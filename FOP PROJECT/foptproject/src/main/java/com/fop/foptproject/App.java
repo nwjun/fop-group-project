@@ -2,7 +2,7 @@ package com.fop.foptproject;
 
 import com.fop.EmailUtil.emailTo;
 import com.fop.sqlUtil.sqlConnect;
-import com.fop.htmlMailTemplate.templateModifier;
+import com.fop.htmlMailTemplate.templateModifie
 import java.io.IOException;
 import java.sql.SQLException;
 import javafx.application.Application;
@@ -13,12 +13,12 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("App.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = new Scene(fxmlLoader.load());
+        primaryStage.setTitle("Movie Ticketing System");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public static void main(String[] args) throws SQLException, IOException {
@@ -31,7 +31,6 @@ public class App extends Application {
         //jc.addTestData();
         //jc.createTestQuery();
         //System.out.println("hi");
-        //launch();
+        launch();
     }
-
 }
