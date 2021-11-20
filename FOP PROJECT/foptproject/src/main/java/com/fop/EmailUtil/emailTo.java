@@ -28,8 +28,8 @@ Methods description:
 2. sendCustomMail   -> Made for the Master and Admins to send custom email.
 3. sendEmailVerification -> send email verification
 4. sendNotification -> send movie notiification before the movie is being played
-5. sendChangePasswordConfirm -> Send email verificaiton and update the password 
-6. setEncrypt -> Change the encryption protocol of the email. 0 for TLS(Default) 1 for SSL
+6. sendBookingConfirmations-> send customers' booking details (with attachments)
+7. setEncrypt -> Change the encryption protocol of the email. 0 for TLS(Default) 1 for SSL
 */
 
 public class emailTo{
@@ -87,11 +87,11 @@ public class emailTo{
   
     private static Message prepMail(Session session,String email,String recepient, String subject, String contentText){
         try{
-            Message message = new MimeMessage(session);
+            MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(email)); // sender
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient)); // recipient
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recepient)); // multiple recipient
             message.setSubject(subject);
-            message.setText(contentText);
+            message.setText(contentText,"utf-8", "html");
             
             return message; // return message object
         } 
@@ -153,7 +153,9 @@ public class emailTo{
         }
     }
     
+    // will be used for both password changing and email verification matters
     public String sendEmailVerification(boolean password){
+        // single recipient at a time only
         Random r = new Random();
         int rand = r.nextInt(1000000); // Generate a random number between 0 to 999999
         String OTP = String.format("%06d",rand); // String format the integer to have 6 leading zeroes
@@ -162,17 +164,37 @@ public class emailTo{
         
         if(password == false){
             subject = "GSC Account Email Verificaiton";
-            content = "Thanks for Signing up, we just need to verify your Email address.\nPlease use this OTP to verify: "+ OTP;
+            content = "<p>Dear customer,"
+                    + "<br><br>"
+                    + "Thanks for Signing up, we just need to verify your Email address with this One-Time-Password:"
+                    + "<br><h3>    "
+                    + OTP
+                    + "</h3><br>"
+                    + "Sincerely,"
+                    + "<br>"
+                    + "<h4>GSC Support</h4>"
+                    + "</p>";
         }
         else{
-            subject = "GSC Verification to change password";
-            content = "Greetings,\nYou recently made a request to reset your password. Please use the one-time-password below to continue.\n\n" + OTP + "\nIf you did not make this change or you believe an unauthorised person has accessed your account, you should go to reset your password immediately. Then sign into your GSC account page to review and update your security settings. \n\nSincerely,\n\nGSC Support" ;           
+            subject = "GSC Verification to change password";         
+            content = "<p>Dear customer,"
+                    + "<br><br>"
+                    + "You recently made a request to reset your password. Please use the one-time-password below to continue."
+                    + "<br><h3>    "
+                    + OTP
+                    + "</h3>"
+                    + "If you did not make this change or you believe an unauthorised person has accessed your account, you should go to reset your password immediately. Then sign into your GSC account page to review and update your security settings."
+                    + "<br><br>"
+                    + "Sincerely,"
+                    + "<br>"
+                    + "<h4>GSC Support</h4>"
+                    + "</p>";
         }
         
         try{
             Message message = prepMail(session,EMAIL,reci,subject,content);
-            Transport.send(message);
-            return OTP;    
+            Transport.send(message); // send OTP email
+            return OTP; // return to sql handler  
         }
         catch(Exception e){
             Logger.getLogger(emailTo.class.getName()).log(Level.SEVERE, null, e);
@@ -181,8 +203,11 @@ public class emailTo{
         
         
     }
-
+    
+    // build for sending special promo notifications
+    // accept image files, format in an embedded email content
     public boolean sendCustomMail(String subject,String content){
+        // multiple recipients are enabled
         try{
             Message message = prepMail(session,EMAIL,reci,subject,content);
             Transport.send(message);
@@ -193,5 +218,53 @@ public class emailTo{
             return false;
         }
        
+    }
+    
+    // movie notification, to alert user their movie time 
+    public boolean sendNotification(String movieName, String date, String time, String venue){
+        // multiple recipients are enabled
+        try{
+             String subject = "GSC Movie Notification";
+             String content = "<p>Dear customer,"
+                    + "<br><br>"
+                    + "Please be notified the movie you have booked is going to start soon. "
+                    + "<br><br>"
+                    + "Movie name: " + movieName
+                    + "<br>"
+                    + "Date: " + date
+                    + "<br>"
+                    + "Time: " + time
+                    + "<br>"
+                    + "Venue: " + venue
+                    + "<br><br>"
+                    + "Hope to see you there!"
+                    + "<br><br>"
+                    + "Sincerely,"
+                    + "<br>"
+                    + "<h4>GSC Customer Support</h4>"
+                    + "</p>";
+            
+             Message message = prepMail(session,EMAIL,reci,subject,content);
+             Transport.send(message);
+         }
+         catch (Exception e){
+            e.printStackTrace();
+            return false;
+         }
+            return true;
+    }
+    
+    // send booking details after successful purchase  
+    public boolean sendBookingConfirmations(String content,String movieName,String firstName,String bookingNumber,String bookingId, String date,String time, String seats, double payment){
+        try {
+            String subject = "Booking Confirmation for" + movieName;
+            String htmlcontent = String.format(content,firstName,bookingNumber,bookingId,movieName,date,time,seats,payment);
+            Message message = prepMail(session,EMAIL,reci,subject,htmlcontent);
+            Transport.send(message);
+        }
+        catch(Exception e){
+            return false;
+        }
+        return true;
     }
 } 
