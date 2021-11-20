@@ -11,6 +11,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Random;
+import com.fop.readConfig.readConfig;
 
 /*
 Dependencies:
@@ -34,8 +35,8 @@ Methods description:
 
 public class emailTo{
     // shared attributes
-    private static final String EMAIL = "smtp@email";
-    private static final String PASSWORD = "smtp@password";
+    private static String EMAIL;
+    private static String PASSWORD;
     private static int currentEncrypt = 0;
     private static Session session;
     
@@ -47,6 +48,9 @@ public class emailTo{
         // setting up destination email
         this.reci = recip;
         
+        Properties prop = new readConfig().readconfigfile();
+        this.EMAIL = prop.getProperty("configuration.smtpemail");
+        this.PASSWORD = prop.getProperty("configuration.smtppassword");
         // setting up session object
         Properties properties = setUpTLSProp(); // use TLS by default
         emailTo.session = Session.getInstance(properties, 
@@ -200,7 +204,6 @@ public class emailTo{
             Logger.getLogger(emailTo.class.getName()).log(Level.SEVERE, null, e);
             return "OTP failed";
         }
-        
         
     }
     
