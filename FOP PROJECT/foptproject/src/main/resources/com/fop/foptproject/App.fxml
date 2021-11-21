@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1911.0" prefWidth="1440.0" styleClass="root" stylesheets="@styles/style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1911.0" styleClass="root" stylesheets="@styles/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1909.0" prefWidth="1443.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1911.0">
          <children>
-            <VBox fx:id="landingBody" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1911.0" prefWidth="1440.0" stylesheets="@styles/style.css">
+            <VBox fx:id="landingBody" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1911.0" stylesheets="@styles/style.css">
                <children>
-                  <GridPane prefHeight="150.0" prefWidth="1440.0">
+                  <GridPane>
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1270.4261216916861" minWidth="10.0" prefWidth="724.586033801061" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1003.482518176061" minWidth="10.0" prefWidth="716.617772082311" />
