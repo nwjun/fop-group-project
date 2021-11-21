@@ -1,5 +1,6 @@
 package com.fop.EmailUtil;
 
+import com.fop.htmlMailTemplate.templateModifier;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -158,7 +159,7 @@ public class emailTo{
     }
     
     // will be used for both password changing and email verification matters
-    public String sendEmailVerification(boolean password){
+    public String sendEmailVerification(String firstName,boolean password){
         // single recipient at a time only
         Random r = new Random();
         int rand = r.nextInt(1000000); // Generate a random number between 0 to 999999
@@ -167,32 +168,25 @@ public class emailTo{
         String content;
         
         if(password == false){
-            subject = "GSC Account Email Verificaiton";
-            content = "<p>Dear customer,"
-                    + "<br><br>"
-                    + "Thanks for Signing up, we just need to verify your Email address with this One-Time-Password:"
-                    + "<br><h3>    "
-                    + OTP
-                    + "</h3><br>"
-                    + "Sincerely,"
-                    + "<br>"
-                    + "<h4>GSC Support</h4>"
-                    + "</p>";
+            try {
+                content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\htmlEmailTemplates\\emailVerificationTemplate.html");
+                subject = "GSC Email Account Verification";
+                content = String.format(content,firstName,OTP);
+            }
+            catch(Exception e){
+                return "false";
+            }
+            
         }
         else{
-            subject = "GSC Verification to change password";         
-            content = "<p>Dear customer,"
-                    + "<br><br>"
-                    + "You recently made a request to reset your password. Please use the one-time-password below to continue."
-                    + "<br><h3>    "
-                    + OTP
-                    + "</h3>"
-                    + "If you did not make this change or you believe an unauthorised person has accessed your account, you should go to reset your password immediately. Then sign into your GSC account page to review and update your security settings."
-                    + "<br><br>"
-                    + "Sincerely,"
-                    + "<br>"
-                    + "<h4>GSC Support</h4>"
-                    + "</p>";
+            try {
+                content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\htmlEmailTemplates\\changePasswordTemplate.html");
+                subject = "GSC Change Account Password";
+                content = String.format(content,firstName,OTP);
+            }
+            catch(Exception e){
+                return "false";
+            }
         }
         
         try{
@@ -207,8 +201,41 @@ public class emailTo{
         
     }
     
+    // movie notification, to alert user their movie time 
+    public boolean sendNotification(String firstName, String bookingId, String bookingNumber ,String movieName, String date, String time, String hall, String seats){
+        // multiple recipients are enabled
+        try{
+            String content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\htmlEmailTemplates\\movieNotificationTemplate.html");
+            String subject = "GSC Movie Notification";
+            content = String.format(content,firstName,bookingNumber,bookingId,movieName,date,time,hall,seats);
+            Message message = prepMail(session,EMAIL,reci,subject,content);
+            Transport.send(message);
+         }
+         catch (Exception e){
+            e.printStackTrace();
+            return false;
+         }
+            return true;
+    }
+    
+    // send booking details after successful purchase  
+    public boolean sendBookingConfirmations(String movieName,String firstName,String bookingNumber,String bookingId, String date,String time, String seats, double payment){
+        try {
+            String content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\htmlEmailTemplates\\bookingConfirmationTemplate.html");
+            String subject = "Booking Confirmation for " + movieName;
+            content = String.format(content,firstName,bookingNumber,bookingId,movieName,date,time,seats,payment);
+            Message message = prepMail(session,EMAIL,reci,subject,content);
+            Transport.send(message);
+        }
+        catch(Exception e){
+            return false;
+        }
+        return true;
+    }
+
     // build for sending special promo notifications
     // accept image files, format in an embedded email content
+    // brg to discussion
     public boolean sendCustomMail(String subject,String content){
         // multiple recipients are enabled
         try{
@@ -221,53 +248,5 @@ public class emailTo{
             return false;
         }
        
-    }
-    
-    // movie notification, to alert user their movie time 
-    public boolean sendNotification(String movieName, String date, String time, String venue){
-        // multiple recipients are enabled
-        try{
-             String subject = "GSC Movie Notification";
-             String content = "<p>Dear customer,"
-                    + "<br><br>"
-                    + "Please be notified the movie you have booked is going to start soon. "
-                    + "<br><br>"
-                    + "Movie name: " + movieName
-                    + "<br>"
-                    + "Date: " + date
-                    + "<br>"
-                    + "Time: " + time
-                    + "<br>"
-                    + "Venue: " + venue
-                    + "<br><br>"
-                    + "Hope to see you there!"
-                    + "<br><br>"
-                    + "Sincerely,"
-                    + "<br>"
-                    + "<h4>GSC Customer Support</h4>"
-                    + "</p>";
-            
-             Message message = prepMail(session,EMAIL,reci,subject,content);
-             Transport.send(message);
-         }
-         catch (Exception e){
-            e.printStackTrace();
-            return false;
-         }
-            return true;
-    }
-    
-    // send booking details after successful purchase  
-    public boolean sendBookingConfirmations(String content,String movieName,String firstName,String bookingNumber,String bookingId, String date,String time, String seats, double payment){
-        try {
-            String subject = "Booking Confirmation for" + movieName;
-            String htmlcontent = String.format(content,firstName,bookingNumber,bookingId,movieName,date,time,seats,payment);
-            Message message = prepMail(session,EMAIL,reci,subject,htmlcontent);
-            Transport.send(message);
-        }
-        catch(Exception e){
-            return false;
-        }
-        return true;
     }
 } 
