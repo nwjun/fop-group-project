@@ -5,15 +5,18 @@
 package com.fop.sqlUtil;
 
 import java.sql.*;
+import com.fop.readConfig.readConfig;
+import java.util.Properties;
 
 
 public class sqlConnect {
     private Connection conn;
     
     public sqlConnect(){
+        Properties prop = new readConfig().readconfigfile();
         try{
             this.conn = DriverManager.getConnection(
-            "jdbc:mysql://127.0.0.1:3306/fopdb","sqlUsername","sqlPassword"
+            "jdbc:mysql://127.0.0.1:3306/fopdb",prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
             System.out.println("Connection established!");
         }
