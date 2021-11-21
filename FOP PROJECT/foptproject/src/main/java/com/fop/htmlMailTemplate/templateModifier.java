@@ -5,22 +5,21 @@
 package com.fop.htmlMailTemplate;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class templateModifier {
     private String content = "";
-    public String readHTML() throws IOException{
+    
+    public String readHTML(String path) throws IOException{
         try {
             String str;
-            BufferedReader in = new BufferedReader(new FileReader("src\\main\\resources\\com\\fop\\htmlEmailTemplates\\bookingConfirmationTemplate.html"));
+            BufferedReader in = new BufferedReader(new FileReader(path));
             while ((str = in.readLine())!= null) {
                 content +=str;
             }
             in.close();
             return content;
-
         }
         catch (IOException e){
             e.printStackTrace();
