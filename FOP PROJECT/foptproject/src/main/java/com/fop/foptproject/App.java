@@ -23,12 +23,13 @@ public class App extends Application {
     public void start(Stage primaryStage) throws IOException {
         // get computer screen size 
         javafx.geometry.Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        double maxX = screenBounds.getMaxX();
-        double maxY = screenBounds.getMaxY();
+        System.out.println(screenBounds);
+        final double WIDTH = screenBounds.getWidth();
+        final double HEIGHT = screenBounds.getHeight();
         
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("App.fxml"));
-        // set Scene with maximum width and height of screen
-        Scene scene = new Scene(fxmlLoader.load(),maxX,maxY); 
+        // set Scene's width and height based on screen size
+        Scene scene = new Scene(fxmlLoader.load(),WIDTH, HEIGHT); 
         // get scrollPane from fxml
         ScrollPane scrollPane = (ScrollPane) fxmlLoader.getRoot();
         scrollPane.setPannable(false);
