@@ -30,12 +30,16 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("App.fxml"));
         // set Scene's width and height based on screen size
         Scene scene = new Scene(fxmlLoader.load(),WIDTH, HEIGHT); 
+        
         // get scrollPane from fxml
         ScrollPane scrollPane = (ScrollPane) fxmlLoader.getRoot();
         scrollPane.setPannable(false);
         // hide horizontal and vertical scroll bar
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
+        // set the content sized with scroll pane
+        scrollPane.setFitToWidth(true);
+        
         primaryStage.setTitle("Movie Ticketing System");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
