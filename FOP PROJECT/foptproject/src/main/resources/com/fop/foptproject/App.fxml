@@ -5,23 +5,23 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1911.0" styleClass="root" stylesheets="@styles/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1911.0" styleClass="root" stylesheets="@styles/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.AppController">
   <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1911.0">
+      <StackPane fx:id="landingStackPane" alignment="CENTER">
          <children>
-            <VBox fx:id="landingBody" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1911.0" stylesheets="@styles/style.css">
+            <VBox fx:id="landingBody" alignment="TOP_CENTER" prefHeight="1911.0" stylesheets="@styles/style.css">
                <children>
-                  <GridPane>
+                  <GridPane fx:id="landingGrid" alignment="TOP_CENTER">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1270.4261216916861" minWidth="10.0" prefWidth="724.586033801061" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1003.482518176061" minWidth="10.0" prefWidth="716.617772082311" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="Infinity" minWidth="10.0" prefWidth="724.586033801061" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="Infinity" minWidth="10.0" prefWidth="716.617772082311" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -29,32 +29,30 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ImageView fx:id="logo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                        <ImageView fx:id="logo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                            <image>
                               <Image url="@assets/company/logo.png" />
                            </image>
                         </ImageView>
                         <Button fx:id="signInBtn" mnemonicParsing="false" text="Sign In" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                      </children>
-                     <padding>
-                        <Insets left="63.0" right="63.0" />
-                     </padding>
                   </GridPane>
                   <VBox fx:id="landingContent" prefHeight="1411.0" prefWidth="1440.0" styleClass="root">
                      <children>
                         <ImageView fx:id="imgBanner" fitHeight="338.0" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true" />
-                        <HBox fx:id="showingContainer" prefHeight="100.0" prefWidth="200.0" />
-                        <HBox fx:id="movieList" prefHeight="352.0" prefWidth="1440.0" />
-                        <HBox fx:id="foodContainer" prefHeight="100.0" prefWidth="200.0" />
-                        <HBox fx:id="foodList" prefHeight="336.0" prefWidth="1440.0" />
+                        <HBox fx:id="showingContainer" prefHeight="100.0" />
+                        <HBox fx:id="movieList" prefHeight="352.0" />
+                        <HBox fx:id="foodContainer" prefHeight="100.0" />
+                        <HBox fx:id="foodList" prefHeight="336.0" />
                      </children>
                   </VBox>
-                  <HBox fx:id="landingFooter" prefHeight="350.0" prefWidth="1383.0" />
+                  <HBox fx:id="landingFooter" prefHeight="350.0" />
                </children>
             </VBox>
          </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets></AnchorPane>
+         <padding>
+            <Insets left="63.0" right="63.0" />
+         </padding>
+      </StackPane>
   </content>
 </ScrollPane>
