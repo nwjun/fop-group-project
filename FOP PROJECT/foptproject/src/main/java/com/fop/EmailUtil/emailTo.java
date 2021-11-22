@@ -169,7 +169,7 @@ public class emailTo{
         
         if(password == false){
             try {
-                content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\htmlEmailTemplates\\emailVerificationTemplate.html");
+                content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\Templates\\emailVerificationTemplate.html");
                 subject = "GSC Email Account Verification";
                 content = String.format(content,firstName,OTP);
             }
@@ -180,7 +180,7 @@ public class emailTo{
         }
         else{
             try {
-                content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\htmlEmailTemplates\\changePasswordTemplate.html");
+                content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\Templates\\changePasswordTemplate.html");
                 subject = "GSC Change Account Password";
                 content = String.format(content,firstName,OTP);
             }
@@ -205,7 +205,7 @@ public class emailTo{
     public boolean sendNotification(String firstName, String bookingId, String bookingNumber ,String movieName, String date, String time, String hall, String seats){
         // multiple recipients are enabled
         try{
-            String content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\htmlEmailTemplates\\movieNotificationTemplate.html");
+            String content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\Templates\\movieNotificationTemplate.html");
             String subject = "GSC Movie Notification";
             content = String.format(content,firstName,bookingNumber,bookingId,movieName,date,time,hall,seats);
             Message message = prepMail(session,EMAIL,reci,subject,content);
@@ -221,7 +221,7 @@ public class emailTo{
     // send booking details after successful purchase  
     public boolean sendBookingConfirmations(String movieName,String firstName,String bookingNumber,String bookingId, String date,String time, String seats, double payment){
         try {
-            String content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\htmlEmailTemplates\\bookingConfirmationTemplate.html");
+            String content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\Templates\\bookingConfirmationTemplate.html");
             String subject = "Booking Confirmation for " + movieName;
             content = String.format(content,firstName,bookingNumber,bookingId,movieName,date,time,seats,payment);
             Message message = prepMail(session,EMAIL,reci,subject,content);
