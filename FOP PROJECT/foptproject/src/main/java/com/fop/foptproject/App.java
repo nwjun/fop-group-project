@@ -47,7 +47,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) throws Exception {
-        // Properties prop = new readConfig().readconfigfile;
+        Properties prop = new readConfig().readconfigfile();
         //System.out.println(new emailTo(prop.getProperty("configuration.testSingleEmail")).sendBookingConfirmations("Eternals","forInternalTest","54321","12345","11/11/2021","1:30 PM","3 x Preferred (RM51.00 - E11, E10, E9)",52.5));
         //System.out.println(new emailTo(prop.getProperty("configuration.testSingleEmail")).sendTestMail());
         //System.out.println(new emailTo("limweixin17@gmail.com,helloworldisagurl@gmail.com").sendNotification("Eternals","11/11/2021","2:00pm","Kuala Lumpur - MidValley"));
