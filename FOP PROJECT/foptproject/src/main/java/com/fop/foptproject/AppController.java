@@ -45,7 +45,7 @@ public class AppController implements Initializable {
 //        
         String[] foods = new String[] {"food1.jpg","food2.jpg","food4.jpg","food5.jpg"};
         String[] foodNames = new String[]{"Chicken Hotdog Combo 1","Cocktail Sausage Combo 1","Regular Combo 1", "food"};
-        StackPane[] foodCards = createCardList(foods, foodNames, "foods", 100, 100);
+        StackPane[] foodCards = createCardList(foods, foodNames, "foods", 180, 180);
         foodList.getChildren().addAll(foodCards);
     }
 

@@ -1,5 +1,6 @@
 package com.fop.EmailUtil;
 
+import com.fop.Ticket.TicketGenerator;
 import com.fop.htmlMailTemplate.templateModifier;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -13,6 +14,15 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Random;
 import com.fop.readConfig.readConfig;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 /*
 Dependencies:
@@ -89,14 +99,88 @@ public class emailTo{
         
         return prop;
     }
-  
+    
+    // for email with pdf attachment
+    private static Message prepMail(Session session,String email,String recepient, String subject, String contentText, boolean isConfirm) throws IOException{
+        ByteArrayOutputStream ops = new ByteArrayOutputStream();
+        ops = new TicketGenerator().genTicket(ops,"ABC1234", "11/11/2021", "3:45pm", "Eternals", "Hall A", "24/11/2021", "Wednesday 2:00pm", "Student x 2", "E11, E10, E9", " ");
+        
+        if(isConfirm){
+            try{
+                // create a MimeMessage object and set recipients and subject
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(email)); // sender
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recepient)); // multiple recipient
+                message.setSubject(subject);
+                
+                // create a multipart object as a container
+                MimeMultipart multipart = new MimeMultipart("related"); // a container which divide the emailBody into few parts
+                
+                // set HTML email body into the email
+                BodyPart messageBody = new MimeBodyPart();
+                messageBody.setContent(contentText,"text/html; charset=utf-8"); // encode to html and use utf-8 charset
+                multipart.addBodyPart(messageBody); // add the email body part into the container
+                
+                // set GSC Icon at the top of the email
+                MimeBodyPart messageHead = new MimeBodyPart();
+                DataSource imgsrc = new FileDataSource("src\\main\\resources\\com\\fop\\foptproject\\assets\\company\\logo.png");
+                messageHead.setDataHandler(new DataHandler(imgsrc));
+                messageHead.setContentID("<logoimage>");
+                messageHead.setDisposition(MimeBodyPart.INLINE);
+                multipart.addBodyPart(messageHead);
+                
+
+                // attach ticket pdf into the email
+                BodyPart messageAttachment = new MimeBodyPart();
+                byte[] bytes = ops.toByteArray(); // turn the data in buffer into a byte array
+                DataSource src = new ByteArrayDataSource(bytes,"application/pdf"); // tell the method the data is of pdf type
+                messageAttachment.setDataHandler(new DataHandler(src));
+                messageAttachment.setFileName("GSC E-ticket.pdf");
+                multipart.addBodyPart(messageAttachment); // add to the container
+                message.setContent(multipart); // set the email to take in the container
+                
+                 // magic method
+                message.saveChanges();
+                
+                // return message object
+                return message;
+            } 
+            catch (Exception ex){
+                Logger.getLogger(emailTo.class.getName()).log(Level.SEVERE, null, ex);
+
+                return null; // if error return null
+            } 
+        }
+        return null;
+    }
+    
+    // for html email only
     private static Message prepMail(Session session,String email,String recepient, String subject, String contentText){
         try{
+            // create a MimeMessage object and set recipients and subject
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(email)); // sender
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recepient)); // multiple recipient
-            message.setSubject(subject);
-            message.setText(contentText,"utf-8", "html");
+            message.setSubject(subject);           
+            
+            // create a multipart object as a container
+            MimeMultipart multipart = new MimeMultipart("related"); // a container which divide the emailBody into few parts
+
+            // set HTML email body into the email
+            BodyPart messageBody = new MimeBodyPart();
+            messageBody.setContent(contentText,"text/html; charset=utf-8"); // encode to html and use utf-8 charset
+            multipart.addBodyPart(messageBody); // add the email body part into the container
+
+            // set GSC Icon at the top of the email
+            MimeBodyPart messageHead = new MimeBodyPart();
+            DataSource imgsrc = new FileDataSource("src\\main\\resources\\com\\fop\\foptproject\\assets\\company\\logo.png");
+            messageHead.setDataHandler(new DataHandler(imgsrc));
+            messageHead.setContentID("<logoimage>");
+            messageHead.setDisposition(MimeBodyPart.INLINE);
+            multipart.addBodyPart(messageHead);
+            
+            message.setContent(multipart);
+            message.saveChanges();
             
             return message; // return message object
         } 
@@ -224,10 +308,11 @@ public class emailTo{
             String content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\Templates\\bookingConfirmationTemplate.html");
             String subject = "Booking Confirmation for " + movieName;
             content = String.format(content,firstName,bookingNumber,bookingId,movieName,date,time,seats,payment);
-            Message message = prepMail(session,EMAIL,reci,subject,content);
+            Message message = prepMail(session,EMAIL,reci,subject,content,true);
             Transport.send(message);
         }
         catch(Exception e){
+            e.printStackTrace();
             return false;
         }
         return true;
