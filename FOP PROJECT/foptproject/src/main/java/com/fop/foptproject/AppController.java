@@ -4,12 +4,19 @@
  */
 package com.fop.foptproject;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,7 +27,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
 public class AppController implements Initializable {
-
+    
     @FXML
     private ImageView logo;
     @FXML
@@ -31,11 +38,35 @@ public class AppController implements Initializable {
     private GridPane landingGrid;
     @FXML
     private StackPane landingStackPane;
+    @FXML 
+    private HBox landingFooter;
+    @FXML 
+    private Hyperlink hyperlink;
+    @FXML
+    void openNwjun (ActionEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/nw_jun/?hl=en"));
+    }
+    @FXML
+    void openWxinlim (ActionEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/wxinlim/?hl=en"));
+    }
+    @FXML
+    void openKuck (ActionEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/kuck.nien_s/?hl=en"));
+    }
+    @FXML
+    void openXyu27 (ActionEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/xyu_27/?hl=en"));
+    }
+    @FXML
+    void openShxao (ActionEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/shxao.yxn_/?hl=en"));
+    }
     @FXML
     private HBox movieList;
     @FXML
     private HBox foodList;
-    
+   
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String[] movies = new String[] {"no-time-to-die.jpg", "venom.jpg","eternals.jpg","anita.jpg","dune.jpg","enemy.jpg"};
@@ -77,4 +108,4 @@ public class AppController implements Initializable {
         
         return cards;
     }
-}
+    }
