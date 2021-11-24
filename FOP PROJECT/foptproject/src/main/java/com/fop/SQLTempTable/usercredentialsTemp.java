@@ -10,20 +10,20 @@ import java.util.Properties;
  *
  * @author kuckn
  */
-public class SQLMovieTemp {
+public class usercredentialsTemp {
     private Properties usercredentials;
     
-    public SQLMovieTemp(){
+    public usercredentialsTemp(){
         Properties prop = new Properties();
         
         // Properties acts like dictionary, call UserId -> get U20000
-        prop.put("UserId", "U2000");
-        prop.put("username","Test");
-        prop.put("password","testing12345");
-        prop.put("email","test@email.com");
-        prop.put("phoneNumber","0123456789");
-        prop.put("permission","4");
-        prop.put("linkedCards","null");
+        prop.put("UserId", "U2000"); //String
+        prop.put("username","Test"); //String 
+        prop.put("password","testing12345"); //String /*SHA-256 encrypt*/
+        prop.put("email","test@email.com"); //String
+        prop.put("phoneNumber","0123456789"); //String
+        prop.put("permission","4"); //int
+        prop.put("linkedCards","null"); //Json
         
         this.usercredentials = prop;
     }
@@ -46,12 +46,12 @@ public class SQLMovieTemp {
 /*
 package com.fop.SQLTempTable;
 
-import com.fop.SQLTempTable.SQLMovieTemp;
+import com.fop.SQLTempTable.usercredentialsTemp;
 
 public class Main {
 
     public static void main(String[] args) {
-        SQLMovieTemp x = new SQLMovieTemp();
+        usercredentialsTemp x = new usercredentialsTemp();
         
         for (String y1 : x.getUserCredential()) {
             System.out.print(y1 + " ");
