@@ -45,6 +45,7 @@ public class AppController implements Initializable {
     private HBox landingFooter;
     @FXML 
     private Hyperlink hyperlink;
+    
     //Hyperlink for instagram
     @FXML
     void openNwjun (ActionEvent event) throws URISyntaxException, IOException {
