@@ -39,6 +39,11 @@
                   </GridPane>
                   <VBox fx:id="landingContent" prefHeight="1411.0" prefWidth="1440.0" styleClass="root">
                      <children>
+                        <ImageView fx:id="banner" fitHeight="419.0" fitWidth="1453.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../../../../../../Desktop/FOP%20Y1S1/GUI/poster1.jpg" />
+                           </image>
+                        </ImageView>
                         <ImageView fx:id="imgBanner" fitHeight="338.0" fitWidth="1440.0" pickOnBounds="true" preserveRatio="true" />
                         <HBox fx:id="showingContainer" prefHeight="100.0" />
                         <HBox fx:id="movieList" prefHeight="352.0" />
