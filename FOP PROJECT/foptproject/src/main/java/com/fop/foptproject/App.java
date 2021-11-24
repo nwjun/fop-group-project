@@ -23,7 +23,6 @@ public class App extends Application {
     public void start(Stage primaryStage) throws IOException {
         // get computer screen size 
         javafx.geometry.Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        System.out.println(screenBounds);
         final double WIDTH = screenBounds.getWidth();
         final double HEIGHT = screenBounds.getHeight();
         
@@ -55,7 +54,6 @@ public class App extends Application {
         //sqlConnect jc = new sqlConnect();
         //jc.addTestData();
         //jc.createTestQuery();
-        
         launch();
     }
 }
