@@ -12,17 +12,17 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 
 public class TicketGenerator {
     
-    public void genTicket(String refId, String transactionDate, String transactionTime, String movieName, String hall, String date, String time,String type, String seats, String FnB) throws IOException{
+    public ByteArrayOutputStream genTicket(ByteArrayOutputStream ops,String refId, String transactionDate, String transactionTime, String movieName, String hall, String date, String time,String type, String seats, String FnB) throws IOException{
         String src = "src/main/resources/com/fop/Templates/MovieTicketTemplate.pdf";
-        String dest = "src/main/resources/com/fop/Templates/OutMovieTicketTemplate.pdf";
         
         // read from existing pdf
-        PdfDocument doc = new PdfDocument(new PdfReader(src),new PdfWriter(dest));
+        PdfDocument doc = new PdfDocument(new PdfReader(src),new PdfWriter(ops)); // write the pdf into buffer
         
         // custom font and color
         PdfFont montserratFont = PdfFontFactory.createFont("src/main/resources/com/fop/font/Montserrat Family/Montserrat-Regular.ttf",true);
@@ -73,5 +73,7 @@ public class TicketGenerator {
      
         // close the pdf document
         doc.close();
+        
+        return ops;
     }
 }
