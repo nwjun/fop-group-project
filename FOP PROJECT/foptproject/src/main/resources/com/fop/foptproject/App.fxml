@@ -68,42 +68,47 @@
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Hyperlink>
-                        <Hyperlink onAction="#scrollToMovies" text="Movies" textFill="#f4f2f2" translateX="-148.0" translateY="40.0">
+                        <Hyperlink onAction="#scrollToMovies" text="Movies" textFill="#f4f2f2" translateX="-100.0" translateY="40.0">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Hyperlink>
+                        <ImageView fitHeight="27.0" fitWidth="40.0" opacity="0.61" pickOnBounds="true" preserveRatio="true" translateX="630.0" translateY="89.0">
+                           <image>
+                              <Image url="@assets/instagram.png" />
+                           </image>
+                        </ImageView>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact us at " translateX="600.0" translateY="50.0">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Text>
-                        <Hyperlink onAction="#openNwjun" text="\@nw_jun" textFill="#ffffffa3" translateX="530.0" translateY="120.0">
+                        <Hyperlink onAction="#openNwjun" text="\@nw_jun" textFill="#ffffffa3" translateX="505.0" translateY="120.0">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Hyperlink>
-                        <Text fill="#ffffffa3" strokeType="OUTSIDE" strokeWidth="0.0" text="Instagram" translateX="435.0" translateY="90.0">
+                        <Text fill="#ffffffa3" strokeType="OUTSIDE" strokeWidth="0.0" text="INSTAGRAM" translateX="410.0" translateY="90.0">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Text>
-                        <Hyperlink onAction="#openWxinlim" text="\@wxinlim" textFill="#ffffffa3" translateX="337.0" translateY="160.0">
+                        <Hyperlink alignment="CENTER" onAction="#openWxinlim" text="\@wxinlim" textFill="#ffffffa3" translateX="290.0" translateY="160.0">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Hyperlink>
-                        <Hyperlink onAction="#openKuck" text="\@kuck.nien_s" textFill="#ffffffa3" translateX="230.0" translateY="200.0">
+                        <Hyperlink onAction="#openKuck" text="\@kuck.nien_s" textFill="#ffffffa3" translateX="185.0" translateY="200.0">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Hyperlink>
-                        <Hyperlink onAction="#openXyu27" text="\@xyu_27" textFill="#ffffffa3" translateX="89.0" translateY="240.0">
+                        <Hyperlink onAction="#openXyu27" text="\@xyu_27" textFill="#ffffffa3" translateX="45.0" translateY="240.0">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
                         </Hyperlink>
-                        <Hyperlink onAction="#openShxao" text="\@shxao.yxn_" textFill="#ffffffa3" translateX="-10.0" translateY="280.0">
+                        <Hyperlink onAction="#openShxao" text="\@shxao.yxn_" textFill="#ffffffa3" translateX="-55.0" translateY="280.0">
                            <font>
                               <Font name="Calibri Bold" size="22.0" />
                            </font>
