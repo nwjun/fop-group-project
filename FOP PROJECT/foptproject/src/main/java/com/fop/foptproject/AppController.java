@@ -34,7 +34,8 @@ import javafx.scene.shape.Line;
 import javafx.collections.ObservableList;
 
 public class AppController implements Initializable {
-
+    CommonMethod method = new CommonMethod();
+    
     @FXML
     private ImageView logo;
     @FXML
@@ -43,17 +44,19 @@ public class AppController implements Initializable {
     private Button signInBtn;
     @FXML
     private ImageView imgBanner;
-    int count;  
+    
+    private int count=0;  
+    
     public void slideshow(){                         
-        ArrayList<Image> image= new ArrayList<Image>();
-        image.add(new Image ( "file:banner2.jpg"));
-        image.add(new Image ( "file:banner3.jpg"));
-        image.add(new Image ( "file:banner4.jpg"));
-        image.add(new Image ( "file:banner5.jpg"));
-        image.add(new Image ( "file:banner6.jpg"));
-        image.add(new Image ( "file:banner7.jpg"));
-        image.add(new Image ( "file:banner8.jpg"));
-        image.add(new Image ( "file:banner1.jpg"));
+        ArrayList<Image> image= new ArrayList<>();
+        image.add(new Image (method.getPathToResources("assets/banner/banner2.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner3.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner4.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner5.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner6.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner7.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner8.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner1.jpg")));
        
         Timeline timeline= new Timeline(new KeyFrame(Duration.seconds(5),event->{
             imgBanner.setImage(image.get(count));
@@ -133,8 +136,8 @@ public class AppController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         slideshow();
         // Location to sample csv
-        final String sampleMovieCSV = "src/main/resources/com/fop/testing/sampleMovie.csv";
-        final String sampleFoodCSV = "src/main/resources/com/fop/testing/sampleFood.csv";
+        final String sampleMovieCSV = "src/main/resources/com/fop/foptproject/testing/sampleMovie.csv";
+        final String sampleFoodCSV = "src/main/resources/com/fop/foptproject/testing/sampleFood.csv";
         Movie[] movies = ReadCSV.csvToMovie(sampleMovieCSV);
         Food[] foods = ReadCSV.csvToFood(sampleFoodCSV);
 
@@ -154,23 +157,7 @@ public class AppController implements Initializable {
         landingLine.setStartX(0);
         landingLine.setEndX(1700);
         StackPane.setAlignment(landingLine, Pos.BOTTOM_CENTER);
-
-
     }
-    
-public void setHChildrenPriority(Pane root, Priority priority){
-    ObservableList<Node> nodes = root.getChildren();
-    nodes.forEach(node -> {
-        HBox.setHgrow(node, priority);
-    });
-}
 
-    
-public void setVChildrenPriority(Pane root, Priority priority){
-    ObservableList<Node> nodes = root.getChildren();
-    nodes.forEach(node -> {
-        VBox.setVgrow(node, priority);
-    });
-}
 }
 

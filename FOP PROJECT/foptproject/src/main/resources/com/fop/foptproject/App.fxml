@@ -44,10 +44,11 @@
                             <children>
                                 <VBox fx:id="landingContent" prefHeight="1411.0" prefWidth="1440.0" styleClass="root">
                      <children>
-                        <ImageView fx:id="imgBanner" fitHeight="338.0" fitWidth="1457.0" pickOnBounds="true" preserveRatio="true" translateX="100.0">
+                        <ImageView fx:id="imgBanner" fitHeight="377.0" fitWidth="1456.0" pickOnBounds="true" preserveRatio="true" translateX="100.0">
                            <image>
                               <Image url="@assets/banner/banner1.jpg" />
-                           </image></ImageView>
+                           </image>
+                              </ImageView>
                         <HBox fx:id="showingContainer" prefHeight="100.0" />
                         <HBox fx:id="movieList" prefHeight="352.0" />
                         <HBox fx:id="foodContainer" prefHeight="100.0" />
@@ -270,9 +271,9 @@
                     </children>
                 </VBox>
             </children>
-            <padding>
-                <Insets left="63.0" right="63.0" />
-            </padding>
+         <padding>
+            <Insets left="63.0" right="63.0" />
+         </padding>
         </StackPane>
     </content>
 </ScrollPane>
