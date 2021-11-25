@@ -32,7 +32,7 @@ public class AppController implements Initializable {
     @FXML
     private ImageView logo;
     @FXML
-    private Button logInBtn;
+    private Button signInBtn;
     @FXML
     private ImageView imgBanner;
     @FXML
