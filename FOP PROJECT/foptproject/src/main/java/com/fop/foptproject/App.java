@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -22,20 +23,25 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         // get computer screen size 
-        javafx.geometry.Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         final double WIDTH = screenBounds.getWidth();
         final double HEIGHT = screenBounds.getHeight();
-        
+        System.out.println(screenBounds);
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("App.fxml"));
+        
         // set Scene's width and height based on screen size
         Scene scene = new Scene(fxmlLoader.load(),WIDTH, HEIGHT); 
+//        Scene scene = new Scene(fxmlLoader.load()); 
         
         // get scrollPane from fxml
         ScrollPane scrollPane = (ScrollPane) fxmlLoader.getRoot();
         scrollPane.setPannable(false);
+        
         // hide horizontal and vertical scroll bar
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
+        
+//        scrollPane.setPrefWidth(screenBounds.getMaxX());
         // set the content sized with scroll pane
         scrollPane.setFitToWidth(true);
         
@@ -43,6 +49,8 @@ public class App extends Application {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
+        primaryStage.setMaxWidth(primaryStage.getWidth());
+        primaryStage.setMaxHeight(primaryStage.getHeight());
     }
 
     public static void main(String[] args) throws Exception {
@@ -54,6 +62,7 @@ public class App extends Application {
         //sqlConnect jc = new sqlConnect();
         //jc.addTestData();
         //jc.createTestQuery();
+        
         launch();
     }
 }
