@@ -11,6 +11,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 public class sqlConnect {
     private Connection conn;
+    protected final String SALT = "c2afca4e3995e4e86caf97e63d644f";
     
     public sqlConnect(){
         Properties prop = new readConfig().readconfigfile();
@@ -33,17 +34,6 @@ public class sqlConnect {
         String email = "test@email.com"; //Store in DB
         String phone = "0123456789"; //Store in DB
         int permission = 4;
-        
-        String salt = "Pepper"; //To encrypt password with SHA-256
-        String password = DigestUtils.sha256Hex(email+salt+password1); // Store in DB //encrypted password
-        
-        //Debug
-//        String myShaString = "a01082202c2afca4e3995e4e86caf97e63d644f4855dfa5a492032877a7a22a4";
-//        if(myShaString.equals(password))
-//            System.out.println("Login Successfully");
-//        else
-//            System.out.println("Bad Credentials");
-//        System.out.println(password);
 
         // SQL Statement
         String query = "INSERT INTO usercredentials(userId, username, password, email,phoneNumber,permission)" +
@@ -82,5 +72,25 @@ public class sqlConnect {
         
         System.out.printf("UserID : %s\nUsername : %s\nPassword : %s\nEmail : %s\nPhone : %s\nPermission : %d\n",userId,username,password,email,phone,permission);
         
+    }
+    
+    public boolean checkCredentials(String userEmail, String password) throws SQLException{
+        // preprocess input
+        // SHA-256
+        String combination = userEmail + SALT + password;
+        String inputPass = DigestUtils.sha256Hex(combination);
+        
+        // retrieve from Database
+        PreparedStatement prep = conn.prepareStatement("$SQLSTATEMENT");
+        
+        ResultSet rs = prep.executeQuery();
+        
+        return true;
+        
+    }
+    
+    public boolean addNewUser(){
+        
+        return true;
     }
 }
