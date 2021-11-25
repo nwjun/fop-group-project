@@ -52,7 +52,6 @@
                         <HBox fx:id="movieList" prefHeight="352.0" />
                         <HBox fx:id="foodContainer" prefHeight="100.0" />
                         <HBox fx:id="foodList" prefHeight="336.0" />
-                        <Line endX="1880.0" startX="-100.0" stroke="WHITE" translateY="200.0" />
                      </children>
                   </VBox>
                                 <Line fx:id="landingLine" endX="1000.0" startX="-100.0" stroke="WHITE">
