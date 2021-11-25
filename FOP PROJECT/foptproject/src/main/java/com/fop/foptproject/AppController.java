@@ -4,13 +4,21 @@
  */
 package com.fop.foptproject;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -24,7 +32,8 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class AppController implements Initializable {
-
+ 
+    
     @FXML
     private ImageView logo;
     @FXML
@@ -36,10 +45,51 @@ public class AppController implements Initializable {
     @FXML
     private StackPane landingStackPane;
     @FXML
+    private ScrollPane scrollpane;
+    @FXML 
+    private HBox landingFooter;
+    @FXML 
+    private Hyperlink hyperlink;
+    
+    //Hyperlink for instagram
+    @FXML
+    void openNwjun (ActionEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/nw_jun/?hl=en"));
+    }
+    @FXML
+    void openWxinlim (ActionEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/wxinlim/?hl=en"));
+    }
+    @FXML
+    void openKuck (ActionEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/kuck.nien_s/?hl=en"));
+    }
+    @FXML
+    void openXyu27 (ActionEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/xyu_27/?hl=en"));
+    }
+    @FXML
+    void openShxao (ActionEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.instagram.com/shxao.yxn_/?hl=en"));
+    }
+    @FXML 
+    void openCinemas (ActionEvent event) throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://www.google.com/"));
+    }
+    @FXML
+    void scrollToMovies (ActionEvent event){
+        scrollpane.setVvalue(0.3);
+    }
+    @FXML
+    void scrollToFB (ActionEvent event){
+        scrollpane.setVvalue(0.7);
+    }
+    @FXML
     private HBox movieList;
     @FXML
     private HBox foodList;
     
+   
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String[] movies = new String[] {"no-time-to-die.jpg", "venom.jpg","eternals.jpg","anita.jpg","dune.jpg","enemy.jpg"};
@@ -51,6 +101,8 @@ public class AppController implements Initializable {
         String[] foodNames = new String[]{"Chicken Hotdog Combo 1","Cocktail Sausage Combo 1","Regular Combo 1", "food"};
         StackPane[] foodCards = createCardList(foods, foodNames, "foods", 100, 100);
         foodList.getChildren().addAll(foodCards);     
+        StackPane[] foodCards = createCardList(foods, foodNames, "foods", 180, 180);
+        foodList.getChildren().addAll(foodCards);
     }
 
     public StackPane createCard(String name, Image poster) {

@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class Movie {
 
-    private HashMap<String, Object> movie = new HashMap<String, Object>();
+    private HashMap<String, Object> movie = new HashMap<>();
 
     Movie(String movieID, String movieName, String description, String language,
             String releaseDate, String[] allShowTimes, String[] allShowDates, int length, Blob poster,
