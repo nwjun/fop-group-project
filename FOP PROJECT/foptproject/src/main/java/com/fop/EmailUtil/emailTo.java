@@ -25,6 +25,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 /*
+/////
 Dependencies:
 1. javax mail
 2. activation
