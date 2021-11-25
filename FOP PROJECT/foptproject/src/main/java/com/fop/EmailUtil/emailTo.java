@@ -14,6 +14,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Random;
 import com.fop.readConfig.readConfig;
+import com.google.zxing.WriterException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import javax.activation.DataHandler;
@@ -25,7 +26,6 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 /*
-/////
 Dependencies:
 1. javax mail
 2. activation
@@ -43,6 +43,9 @@ Methods description:
 4. sendNotification -> send movie notiification before the movie is being played
 6. sendBookingConfirmations-> send customers' booking details (with attachments)
 7. setEncrypt -> Change the encryption protocol of the email. 0 for TLS(Default) 1 for SSL
+
+To be changed:
+1. convert all hardcoded details into arguments
 */
 
 public class emailTo{
@@ -102,9 +105,9 @@ public class emailTo{
     }
     
     // for email with pdf attachment
-    private static Message prepMail(Session session,String email,String recepient, String subject, String contentText, boolean isConfirm) throws IOException{
+    private static Message prepMail(Session session,String email,String recepient, String subject, String contentText, boolean isConfirm) throws IOException, WriterException{
         ByteArrayOutputStream ops = new ByteArrayOutputStream();
-        ops = new TicketGenerator().genTicket(ops,"ABC1234", "11/11/2021", "3:45pm", "Eternals", "Hall A", "24/11/2021", "Wednesday 2:00pm", "Student x 2", "E11, E10, E9", " ");
+        ops = new TicketGenerator().genTicket(ops,"ABC1234", "11/11/2021", "3:45pm", "Eternals", "Hall A", "24/11/2021", "Wednesday 2:00pm", "Student x 2", "E11, E10, E9", "Set A Bundle x 1");
         
         if(isConfirm){
             try{

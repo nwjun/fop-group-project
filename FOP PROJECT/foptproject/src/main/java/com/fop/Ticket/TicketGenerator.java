@@ -4,6 +4,9 @@
  */
 package com.fop.Ticket;
 
+import com.google.zxing.WriterException;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.color.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
@@ -12,15 +15,21 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.kernel.pdf.xobject.PdfXObject;
+import com.itextpdf.layout.element.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 
 public class TicketGenerator {
     
-    public ByteArrayOutputStream genTicket(ByteArrayOutputStream ops,String refId, String transactionDate, String transactionTime, String movieName, String hall, String date, String time,String type, String seats, String FnB) throws IOException{
+    public ByteArrayOutputStream genTicket(ByteArrayOutputStream ops,String refId, String transactionDate, String transactionTime, String movieName, String hall, String date, String time,String type, String seats, String FnB) throws IOException, WriterException{
         String src = "src/main/resources/com/fop/Templates/MovieTicketTemplate.pdf";
         
+        // get qr code image data
+        ByteArrayOutputStream qr = qrGenerator.genQR(refId, movieName, time, date, hall, seats);
+        ImageData qrData = ImageDataFactory.create(qr.toByteArray()); // convert to byte array and fit into ImageData object
+ 
         // read from existing pdf
         PdfDocument doc = new PdfDocument(new PdfReader(src),new PdfWriter(ops)); // write the pdf into buffer
         
@@ -33,7 +42,8 @@ public class TicketGenerator {
         float y = 1000; // adjustment for y offset of all texts
         double y2 = 33; // minor addjustment for y offset of the texts under movie section
         PdfCanvas canvas = new PdfCanvas(doc.getFirstPage()).setColor(white,true);
-    
+        
+        // drawing
         canvas.beginText().setFontAndSize(montserratFont,20)
                 .moveText(745,y-194)
                 .showText(refId)
@@ -70,6 +80,8 @@ public class TicketGenerator {
                 .moveText(745,y-758)
                 .showText(FnB)
                 .endText();
+        
+        canvas.addImage(qrData,1030,100,false); // false for inline
      
         // close the pdf document
         doc.close();
