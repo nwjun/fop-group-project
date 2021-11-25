@@ -9,8 +9,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
+import javafx.util.Duration;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,9 +36,34 @@ public class AppController implements Initializable {
     @FXML
     private ImageView logo;
     @FXML
+    private Button logInBtn;
+    //banner slideshow
     private Button signInBtn;
     @FXML
     private ImageView imgBanner;
+    int count;  
+    public void slideshow(){                         
+        ArrayList<Image> image= new ArrayList<Image>();
+        image.add(new Image ( "file:banner2.jpg"));
+        image.add(new Image ( "file:banner3.jpg"));
+        image.add(new Image ( "file:banner4.jpg"));
+        image.add(new Image ( "file:banner5.jpg"));
+        image.add(new Image ( "file:banner6.jpg"));
+        image.add(new Image ( "file:banner7.jpg"));
+        image.add(new Image ( "file:banner8.jpg"));
+        image.add(new Image ( "file:banner1.jpg"));
+       
+        Timeline timeline= new Timeline(new KeyFrame(Duration.seconds(5),event->{
+            imgBanner.setImage(image.get(count));
+            count++;
+            if (count==8){
+                count=0;
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+    
     @FXML
     private GridPane landingGrid;
     @FXML
@@ -101,7 +129,7 @@ public class AppController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println(Desktop.getDesktop());
+        slideshow();
         // Location to sample csv
         final String sampleMovieCSV = "src/main/resources/com/fop/testing/sampleMovie.csv";
         final String sampleFoodCSV = "src/main/resources/com/fop/testing/sampleFood.csv";

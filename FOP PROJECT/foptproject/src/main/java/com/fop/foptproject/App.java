@@ -8,18 +8,23 @@ import com.fop.readConfig.readConfig;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class App extends Application {
-
+    
     @Override
     public void start(Stage primaryStage) throws IOException {
         // get computer screen size 
@@ -44,7 +49,7 @@ public class App extends Application {
 //        scrollPane.setPrefWidth(screenBounds.getMaxX());
         // set the content sized with scroll pane
         scrollPane.setFitToWidth(true);
-        
+       
         primaryStage.setTitle("Movie Ticketing System");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
