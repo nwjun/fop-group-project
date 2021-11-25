@@ -35,7 +35,7 @@ public class sqlConnect {
         int permission = 4;
         
         String salt = "Pepper"; //To encrypt password with SHA-256
-        String password = DigestUtils.sha256Hex(username+salt+password1); // Store in DB //encrypted password
+        String password = DigestUtils.sha256Hex(email+salt+password1); // Store in DB //encrypted password
         
         //Debug
 //        String myShaString = "a01082202c2afca4e3995e4e86caf97e63d644f4855dfa5a492032877a7a22a4";
