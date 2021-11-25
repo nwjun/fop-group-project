@@ -10,7 +10,8 @@ import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class sqlConnect {
-    private Connection conn;
+    private static Connection conn;
+    protected static final String SALT = "c2afca4e3995e4e86caf97e63d644f";
     
     public sqlConnect(){
         Properties prop = new readConfig().readconfigfile();
@@ -29,21 +30,10 @@ public class sqlConnect {
         // values to be filled
         String userId = "U00000"; //Store in DB
         String username = "Test"; //Store in DB
-        String password1 = "testing12345"; // Cannot Store in DB
+        String password = "testing12345"; // Cannot Store in DB
         String email = "test@email.com"; //Store in DB
         String phone = "0123456789"; //Store in DB
         int permission = 4;
-        
-        String salt = "Pepper"; //To encrypt password with SHA-256
-        String password = DigestUtils.sha256Hex(email+salt+password1); // Store in DB //encrypted password
-        
-        //Debug
-//        String myShaString = "a01082202c2afca4e3995e4e86caf97e63d644f4855dfa5a492032877a7a22a4";
-//        if(myShaString.equals(password))
-//            System.out.println("Login Successfully");
-//        else
-//            System.out.println("Bad Credentials");
-//        System.out.println(password);
 
         // SQL Statement
         String query = "INSERT INTO usercredentials(userId, username, password, email,phoneNumber,permission)" +
@@ -82,5 +72,118 @@ public class sqlConnect {
         
         System.out.printf("UserID : %s\nUsername : %s\nPassword : %s\nEmail : %s\nPhone : %s\nPermission : %d\n",userId,username,password,email,phone,permission);
         
+    }
+    public static int checkDup(String email, String phoneNumber){
+        String query = "SELECT COUNT(email), COUNT(phonenumber) as DuplicateE,DuplicateP " +
+                     "FROM usercredentials " + 
+                     "WHERE email = ? OR phoneNumber = ? ";
+        int duplicateE,duplicateP;
+        try{
+            PreparedStatement prep = conn.prepareStatement(query);
+            prep.setString(1,email);
+            prep.setString(2, phoneNumber);
+            
+            ResultSet rs = prep.executeQuery();
+            duplicateE = rs.getInt("DuplicateE");
+            duplicateP = rs.getInt("DuplicateP");
+            
+            int result = 0; 
+            duplicateE = (duplicateE > 0)?-1:0;
+            duplicateP = (duplicateP > 0)?-2:0;
+            
+            return result+duplicateE+duplicateP; // 0 = no dup -1 =  dup email -2 = dup phone -3 = both dup
+        }
+        catch(SQLException e){
+            return -4; // error code
+        }
+    }
+    
+    public static int checkCredentials(String userEmail, String password){
+        // preprocess input
+        // SHA-256
+        String combination = userEmail + SALT + password;
+        String inputPass = DigestUtils.sha256Hex(combination);
+        
+        // query statement
+        String query = "SELECT email, password, permission " + 
+                       "FROM usercredentials " + 
+                       "WHERE email = ?";
+        
+        try {
+            // retrieve from Database
+            PreparedStatement prep = conn.prepareStatement(query);
+
+            prep.setString(1, userEmail);
+
+            ResultSet rs = prep.executeQuery();
+            rs.next();
+            String dbEmail = rs.getString("email");
+            String dbPassword = rs.getString("password");
+            int permission = rs.getInt("permission");
+
+            if(dbPassword.equals(inputPass)){
+                System.out.println("Successfully login");
+                return permission;
+            }
+            else {
+                System.out.println("Invalid Password");
+                return -1;
+            }
+            
+        }catch (SQLException e){
+            System.out.println("Invalid Email");
+            return -2;
+        }
+        
+    }
+    
+    public static boolean addNewUser(String username, String email, String password, String phoneNumber, int permission){
+        // get last user ID
+        // kuck section below
+        String userID = "";
+        String query = "SELECT userId " +
+                     "FROM usercredentials "+
+                     "ORDER BY userId DESC "+
+                     "LIMIT 1";
+
+        try{
+            //get last userID
+            PreparedStatement prepstat1 = conn.prepareStatement(query);
+            ResultSet rs = prepstat1.executeQuery();
+            rs.next();
+            userID = rs.getString("userId");
+            
+            // increment by 1
+            userID = String.format("U%05d",Integer.parseInt(userID.substring(1))+1);
+        }
+        catch(SQLException e){
+            return false;
+        }
+        
+        // SQL Statement
+        query = "INSERT INTO usercredentials(userId, username, password, email, phoneNumber, permission)" 
+              +"VALUE(?,?,?,?,?,?)";
+        int rowAffected = 0; // check sql response
+        
+        try{
+            // create a SQL prepare statement object
+            PreparedStatement prepstat = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+
+            // filling the fields
+            prepstat.setString(1, userID);
+            prepstat.setString(2, username);
+            prepstat.setString(3, password);
+            prepstat.setString(4, email);
+            prepstat.setString(5, phoneNumber);
+            prepstat.setInt(6, permission);
+
+            // execute the statement
+                rowAffected = prepstat.executeUpdate(/*String.format(query,userId,username,password,email,phone,permission)*/);
+        }
+        catch(SQLException e){
+            return false;
+        }
+        
+        return (rowAffected > 0)?true:false;
     }
 }
