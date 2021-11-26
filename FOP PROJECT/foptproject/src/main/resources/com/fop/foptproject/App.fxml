@@ -15,6 +15,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
+
 <ScrollPane fx:id="scrollpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1911.0" styleClass="root" stylesheets="@styles/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.AppController">
     <content>
         <StackPane fx:id="landingStackPane" alignment="CENTER">
@@ -58,11 +59,12 @@
                                 <Line fx:id="landingLine" endX="1000.0" startX="-100.0" stroke="WHITE">
                            <StackPane.margin>
                               <Insets bottom="50.0" />
-                           </StackPane.margin></Line>
+                           </StackPane.margin>
+                        </Line>
                             </children>
                         </StackPane>
                       
-                  <GridPane fx:id="landingFooter" alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="350.0" prefWidth="1000.0">
+                        <GridPane fx:id="landingFooter" alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="350.0" prefWidth="1000.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="380.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="450.0" />
@@ -189,7 +191,7 @@
                                  </VBox.margin>
                                         </StackPane>
                               
-                                                                <StackPane layoutX="10.0" layoutY="87.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="14.0" prefWidth="200.0">
+                                                                      <StackPane layoutX="10.0" layoutY="87.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="14.0" prefWidth="200.0">
                                             <children>
                                                 <ImageView fitHeight="27.0" fitWidth="40.0" opacity="0.61" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
                                                     <image>
