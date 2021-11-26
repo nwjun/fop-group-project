@@ -32,6 +32,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 
 public class AppController implements Initializable {
     CommonMethod method = new CommonMethod();
@@ -144,15 +146,15 @@ public class AppController implements Initializable {
         for (Movie movie : movies) {
             StackPane card = movie.getCard();
             movieList.getChildren().add(card);
-            HBox.setHgrow(card, Priority.ALWAYS);
+            HBox.setMargin(card, new Insets(0,60,0,0));            
         }
-
+        
         for (Food food : foods) {
             StackPane card = food.getCard();
             foodList.getChildren().add(card);
-            HBox.setHgrow(card, Priority.ALWAYS);
+            HBox.setMargin(card, new Insets(0,60,0,0));
         }
-
+        
         // Set landingLine to center
         landingLine.setStartX(0);
         landingLine.setEndX(1700);
