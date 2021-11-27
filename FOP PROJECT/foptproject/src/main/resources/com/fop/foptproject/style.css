@@ -1,0 +1,9 @@
+@font-face{
+     src: url("../font/Montserrat/Montserrat-Regular.ttf");
+}
+
+.root{
+    -fx-background: #070707;
+    -fx-font-family: "Montserrat";
+    -fx-text-fill: #ffffff;
+}

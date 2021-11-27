@@ -36,7 +36,6 @@ public class App extends Application {
         
         // set Scene's width and height based on screen size
         Scene scene = new Scene(fxmlLoader.load(),WIDTH, HEIGHT); 
-//        Scene scene = new Scene(fxmlLoader.load()); 
         
         // get scrollPane from fxml
         ScrollPane scrollPane = (ScrollPane) fxmlLoader.getRoot();

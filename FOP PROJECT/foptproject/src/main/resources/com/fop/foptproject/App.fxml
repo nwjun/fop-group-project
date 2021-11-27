@@ -16,11 +16,11 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="scrollpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1911.0" styleClass="root" stylesheets="@styles/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.AppController">
+<ScrollPane fx:id="scrollpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1911.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.AppController">
     <content>
-        <StackPane fx:id="landingStackPane" alignment="CENTER">
+        <StackPane fx:id="landingStackPane" alignment="CENTER" stylesheets="@style.css">
             <children>
-                <VBox fx:id="landingBody" alignment="TOP_CENTER" prefHeight="1911.0" stylesheets="@styles/style.css">
+                <VBox fx:id="landingBody" alignment="TOP_CENTER" prefHeight="1911.0" stylesheets="@style.css">
                     <children>
                         <GridPane fx:id="landingGrid" alignment="TOP_CENTER">
                             <columnConstraints>
@@ -68,7 +68,7 @@
                                     <Insets left="60.0" top="30.0" />
                                  </VBox.margin>
                               </HBox>
-                              <Label fx:id="landingFoodLabel" text="Food &amp; Beverages">
+                              <Label fx:id="landingFoodLabel" text="Food &amp; Beverages" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets left="60.0" top="60.0" />
                                  </VBox.margin>

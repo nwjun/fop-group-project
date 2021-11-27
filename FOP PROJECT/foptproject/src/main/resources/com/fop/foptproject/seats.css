@@ -1,0 +1,35 @@
+/*
+ * Empty Stylesheet file.
+ */
+@font-face{
+    src: url("../font/Montserrat/Montserrat-Regular.ttf");
+}
+
+.mainFxmlClass {
+
+}
+
+.seatsLabel{
+    -fx-text-fill:#ffffff;
+    -fx-background:#000000;
+    -fx-font-family: "Montserrat,Regular";
+    -fx-text-align: center;
+}
+
+.check-box>.box{
+    -fx-background-color: transparent;
+}
+
+.check-box>.box>.mark {
+  -fx-background-image: url("assets/availableSeat.png");
+  -fx-background-position: center;
+  -fx-background-repeat: stretch;
+  -fx-background-color: transparent;
+  -fx-shape: none;
+  -fx-padding: 20;
+}
+
+.check-box:selected>.box>.mark{
+  -fx-background-color: transparent;
+  -fx-background-image: url("assets/selectedSeat.png");
+}
