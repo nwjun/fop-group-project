@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -28,8 +29,8 @@ public class SceneController {
         this.HEIGHT = screenBounds.getHeight();
     }
     
-    public void switchToOTPScene(ActionEvent event) throws IOException{
-        BorderPane root = FXMLLoader.load(App.class.getResource("OTP.fxml"));
+    private void switchScene(ActionEvent event, String fxmlFile) throws IOException{
+        Parent root = FXMLLoader.load(App.class.getResource(fxmlFile));
         stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
         scene = new Scene(root,WIDTH,HEIGHT);
         stage.setScene(scene);
@@ -37,13 +38,15 @@ public class SceneController {
         stage.show();
     }
     
+    public void switchToOTPScene(ActionEvent event) throws IOException{
+        switchScene(event,"OTP.fxml");
+    }
+    
     public void switchToRegisterAndLogin(ActionEvent event) throws IOException{
-        AnchorPane root = FXMLLoader.load(App.class.getResource("login.fxml"));
-        stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
-        scene = new Scene(root,WIDTH,HEIGHT);
-        stage.setScene(scene);
-        stage.setMaximized(true);
-        stage.show();
+        switchScene(event,"login.fxml");
     }
  
+    public void switchToSeats(ActionEvent event) throws IOException{
+        switchScene(event, "Seats.fxml");
+    }
 }

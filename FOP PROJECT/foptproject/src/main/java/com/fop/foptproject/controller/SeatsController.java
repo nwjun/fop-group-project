@@ -1,4 +1,4 @@
-package com.fop.foptproject;
+package com.fop.foptproject.controller;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
