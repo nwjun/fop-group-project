@@ -98,6 +98,7 @@ public class LoginRegisterController implements Initializable {
         }
     }
    
+    @FXML
     public void registerButton(){
         String username = usernameField.getText();
         String email = REmailField.getText();
