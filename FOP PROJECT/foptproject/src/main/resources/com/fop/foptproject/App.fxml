@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,11 +17,11 @@
 <?import javafx.scene.text.Font?>
 
 
-<ScrollPane fx:id="scrollpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1911.0" styleClass="root" stylesheets="@styles/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.AppController">
+<ScrollPane fx:id="scrollpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1911.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.AppController">
     <content>
-        <StackPane fx:id="landingStackPane" alignment="CENTER">
+        <StackPane fx:id="landingStackPane" alignment="CENTER" stylesheets="@style.css">
             <children>
-                <VBox fx:id="landingBody" alignment="TOP_CENTER" prefHeight="1911.0" stylesheets="@styles/style.css">
+                <VBox fx:id="landingBody" alignment="TOP_CENTER" prefHeight="1911.0" stylesheets="@style.css">
                     <children>
                         <GridPane fx:id="landingGrid" alignment="TOP_CENTER">
                             <columnConstraints>
@@ -50,10 +51,34 @@
                               <Image url="@assets/banner/banner1.jpg" />
                            </image>
                               </ImageView>
-                        <HBox fx:id="showingContainer" prefHeight="100.0" />
-                        <HBox fx:id="movieList" prefHeight="352.0" />
-                        <HBox fx:id="foodContainer" prefHeight="100.0" />
-                        <HBox fx:id="foodList" prefHeight="336.0" />
+                        <HBox fx:id="showingContainer" prefHeight="0.0" prefWidth="1399.0">
+                                 <children>
+                                    <Label text="Now Showing">
+                                       <HBox.margin>
+                                          <Insets right="50.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label text="Advance Sales" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="60.0" top="60.0" />
+                                 </VBox.margin>
+                              </HBox>
+                        <HBox fx:id="movieList" prefHeight="363.0" prefWidth="1397.0">
+                                 <VBox.margin>
+                                    <Insets left="60.0" top="30.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <Label fx:id="landingFoodLabel" text="Food &amp; Beverages" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets left="60.0" top="60.0" />
+                                 </VBox.margin>
+                              </Label>
+                        <HBox fx:id="foodList" prefHeight="290.0" prefWidth="1397.0">
+                                 <VBox.margin>
+                                    <Insets left="60.0" top="30.0" />
+                                 </VBox.margin>
+                              </HBox>
                      </children>
                   </VBox>
                                 <Line fx:id="landingLine" endX="1000.0" startX="-100.0" stroke="WHITE">
