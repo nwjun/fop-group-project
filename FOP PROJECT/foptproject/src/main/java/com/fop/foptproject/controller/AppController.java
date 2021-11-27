@@ -2,12 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.fop.foptproject;
+package com.fop.foptproject.controller;
 
-import com.fop.foptproject.CommonMethod;
-import com.fop.foptproject.Food;
-import com.fop.foptproject.Movie;
-import com.fop.foptproject.ReadCSV;
+
+
+// import classes from external library
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
@@ -22,7 +21,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ScrollPane;
@@ -30,17 +28,25 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+// import user-defined classes
+import com.fop.foptproject.CommonMethod;
+import com.fop.foptproject.Food;
+import com.fop.foptproject.Movie;
+import com.fop.foptproject.ReadCSV;
+
 
 public class AppController implements Initializable {
-    CommonMethod method = new CommonMethod();
+    private CommonMethod method = new CommonMethod();
+    
+    private Scene scene;
+    private Stage stage;
     
     @FXML
     private ImageView logo;
@@ -52,29 +58,7 @@ public class AppController implements Initializable {
     private ImageView imgBanner;
     
     private int count=0;  
-    
-    public void slideshow(){                         
-        ArrayList<Image> image= new ArrayList<>();
-        image.add(new Image (method.getPathToResources("assets/banner/banner2.jpg")));
-        image.add(new Image (method.getPathToResources("assets/banner/banner3.jpg")));
-        image.add(new Image (method.getPathToResources("assets/banner/banner4.jpg")));
-        image.add(new Image (method.getPathToResources("assets/banner/banner5.jpg")));
-        image.add(new Image (method.getPathToResources("assets/banner/banner6.jpg")));
-        image.add(new Image (method.getPathToResources("assets/banner/banner7.jpg")));
-        image.add(new Image (method.getPathToResources("assets/banner/banner8.jpg")));
-        image.add(new Image (method.getPathToResources("assets/banner/banner1.jpg")));
-       
-        Timeline timeline= new Timeline(new KeyFrame(Duration.seconds(5),event->{
-            imgBanner.setImage(image.get(count));
-            count++;
-            if (count==8){
-                count=0;
-            }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-    }
-    
+        
     @FXML
     private GridPane landingGrid;
     @FXML
@@ -97,7 +81,7 @@ public class AppController implements Initializable {
     private VBox landingFooterVBox2;
     @FXML
     private VBox landingFooterVBox3;
-
+    
     @FXML
     void scrollToMovies(ActionEvent event) {
         scrollpane.setVvalue(0.3);
@@ -137,7 +121,35 @@ public class AppController implements Initializable {
     void openCinemas(ActionEvent event) throws URISyntaxException, IOException {
         Desktop.getDesktop().browse(new URI("https://www.google.com/"));
     }
-
+    
+    @FXML
+    public void changeToOTP(ActionEvent event) throws IOException{
+        SceneController switchScene = new SceneController();
+        switchScene.switchToOTPScene(event);
+    }
+        
+    public void slideshow(){                         
+        ArrayList<Image> image= new ArrayList<>();
+        image.add(new Image (method.getPathToResources("assets/banner/banner2.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner3.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner4.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner5.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner6.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner7.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner8.jpg")));
+        image.add(new Image (method.getPathToResources("assets/banner/banner1.jpg")));
+       
+        Timeline timeline= new Timeline(new KeyFrame(Duration.seconds(5),event->{
+            imgBanner.setImage(image.get(count));
+            count++;
+            if (count==8){
+                count=0;
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         slideshow();
@@ -164,6 +176,5 @@ public class AppController implements Initializable {
         landingLine.setEndX(1700);
         StackPane.setAlignment(landingLine, Pos.BOTTOM_CENTER);
     }
-
 }
 

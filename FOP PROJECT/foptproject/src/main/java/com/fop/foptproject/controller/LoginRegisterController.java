@@ -2,13 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.fop.foptproject;
+package com.fop.foptproject.controller;
+import com.fop.EmailUtil.emailTo;
 import com.fop.checker.Checker;
 import com.fop.sqlUtil.sqlConnect;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
@@ -18,6 +23,9 @@ import javafx.scene.control.Label;
  * @author User
  */
 public class LoginRegisterController implements Initializable {
+    // class attribute
+    private SceneController switchScene = new SceneController();
+
     // login side
     @FXML
     private Button loginButton;
@@ -80,26 +88,38 @@ public class LoginRegisterController implements Initializable {
             }
             else{
                 int permission = sqlConnect.checkCredentials(email, password);
-
+                
+                // for reminder
+                Alert alert = new Alert(AlertType.INFORMATION);
                 switch(permission){
                     case 1:
                         //normal user scene
+                        alert.setContentText("Remember do normal user page");
+                        alert.show();
                     case 2:
                         //admin scene
+                        alert.setContentText("Remember do admin page");
+                        alert.show();
                     case 3:
                         //master scene
+                        alert.setContentText("Remember do master page");
+                        alert.show();
                     case -1:
                         passwordField.clear();
+                        alert.setContentText("Remember do wrong password popup pane");
+                        alert.show();
                     case -2:
                         passwordField.clear();
                         emailField.clear();
+                        alert.setContentText("Remember do wrong email pop up pane");
+                        alert.show();
                 }
             }   
         }
     }
    
     @FXML
-    public void registerButton(){
+    public void registerButton(ActionEvent event) throws IOException{
         String username = usernameField.getText();
         String email = REmailField.getText();
         String phoneNumber = phoneNumberField.getText();
@@ -109,12 +129,12 @@ public class LoginRegisterController implements Initializable {
         boolean status = register(username,phoneNumber,email,password,confirmPassword);
         
         if (status){
-            // s
+            switchScene.switchToOTPScene(event);
         }
     
     }
     
-    @FXML
+    @FXML //link to login email checkfield
     public void checkEmailFormat(){
         String email = emailField.getText();
         if(!(Checker.checkEmail(email))){
@@ -124,7 +144,7 @@ public class LoginRegisterController implements Initializable {
         loginButton.setDisable(false);
     }
     
-    @FXML
+    @FXML //link to username textfield
     public void checkUsername(){
         String username = usernameField.getText();
         
@@ -135,7 +155,7 @@ public class LoginRegisterController implements Initializable {
         registerButton.setDisable(false);
     }
     
-    @FXML
+    @FXML // link to register email textfield
     public void checkREmail(){
         String email = REmailField.getText();
         
@@ -150,7 +170,7 @@ public class LoginRegisterController implements Initializable {
         registerButton.setDisable(false);
     }
     
-    @FXML
+    @FXML //link to both password textfield
     public void checkIdenticalPass(){
         String password = RPasswordField.getText();
         String confirmPassword = RConfirmPasswordField.getText();
@@ -167,7 +187,7 @@ public class LoginRegisterController implements Initializable {
         registerButton.setDisable(false);
     }
     
-    
+    // helper method
     public boolean register(String userName, String phoneNumber, String email, String password, String confirmPassword){
         // check if there is any empty field
         if (userName.isBlank() || phoneNumber.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()){
@@ -185,14 +205,23 @@ public class LoginRegisterController implements Initializable {
             }
             return false;
         }
+        
+        // if phonenumber is not filled
+        if (phoneNumber.isBlank()){
+            phoneNumber = null;
+        }
        
         // check if the email inputted is registered
         int isDup = sqlConnect.checkDup(email, phoneNumber);
         
+        // cut to OTP scene
         boolean status = false;
+        
         switch(isDup){
             case 0:
-                status = sqlConnect.addNewUser(userName,email,password,phoneNumber,1);
+                SceneController switchScene = new SceneController();
+                String OTP =  new emailTo(email).sendEmailVerification(userName,false);
+                status = sqlConnect.addNewRegisterOTP(userName, email, phoneNumber, password, OTP);   
             case -1:
                 REmailFieldWarning.setText("This email is already registered");
             case -2:
@@ -204,9 +233,10 @@ public class LoginRegisterController implements Initializable {
                 System.out.println("SQL error");
         }
  
-        return status;
+        return status; // if everything is okay and verification email is sent. will return true to proceed to OTP
     }
-
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
