@@ -11,6 +11,8 @@ import java.util.Properties;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -19,54 +21,47 @@ import javafx.scene.Scene;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 
 public class App extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        // get computer screen size 
+        
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         final double WIDTH = screenBounds.getWidth();
         final double HEIGHT = screenBounds.getHeight();
-        System.out.println(screenBounds);
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("App.fxml"));
+ 
+        ScrollPane scrollPaneRoot = FXMLLoader.load(getClass().getResource("App.fxml"));
+        scrollPaneRoot.setFitToWidth(true);
+        
+        //adjust the view to center when hvalue changes
+        scrollPaneRoot.hvalueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                Number old_val, Number new_val) {
+                    scrollPaneRoot.setHvalue(50);
+            }
+        });
         
         // set Scene's width and height based on screen size
-        Scene scene = new Scene(fxmlLoader.load(),WIDTH, HEIGHT); 
-        
-        // get scrollPane from fxml
-        ScrollPane scrollPane = (ScrollPane) fxmlLoader.getRoot();
-        scrollPane.setPannable(false);
-        
-        // hide horizontal and vertical scroll bar
-        scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-        scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
-        
-//        scrollPane.setPrefWidth(screenBounds.getMaxX());
-        // set the content sized with scroll pane
-        scrollPane.setFitToWidth(true);
+        Scene scene = new Scene(scrollPaneRoot,HEIGHT,WIDTH); 
        
         primaryStage.setTitle("Movie Ticketing System");
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.setResizable(false);
         primaryStage.show();
-        primaryStage.setMaxWidth(primaryStage.getWidth());
-        primaryStage.setMaxHeight(primaryStage.getHeight());
+      
     }
 
     public static void main(String[] args) throws Exception {
         Properties prop = new readConfig().readconfigfile();
-        //System.out.println(new emailTo(prop.getProperty("configuration.testSingleEmail")).sendBookingConfirmations("Eternals","forInternalTest","54321","12345","24/11/2021","2:00 PM","3 x Student (RM51.00 - E11, E10, E9)",52.5));
-        //System.out.println(new emailTo(prop.getProperty("configuration.testSingleEmail")).sendEmailVerification("Lim",false));
-        //System.out.println(new emailTo("limweixin17@gmail.com,helloworldisagurl@gmail.com").sendNotification("Eternals","11/11/2021","2:00pm","Kuala Lumpur - MidValley"));
-
-        //sqlConnect jc = new sqlConnect();
-        //jc.addTestData();
-        //jc.createTestQuery();
-        
+    
         launch();
     }
 }

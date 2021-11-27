@@ -17,9 +17,10 @@
 <?import javafx.scene.text.Font?>
 
 
-<ScrollPane fx:id="scrollpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1911.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.AppController">
+
+<ScrollPane fx:id="scrollpane" fitToWidth="true" hbarPolicy="NEVER" hmax="100.0" styleClass="root" stylesheets="@style.css" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.AppController">
     <content>
-        <StackPane fx:id="landingStackPane" alignment="CENTER" stylesheets="@style.css">
+        <StackPane fx:id="landingStackPane" alignment="CENTER" stylesheets = "@style.css">
             <children>
                 <VBox fx:id="landingBody" alignment="TOP_CENTER" prefHeight="1911.0" stylesheets="@style.css">
                     <children>
@@ -39,17 +40,20 @@
                                         <Image url="@assets/company/logo.png" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="signInBtn" mnemonicParsing="false" text="Sign In" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                                <Button fx:id="signInBtn" mnemonicParsing="false" onAction="#changeToOTP" text="Sign In" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                             </children>
                         </GridPane>
                         <StackPane>
                             <children>
                                 <VBox fx:id="landingContent" prefHeight="1411.0" prefWidth="1440.0" styleClass="root">
                      <children>
-                        <ImageView fx:id="imgBanner" fitHeight="377.0" fitWidth="1456.0" pickOnBounds="true" preserveRatio="true" translateX="100.0">
+                        <ImageView fx:id="imgBanner" pickOnBounds="true" preserveRatio="true" translateX="100.0" VBox.vgrow="NEVER">
                            <image>
                               <Image url="@assets/banner/banner1.jpg" />
                            </image>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
                               </ImageView>
                         <HBox fx:id="showingContainer" prefHeight="0.0" prefWidth="1399.0">
                                  <children>
@@ -64,11 +68,13 @@
                                     <Insets left="60.0" top="60.0" />
                                  </VBox.margin>
                               </HBox>
+
                         <HBox fx:id="movieList" prefHeight="363.0" prefWidth="1397.0">
                                  <VBox.margin>
                                     <Insets left="60.0" top="30.0" />
                                  </VBox.margin>
                               </HBox>
+
                               <Label fx:id="landingFoodLabel" text="Food &amp; Beverages" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets left="60.0" top="60.0" />
@@ -78,18 +84,18 @@
                                  <VBox.margin>
                                     <Insets left="60.0" top="30.0" />
                                  </VBox.margin>
-                              </HBox>
+                        </HBox>
                      </children>
-                  </VBox>
-                                <Line fx:id="landingLine" endX="1000.0" startX="-100.0" stroke="WHITE">
                            <StackPane.margin>
                               <Insets bottom="50.0" />
+                              <Insets />
                            </StackPane.margin>
-                        </Line>
+                  </VBox>
                             </children>
                         </StackPane>
+                          <Line fx:id="landingLine" endX="1700.0" stroke="WHITE" />
                       
-                        <GridPane fx:id="landingFooter" alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="350.0" prefWidth="1000.0">
+                                    <GridPane fx:id="landingFooter" alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="350.0" prefWidth="1000.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="380.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="450.0" />
@@ -158,6 +164,9 @@
                                  </VBox.margin>
                                         </Hyperlink>
                                     </children>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
                                 </VBox>
                                 <VBox fx:id="landingFooterVBox3" prefHeight="350.0" prefWidth="200.0" GridPane.columnIndex="2">
                                     <children>
@@ -202,7 +211,7 @@
                                           <Insets />
                                        </StackPane.margin>
                                                 </ImageView>
-                                                <Hyperlink alignment="CENTER_RIGHT" onAction="#openShxao" prefWidth="138.0" text="shxao.yxn_" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
+                                                <Hyperlink onAction="#openShxao" prefHeight="36.0" prefWidth="119.0" text="shxao.yxn_" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
                                                     <font>
                                                         <Font name="Calibri Bold" size="22.0" />
                                                     </font>
@@ -216,7 +225,7 @@
                                  </VBox.margin>
                                         </StackPane>
                               
-                                                                      <StackPane layoutX="10.0" layoutY="87.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="14.0" prefWidth="200.0">
+                                                                                  <StackPane layoutX="10.0" layoutY="87.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="14.0" prefWidth="200.0">
                                             <children>
                                                 <ImageView fitHeight="27.0" fitWidth="40.0" opacity="0.61" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
                                                     <image>

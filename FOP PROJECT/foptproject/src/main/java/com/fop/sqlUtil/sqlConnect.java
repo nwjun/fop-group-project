@@ -12,6 +12,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class sqlConnect {
     private static Connection conn;
     protected static final String SALT = "c2afca4e3995e4e86caf97e63d644f";
+    private final static int trial = 5; 
     
     public sqlConnect(){
         Properties prop = new readConfig().readconfigfile();
@@ -36,8 +37,8 @@ public class sqlConnect {
         int permission = 4;
 
         // SQL Statement
-        String query = "INSERT INTO usercredentials(userId, username, password, email,phoneNumber,permission)" +
-"                          VALUE(?,?,?,?,?,?)";
+        String query = "INSERT INTO usercredentials(userId, username, password, email,phoneNumber,permission)"
+                       + "VALUE(?,?,?,?,?,?)";
         
         // create a SQL prepare statement object
         PreparedStatement prepstat = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
@@ -51,9 +52,10 @@ public class sqlConnect {
         prepstat.setInt(6, permission);
         
         // execute the statement
-        int rowAffected = prepstat.executeUpdate(/*String.format(query,userId,username,password,email,phone,permission)*/);
+        int rowAffected = prepstat.executeUpdate();
     
     }    
+    
     public void createTestQuery() throws SQLException{
         // createa a SQL prepare statement object
         PreparedStatement prep = conn.prepareStatement("SELECT * FROM usercredentials");
@@ -74,16 +76,21 @@ public class sqlConnect {
         
     }
     public static int checkDup(String email, String phoneNumber){
-        String query = "SELECT COUNT(email), COUNT(phonenumber) as DuplicateE,DuplicateP " +
-                     "FROM usercredentials " + 
-                     "WHERE email = ? OR phoneNumber = ? ";
+        String query = "SELECT COUNT(email) as DuplicateE "
+                    + "FROM usercredentials "
+                    + "WHERE phoneNumber = ?;"
+                    + "SELECT COUNT(phoneNumber) as DuplicateP "
+                    + "FROM usercredentials "
+                    + "WHERE phoneNumber = ? AND phoneNumber IS NOT NULL;";
+        
         int duplicateE,duplicateP;
         try{
             PreparedStatement prep = conn.prepareStatement(query);
             prep.setString(1,email);
-            prep.setString(2, phoneNumber);
+            prep.setString(2,phoneNumber);
             
             ResultSet rs = prep.executeQuery();
+            rs.next();
             duplicateE = rs.getInt("DuplicateE");
             duplicateP = rs.getInt("DuplicateP");
             
@@ -163,6 +170,7 @@ public class sqlConnect {
         // SQL Statement
         query = "INSERT INTO usercredentials(userId, username, password, email, phoneNumber, permission)" 
               +"VALUE(?,?,?,?,?,?)";
+        
         int rowAffected = 0; // check sql response
         
         try{
@@ -178,12 +186,138 @@ public class sqlConnect {
             prepstat.setInt(6, permission);
 
             // execute the statement
-                rowAffected = prepstat.executeUpdate(/*String.format(query,userId,username,password,email,phone,permission)*/);
+            rowAffected = prepstat.executeUpdate();
         }
         catch(SQLException e){
             return false;
         }
         
         return (rowAffected > 0)?true:false;
+    }
+    
+    public static boolean addNewRegisterOTP(String username, String email, String phoneNumber, String password, String OTP){
+        
+        String query = "INSERT INTO otps(username,email,phoneNumber,password,OTP,isExpired)"
+                +"VALUE(?,?,?,?,?)";
+        
+        // try connection to SQL for three times before breaking
+        for(int i = 0 ; i < trial ; i++){
+            try {
+                PreparedStatement prepstat = conn.prepareStatement(query);
+
+                prepstat.setString(1,username);
+                prepstat.setString(2,email);
+                prepstat.setString(3,phoneNumber);
+                prepstat.setString(4,password);
+                prepstat.setString(5,OTP);
+                prepstat.setInt(6,1);
+                
+                int rowAffected = prepstat.executeUpdate();
+                return true;
+            }
+            catch (SQLException e){
+                continue;
+            }
+        }
+        return false;
+    }
+    
+    public static boolean updateOTP(String email, String OTP){
+        
+        String query = "UPDATE otps SET OTP = ? WHERE email = ?";
+        
+        for(int i = 0 ; i < trial ; i++){
+            try{
+                PreparedStatement prepstat = conn.prepareStatement(query);
+
+                prepstat.setString(2,email);
+                prepstat.setString(1,OTP);
+
+                int rowAffected = prepstat.executeUpdate();
+                return true;
+            }
+            catch(SQLException e){
+                continue;
+            }
+        }
+        
+        return false;
+    }
+    
+    public static boolean removeNewRegisterOTP(String email, boolean isCancelled){
+        
+        if(!(isCancelled)){
+            transferToUserCred(email);
+        }
+        
+        String query = "DELETE FROM otps WHERE email = ?";
+
+        for(int i = 0 ; i < trial ; i++){
+            try{
+                PreparedStatement prepstat = conn.prepareStatement(query);
+
+                prepstat.setString(1,email);
+
+                int rowAffected = prepstat.executeUpdate();
+
+                return (rowAffected > 0)?true:false;
+            }
+            catch(SQLException e){
+                continue;
+            }
+        }
+     
+        
+        return false;
+    }
+    
+    public static String queryOTP(String email){
+        String query = "SELECT OTP from otps WHERE email = ?";
+        
+        for(int i = 0 ; i < trial ; i++){
+            try{
+                PreparedStatement prepstat = conn.prepareStatement(query);
+                
+                prepstat.setString(1,email);
+                
+                ResultSet rs = prepstat.executeQuery();
+                
+                rs.next();
+                String OTP = rs.getString("OTP");
+                
+                return OTP;
+            }
+            catch(SQLException e){
+                continue;
+            }
+        }
+        
+        return null;
+    }
+    
+    public static void transferToUserCred(String email){
+        String query = "SELECT * from otps WHERE email = ?";
+        
+        for(int i = 0 ; i < trial ; i++){
+            try{
+                PreparedStatement prepstat = conn.prepareStatement(query);
+                
+                prepstat.setString(1,email);
+                
+                ResultSet rs = prepstat.executeQuery();
+                
+                rs.next();
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String phonenumber = rs.getString("phoneNumber");
+                
+                boolean status = addNewUser(username,email,password,phonenumber,1);
+                
+            }
+            catch(SQLException e){
+                continue;
+            }
+        }
+        
     }
 }

@@ -1,0 +1,9 @@
+@font-face{
+    src: url("../font/Montserrat/Montserrat-Regular.ttf");
+}
+
+.Button {
+    -fx-background-color : #262833;
+    -fx-background-radius : 0;
+}
+
