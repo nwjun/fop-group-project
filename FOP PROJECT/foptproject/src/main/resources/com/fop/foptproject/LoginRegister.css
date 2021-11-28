@@ -25,3 +25,8 @@
 .Button:hover {
     -fx-opacity : 0.6;
 }
+
+.Button:disabled{
+    -fx-background-color : #c1c1c1;
+    -fx-text-fill : #ffffff;
+}

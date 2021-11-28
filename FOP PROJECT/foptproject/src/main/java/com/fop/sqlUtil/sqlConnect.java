@@ -5,7 +5,9 @@
 package com.fop.sqlUtil;
 
 import java.sql.*;
+
 import com.fop.readConfig.readConfig;
+import java.time.LocalDateTime;
 import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -75,24 +77,31 @@ public class sqlConnect {
         System.out.printf("UserID : %s\nUsername : %s\nPassword : %s\nEmail : %s\nPhone : %s\nPermission : %d\n",userId,username,password,email,phone,permission);
         
     }
-    public static int checkDup(String email, String phoneNumber){
-        String query = "SELECT COUNT(email) as DuplicateE "
-                    + "FROM usercredentials "
-                    + "WHERE phoneNumber = ?;"
-                    + "SELECT COUNT(phoneNumber) as DuplicateP "
-                    + "FROM usercredentials "
-                    + "WHERE phoneNumber = ? AND phoneNumber IS NOT NULL;";
+    public static int checkDup(String email, String phoneNumber){ 
+        System.out.println("checkdup");
+//        String query = "SELECT ("
+//                    + "SELECT COUNT(email) " 
+//                    + "FROM usercredentials "
+//                    + "WHERE email = ?) "
+//                    + "AS DE,"
+//                    + "(SELECT COUNT(phoneNumber)"
+//                    + "FROM usercredentials "
+//                    + "WHERE phoneNumber = ? AND phoneNumber IS NOT NULL) "
+//                    + "AS DP";
+        
+        String query = "SELECT (SELECT COUNT(email) FROM usercredentials WHERE email = ?) AS DE,(SELECT COUNT(phoneNumber) FROM usercredentials WHERE phoneNumber = ? AND phoneNumber IS NOT NULL) AS DP";
         
         int duplicateE,duplicateP;
+        
         try{
+            // first query
             PreparedStatement prep = conn.prepareStatement(query);
             prep.setString(1,email);
             prep.setString(2,phoneNumber);
-            
             ResultSet rs = prep.executeQuery();
             rs.next();
-            duplicateE = rs.getInt("DuplicateE");
-            duplicateP = rs.getInt("DuplicateP");
+            duplicateE = rs.getInt("DE");
+            duplicateP = rs.getInt("DP");
             
             int result = 0; 
             duplicateE = (duplicateE > 0)?-1:0;
@@ -101,6 +110,7 @@ public class sqlConnect {
             return result+duplicateE+duplicateP; // 0 = no dup -1 =  dup email -2 = dup phone -3 = both dup
         }
         catch(SQLException e){
+            e.printStackTrace();
             return -4; // error code
         }
     }
@@ -189,6 +199,7 @@ public class sqlConnect {
             rowAffected = prepstat.executeUpdate();
         }
         catch(SQLException e){
+            e.printStackTrace();
             return false;
         }
         
@@ -197,8 +208,8 @@ public class sqlConnect {
     
     public static boolean addNewRegisterOTP(String username, String email, String phoneNumber, String password, String OTP){
         
-        String query = "INSERT INTO otps(username,email,phoneNumber,password,OTP,isExpired)"
-                +"VALUE(?,?,?,?,?)";
+        String query = "INSERT INTO otps(username,email,phoneNumber,password,OTP,isExpired,timestamp)"
+                +"VALUE(?,?,?,?,?,?,?)";
         
         // try connection to SQL for three times before breaking
         for(int i = 0 ; i < trial ; i++){
@@ -211,11 +222,13 @@ public class sqlConnect {
                 prepstat.setString(4,password);
                 prepstat.setString(5,OTP);
                 prepstat.setInt(6,1);
+                prepstat.setTimestamp(7,Timestamp.valueOf(LocalDateTime.now()));
                 
                 int rowAffected = prepstat.executeUpdate();
                 return true;
             }
             catch (SQLException e){
+                e.printStackTrace();
                 continue;
             }
         }

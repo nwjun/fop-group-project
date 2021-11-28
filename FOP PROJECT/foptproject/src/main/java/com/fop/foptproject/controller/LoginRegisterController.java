@@ -128,6 +128,7 @@ public class LoginRegisterController implements Initializable {
         
         boolean status = register(username,phoneNumber,email,password,confirmPassword);
         
+        System.out.println(status);
         if (status){
             switchScene.switchToOTPScene(event);
         }
@@ -141,7 +142,10 @@ public class LoginRegisterController implements Initializable {
             emailFieldWarning.setText("Invalid email format");
            loginButton.setDisable(true);
         }
-        loginButton.setDisable(false);
+        else{
+            emailFieldWarning.setText(null);
+            loginButton.setDisable(false);   
+        }
     }
     
     @FXML //link to username textfield
@@ -151,14 +155,16 @@ public class LoginRegisterController implements Initializable {
         if(username.isBlank()){
             usernameFieldWarning.setText("Please enter a username");
             registerButton.setDisable(true);
+            return;
         }
         registerButton.setDisable(false);
+        usernameFieldWarning.setText(null);
+        return;
     }
     
     @FXML // link to register email textfield
     public void checkREmail(){
         String email = REmailField.getText();
-        
         if (email.isBlank()){
             REmailFieldWarning.setText("Please enter your email");
             registerButton.setDisable(true);
@@ -167,7 +173,11 @@ public class LoginRegisterController implements Initializable {
             REmailFieldWarning.setText("Invalid email format");
             registerButton.setDisable(true);
         }
-        registerButton.setDisable(false);
+        else{
+            REmailFieldWarning.setText(null);
+            registerButton.setDisable(false);
+        }
+        
     }
     
     @FXML //link to both password textfield
@@ -177,25 +187,31 @@ public class LoginRegisterController implements Initializable {
         
         if(password.isBlank() || confirmPassword.isBlank()){
             registerButton.setDisable(true);
+            return;
         }
         else if(!(password.equals(confirmPassword))){
             RPasswordFieldWarning.setText("Both of the password entered are not identical!");
             RConfirmPasswordFieldWarning.setText("Both of the password entered are not identical!");
             registerButton.setDisable(true);
+            return;
         }
         
         registerButton.setDisable(false);
+        RPasswordFieldWarning.setText(null);
+        RConfirmPasswordFieldWarning.setText(null);
+        return;
     }
     
     // helper method
     public boolean register(String userName, String phoneNumber, String email, String password, String confirmPassword){
+        sqlConnect conn2db = new sqlConnect();
         // check if there is any empty field
-        if (userName.isBlank() || phoneNumber.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()){
+        if (userName.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()){
             if (userName.isBlank()){
-                usernameFieldWarning.setText("Please create a password!");
+                usernameFieldWarning.setText("Please create an username!");
             }
             if (email.isBlank()){
-                REmailFieldWarning.setText("Please create a password!");
+                REmailFieldWarning.setText("Please create an email!");
             }
             if (password.isBlank()){
                 RPasswordFieldWarning.setText("Please create a password!");
@@ -212,25 +228,29 @@ public class LoginRegisterController implements Initializable {
         }
        
         // check if the email inputted is registered
-        int isDup = sqlConnect.checkDup(email, phoneNumber);
-        
+        int isDup = conn2db.checkDup(email, phoneNumber);
+        System.out.println(isDup);
         // cut to OTP scene
         boolean status = false;
         
         switch(isDup){
             case 0:
-                SceneController switchScene = new SceneController();
                 String OTP =  new emailTo(email).sendEmailVerification(userName,false);
-                status = sqlConnect.addNewRegisterOTP(userName, email, phoneNumber, password, OTP);   
+                status = conn2db.addNewRegisterOTP(userName, email, phoneNumber, password, OTP);   
+                break;
             case -1:
                 REmailFieldWarning.setText("This email is already registered");
+                break;
             case -2:
                 phoneNumberFieldWarning.setText("This phone number is already registered");
+                break;
             case -3:
                 REmailFieldWarning.setText("This email is already registered");
                 phoneNumberFieldWarning.setText("This phone number is already registered");
+                break;
             case -4:
                 System.out.println("SQL error");
+                break;
         }
  
         return status; // if everything is okay and verification email is sent. will return true to proceed to OTP
