@@ -2,8 +2,30 @@
     src: url("../font/Montserrat/Montserrat-Regular.ttf");
 }
 
+.root {
+    -fx-background-color : #141414;
+    -fx-font-family : "Montserrat,Regular";
+}
+
 .Button {
-    -fx-background-color : #262833;
+    -fx-background-color : #FFCC1D;
     -fx-background-radius : 0;
+    -fx-background-insets : 0;
+    -fx-font-family: "Montserrat,Regular";
+}
+
+.Button:hover {
+    -fx-opacity : 0.6;
+}
+
+.textField {
+    -fx-padding : 0 0 0 15px;
+    -fx-background-insets : 0;
+    -fx-font-family: "Montserrat,Regular";
+    -fx-font-size : 16;
+}
+
+.label {
+    -fx-font-family: "Montserrat,Regular";
 }
 

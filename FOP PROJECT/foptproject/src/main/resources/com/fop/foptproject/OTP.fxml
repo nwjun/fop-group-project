@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -11,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.OTPController">
+<BorderPane prefHeight="1080.0" prefWidth="539.0" style="-fx-background-color: black;" styleClass="root" stylesheets="@otp.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.OTPController">
    <center>
-      <VBox alignment="TOP_CENTER" prefHeight="1080.0" prefWidth="421.0" style="-fx-padding: 75 0 75 0; -fx-background-color: black;" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="1080.0" prefWidth="492.0" style="-fx-padding: 75 0 75 0;" styleClass="root" stylesheets="@otp.css" BorderPane.alignment="CENTER">
          <children>
             <VBox id="logoContainer" alignment="CENTER" prefHeight="194.0" prefWidth="369.0">
                <children>
@@ -29,9 +30,9 @@
             </VBox>
             <VBox id="instructionContainer" alignment="BOTTOM_CENTER" prefHeight="35.0" prefWidth="1920.0">
                <children>
-                  <Label id="instructionText" prefHeight="35.0" prefWidth="537.0" text="Please enter the 6 digits One-time-password to verify your account" textFill="#c1c1c1">
+                  <Label id="instructionText" alignment="CENTER" prefHeight="35.0" prefWidth="504.0" stylesheets="@otp.css" text="Please enter the 6 digits One-time-password to verify your account" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="17.0" />
+                        <Font name="Baskerville Old Face" size="17.0" />
                      </font>
                   </Label>
                </children>
@@ -43,17 +44,26 @@
             </VBox>
             <HBox alignment="CENTER" prefHeight="70.0" prefWidth="1920.0">
                <children>
-                  <TextField prefHeight="38.0" prefWidth="804.0" promptText="6 digits OTP" style="-fx-pref-height: 39; -fx-pref-width: 200;">
+                  <TextField prefHeight="46.0" prefWidth="804.0" promptText="  6 digits OTP" style="-fx-pref-height: 39; -fx-pref-width: 200; -fx-background-radius: 8 0 0 8;" styleClass="textField">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="16.0" />
                      </font>
                   </TextField>
-                  <Button id="resendButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="92.0" style="-fx-pref-height: 39;" text="Resend (60)" />
+                  <Button id="resendButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="92.0" style="-fx-pref-height: 39; -fx-background-radius: 0 8 8 0;" styleClass="Button" text="Resend (60)">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></Button>
                </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
             </HBox>
             <VBox id="submitButtonContainer" alignment="CENTER" prefHeight="35.0" prefWidth="1906.0">
                <children>
-                  <Button id="submitButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="405.0" text="Verify" />
+                  <Button id="submitButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="273.0" styleClass="Button" text="Verify">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></Button>
                </children>
             </VBox>
          </children>

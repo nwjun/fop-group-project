@@ -123,9 +123,9 @@ public class AppController implements Initializable {
     }
     
     @FXML
-    public void changeToOTP(ActionEvent event) throws IOException{
+    public void changeToLoginAndRegister(ActionEvent event) throws IOException{
         SceneController switchScene = new SceneController();
-        switchScene.switchToOTPScene(event);
+        switchScene.switchToRegisterAndLogin(event);
     }
         
     public void slideshow(){                         
@@ -173,7 +173,7 @@ public class AppController implements Initializable {
         
         // Set landingLine to center
         landingLine.setStartX(0);
-        landingLine.setEndX(1700);
+        landingLine.setEndX(1500);
         StackPane.setAlignment(landingLine, Pos.BOTTOM_CENTER);
     }
 }
