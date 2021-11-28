@@ -5,10 +5,6 @@
     src: url("../font/Montserrat/Montserrat-Regular.ttf");
 }
 
-.mainFxmlClass {
-
-}
-
 .seatsLabel{
     -fx-text-fill:#ffffff;
     -fx-background:#000000;
