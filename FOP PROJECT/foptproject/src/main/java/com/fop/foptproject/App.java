@@ -27,41 +27,44 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
 public class App extends Application {
-    
+
     @Override
     public void start(Stage primaryStage) throws IOException {
-        
+
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         final double WIDTH = screenBounds.getWidth();
         final double HEIGHT = screenBounds.getHeight();
- 
-        ScrollPane scrollPaneRoot = FXMLLoader.load(getClass().getResource("App.fxml"));
-        scrollPaneRoot.setFitToWidth(true);
-        
-        //adjust the view to center when hvalue changes
-        scrollPaneRoot.hvalueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                Number old_val, Number new_val) {
-                    scrollPaneRoot.setHvalue(50);
-            }
-        });
-        
+
+        boolean DEBUG = false;
+        String fxmlFile = "App.fxml";
+
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+        if (!DEBUG) {
+            //adjust the view to center when hvalue changes
+            ScrollPane k = (ScrollPane) root;
+            k.hvalueProperty().addListener(new ChangeListener<Number>() {
+                public void changed(ObservableValue<? extends Number> ov,
+                        Number old_val, Number new_val) {
+                    k.setHvalue(50);
+                }
+            });
+        }
+
         // set Scene's width and height based on screen size
-        Scene scene = new Scene(scrollPaneRoot,HEIGHT,WIDTH); 
-       
+        Scene scene = new Scene(root, HEIGHT, WIDTH);
+
         primaryStage.setTitle("Movie Ticketing System");
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
         primaryStage.setResizable(true);
         primaryStage.show();
-      
+
     }
 
     public static void main(String[] args) throws Exception {
         Properties prop = new readConfig().readconfigfile();
-    
+
         launch();
     }
 }
