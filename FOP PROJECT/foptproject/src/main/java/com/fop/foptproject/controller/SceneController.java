@@ -43,7 +43,7 @@ public class SceneController {
     }
     
     public void switchToRegisterAndLogin(ActionEvent event) throws IOException{
-        switchScene(event,"login.fxml");
+        switchScene(event,"LoginRegister.fxml");
     }
  
     public void switchToSeats(ActionEvent event) throws IOException{

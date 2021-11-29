@@ -54,7 +54,7 @@ public class App extends Application {
         primaryStage.setTitle("Movie Ticketing System");
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         primaryStage.show();
       
     }
