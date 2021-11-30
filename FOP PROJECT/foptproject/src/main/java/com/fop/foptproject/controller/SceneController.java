@@ -49,4 +49,13 @@ public class SceneController {
     public void switchToSeats(ActionEvent event) throws IOException{
         switchScene(event, "Seats.fxml");
     }
+    
+    public void switchToMoviesDetails(ActionEvent event) throws IOException{
+        switchScene(event,"MoviesDetails.fxml");
+    }
+    
+    public void switchToMovieBooking(ActionEvent event) throws IOException{
+        switchScene(event,"MovieBooking.fxml");
+    }
+    
 }

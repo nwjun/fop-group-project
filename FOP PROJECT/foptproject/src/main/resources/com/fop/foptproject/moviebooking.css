@@ -1,0 +1,21 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.root {
+    -fx-font-family : "Montserrat,Regular";
+    -fx-text-fill:#ffffff;
+    -fx-background:#000000;
+}
+
+.Button {
+    -fx-background-color : #FFCC1D;
+    -fx-background-radius : 0;
+    -fx-background-insets : 0;
+    -fx-font-family: "Montserrat,Regular";
+    -fx-padding : 5px;
+    -fx-background-radius : 15px;
+}
+    
+          
+

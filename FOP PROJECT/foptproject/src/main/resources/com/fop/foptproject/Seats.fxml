@@ -347,7 +347,7 @@
                                        <StackPane.margin>
                                           <Insets />
                                        </StackPane.margin></Label>
-                                    <Button mnemonicParsing="false" text="Back" StackPane.alignment="BOTTOM_LEFT" />
+                                    <Button mnemonicParsing="false" onAction="#changeToMovieBooking" text="Back" StackPane.alignment="BOTTOM_LEFT" />
                                     <Button mnemonicParsing="false" text="Next" StackPane.alignment="BOTTOM_RIGHT" />
                                  </children>
                               </StackPane>

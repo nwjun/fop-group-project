@@ -70,7 +70,7 @@
                                  </VBox.margin>
                               </HBox>
 
-                        <HBox fx:id="movieList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="1397.0">
+                        <HBox fx:id="movieList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#changeToMoviesDetails" prefHeight="363.0" prefWidth="1397.0">
                                  <VBox.margin>
                                     <Insets left="100.0" top="30.0" />
                                  </VBox.margin>
