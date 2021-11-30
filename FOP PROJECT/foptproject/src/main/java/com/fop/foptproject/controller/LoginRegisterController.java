@@ -5,18 +5,23 @@
 package com.fop.foptproject.controller;
 import com.fop.EmailUtil.emailTo;
 import com.fop.checker.Checker;
+import com.fop.foptproject.App;
 import com.fop.sqlUtil.sqlConnect;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 
 /**
  *
@@ -25,14 +30,15 @@ import javafx.scene.control.Label;
 public class LoginRegisterController implements Initializable {
     // class attribute
     private SceneController switchScene = new SceneController();
-
+    private String OTP;
+    
     // login side
     @FXML
     private Button loginButton;
     @FXML
     private TextField emailField;
     @FXML
-    private TextField passwordField;
+    private PasswordField passwordField;
     @FXML
     private Label emailFieldWarning;
     @FXML
@@ -48,9 +54,9 @@ public class LoginRegisterController implements Initializable {
     @FXML
     private TextField phoneNumberField;
     @FXML
-    private TextField RPasswordField;
+    private PasswordField RPasswordField;
     @FXML
-    private TextField RConfirmPasswordField;
+    private PasswordField RConfirmPasswordField;
     @FXML
     private Label usernameFieldWarning;
     @FXML
@@ -67,6 +73,7 @@ public class LoginRegisterController implements Initializable {
     public void loginButton(){
         String email = emailField.getText();
         String password = passwordField.getText();
+        System.out.printf("%s | %s\n",email,password);
         login(email,password);
     }
     
@@ -87,7 +94,7 @@ public class LoginRegisterController implements Initializable {
                 passwordField.clear();
             }
             else{
-                int permission = sqlConnect.checkCredentials(email, password);
+                int permission = new sqlConnect().checkCredentials(email, password);
                 
                 // for reminder
                 Alert alert = new Alert(AlertType.INFORMATION);
@@ -96,23 +103,28 @@ public class LoginRegisterController implements Initializable {
                         //normal user scene
                         alert.setContentText("Remember do normal user page");
                         alert.show();
+                        break;
                     case 2:
                         //admin scene
                         alert.setContentText("Remember do admin page");
                         alert.show();
+                        break;
                     case 3:
                         //master scene
                         alert.setContentText("Remember do master page");
                         alert.show();
+                        break;
                     case -1:
                         passwordField.clear();
                         alert.setContentText("Remember do wrong password popup pane");
                         alert.show();
+                        break;
                     case -2:
                         passwordField.clear();
                         emailField.clear();
                         alert.setContentText("Remember do wrong email pop up pane");
                         alert.show();
+                        break;
                 }
             }   
         }
@@ -128,9 +140,13 @@ public class LoginRegisterController implements Initializable {
         
         boolean status = register(username,phoneNumber,email,password,confirmPassword);
         
-        System.out.println(status);
         if (status){
-            switchScene.switchToOTPScene(event);
+            sendEmailVerification(email,username,phoneNumber,password);
+            FXMLLoader fxmlloader = new FXMLLoader(App.class.getResource("OTP.fxml"));
+            Parent root = fxmlloader.load();
+            OTPController control = fxmlloader.getController();
+            control.setDisplayEmail(email,username);
+            switchScene.switchToOTPScene(event);     
         }
     
     }
@@ -139,7 +155,7 @@ public class LoginRegisterController implements Initializable {
     public void checkEmailFormat(){
         String email = emailField.getText();
         if(!(Checker.checkEmail(email))){
-            emailFieldWarning.setText("Invalid email format");
+           emailFieldWarning.setText("Invalid email format");
            loginButton.setDisable(true);
         }
         else{
@@ -203,6 +219,13 @@ public class LoginRegisterController implements Initializable {
     }
     
     // helper method
+    public void sendEmailVerification(String email,String userName, String phoneNumber, String password){
+        String otp =  new emailTo(email).sendEmailVerification(userName,false);
+        OTP = otp;
+        boolean status = sqlConnect.addNewRegisterOTP(userName, email, phoneNumber, password, OTP); 
+        
+    }
+    
     public boolean register(String userName, String phoneNumber, String email, String password, String confirmPassword){
         sqlConnect conn2db = new sqlConnect();
         // check if there is any empty field
@@ -229,14 +252,13 @@ public class LoginRegisterController implements Initializable {
        
         // check if the email inputted is registered
         int isDup = conn2db.checkDup(email, phoneNumber);
-        System.out.println(isDup);
+
         // cut to OTP scene
         boolean status = false;
         
         switch(isDup){
             case 0:
-                String OTP =  new emailTo(email).sendEmailVerification(userName,false);
-                status = conn2db.addNewRegisterOTP(userName, email, phoneNumber, password, OTP);   
+                status = true;
                 break;
             case -1:
                 REmailFieldWarning.setText("This email is already registered");
