@@ -22,7 +22,6 @@ public class sqlConnect {
             this.conn = DriverManager.getConnection(
             "jdbc:mysql://127.0.0.1:3306/fopdb",prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
-            System.out.println("Connection established!");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -78,23 +77,11 @@ public class sqlConnect {
         
     }
     public static int checkDup(String email, String phoneNumber){ 
-        System.out.println("checkdup");
-//        String query = "SELECT ("
-//                    + "SELECT COUNT(email) " 
-//                    + "FROM usercredentials "
-//                    + "WHERE email = ?) "
-//                    + "AS DE,"
-//                    + "(SELECT COUNT(phoneNumber)"
-//                    + "FROM usercredentials "
-//                    + "WHERE phoneNumber = ? AND phoneNumber IS NOT NULL) "
-//                    + "AS DP";
-        
         String query = "SELECT (SELECT COUNT(email) FROM usercredentials WHERE email = ?) AS DE,(SELECT COUNT(phoneNumber) FROM usercredentials WHERE phoneNumber = ? AND phoneNumber IS NOT NULL) AS DP";
         
         int duplicateE,duplicateP;
         
         try{
-            // first query
             PreparedStatement prep = conn.prepareStatement(query);
             prep.setString(1,email);
             prep.setString(2,phoneNumber);
@@ -118,6 +105,7 @@ public class sqlConnect {
     public static int checkCredentials(String userEmail, String password){
         // preprocess input
         // SHA-256
+        System.out.println("checking cred");
         String combination = userEmail + SALT + password;
         String inputPass = DigestUtils.sha256Hex(combination);
         
@@ -149,6 +137,7 @@ public class sqlConnect {
             
         }catch (SQLException e){
             System.out.println("Invalid Email");
+            e.printStackTrace();
             return -2;
         }
         
@@ -162,6 +151,8 @@ public class sqlConnect {
                      "FROM usercredentials "+
                      "ORDER BY userId DESC "+
                      "LIMIT 1";
+        String combination = email + SALT + password;
+        password = DigestUtils.sha256Hex(combination);
 
         try{
             //get last userID
@@ -169,11 +160,12 @@ public class sqlConnect {
             ResultSet rs = prepstat1.executeQuery();
             rs.next();
             userID = rs.getString("userId");
-            
+            userID = (userID.isBlank())?"U00000":userID;
             // increment by 1
             userID = String.format("U%05d",Integer.parseInt(userID.substring(1))+1);
         }
         catch(SQLException e){
+            e.printStackTrace();
             return false;
         }
         
@@ -250,6 +242,7 @@ public class sqlConnect {
                 return true;
             }
             catch(SQLException e){
+                e.printStackTrace();
                 continue;
             }
         }
@@ -276,6 +269,7 @@ public class sqlConnect {
                 return (rowAffected > 0)?true:false;
             }
             catch(SQLException e){
+                e.printStackTrace();
                 continue;
             }
         }
@@ -301,6 +295,32 @@ public class sqlConnect {
                 return OTP;
             }
             catch(SQLException e){
+                e.printStackTrace();
+                continue;
+            }
+        }
+        
+        return null;
+    }
+    
+    public static Timestamp queryTimestamp(String email){
+        String query = "SELECT timestamp from otps WHERE email = ?";
+        
+        for(int i = 0 ; i < trial ; i++){
+            try{
+                PreparedStatement prepstat = conn.prepareStatement(query);
+                
+                prepstat.setString(1,email);
+                
+                ResultSet rs = prepstat.executeQuery();
+                
+                rs.next();
+                Timestamp timeIssued = rs.getTimestamp("timestamp");
+                
+                return timeIssued;
+            }
+            catch(SQLException e){
+                e.printStackTrace();
                 continue;
             }
         }
@@ -323,11 +343,12 @@ public class sqlConnect {
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 String phonenumber = rs.getString("phoneNumber");
-                
+
                 boolean status = addNewUser(username,email,password,phonenumber,1);
-                
+                return;
             }
             catch(SQLException e){
+                e.printStackTrace();
                 continue;
             }
         }
