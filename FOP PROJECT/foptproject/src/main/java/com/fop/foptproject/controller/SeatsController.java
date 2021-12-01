@@ -69,7 +69,6 @@ public class SeatsController implements Initializable {
                 }
                 selectedLength = 0;
                 selected = new ArrayList<int[]>();
-
             }
         }
     }

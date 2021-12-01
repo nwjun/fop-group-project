@@ -71,7 +71,7 @@
                         <Label fx:id="classicPrice" text="RM 25 " textFill="WHITE" translateX="15.0" wrapText="true" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="73.0" prefWidth="172.0">
+                  <HBox prefHeight="91.0" prefWidth="448.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Premium : " />
                         <Label fx:id="premiumPrice" text="RM 35 " textFill="WHITE" translateX="15.0" wrapText="true" />

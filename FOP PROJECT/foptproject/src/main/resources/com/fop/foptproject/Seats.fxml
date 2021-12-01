@@ -35,14 +35,6 @@
                <children>
                   <StackPane prefHeight="53.0" prefWidth="1000.0">
                      <children>
-                        <Label text="HALL A" textFill="WHITE" StackPane.alignment="TOP_CENTER">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <StackPane.margin>
-                              <Insets bottom="10.0" />
-                           </StackPane.margin>
-                        </Label>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" height="9.0" stroke="BLACK" strokeType="INSIDE" width="820.0" StackPane.alignment="CENTER">
                            <fill>
                               <LinearGradient endX="1.0" endY="1.0" startX="1.0" startY="0.01886791308276581">
@@ -62,6 +54,14 @@
                            </fill>
                         </Rectangle>
                         <Label prefHeight="7.0" prefWidth="46.0" text="Screen" textFill="WHITE" StackPane.alignment="BOTTOM_CENTER" />
+                        <Label text="HALL A" textFill="WHITE" translateX="-5.0" StackPane.alignment="TOP_CENTER">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <StackPane.margin>
+                              <Insets bottom="10.0" />
+                           </StackPane.margin>
+                        </Label>
                      </children>
                      <VBox.margin>
                         <Insets bottom="40.0" />

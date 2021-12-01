@@ -38,6 +38,7 @@ public class MovieBookingController implements Initializable {
     public void changeToMoviesDetails(ActionEvent event) throws IOException{
         SceneController switchScene = new SceneController();
         switchScene.switchToMoviesDetails(event);
+        
     }
     
     @FXML
