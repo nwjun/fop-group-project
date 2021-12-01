@@ -12,6 +12,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
@@ -38,6 +39,15 @@ public class SceneController {
         stage.show();
     }
     
+    private void switchScene(MouseEvent event, String fxmlFile) throws IOException{
+        Parent root = FXMLLoader.load(App.class.getResource(fxmlFile));
+        stage = (Stage)(((Node)event.getSource()).getScene().getWindow());
+        scene = new Scene(root,WIDTH,HEIGHT);
+        stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.show();
+    }
+    
     public void switchToOTPScene(ActionEvent event) throws IOException{
         switchScene(event,"OTP.fxml");
     }
@@ -48,5 +58,13 @@ public class SceneController {
  
     public void switchToSeats(ActionEvent event) throws IOException{
         switchScene(event, "Seats.fxml");
+    }
+    
+    public void switchToHome(ActionEvent event) throws IOException{
+        switchScene(event, "App.fxml");
+    }
+    
+    public void switchToHome(MouseEvent event) throws IOException{
+        switchScene(event, "App.fxml");
     }
 }
