@@ -382,6 +382,7 @@ public class sqlConnect {
                 ResultSet rs = prepstat.executeQuery();
                 
                 while(rs.next()){
+                    //System.out.printf("%s %s %s %s",rs.getString("productId"),rs.getString("poster"),rs.getString("price"),rs.getString("productDescription"));
                     productId.add(rs.getString("productId"));
                     posterPath.add(rs.getString("poster"));
                     price.add(rs.getString("price"));
