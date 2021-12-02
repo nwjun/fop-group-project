@@ -76,7 +76,7 @@ public class Item {
     }
 
     public HashMap<String, Object> getItem() {
-        /*
+        /**
          * Getter for private variable "item".
          * @return private variable "item"
          */
