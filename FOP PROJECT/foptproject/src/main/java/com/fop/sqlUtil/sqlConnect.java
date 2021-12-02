@@ -10,6 +10,8 @@ import com.fop.readConfig.readConfig;
 import java.time.LocalDateTime;
 import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class sqlConnect {
     private static Connection conn;
@@ -76,6 +78,7 @@ public class sqlConnect {
         System.out.printf("UserID : %s\nUsername : %s\nPassword : %s\nEmail : %s\nPhone : %s\nPermission : %d\n",userId,username,password,email,phone,permission);
         
     }
+    
     public static int checkDup(String email, String phoneNumber){ 
         String query = "SELECT (SELECT COUNT(email) FROM usercredentials WHERE email = ?) AS DE,(SELECT COUNT(phoneNumber) FROM usercredentials WHERE phoneNumber = ? AND phoneNumber IS NOT NULL) AS DP";
         
@@ -253,6 +256,7 @@ public class sqlConnect {
     public static boolean removeNewRegisterOTP(String email, boolean isCancelled){
         
         if(!(isCancelled)){
+            System.out.println("transferring");
             transferToUserCred(email);
         }
         
@@ -345,6 +349,7 @@ public class sqlConnect {
                 String phonenumber = rs.getString("phoneNumber");
 
                 boolean status = addNewUser(username,email,password,phonenumber,1);
+                System.out.println(status);
                 return;
             }
             catch(SQLException e){
@@ -353,5 +358,47 @@ public class sqlConnect {
             }
         }
         
+    }
+
+    public static HashMap<String,ArrayList<String>> queryProduct(String category){
+        String query = "SELECT products.productId,pos.poster,products.price,products.productDescription " 
+                       + "FROM pos " 
+                       + "INNER JOIN products " 
+                       + "ON pos.posterId = products.posterId "
+                       + "WHERE products.category = ?";
+        
+        HashMap<String,ArrayList<String>> items = new HashMap<>();
+        ArrayList<String> productId = new ArrayList<>();
+        ArrayList<String> posterPath = new ArrayList<>();
+        ArrayList<String> price = new ArrayList<>();
+        ArrayList<String> productDesc = new ArrayList<>();
+   
+        for(int i = 0; i < 5 ; i++){
+            try{
+                PreparedStatement prepstat = conn.prepareStatement(query);
+                
+                prepstat.setString(1,category);
+                
+                ResultSet rs = prepstat.executeQuery();
+                
+                while(rs.next()){
+                    productId.add(rs.getString("productId"));
+                    posterPath.add(rs.getString("poster"));
+                    price.add(rs.getString("price"));
+                    productDesc.add(rs.getString("productDescription"));
+                }
+                break;
+            }
+            catch(SQLException e){
+                e.printStackTrace();
+                continue;
+            }
+        }
+        items.put("productId",productId);
+        items.put("posterPath",posterPath);
+        items.put("price",price);
+        items.put("productDesc",productDesc);
+        
+        return items;
     }
 }
