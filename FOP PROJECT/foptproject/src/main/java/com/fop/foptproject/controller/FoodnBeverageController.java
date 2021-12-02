@@ -11,14 +11,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -35,13 +39,19 @@ public class FoodnBeverageController implements Initializable {
     private double IMGW = 180.0 ;
     private double IMGH = 185.5;
     private double SCALE = 0.9;
+    private double TRANSLATEX = 293;
     private int currentIndex = 0;
     private int currentPage = 0;
+    private int maxPage;
     
     @FXML
     private GridPane productList;
     @FXML
     private Button comboButton;
+    @FXML
+    private Button prevPageButton;
+    @FXML
+    private Button nextPageButton;
     @FXML
     private Button carteButton;
     @FXML
@@ -50,6 +60,8 @@ public class FoodnBeverageController implements Initializable {
     private Button beverageButton;
     @FXML 
     private Label title;
+    @FXML
+    private Line highlightLine;
     
     public void getProduct(String category){
         HashMap<String,ArrayList<String>> items = sql.queryProduct(category);
@@ -58,71 +70,11 @@ public class FoodnBeverageController implements Initializable {
         this.posterPath = items.get("posterPath").toArray();
         this.productDesc = items.get("productDesc").toArray();
         this.currentPage = 0;
+        this.maxPage = (int) Math.ceil(productId.length/4.0);
         this.currentIndex = 0;
                   
         loadCard();   
     }
-    
-    @FXML
-    public void popcorn(){
-        popcornButton.setStyle("-fx-border-width: 0 0 1 0;-fx-border-color:#FFEE00");
-        carteButton.setStyle("-fx-border-width: 0 0 0 0;");
-        beverageButton.setStyle("-fx-border-width: 0 0 0 0;");
-        comboButton.setStyle("-fx-border-width: 0 0 0 0;");
-        title.setText("POPCORNS");
-        productList.getChildren().clear();
-        getProduct("popcorn");
-    }
-    
-    @FXML
-    public void combo(){
-        comboButton.setStyle("-fx-border-width: 0 0 1 0;-fx-border-color:#FFEE00");
-        carteButton.setStyle("-fx-border-width: 0 0 0 0;");
-        beverageButton.setStyle("-fx-border-width: 0 0 0 0;");
-        popcornButton.setStyle("-fx-border-width: 0 0 0 0;");
-        title.setText("COMBO SETS");
-        productList.getChildren().clear();
-        getProduct("combo");
-    }
-    @FXML
-    public void carte(){
-        carteButton.setStyle("-fx-border-width: 0 0 1 0;-fx-border-color:#FFEE00");
-        comboButton.setStyle("-fx-border-width: 0 0 0 0;");
-        beverageButton.setStyle("-fx-border-width: 0 0 0 0;");
-        popcornButton.setStyle("-fx-border-width: 0 0 0 0;");
-        title.setText("A LA CARTE");
-        productList.getChildren().clear();
-        getProduct("carte");
-    }
-    @FXML
-    public void beverage(){
-        beverageButton.setStyle("-fx-border-width: 0 0 1 0;-fx-border-color:#FFEE00");
-        carteButton.setStyle("-fx-border-width: 0 0 0 0;");
-        comboButton.setStyle("-fx-border-width: 0 0 0 0;");
-        popcornButton.setStyle("-fx-border-width: 0 0 0 0;");
-        title.setText("BEVERAGES");
-        productList.getChildren().clear();
-        System.out.println("in progress");
-        return;
-    }
-    
-    @FXML
-    public void prevPage(){
-        if (currentPage == 0)return;
-        productList.getChildren().clear();
-        currentIndex = (currentPage-1)*4;
-        loadCard();
-        currentPage--;
-    }      
-        
-    @FXML
-    public void nextPage(){
-        if(currentIndex==productId.length)return;
-        productList.getChildren().clear();
-        loadCard();
-        currentPage++;
-    }
-    
     
     public void loadCard(){
         int n = productId.length;
@@ -137,10 +89,97 @@ public class FoodnBeverageController implements Initializable {
                         break stop;
                     }   
            
-                    }
                 }
             }
+        }
     }
+    
+    public void lineAnimation(double start, double end, Node node){
+        TranslateTransition move = new TranslateTransition();
+        move.setNode(node);
+        move.setFromX(start);
+        move.setToX(end);
+        move.setCycleCount(1);
+        move.setAutoReverse(false);
+        move.setDuration(Duration.millis(200));
+        move.play();
+        
+    }
+    
+    public void checkPage(){
+        if(currentPage == maxPage-1){
+            nextPageButton.setDisable(true);
+        }
+        else{
+            nextPageButton.setDisable(false);
+        }
+        if(currentPage == 0){
+            prevPageButton.setDisable(true);
+        }
+        else{
+            prevPageButton.setDisable(false);
+        }
+    }
+    
+    @FXML
+    public void popcorn(){
+        lineAnimation(TRANSLATEX,444,highlightLine);
+        TRANSLATEX = 444;
+        title.setText("POPCORNS");
+        productList.getChildren().clear();
+        getProduct("popcorn");
+        checkPage();
+    }
+    
+    @FXML
+    public void combo(){
+        lineAnimation(TRANSLATEX,293,highlightLine);
+        TRANSLATEX = 293;
+        title.setText("COMBO SETS");
+        productList.getChildren().clear();
+        getProduct("combo");
+        checkPage();
+    }
+    @FXML
+    public void carte(){
+        lineAnimation(TRANSLATEX,595,highlightLine);
+        TRANSLATEX = 595;
+        title.setText("A LA CARTE");
+        productList.getChildren().clear();
+        getProduct("carte");
+        checkPage();
+    }
+    @FXML
+    public void beverage(){
+        lineAnimation(TRANSLATEX,744,highlightLine);
+        TRANSLATEX = 744;
+        title.setText("BEVERAGES");
+        productList.getChildren().clear();
+        getProduct("beverage");
+        checkPage();
+    }
+    
+    @FXML
+    public void prevPage(){
+        if (currentPage == 0)return;
+        productList.getChildren().clear();
+        currentIndex = (currentPage-1)*4;
+        loadCard();
+        currentPage--;
+        checkPage();
+    }      
+        
+    @FXML
+    public void nextPage(){
+        if(currentIndex==productId.length)return;
+        productList.getChildren().clear();
+        loadCard();
+        currentPage++;
+        checkPage();
+    }
+    
+    
+    
         
     
     
