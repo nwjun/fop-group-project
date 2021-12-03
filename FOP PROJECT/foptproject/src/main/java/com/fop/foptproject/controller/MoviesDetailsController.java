@@ -44,6 +44,11 @@ public class MoviesDetailsController implements Initializable {
         switchScene.switchToMovieBooking(event);
     }
     
+    @FXML
+    public void changeToLandingPage(ActionEvent event) throws IOException{
+        SceneController switchScene = new SceneController();
+        switchScene.switchToLandingPage(event);
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

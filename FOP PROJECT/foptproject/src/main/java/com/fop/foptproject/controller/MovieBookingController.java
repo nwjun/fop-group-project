@@ -24,8 +24,6 @@ public class MovieBookingController implements Initializable {
     @FXML 
     private ChoiceBox selectCinema;
     @FXML 
-    private ChoiceBox selectHall;
-    @FXML 
     private ChoiceBox selectTime;
     @FXML 
     private DatePicker selectDate;

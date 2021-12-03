@@ -332,26 +332,26 @@
                                  </children>
                               </StackPane>
                               <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                              <StackPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="150.0" prefWidth="200.0">
+                              <StackPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="167.0" prefWidth="287.0">
                                  <children>
                                     <Label text="Selected" StackPane.alignment="TOP_LEFT">
                                        <padding>
                                           <Insets top="4.0" />
                                        </padding></Label>
-                                    <Label fx:id="selectedTicketLabel" alignment="CENTER" style="-fx-border-width: 1; -fx-border-style: solid; -fx-border-radius: 50; -fx-border-color: #ffee00;" text="0" StackPane.alignment="TOP_CENTER">
-                                       <padding>
-                                          <Insets bottom="4.0" left="8.0" right="8.0" top="4.0" />
-                                       </padding>
-                                    </Label>
                                     <Label fx:id="totalLabel" text="TOTAL: RM0.00" StackPane.alignment="CENTER_LEFT">
                                        <StackPane.margin>
                                           <Insets />
                                        </StackPane.margin></Label>
-                                    <Button mnemonicParsing="false" onAction="#changeToMovieBooking" text="Back" StackPane.alignment="BOTTOM_LEFT" />
-                                    <Button mnemonicParsing="false" text="Next" StackPane.alignment="BOTTOM_RIGHT" />
+                                    <Button fx:id="backBtn" mnemonicParsing="false" onAction="#changeToMovieBooking" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: 000000; -fx-border-color: #FFEE00; -fx-border-radius: 15;" text="Back" textFill="WHITE" StackPane.alignment="BOTTOM_LEFT" />
+                                    <Button fx:id="nextBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="118.0" style="-fx-background-color: #FFEE00; -fx-background-radius: 15;" text="Next" StackPane.alignment="BOTTOM_RIGHT" />
+                                    <Label fx:id="selectedTicketLabel" alignment="CENTER" style="-fx-border-width: 1; -fx-border-style: solid; -fx-border-radius: 50; -fx-border-color: #ffee00;" text="0" translateX="-60.0" StackPane.alignment="TOP_CENTER">
+                                       <padding>
+                                          <Insets bottom="4.0" left="8.0" right="8.0" top="4.0" />
+                                       </padding>
+                                    </Label>
                                  </children>
                               </StackPane>
-                              <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                              <Region prefHeight="167.0" prefWidth="184.0" HBox.hgrow="ALWAYS" />
                            </children>
                            <StackPane.margin>
                               <Insets left="50.0" right="20.0" top="10.0" />

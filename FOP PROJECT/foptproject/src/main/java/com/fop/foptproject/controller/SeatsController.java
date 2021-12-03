@@ -44,7 +44,7 @@ public class SeatsController implements Initializable {
         SceneController switchScene = new SceneController();
         switchScene.switchToMovieBooking(event);
     }
-
+  
     private ArrayList<int[]> selected = new ArrayList<int[]>();
     private int selectedLength = 0;
     // no of ticket for adult, student, OKU
