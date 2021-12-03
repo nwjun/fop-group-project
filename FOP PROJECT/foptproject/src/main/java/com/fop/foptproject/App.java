@@ -27,7 +27,7 @@ public class App extends Application {
         final double HEIGHT = screenBounds.getHeight();
 
         boolean DEBUG = true;
-        String fxmlFile = "FoodnBeverage.fxml";
+        String fxmlFile = "MoviesDetails.fxml";
 
         Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
         if (!DEBUG) {

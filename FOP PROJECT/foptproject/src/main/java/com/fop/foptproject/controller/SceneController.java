@@ -78,4 +78,9 @@ public class SceneController {
         
     }
     
+    public void switchToFoodnBeverage(ActionEvent event) throws IOException{
+        switchScene(event,"FoodnBeverage.fxml"); 
+        
+    }
+    
 }

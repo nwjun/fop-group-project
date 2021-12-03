@@ -44,6 +44,12 @@ public class SeatsController implements Initializable {
         SceneController switchScene = new SceneController();
         switchScene.switchToMovieBooking(event);
     }
+    
+    @FXML
+    public void changeToFoodnBeverage(ActionEvent event) throws IOException{
+        SceneController switchScene = new SceneController();
+        switchScene.switchToFoodnBeverage(event);
+    }
 
     private ArrayList<int[]> selected = new ArrayList<int[]>();
     private int selectedLength = 0;
