@@ -5,6 +5,7 @@
  */
 package com.fop.foptproject.controller;
 
+
 import com.fop.foptproject.CommonMethod;
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -30,6 +32,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -49,7 +52,9 @@ public class profileController implements Initializable {
     @FXML
     ImageView bigLogo;
 
-    private boolean bigLogoExisted = true;
+    @FXML
+    StackPane centerContainer;
+
     CommonMethod commonMethod = new CommonMethod();
 
     //https://stackoverflow.com/questions/28717343/javafx-create-a-vertical-menu-ribbon
@@ -158,12 +163,11 @@ public class profileController implements Initializable {
     private void profile() {
         titleLabel.setText("Profile");
         contentContainer.getChildren().clear();
-        if (!bigLogoExisted) {
-            mainContainer.getChildren().add(bigLogo);
-            bigLogoExisted = true;
-        }
+        addRemoveLogo("profile");
         final double MAX_HEIGHT = 45;
         final double MAX_WIDTH = 380;
+
+
         Label usernameLabel = new Label("Username");
         Label emailLabel = new Label("Email");
         Label hpLabel = new Label("Phone number");
@@ -186,11 +190,12 @@ public class profileController implements Initializable {
             textFields[i].setMaxSize(MAX_WIDTH, MAX_HEIGHT);
         }
 
+        VBox wrapper = new VBox();
+
         Button confirmBtn = new Button("Confirm");
         Button cancelBtn = new Button("Cancel");
         confirmBtn.setStyle("confirmBtn");
         cancelBtn.setStyle("cancelBtn");
-        Region region = new Region();
 
         confirmBtn.setOnAction(e -> {
             System.out.println("confirm");
@@ -199,56 +204,98 @@ public class profileController implements Initializable {
             System.out.println("cancel");
         });
 
-        HBox btnBox = new HBox(confirmBtn, region, cancelBtn);
-        HBox.setHgrow(region, Priority.ALWAYS);
+        HBox btnBox = new HBox(confirmBtn, cancelBtn);
+        btnBox.setSpacing(30);
         btnBox.setMaxWidth(MAX_WIDTH);
         VBox.setMargin(btnBox, new Insets(70, 0, 0, 0));
 
-        contentContainer.getChildren().addAll(usernameLabel, usernameField, emailLabel, emailField, hpLabel, hpField, btnBox);
+        wrapper.getChildren().addAll(usernameLabel, usernameField, emailLabel, emailField, hpLabel, hpField, btnBox);
+        wrapper.getStyleClass().add("wrapper");
+        contentContainer.getChildren().addAll(wrapper);
 
     }
 
     private void billing() {
+        /**
+         * contentContainer |-scrollPaneContainer |-scrollPane |-banksContainer
+         * |-bankContainer |-detailsContainer |-removeBtn
+         *
+         * |-btnHbox |-saveBtn |-cclBtn
+         */
         titleLabel.setText("Billing");
         contentContainer.getChildren().clear();
-        mainContainer.getChildren().remove(bigLogo);
-        bigLogoExisted = false;
+        addRemoveLogo("billing");
 
         ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setFitToWidth(true);
         HBox btnHbox = new HBox();
         VBox scrollPaneContainer = new VBox();
-        VBox bankContainer = new VBox();
+        VBox banksContainer = new VBox();
 
         Button addBtn = new Button("Add");
         Button saveBtn = new Button("Save");
         Button cclBtn = new Button("Cancel");
-        
+
         btnHbox.getChildren().addAll(saveBtn, cclBtn);
-        scrollPane.setContent(bankContainer);
-        scrollPaneContainer.getChildren().addAll(bankContainer, addBtn);
-        contentContainer.getChildren().addAll(scrollPaneContainer, btnHbox);
+        scrollPane.setContent(banksContainer);
+        scrollPaneContainer.getChildren().addAll(scrollPane, addBtn);
+        VBox wrapper = new VBox(scrollPaneContainer, btnHbox);
+        contentContainer.getChildren().addAll(wrapper);
+        scrollPaneContainer.setAlignment(Pos.TOP_CENTER);
+        btnHbox.setAlignment(Pos.BOTTOM_CENTER);
+        btnHbox.setSpacing(30);
+        wrapper.setSpacing(40);
+        scrollPane.setStyle("-fx-background-color:transparent");
+        banksContainer.setStyle("-fx-background-color:#252525");
+        scrollPaneContainer.setId("billingScrollPaneContainer");
 
+        banksContainer.setAlignment(Pos.CENTER);
         String[][] banks = getBanks();
-//        for(int i = 0; i <banks.length;i++){
-//            bank = banks
-//        }
-        for(String[] bank:banks){
-            
-        }
-        
 
-       bankContainer.getChildren().addAll(usernameLabel, emailLabel, hpLabel);
+        ArrayList<HBox> bankContainers = new ArrayList<>();
+
+        for (int i = 0; i < banks.length; i++) {
+            String[] bank = banks[i];
+            Label bankLabel = new Label(bank[0]);
+            Label accLabel = new Label(bank[1]);
+            VBox detailsContainer = new VBox(bankLabel, accLabel);
+            Region region = new Region();
+            HBox.setHgrow(region, Priority.ALWAYS);
+            Button removeBtn = new Button("-");
+            HBox bankContainer = new HBox(detailsContainer, region, removeBtn);
+            bankContainer.setAlignment(Pos.CENTER_LEFT);
+            bankContainers.add(bankContainer);
+            removeBtn.setOnAction(e -> {
+                banksContainer.getChildren().remove(bankContainer);
+                bankContainers.remove(bankContainer);
+            });
+        }
+
+        addBtn.setOnAction(e -> {
+            Stage popupStage = SceneController.showPopUpStage("AddCardPopUp.fxml");
+            if(popupStage != null)
+                popupStage.showAndWait();
+        });
+
+        banksContainer.setSpacing(30);
+
+        banksContainer.getChildren().addAll(bankContainers);
+
+        saveBtn.setOnAction(e -> {
+            updateBank(bankContainers);
+        });
     }
 
     private void history() {
         titleLabel.setText("History");
         contentContainer.getChildren().clear();
-        if (!bigLogoExisted) {
-            mainContainer.getChildren().add(bigLogo);
-            bigLogoExisted = true;
-        }
+        addRemoveLogo("history");
+
         ScrollPane scrollPane = new ScrollPane();
-        contentContainer.getChildren().add(scrollPane);
+        VBox wrapper = new VBox(scrollPane);
+        wrapper.getStyleClass().add("wrapper");
+        contentContainer.getChildren().add(wrapper);
+
         scrollPane.setStyle("-fx-background-color:transparent");
         scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -295,7 +342,6 @@ public class profileController implements Initializable {
 
         }
         for (int i = 0; i < historyContainers.size(); i++) {
-            System.out.println("item " + i + " row " + (i / 2) + "col " + i % 2);
             gridPane.add(historyContainers.get(i), i % 2, i / 2);
         }
     }
@@ -316,12 +362,39 @@ public class profileController implements Initializable {
     private String[][] getBanks() {
         final int NUM = 5;
         String[][] banks = new String[NUM][2];
-        
-        for(int i = 0; i < NUM; i++){
+
+        for (int i = 0; i < NUM; i++) {
             banks[i][0] = "Ambank";
             banks[i][1] = "888123456****";
         }
         return banks;
+    }
+
+    private void updateBank(ArrayList<HBox> bankContainers) {
+        // send back to server
+        System.out.println(bankContainers.size());
+        System.out.println("updateBank");
+    }
+
+    private void addRemoveLogo(String section) {
+
+        if (section.equals("billing")) {
+            centerContainer.getChildren().remove(bigLogo);
+            StackPane.setAlignment(contentContainer, Pos.CENTER);
+
+        } else if (!centerContainer.getChildren().contains(bigLogo)) {
+            centerContainer.getChildren().add(bigLogo);
+            StackPane.setAlignment(contentContainer, Pos.TOP_LEFT);
+
+        }
+
+    }
+
+    private Stage popUpStage() {
+        VBox vbox = new VBox();
+        Scene scene = new Scene(vbox);
+        Stage stage = new Stage();
+        return stage;
     }
 
 }

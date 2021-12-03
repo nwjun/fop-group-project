@@ -1,7 +1,11 @@
 package com.fop.foptproject;
 
+
 import com.fop.EmailUtil.emailTo;
 import com.fop.Ticket.TicketGenerator;
+import com.fop.foptproject.controller.SceneController;
+import com.fop.sqlUtil.sqlConnect;
+import com.fop.htmlMailTemplate.templateModifier;
 import com.fop.sqlUtil.sqlConnect;
 import com.fop.htmlMailTemplate.templateModifier;
 import com.fop.readConfig.readConfig;
@@ -27,7 +31,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class App extends Application {
+public class App extends Application{
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -36,10 +40,16 @@ public class App extends Application {
         final double WIDTH = screenBounds.getWidth();
         final double HEIGHT = screenBounds.getHeight();
 
-        boolean DEBUG = false;
-        String fxmlFile = "App.fxml";
+
+        boolean DEBUG = true;
+        String fxmlFile = "userProfile.fxml";
+
+        if (!DEBUG) {
+            fxmlFile = "App.fxml";
+        }
 
         Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+
         if (!DEBUG) {
             //adjust the view to center when hvalue changes
             ScrollPane k = (ScrollPane) root;
@@ -53,7 +63,7 @@ public class App extends Application {
 
         // set Scene's width and height based on screen size
         Scene scene = new Scene(root, HEIGHT, WIDTH);
-
+        SceneController.setPrimaryStage(primaryStage);
         primaryStage.setTitle("Movie Ticketing System");
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);

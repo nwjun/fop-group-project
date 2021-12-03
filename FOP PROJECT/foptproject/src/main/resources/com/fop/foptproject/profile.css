@@ -41,3 +41,21 @@
 
 .historyText{
 }
+
+
+.wrapper{
+    -fx-padding: 0 0 0 80;
+    -fx-border-color:red;
+}
+
+#billingScrollPaneContainer{
+    -fx-border-color:#ffee00;
+    -fx-border-style:solid;
+    -fx-border-width:0.5;
+    -fx-padding: 20 40 20 40;
+    -fx-border-radius: 20;
+}
+
+#contentContainer{
+    
+}

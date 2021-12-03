@@ -7,7 +7,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 
 <StackPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.profileController">
    <children>
@@ -19,15 +18,23 @@
             <Insets left="100.0" top="100.0" />
          </StackPane.margin>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#252525" height="874.0" stroke="BLACK" strokeType="INSIDE" width="1197.0" StackPane.alignment="CENTER" />
-      <ImageView fx:id="bigLogo" fitHeight="869.0" fitWidth="427.0" pickOnBounds="true" StackPane.alignment="CENTER">
-         <StackPane.margin>
-            <Insets left="800.0" />
-         </StackPane.margin>
-         <image>
-            <Image url="@assets/company/sign-logo-new.jpg" />
-         </image>
-      </ImageView>
+      <StackPane fx:id="centerContainer" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="874.0" prefWidth="1197.0" style="-fx-background-color: #252525;">
+         <children>
+            <ImageView fx:id="bigLogo" fitHeight="869.0" fitWidth="427.0" pickOnBounds="true" StackPane.alignment="TOP_RIGHT">
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
+               <image>
+                  <Image url="@assets/company/sign-logo-new.jpg" />
+               </image>
+            </ImageView>
+            <VBox id="contentContainer" fx:id="contentContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="733.0" prefWidth="772.0" StackPane.alignment="TOP_LEFT">
+               <StackPane.margin>
+                  <Insets top="140.0" />
+               </StackPane.margin>
+            </VBox>
+         </children>
+      </StackPane>
       <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="55.0" prefWidth="314.0" StackPane.alignment="TOP_LEFT">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
@@ -44,11 +51,6 @@
             <Insets left="450.0" top="150.0" />
          </StackPane.margin>
       </StackPane>
-      <VBox fx:id="contentContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="653.0" StackPane.alignment="TOP_LEFT">
-         <StackPane.margin>
-            <Insets left="420.0" top="250.0" />
-         </StackPane.margin>
-      </VBox>
    </children>
    <stylesheets>
       <URL value="@style.css" />
