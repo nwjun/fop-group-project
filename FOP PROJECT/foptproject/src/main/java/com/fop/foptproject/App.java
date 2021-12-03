@@ -1,5 +1,6 @@
 package com.fop.foptproject;
 
+import com.fop.foptproject.controller.SceneController;
 import com.fop.readConfig.readConfig;
 import com.fop.sqlUtil.sqlConnect;
 import java.io.IOException;

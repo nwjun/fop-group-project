@@ -91,8 +91,7 @@ public class SceneController {
     }
     
     public void switchToMovieBooking(ActionEvent event) throws IOException{
-        switchScene(event,"MovieBooking.fxml"); 
-        
+        switchScene(event,"MovieBooking.fxml");         
     }
 
     public void switchToHome(ActionEvent event) throws IOException {
@@ -101,5 +100,17 @@ public class SceneController {
 
     public void switchToHome(MouseEvent event) throws IOException {
         switchScene(event, "App.fxml");
+    }
+    
+    public void switchToAdminMovie(ActionEvent event) throws IOException {
+        switchScene(event, "AdminMovie.fxml");
+    }
+    
+    public void switchToAdminFood(ActionEvent event) throws IOException{
+        switchScene(event, "AdminFood.fxml");
+    }
+    
+    public void switchToAdminMain(ActionEvent event) throws IOException{
+        switchScene(event, "AdminMain.fxml");
     }
 }
