@@ -102,5 +102,4 @@ public class SceneController {
     public void switchToHome(MouseEvent event) throws IOException {
         switchScene(event, "App.fxml");
     }
-
 }

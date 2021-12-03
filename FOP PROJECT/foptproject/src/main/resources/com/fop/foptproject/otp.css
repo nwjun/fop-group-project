@@ -8,7 +8,7 @@
 }
 
 .Button {
-    -fx-background-color : #FFCC1D;
+    -fx-background-color : #FFEE00;
     -fx-background-radius : 0;
     -fx-background-insets : 0;
     -fx-padding : 5px;
@@ -22,7 +22,26 @@
 .Button:disabled{
     -fx-background-color : #c1c1c1;
     -fx-text-fill : #ffffff;
+    -fx-opacity : 1;
 }
+
+#backButton {
+  -fx-background-image: url("assets/back.png");
+  -fx-background-size : 30px 30px;
+  -fx-background-position: center;
+  -fx-background-repeat:no-repeat;
+  -fx-background-color: transparent;
+
+}
+
+#backButton:hover {
+  -fx-background-image: url("assets/back-hovered.png");
+  -fx-background-repeat:no-repeat;
+  -fx-background-size : 30px 30px;
+  -fx-background-position: center;
+  -fx-background-color: transparent;
+}
+
 
 .textField {
     -fx-padding : 0 0 0 15px;

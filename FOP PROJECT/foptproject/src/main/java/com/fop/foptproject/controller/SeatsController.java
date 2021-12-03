@@ -5,6 +5,7 @@ package com.fop.foptproject.controller;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +38,12 @@ public class SeatsController implements Initializable {
     private Button studentMinus, studentAdd, adultMinus, adultAdd, okuMinus, okuAdd;
     @FXML
     private Label studentCount, adultCount, okuCount, selectedTicketLabel, totalLabel;
+    
+    @FXML
+    public void changeToMovieBooking(ActionEvent event) throws IOException{
+        SceneController switchScene = new SceneController();
+        switchScene.switchToMovieBooking(event);
+    }
 
     private ArrayList<int[]> selected = new ArrayList<int[]>();
     private int selectedLength = 0;
@@ -62,7 +69,6 @@ public class SeatsController implements Initializable {
                 }
                 selectedLength = 0;
                 selected = new ArrayList<int[]>();
-
             }
         }
     }

@@ -6,17 +6,19 @@
    -fx-background: #141414;
    -fx-font-family: "Montserrat";
    -fx-text-fill: #ffffff;
+
 }
 
-.Button {
-    -fx-background-color : #FFEE00;
-    -fx-background-radius : 0;
-    -fx-background-insets : 0;
+.Button
+{
+    -fx-background-color:#FFEE00;   
+    -fx-background-radius:0;
+    -fx-background-insets:0;
     -fx-font-family: "Montserrat,Regular";
-    -fx-padding : 5px;
+    -fx-background-radius:15px;
+    -fx-font-size: 15fx;
 }
 
-.Button:hover {
+.Button:hover{
     -fx-opacity : 0.6;
 }
-

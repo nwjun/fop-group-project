@@ -1,3 +1,7 @@
+/*
+ * Empty Stylesheet file.
+ */
+
 @font-face{
     src: url("../font/Montserrat/Montserrat-Regular.ttf");
 }
@@ -8,13 +12,8 @@
     -fx-background:#000000;
 }
 
-.label {
-    -fx-fill:#ffffff;
-    -fx-font-family : "Montserrat,Regular";
-}
-
 .Button {
-    -fx-background-color : #FFEE00;
+    -fx-background-color : #FFCC1D;
     -fx-background-radius : 0;
     -fx-background-insets : 0;
     -fx-font-family: "Montserrat,Regular";
@@ -22,11 +21,3 @@
     -fx-background-radius : 15px;
 }
 
-.Button:hover {
-    -fx-opacity : 0.6;
-}
-
-.Button:disabled{
-    -fx-background-color : #c1c1c1;
-    -fx-text-fill : #ffffff;
-}
