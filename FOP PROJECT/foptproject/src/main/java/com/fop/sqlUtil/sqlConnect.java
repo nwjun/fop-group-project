@@ -361,7 +361,7 @@ public class sqlConnect {
     }
 
     public static HashMap<String,ArrayList<String>> queryProduct(String category){
-        String query = "SELECT products.productId,pos.poster,products.price,products.productDescription " 
+        String query = "SELECT products.productId,pos.poster,products.price,products.productDescription,products.productname " 
                        + "FROM pos " 
                        + "INNER JOIN products " 
                        + "ON pos.posterId = products.posterId "
@@ -372,6 +372,7 @@ public class sqlConnect {
         ArrayList<String> posterPath = new ArrayList<>();
         ArrayList<String> price = new ArrayList<>();
         ArrayList<String> productDesc = new ArrayList<>();
+        ArrayList<String> productName = new ArrayList<>();
    
         for(int i = 0; i < 5 ; i++){
             try{
@@ -387,6 +388,7 @@ public class sqlConnect {
                     posterPath.add(rs.getString("poster"));
                     price.add(rs.getString("price"));
                     productDesc.add(rs.getString("productDescription"));
+                    productName.add(rs.getString("productname"));
                 }
                 break;
             }
@@ -399,7 +401,37 @@ public class sqlConnect {
         items.put("posterPath",posterPath);
         items.put("price",price);
         items.put("productDesc",productDesc);
+        items.put("productName",productName);
         
         return items;
+    }
+
+    public static String queryProductInfo(String productId,String fieldName){
+        String query = "SELECT %s FROM products WHERE productId = ?";
+        
+        for(int i = 0 ; i < trial ; i++){
+            try{
+                query = String.format(query,fieldName);
+                PreparedStatement prepstat = conn.prepareStatement(query);
+                prepstat.setString(1,productId);
+                
+                ResultSet rs = prepstat.executeQuery();
+                
+                String result;
+                if(rs.next()){
+                    result = rs.getString(fieldName);
+                }
+                else{
+                    return null;
+                }
+                return result;
+            }
+            catch(SQLException e){
+                e.printStackTrace();
+                continue;
+            }
+        }
+        
+        return "0";
     }
 }

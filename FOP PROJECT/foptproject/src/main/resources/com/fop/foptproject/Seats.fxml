@@ -347,8 +347,8 @@
                                        <StackPane.margin>
                                           <Insets />
                                        </StackPane.margin></Label>
-                                    <Button mnemonicParsing="false" onAction="#changeToMovieBooking" text="Back" StackPane.alignment="BOTTOM_LEFT" />
-                                    <Button mnemonicParsing="false" text="Next" StackPane.alignment="BOTTOM_RIGHT" />
+                                    <Button mnemonicParsing="false" onAction="#changeToMovieBooking" prefHeight="25.0" prefWidth="70.0" style="-fx-background-radius: 10;" styleClass="Button" text="Back" StackPane.alignment="BOTTOM_LEFT" />
+                                    <Button fx:id="nextButton" mnemonicParsing="false" onAction="#toFnB" prefHeight="25.0" prefWidth="70.0" style="-fx-background-radius: 10;" styleClass="Button" text="Next" StackPane.alignment="BOTTOM_RIGHT" />
                                  </children>
                               </StackPane>
                               <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />

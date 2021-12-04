@@ -15,9 +15,9 @@
 
 <BorderPane stylesheets="@LoginRegister.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.LoginRegisterController">
    <center>
-      <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER">
+      <ScrollPane fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="NEVER">
          <content>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="865.0" prefWidth="1336.0" stylesheets="@LoginRegister.css">
+            <AnchorPane stylesheets="@LoginRegister.css">
                <children>
                   <ImageView fitHeight="951.0" fitWidth="510.0" layoutX="-96.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
                      <image>
