@@ -105,6 +105,10 @@ public class SceneController {
     public void switchToAdminMovie(ActionEvent event) throws IOException {
         switchScene(event, "AdminMovie.fxml");
     }
+
+    public void switchToFnB(ActionEvent event) throws IOException{
+        switchScene(event,"FoodnBeverage.fxml");         
+    }
     
     public void switchToAdminFood(ActionEvent event) throws IOException{
         switchScene(event, "AdminFood.fxml");

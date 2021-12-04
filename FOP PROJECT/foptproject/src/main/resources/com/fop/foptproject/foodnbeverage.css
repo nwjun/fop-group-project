@@ -75,3 +75,58 @@
     -fx-border-color:#FFEE00;
     -fx-border-width:1px;
 }
+
+#shoppingCart{
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: 'Montserrat';
+    -fx-font-size: 24px;
+    -fx-padding : 0 0 0 75px;
+    
+    
+}
+
+#shoppingCartBtn {
+  -fx-background-image: url("assets/shopping-bag.png");
+  -fx-background-size : 40px 40px;
+  -fx-background-position: center;
+  -fx-background-repeat:no-repeat;
+  -fx-background-color: transparent;
+
+}
+
+#shoppingCartBtn:hover {
+  -fx-background-image: url("assets/shopping-bag-hovered.png");
+  -fx-background-repeat:no-repeat;
+  -fx-background-size : 40px 40px;
+  -fx-background-position: center;
+  -fx-background-color: transparent;
+}
+
+#XBtn {
+  -fx-background-image: url("assets/X.png");
+  -fx-background-size : 25px 25px;
+  -fx-background-position: center;
+  -fx-background-repeat:no-repeat;
+  -fx-background-color: transparent;
+
+}
+
+#XBtn:hover {
+  -fx-background-image: url("assets/X-hovered.png");
+  -fx-background-repeat:no-repeat;
+  -fx-background-size : 25px 25px;
+  -fx-background-position: center;
+  -fx-background-color: transparent;
+}
+
+.shoppingCartTitle{
+    -fx-margin: 0 0 15px 0;
+    -fx-font-size:18px;
+    -fx-text-fill:#FFEE00;
+}
+
+.shoppingCartContent{
+    -fx-margin: 0 0 15px 0;
+    -fx-font-size:18px;
+    -fx-text-fill:#FFFFFF; 
+}
