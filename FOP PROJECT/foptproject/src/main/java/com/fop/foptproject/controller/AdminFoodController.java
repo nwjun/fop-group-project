@@ -16,7 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 
-public class AdminMovieController implements Initializable {
+public class AdminFoodController implements Initializable {
 
     @FXML
     private ImageView DropImage;

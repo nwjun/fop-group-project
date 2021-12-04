@@ -42,13 +42,7 @@
                         <ChoiceBox fx:id="selectCinema" prefWidth="225.0" />
                      </children>
                   </VBox>
-                  <Region prefHeight="200.0" prefWidth="200.0" />
-                  <VBox alignment="CENTER_LEFT">
-                     <children>
-                        <Label text="Select Date :" textFill="#666666" />
-                        <DatePicker fx:id="selectDate" prefWidth="225.0" />
-                     </children>
-                  </VBox>
+                  <VBox alignment="CENTER_LEFT" />
                </children>
             </HBox>
             <Line endX="882.5791625976562" endY="-7.66273832321167" startX="116.88623809814453" startY="-7.662712574005127" stroke="#ffee00" translateX="170.0" />
@@ -57,19 +51,19 @@
                   <HBox alignment="TOP_CENTER">
                      <children>
                         <CheckBox fx:id="selectClassic" mnemonicParsing="false" text="Classic" />
-                        <Region prefHeight="106.0" prefWidth="200.0" />
+                        <Region prefHeight="113.0" prefWidth="87.0" />
                         <CheckBox fx:id="selectPremium" mnemonicParsing="false" text="Premium" />
                      </children>
                   </HBox>
-                  <Label text="Select Hall" />
-                  <ChoiceBox fx:id="selectHall" prefWidth="225.0" />
+                  <Label text="Select Date :" textFill="#666666" />
+                  <DatePicker fx:id="selectDate" prefWidth="225.0" />
                   <Region prefHeight="138.0" prefWidth="1498.0" />
                   <Label text="Select Time :" />
                   <ChoiceBox fx:id="selectTime" prefHeight="26.0" prefWidth="225.0" />
                   <Region prefHeight="138.0" prefWidth="1498.0" />
                   <HBox alignment="TOP_CENTER" prefHeight="121.0" prefWidth="1498.0">
                      <children>
-                        <Button fx:id="backToMoviesDetailsBtn" mnemonicParsing="false" onAction="#changeToMoviesDetails" prefHeight="31.0" prefWidth="139.0" style="-fx-background-radius: 15;" styleClass="Button" stylesheets="@moviebooking.css" text="Back" />
+                        <Button fx:id="backToMoviesDetailsBtn" mnemonicParsing="false" onAction="#changeToMoviesDetails" prefHeight="31.0" prefWidth="139.0" style="-fx-background-color: 000000; -fx-border-color: #FFEE00; -fx-border-radius: 15;" styleClass="Button" stylesheets="@moviebooking.css" text="Back" textFill="WHITE" />
                         <Region prefHeight="200.0" prefWidth="200.0" />
                         <Button fx:id="nextToSeatsBtn" mnemonicParsing="false" onAction="#changeToSeats" prefHeight="31.0" prefWidth="139.0" style="-fx-background-radius: 15;" styleClass="Button" stylesheets="@moviebooking.css" text="Next" />
                      </children>

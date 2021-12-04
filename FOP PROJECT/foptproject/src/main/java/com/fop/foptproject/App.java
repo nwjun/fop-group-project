@@ -1,5 +1,6 @@
 package com.fop.foptproject;
 
+import com.fop.foptproject.controller.SceneController;
 import com.fop.readConfig.readConfig;
 import com.fop.sqlUtil.sqlConnect;
 import java.io.IOException;
@@ -17,7 +18,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class App extends Application {
+public class App extends Application{
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -27,9 +28,14 @@ public class App extends Application {
         final double HEIGHT = screenBounds.getHeight();
 
         boolean DEBUG = true;
-        String fxmlFile = "FoodnBeverage.fxml";
+        String fxmlFile = "userProfile.fxml";
+
+        if (!DEBUG) {
+            fxmlFile = "App.fxml";
+        }
 
         Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+
         if (!DEBUG) {
             //adjust the view to center when hvalue changes
             ScrollPane k = (ScrollPane) root;
@@ -43,7 +49,7 @@ public class App extends Application {
         
         // set Scene's width and height based on screen size
         Scene scene = new Scene(root, HEIGHT, WIDTH);
-
+        SceneController.setPrimaryStage(primaryStage);
         primaryStage.setTitle("Movie Ticketing System");
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);

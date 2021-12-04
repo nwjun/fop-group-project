@@ -5,6 +5,7 @@
  */
 package com.fop.foptproject;
 
+import java.io.File;
 import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -36,7 +37,7 @@ public class CommonMethod {
 
     public String getPathToResources(String relPath) {
         /**
-         * @param relPath eg:banner/banner2.jpg.
+         * @param relPath eg:assets/banner/banner2.jpg.
          */
         String path = getClass().getResource(relPath).toString();
 
