@@ -6,11 +6,14 @@ package com.fop.foptproject.controller;
 
 import com.fop.foptproject.App;
 import java.io.IOException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -54,7 +57,19 @@ public class SceneController {
     }
 
     private void switchScene(ActionEvent event, String fxmlFile) throws IOException {
+        
         Parent root = FXMLLoader.load(App.class.getResource(fxmlFile));
+        //lock landing H scroll
+        if(fxmlFile.equals("App.fxml")){
+            ScrollPane k = (ScrollPane) root;
+            k.hvalueProperty().addListener(new ChangeListener<Number>() {
+                public void changed(ObservableValue<? extends Number> ov,
+                        Number old_val, Number new_val) {
+                    k.setHvalue(50);
+                }
+            });
+        
+        }
         scene = new Scene(root, WIDTH, HEIGHT);
         this.primaryStage.setScene(scene);
         this.primaryStage.setMaximized(true);
@@ -63,7 +78,17 @@ public class SceneController {
 
     private void switchScene(MouseEvent event, String fxmlFile) throws IOException {
         Parent root = FXMLLoader.load(App.class.getResource(fxmlFile));
+        //lock landing H scroll
+        if(fxmlFile.equals("App.fxml")){
+            ScrollPane k = (ScrollPane) root;
+            k.hvalueProperty().addListener(new ChangeListener<Number>() {
+                public void changed(ObservableValue<? extends Number> ov,
+                        Number old_val, Number new_val) {
+                    k.setHvalue(50);
+                }
+            });
         
+        }
         scene = new Scene(root, WIDTH, HEIGHT);
         this.primaryStage.setScene(scene);
         this.primaryStage.setMaximized(true);
