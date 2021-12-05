@@ -12,6 +12,8 @@ import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class sqlConnect {
     private static Connection conn;
@@ -358,6 +360,46 @@ public class sqlConnect {
             }
         }
         
+    }
+    
+    public static HashMap<String, ArrayList<String>> queryAllProduct(){
+        String query = "SELECT productId, productname, poster, price, productDescription, category "
+                       + "FROM products "
+                       + "INNER JOIN pos USING (posterId) ";
+        
+        HashMap<String, ArrayList<String>> items = new HashMap<>();
+        ArrayList<String> productId = new ArrayList<>();
+        ArrayList<String> posterPath = new ArrayList<>();
+        ArrayList<String> price = new ArrayList<>();
+        ArrayList<String> productDesc = new ArrayList<>();
+        ArrayList<String> productName = new ArrayList<>();
+        ArrayList<String> category = new ArrayList<>();
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+
+            ResultSet rs = prepstat.executeQuery();
+
+            while(rs.next()){  
+            productId.add(rs.getString("productId"));
+            posterPath.add(rs.getString("poster"));
+            price.add(rs.getString("price"));
+            productDesc.add(rs.getString("productDescription"));
+            productName.add(rs.getString("productname"));   
+            category.add(rs.getString("category"));
+            }   
+        } catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+        
+        items.put("productId",productId);
+        items.put("posterPath",posterPath);
+        items.put("price",price);
+        items.put("productDesc",productDesc);
+        items.put("productName",productName);
+        items.put("category", category);
+        
+        return items;                            
     }
 
     public static HashMap<String,ArrayList<String>> queryProduct(String category){
