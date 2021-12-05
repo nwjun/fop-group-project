@@ -4,7 +4,6 @@
  */
 package com.fop.foptproject;
 
-import com.fop.foptproject.controller.FoodnBeverageController;
 import com.fop.sqlUtil.sqlConnect;
 import java.util.HashMap;
 import javafx.event.ActionEvent;
@@ -24,56 +23,61 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
 /**
  *
  * @author WeiXin
  */
-public class ProductCardAdminFood{
-    private HashMap<String,Object> productDetails = new HashMap<>();
-    private HBox productCard;
+public class ProductCardAdminMovie{
+    private HashMap<String,Object> movieDetails = new HashMap<>();
+    private HBox movieCard;
     private boolean deletestatus = false;
     
-    public ProductCardAdminFood(String productID,String imgPath,double imgW,double imgH,double scale,double price,String productName,String productDesc, String category){
-        productDetails.put("productID",productID);
-        productDetails.put("imgPath",imgPath);
-        productDetails.put("imgW",imgW*scale);
-        productDetails.put("imgH",imgH*scale);
-        productDetails.put("price",price);
-        productDetails.put("productName",productName);
-        productDetails.put("productDesc",productDesc);
-        productDetails.put("category", category);
+    public ProductCardAdminMovie(String movieID,String imgPath,double imgW,double imgH,double scale,double length,String movieName,String synopsis, String language){
+        movieDetails.put("movieID",movieID);
+        movieDetails.put("imgPath",imgPath);
+        movieDetails.put("imgW",imgW*scale);
+        movieDetails.put("imgH",imgH*scale);
+        movieDetails.put("length",length);
+        movieDetails.put("movieName",movieName);
+        movieDetails.put("synopsis",synopsis);
+        movieDetails.put("language", language);
                
-        this.productCard = makeCard(productID,price);
-        HBox.setMargin(this.productCard,new Insets(0,45,0,0));   
+        this.movieCard = makeCard(movieID,length);
+        HBox.setMargin(this.movieCard,new Insets(0,45,0,0));   
     }
         
     public HashMap<String,Object> getProductDetails(){
-        return productDetails;
+        return movieDetails;
     }
     
     public Object getValue(String key){
-        return this.productDetails.get(key);
+        return this.movieDetails.get(key);
     }
     
     public HBox getCard(){
         
-        return this.productCard;
+        return this.movieCard;
     }
         
-    private HBox makeCard(String productId, double price){
+    private HBox makeCard(String movieId, double length){
         HBox card = new HBox();
         
-        VBox img = productImage(productId);
+        VBox img = movieImage(movieId);
         img.setPrefHeight(250);
         img.setPrefHeight(250);
         
-        VBox productDetails = makeProductDescription(productId, price);
-        productDetails.setPrefHeight(250);
-        productDetails.setPrefWidth(401);
+        VBox movieDetails = makeMovieDescription(movieId, length);
+        movieDetails.setPrefHeight(250);
+        movieDetails.setPrefWidth(401);
         
-        card.getChildren().addAll(img,productDetails);
+        card.getChildren().addAll(img,movieDetails);
         return card;
+    }
+    
+    public String pathway(){
+        String path1 = "";
+        path1 = getClass().getResource((String)getValue("\\assets\\movies\\anita.jpg\\")).toString();
+        return path1;
     }
     
     private Image getImage(){
@@ -83,37 +87,40 @@ public class ProductCardAdminFood{
     }
 
     
-    private VBox makeProductDescription(String productId, double price){
+    private VBox makeMovieDescription(String movieId, double length){
         
-        Label productName = new Label();
-        Label productDesc = new Label();
-        Label priceTag = new Label();    
-        Label category = new Label();
+        Label movieName = new Label();
+        Label synopsis = new Label();
+        Label movielength = new Label();    
+        Label language = new Label();
         Label path = new Label();
         VBox labelContainer = new VBox();
         
-        path.setId(productId+"_path");
-        category.setId(productId+"_category");
-        productName.setId(productId+"_name");
-        productDesc.setId(productId+"_desc");
-        priceTag.setId(productId+"_priceTag");    
+        
+        int minute = (int)((length-(int)length)*60);
+        
+        path.setId(movieId+"_path");
+        language.setId(movieId+"_language");
+        movieName.setId(movieId+"_name");
+        synopsis.setId(movieId+"_synopsis");
+        movielength.setId(movieId+"_movielength");    
         path.setStyle("-fx-text-fill:#FFFFFF;-fx-padding:0px 0 5 18px;-fx-font-size:15px");
-        category.setStyle("-fx-text-fill:#FFFFFF;-fx-padding:0px 0 5 18px;-fx-font-size:15px");
-        productName.setStyle("-fx-text-fill:#FFFFFF;-fx-padding:0px 0 5 18px;-fx-font-size:15px");
-        productDesc.setStyle("-fx-text-fill:#FFFFFF;-fx-padding:0px 0 5 18px;-fx-font-size:15px");
-        priceTag.setStyle("-fx-text-fill:#FFFFFF;-fx-padding:0px 0 5 18px;-fx-font-size:15px;-fx-alignment:center"); 
-        path.setText("Path: "+ (String)this.productDetails.get("imgPath"));
-        category.setText("Category: "+(String)this.productDetails.get("category"));
-        productName.setText("Name: "+(String)this.productDetails.get("productName"));
-        priceTag.setText("Price: "+String.format("RM%.2f",price));
-        productDesc.setText("Description: "+(String)this.productDetails.get("productDesc"));           
+        language.setStyle("-fx-text-fill:#FFFFFF;-fx-padding:0px 0 5 18px;-fx-font-size:15px");
+        movieName.setStyle("-fx-text-fill:#FFFFFF;-fx-padding:0px 0 5 18px;-fx-font-size:15px");
+        synopsis.setStyle("-fx-text-fill:#FFFFFF;-fx-padding:0px 0 5 18px;-fx-font-size:15px");
+        movielength.setStyle("-fx-text-fill:#FFFFFF;-fx-padding:0px 0 5 18px;-fx-font-size:15px;-fx-alignment:center"); 
+        path.setText("Path: "+ (String)this.movieDetails.get("imgPath"));
+        language.setText("Language: "+(String)this.movieDetails.get("language"));
+        movieName.setText("Name: "+(String)this.movieDetails.get("movieName"));
+        movielength.setText("Movie Length: "+String.format("%dh ",(int)length)+ String.format("%dm", minute));
+        synopsis.setText("Description: "+(String)this.movieDetails.get("synopsis"));           
 
         AnchorPane editdelete = MakeButton();
         
         labelContainer.setPrefWidth(652);
-        labelContainer.setPrefHeight(166);
+        labelContainer.setPrefHeight(400);
         labelContainer.setStyle("-fx-padding:0 0 0 20");
-        labelContainer.getChildren().addAll(path, category, productName, priceTag, productDesc, editdelete);
+        labelContainer.getChildren().addAll(path, language, movieName, movielength, synopsis, editdelete);
         
 
         return labelContainer;
@@ -123,7 +130,7 @@ public class ProductCardAdminFood{
         Stage window = new Stage();
         
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Delete \""+ this.productDetails.get("productName")+ "\"");
+        window.setTitle("Delete \""+ this.movieDetails.get("movieName")+ "\"");
         window.setMinWidth(340);
         window.setMinHeight(210);
         window.setY(350);
@@ -131,7 +138,7 @@ public class ProductCardAdminFood{
         
         
         Label label = new Label();
-        label.setText("Confirm Deletion of \"" + this.productDetails.get("productName")+ "\"");
+        label.setText("Confirm Deletion of \"" + this.movieDetails.get("movieName")+ "\"");
         label.setStyle("-fx-font-size: 16px");
         label.setPrefHeight(1);
         
@@ -149,6 +156,7 @@ public class ProductCardAdminFood{
                 window.close();
         }
         });
+        
         deleteButton.setOnMouseEntered(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent t){
@@ -182,6 +190,7 @@ public class ProductCardAdminFood{
         
             }
         }); 
+        
         String path = getClass().getResource("assets\\company\\Admin.png\\").toString();
         Image img = new Image(path, 168.75, 24.375, false, false);
         ImageView setImg = new ImageView();
@@ -209,9 +218,10 @@ public class ProductCardAdminFood{
         Label spacing1 = new Label("     ");
         row3.getChildren().addAll(spacing6, deleteText, spacing7, deleteButton,spacing, cancel, spacing1);
         
+
         VBox layout = new VBox(10);
         layout.setStyle("-fx-background: #141414;-fx-font-family: \"Montserrat\";-fx-text-fill: #ffffff;");
-        layout.getChildren().addAll(row0, row1,row2, row3);
+        layout.getChildren().addAll(row0,row1,row2, row3);
         
         
         Scene scene = new Scene(layout);
@@ -227,7 +237,7 @@ public class ProductCardAdminFood{
         
         edit.setText("Edit");
         edit.setLayoutX(45);
-        edit.setLayoutY(88);
+        edit.setLayoutY(204);
         edit.setPrefWidth(100);
         edit.setPrefHeight(31);    
         edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:tranparent;-fx-text-fill:#FFEE00");
@@ -249,7 +259,7 @@ public class ProductCardAdminFood{
         
         delete.setText("Delete");
         delete.setLayoutX(193);
-        delete.setLayoutY(88);
+        delete.setLayoutY(204);
         delete.setPrefWidth(100);
         delete.setPrefHeight(31);        
         delete.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
@@ -284,18 +294,18 @@ public class ProductCardAdminFood{
         return editdelete;       
     }
     
-    private VBox productImage(String productId){
-        Image productImg = getImage();
-        ImageView img = new ImageView(productImg);
-        img.setId(productId+"_img");
-        img.setFitWidth((double)this.productDetails.get("imgW"));
-        img.setFitHeight((double)this.productDetails.get("imgH"));
+    private VBox movieImage(String movieId){
+        Image movieImg = getImage();
+        ImageView img = new ImageView(movieImg);
+        img.setId(movieId+"_img");
+        img.setFitWidth((double)this.movieDetails.get("imgW"));
+        img.setFitHeight((double)this.movieDetails.get("imgH"));
         img.setPreserveRatio(true);
         img.setSmooth(true);
         
         
         VBox container = new VBox();
-        container.setStyle("-fx-padding:14 0 0 13");
+        container.setStyle("-fx-padding:18.5 0 0 13.5");
         container.getChildren().addAll(img);
         
         return container;
