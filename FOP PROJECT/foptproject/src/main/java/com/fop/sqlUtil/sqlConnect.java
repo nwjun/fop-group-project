@@ -362,6 +362,62 @@ public class sqlConnect {
         
     }
     
+    public static HashMap<String, ArrayList<String>> queryAllMovie(){
+        String query = "SELECT movieId, movieName, length, releaseDate, directorCast, language, poster, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict "
+                        + "FROM movies "
+                        + "INNER JOIN pos USING (posterId) ";
+        
+        HashMap<String, ArrayList<String>> movies = new HashMap<>();
+        ArrayList<String> movieId = new ArrayList<>();
+        ArrayList<String> movieName = new ArrayList<>();
+        ArrayList<String> length = new ArrayList<>();
+        ArrayList<String> releaseDate = new ArrayList<>();
+        ArrayList<String> directorCast = new ArrayList<>();
+        ArrayList<String> language = new ArrayList<>();
+        ArrayList<String> poster = new ArrayList<>();
+        ArrayList<String> allShowTime = new ArrayList<>();
+        ArrayList<String> synopsis = new ArrayList<>();
+        ArrayList<String> rottenTomato = new ArrayList<>();
+        ArrayList<String> iMDB = new ArrayList<>();
+        ArrayList<String> ageRestrict = new ArrayList<>();
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            ResultSet rs = prepstat.executeQuery();
+            while(rs.next()){
+                movieId.add(rs.getString("movieId"));
+                movieName.add(rs.getString("movieName"));
+                length.add(rs.getString("length"));
+                releaseDate.add(rs.getString("releaseDate"));
+                directorCast.add(rs.getString("directorCast"));
+                language.add(rs.getString("language"));
+                poster.add(rs.getString("poster"));
+                allShowTime.add(rs.getString("allShowTime"));
+                synopsis.add(rs.getString("synopsis"));
+                rottenTomato.add(rs.getString("rottenTomato"));
+                iMDB.add(rs.getString("iMDB"));
+                ageRestrict.add(rs.getString("ageRestrict"));
+            }
+        } catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+        
+        movies.put("movieId",movieId);
+        movies.put("movieName",movieName);
+        movies.put("length",length);
+        movies.put("releaseDate",releaseDate);
+        movies.put("directorCast",directorCast);
+        movies.put("language",language);
+        movies.put("poster",poster);
+        movies.put("allShowTime",allShowTime);
+        movies.put("synopsis",synopsis);
+        movies.put("rottenTomato",rottenTomato);
+        movies.put("iMDB",iMDB);
+        movies.put("ageRestrict",ageRestrict);
+        
+        return movies;
+    }
+    
     public static HashMap<String, ArrayList<String>> queryAllProduct(){
         String query = "SELECT productId, productname, poster, price, productDescription, category "
                        + "FROM products "

@@ -69,7 +69,7 @@ public class ProductCard{
             Image img = new Image(path,(double)getValue("imgW"),(double)getValue("imgH"),false,false);
         return img;
     }
-
+    
     private StackPane makeButtons(String productId){
         // components
         this.quantity = new Label();

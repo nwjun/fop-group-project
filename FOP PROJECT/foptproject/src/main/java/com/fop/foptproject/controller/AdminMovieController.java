@@ -1,12 +1,16 @@
 package com.fop.foptproject.controller;
 
+import com.fop.foptproject.ProductCardAdminMovie;
+import com.fop.sqlUtil.sqlConnect;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -18,6 +22,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javax.imageio.ImageIO;
@@ -28,6 +34,25 @@ public class AdminMovieController implements Initializable {
     String poster;
     String save;
     String desktopPath;
+    private sqlConnect sql = new sqlConnect();
+    private Object[] movieId;
+    private Object[] movieName;
+    private Object[] length;
+    private Object[] releaseDate;
+    private Object[] directorCast;
+    private Object[] language;
+    private Object[] posterPath;
+    private Object[] allShowTime;
+    private Object[] synopsis;
+    private Object[] rottenTomato;
+    private Object[] iMDB;
+    private Object[] ageRestrict;
+    private double IMGW = 250 ;
+    private double IMGH = 375;
+    private double SCALE = 0.9;
+    private int currentIndex = 0;
+    private int currentPage = 0;
+    private int maxPage;
 
     @FXML
     private ImageView DropImage;
@@ -37,10 +62,91 @@ public class AdminMovieController implements Initializable {
     private TextField Poster;
     @FXML
     private Button FileChooser;
+    @FXML
+    private GridPane movieList;
+    @FXML
+    private Button nextPageButton;
+    @FXML
+    private Button prevPageButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        getProduct();
     } 
+    
+    public void getProduct(){
+        HashMap<String,ArrayList<String>> items = sql.queryAllMovie();
+        this.movieId = items.get("movieId").toArray();
+        this.movieName = items.get("movieName").toArray();
+        this.length = items.get("length").toArray();
+        this.releaseDate = items.get("releaseDate").toArray();
+        this.directorCast = items.get("directorCast").toArray();
+        this.language = items.get("language").toArray();
+        this.posterPath = items.get("poster").toArray();
+        this.allShowTime = items.get("allShowTime").toArray();
+        this.synopsis = items.get("synopsis").toArray();
+        this.rottenTomato = items.get("rottenTomato").toArray();
+        this.iMDB = items.get("iMDB").toArray();
+        this.ageRestrict = items.get("ageRestrict").toArray();
+        
+        this.currentPage = 0;
+        this.maxPage = (int) Math.ceil(movieId.length/4.0);
+        this.currentIndex = 0;
+                  
+        loadCard();   
+    }
+    
+    public void loadCard(){
+        int n = movieId.length;
+        stop:{
+            for(int i = 0; i < 4;i++){
+                for(int j = 0; j < 1 ; j++){
+                    ProductCardAdminMovie content = new ProductCardAdminMovie((String)movieId[currentIndex],(String)posterPath[currentIndex],IMGW,IMGH,SCALE,Double.parseDouble((String)length[currentIndex]),(String)movieName[currentIndex],(String)synopsis[currentIndex], (String)language[currentIndex]);
+                    HBox card = content.getCard();
+                    movieList.add(card,j,i);
+                    currentIndex++;
+                    if (currentIndex>=n){
+                        break stop;
+                    }   
+           
+                }
+            }
+        }
+    }
+    
+    public void checkPage(){
+        if(currentPage == maxPage-1){
+            nextPageButton.setDisable(true);
+        }
+        else{
+            nextPageButton.setDisable(false);
+        }
+        if(currentPage == 0){
+            prevPageButton.setDisable(true);
+        }
+        else{
+            prevPageButton.setDisable(false);
+        }
+    }
+    
+    @FXML
+    public void prevPage(){
+        if (currentPage == 0)return;
+        movieList.getChildren().clear();
+        currentIndex = (currentPage-1)*4;
+        loadCard();
+        currentPage--;
+        checkPage();
+    }      
+        
+    @FXML
+    public void nextPage(){
+        if(currentIndex==movieId.length)return;
+        movieList.getChildren().clear();
+        loadCard();
+        currentPage++;
+        checkPage();
+    }
     
     @FXML
     private void singleImagePathRead(ActionEvent event) throws FileNotFoundException {
