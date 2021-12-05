@@ -55,61 +55,61 @@
                         <Label layoutX="200.0" layoutY="252.0" style="-fx-font-size: 25;" text="Drag" />
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="285.0" prefHeight="21.0" prefWidth="253.0" style="-fx-font-size: 25;" text="Movie Poster" />
                         <ImageView fx:id="DropImage" fitHeight="375.0" fitWidth="250.0" layoutX="187.0" layoutY="121.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" />
-                        <VBox layoutX="49.0" layoutY="502.0" prefHeight="128.0" prefWidth="528.0">
+                        <VBox layoutX="48.0" layoutY="494.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Poster Path" />
-                              <TextField prefHeight="47.0" prefWidth="528.0" />
+                              <TextField fx:id="Poster" onAction="#PreText" prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
-                        <VBox layoutX="51.0" layoutY="621.0" prefHeight="128.0" prefWidth="528.0">
+                        <VBox layoutX="48.0" layoutY="608.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Movie Name" />
                               <TextField prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
-                        <VBox layoutX="51.0" layoutY="749.0" prefHeight="128.0" prefWidth="528.0">
+                        <VBox layoutX="48.0" layoutY="722.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Movie Length" />
                               <TextField prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
-                        <VBox layoutX="53.0" layoutY="877.0" prefHeight="128.0" prefWidth="528.0">
+                        <VBox layoutX="51.0" layoutY="837.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Release Date" />
                               <TextField prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
-                        <VBox layoutX="54.0" layoutY="1005.0" prefHeight="128.0" prefWidth="528.0">
+                        <VBox layoutX="51.0" layoutY="952.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Director" />
                               <TextField prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
-                        <VBox layoutX="51.0" layoutY="1133.0" prefHeight="128.0" prefWidth="528.0">
+                        <VBox layoutX="51.0" layoutY="1068.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Cast" />
                               <TextField prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
-                        <VBox layoutX="51.0" layoutY="1261.0" prefHeight="128.0" prefWidth="528.0">
+                        <VBox layoutX="51.0" layoutY="1182.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Language" />
                               <TextField prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
-                        <VBox layoutX="51.0" layoutY="1389.0" prefHeight="128.0" prefWidth="528.0">
+                        <VBox layoutX="51.0" layoutY="1524.0" prefHeight="249.0" prefWidth="528.0">
                            <children>
-                              <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Movie Name" />
-                              <TextField prefHeight="47.0" prefWidth="528.0" />
+                              <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Synopsis" />
+                              <TextArea prefHeight="200.0" prefWidth="200.0" />
                            </children>
                         </VBox>
-                        <VBox layoutX="51.0" layoutY="1517.0" prefHeight="128.0" prefWidth="528.0">
+                        <VBox layoutX="51.0" layoutY="1412.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Show Time" />
                               <TextField prefHeight="47.0" prefWidth="528.0" text="Make a Pop Up Here to Choose &quot;FIXED&quot; TIME for certain DATE [mon, tue, wed...]" />
                            </children>
                         </VBox>
-                        <VBox layoutX="51.0" layoutY="1645.0" prefHeight="128.0" prefWidth="528.0">
+                        <VBox layoutX="51.0" layoutY="1298.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="17.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Rating:" />
                               <HBox prefHeight="56.0" prefWidth="528.0">
@@ -261,7 +261,7 @@
                         <Line endX="90.0" fill="#fbff00" layoutX="150.0" layoutY="69.0" startX="-100.0" stroke="#fff200" strokeLineCap="ROUND" strokeLineJoin="ROUND" />
                         <Line endX="90.0" fill="#fbff00" layoutX="786.0" layoutY="68.0" startX="-100.0" stroke="#fff200" strokeLineCap="ROUND" strokeLineJoin="ROUND" />
                         <Button layoutX="1272.0" layoutY="1792.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" styleClass="Button" text="Next Page" />
-                        <Label layoutX="248.0" layoutY="464.0" text="Prioritise Path first" />
+                        <Button fx:id="FileChooser" layoutX="242.0" layoutY="459.0" mnemonicParsing="false" onAction="#singleImagePathRead" prefHeight="31.0" prefWidth="134.0" styleClass="Button" text="Browse Image" />
                      </children>
                   </AnchorPane>
                </children>

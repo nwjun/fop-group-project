@@ -74,7 +74,7 @@
                               </HBox>
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <Label prefHeight="74.0" prefWidth="192.0" style="-fx-font-size: 25;" styleClass="root" text="Menu uploaded">
+                                    <Label prefHeight="74.0" prefWidth="176.0" style="-fx-font-size: 25;" styleClass="root" text="Menu uploaded">
                                        <font>
                                           <Font name="Arial" size="25.0" />
                                        </font>
@@ -84,7 +84,7 @@
                                     </Label>
                                     <Button fx:id="toAdminFood" mnemonicParsing="false" onAction="#switchToAdminFood" prefHeight="10.0" prefWidth="121.0" styleClass="Button" text="+ edit/ upload">
                                        <HBox.margin>
-                                          <Insets top="27.0" />
+                                          <Insets left="16.0" top="27.0" />
                                        </HBox.margin>
                                     </Button>
                                  </children>

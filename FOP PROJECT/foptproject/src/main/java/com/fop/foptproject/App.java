@@ -27,9 +27,9 @@ public class App extends Application{
         final double WIDTH = screenBounds.getWidth();
         final double HEIGHT = screenBounds.getHeight();
 
-        boolean DEBUG = false;
-        String fxmlFile = "FoodnBeverage.fxml";
-
+        boolean DEBUG = true;
+        String fxmlFile = "AdminFood.fxml";
+        
         if (!DEBUG) {
             fxmlFile = "App.fxml";
         }
