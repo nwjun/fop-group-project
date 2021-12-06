@@ -1,10 +1,8 @@
 package com.fop.foptproject;
 
+import com.fop.foptproject.controller.SceneController;
 import com.fop.readConfig.readConfig;
-import com.fop.sqlUtil.sqlConnect;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Properties;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
