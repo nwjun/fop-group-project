@@ -31,6 +31,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
+
 public class AdminFoodController implements Initializable {
     
     List<String> lsFile = Arrays.asList("*.jpg", "*.png", "*.jpeg");
@@ -38,7 +39,7 @@ public class AdminFoodController implements Initializable {
     String save;
     String desktopURL;
     String desktopPath;
-    private sqlConnect sql = new sqlConnect();
+    private sqlConnect sql;
     private Object[] productId;
     private Object[] price;
     private Object[] posterPath;
@@ -69,6 +70,7 @@ public class AdminFoodController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.sql = new sqlConnect();
         getProduct();
     }    
     
@@ -147,15 +149,15 @@ public class AdminFoodController implements Initializable {
                 
         if (f!= null){
             path = f.getAbsolutePath();
-            Poster.setText(path);
             Image img = new Image(new FileInputStream(path));
             DropImage.setImage(img);      
             this.poster = path.substring(path.lastIndexOf("\\")+1);
             ext = path.substring(path.lastIndexOf(".")+1);
             this.save = "assets\\foods\\" + this.poster;
-            
             this.desktopURL = getPathway();
             this.desktopPath = this.desktopURL + this.poster;
+            
+            Poster.setText(path + " -> " + this.desktopPath);
         }
         
         //Move to Upload Button OnAction

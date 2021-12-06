@@ -23,13 +23,15 @@ public class sqlConnect {
     public sqlConnect(){
         Properties prop = new readConfig().readconfigfile();
         try{
-            this.conn = DriverManager.getConnection(
+        this.conn = DriverManager.getConnection(
             "jdbc:mysql://127.0.0.1:3306/fopdb",prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
-        }
-        catch (Exception e){
+            System.out.println("Succeeded");
+        }catch(SQLException e){
             e.printStackTrace();
-        }  
+            System.out.println("Fail");
+        
+        };
     }
     
     public void addTestData() throws SQLException{
