@@ -7,12 +7,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,6 +37,7 @@ public class AdminMovieController implements Initializable {
     List<String> lsFile = Arrays.asList("*.jpg", "*.png", "*.jpeg");
     String poster;
     String save;
+    String desktopURL;
     String desktopPath;
     private sqlConnect sql = new sqlConnect();
     private Object[] movieId;
@@ -72,7 +77,22 @@ public class AdminMovieController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         getProduct();
-    } 
+    }
+    
+    public String getPathway (){
+        URL URL = AdminFoodController.class.getResource("/com/fop/foptproject/assets/movies/marker.txt");
+        File file = null;
+        try {
+            file = Paths.get(URL.toURI()).toFile();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(AdminFoodController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String absolutePath = file.getAbsolutePath();    
+        //the output of absolutePath is "C:\\Users\\kuckn\\Documents\\GitHub\\fop-group-project\\FOP PROJECT\\foptproject\\target\\classes\\com\\fop\\foptproject\\assets\\movies\\poster7.jpg"
+        String path = absolutePath.substring(0, absolutePath.indexOf("target"))+ "src\\main\\resources\\com\\fop\\foptproject\\assets\\movies\\";
+        
+        return path;
+    }
     
     public void getProduct(){
         HashMap<String,ArrayList<String>> items = sql.queryAllMovie();
@@ -166,8 +186,8 @@ public class AdminMovieController implements Initializable {
             ext = path.substring(path.lastIndexOf(".")+1);
             this.save = "assets\\movies\\" + this.poster;
             
-            // Tolong change to your Path
-            this.desktopPath = "C:\\Users\\kuckn\\Documents\\GitHub\\fop-group-project\\FOP PROJECT\\foptproject\\src\\main\\resources\\com\\fop\\foptproject\\assets\\movies\\" + this.poster;
+            this.desktopURL = getPathway();
+            this.desktopPath = this.desktopURL+ this.poster;
         }
         
         //Move to Upload Button OnAction
