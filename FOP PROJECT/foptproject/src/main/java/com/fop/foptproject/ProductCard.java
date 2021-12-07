@@ -128,11 +128,13 @@ public class ProductCard{
         productName.setId(productId+"_name");
         productDesc.setId(productId+"_desc");
         productName.setStyle("-fx-text-fill:#FFFFFF;-fx-font-size:18px");
-        productDesc.setStyle("-fx-text-fill:#FFFFFF;-fx-font-size:18px");
+        productDesc.setStyle("-fx-text-fill:#FFFFFF;-fx-font-size:14px");
+        productDesc.setWrapText(true);
         productName.setText((String)this.productDetails.get("productName"));
         productDesc.setText((String)this.productDetails.get("productDesc"));
         
         labelContainer.setPrefWidth(350);
+        labelContainer.setSpacing(8);
         labelContainer.setStyle("-fx-padding:10 0 0 20");
         labelContainer.getChildren().addAll(productName,productDesc);
         

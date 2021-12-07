@@ -24,8 +24,9 @@ public class sqlConnect {
         Properties prop = new readConfig().readconfigfile();
         try{
             this.conn = DriverManager.getConnection(
-            "jdbc:mysql://127.0.0.1:3306/fopdb",prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
+            prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
+            System.out.println("Succeeded");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -178,6 +179,7 @@ public class sqlConnect {
         query = "INSERT INTO usercredentials(userId, username, password, email, phoneNumber, permission)" 
               +"VALUE(?,?,?,?,?,?)";
         
+        
         int rowAffected = 0; // check sql response
         
         try{
@@ -194,6 +196,10 @@ public class sqlConnect {
 
             // execute the statement
             rowAffected = prepstat.executeUpdate();
+            
+            // fill blank field to null
+            fillBlankToNull();
+            
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -532,4 +538,18 @@ public class sqlConnect {
         
         return "0";
     }
+    
+    public static void fillBlankToNull(){
+        String query = "UPDATE usercredentials "
+                + "SET phoneNumber = NULL "
+                + "WHERE phoneNumber = ''";
+        try{
+            PreparedStatement prep = conn.prepareStatement(query);
+            prep.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 }

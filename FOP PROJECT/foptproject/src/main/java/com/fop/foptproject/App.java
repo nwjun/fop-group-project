@@ -28,8 +28,8 @@ public class App extends Application{
         final double HEIGHT = screenBounds.getHeight();
 
         boolean DEBUG = true;
-        String fxmlFile = "AdminMovie.fxml";
-        
+        String fxmlFile = "CheckOut.fxml";
+
         if (!DEBUG) {
             fxmlFile = "App.fxml";
         }
@@ -61,6 +61,7 @@ public class App extends Application{
     public static void main(String[] args) throws Exception {
         Properties prop = new readConfig().readconfigfile();
         
+        sqlConnect sql = new sqlConnect();
         launch();
     }
 }
