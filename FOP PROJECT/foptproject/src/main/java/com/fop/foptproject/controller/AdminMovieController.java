@@ -44,7 +44,7 @@ public class AdminMovieController implements Initializable {
     String save;
     String desktopURL;
     String desktopPath;
-    private sqlConnect sql=new sqlConnect();;
+    private sqlConnect sql;
     private Object[] movieId;
     private Object[] movieName;
     private Object[] length;
@@ -81,6 +81,7 @@ public class AdminMovieController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.sql = new sqlConnect();
         try {
             getProduct();
         } catch (ParseException ex) {
