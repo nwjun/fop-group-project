@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -72,8 +73,6 @@ public class AdminFoodController implements Initializable {
     private ImageView DropImage;
     @FXML
     private Button backToMain;
-    @FXML 
-    private TextField Poster;
     @FXML
     private Button FileChooser;
     @FXML
@@ -82,6 +81,18 @@ public class AdminFoodController implements Initializable {
     private Button nextPageButton;
     @FXML
     private Button prevPageButton;
+    @FXML
+    private TextField posterT;
+    @FXML
+    private TextField categoryT;
+    @FXML
+    private TextField productnameT;
+    @FXML
+    private TextField priceT;
+    @FXML
+    private TextArea productDescriptionT;
+    @FXML
+    private Button upload;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -245,7 +256,7 @@ public class AdminFoodController implements Initializable {
         edit.setLayoutY(20);
         edit.setPrefWidth(100);
         edit.setPrefHeight(31);    
-        edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:tranparent;-fx-text-fill:#FFEE00");
+        edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:rgba(0,0,0,0);-fx-text-fill:#FFEE00");
         
         edit.setOnMouseEntered(new EventHandler<MouseEvent>(){
             
@@ -258,7 +269,7 @@ public class AdminFoodController implements Initializable {
             
             @Override
             public void handle(MouseEvent t){
-                edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:tranparent;-fx-text-fill:#FFEE00");
+                edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:rgba(0,0,0,0);-fx-text-fill:#FFEE00");
             }
         });
         
@@ -392,7 +403,7 @@ public class AdminFoodController implements Initializable {
             this.desktopURL = getPathway() + "foods\\";
             this.desktopPath = this.desktopURL + this.poster;
             
-            Poster.setText(path + " -> " + this.save);
+            posterT.setText(path + " -> " + this.save);
         }
         
         //Move to Upload Button OnAction
@@ -425,5 +436,20 @@ public class AdminFoodController implements Initializable {
     private void switchToAdminMain(ActionEvent event) throws IOException {
         SceneController SwitchScene = new SceneController();
         SwitchScene.switchToAdminMain(event);
+    }
+    
+    String a;
+    String b; 
+    String c;
+    String d;
+    String e;
+
+    @FXML
+    private void uploadProduct(ActionEvent event) {
+        a = this.save;
+        b = categoryT.getText();
+        c = productnameT.getText();
+        d = priceT.getText();
+        e = productDescriptionT.getText();
     }
 }

@@ -14,7 +14,7 @@
 }
 
 .optionButton{
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(0,0,0,0);
     -fx-text-fill: #FFFFFF;
     -fx-font-family: 'Montserrat';
     -fx-font-size: 16px;
@@ -23,7 +23,7 @@
 }
 
 .optionButton:hover{
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(0,0,0,0);
     -fx-text-fill: #FFEE00;
 
 }
@@ -55,7 +55,7 @@
     -fx-border-radius:20px;
     -fx-border-color:#FFEE00;
     -fx-border-width:1px;
-    -fx-background-color:tranparent;
+    -fx-background-color:rgba(0,0,0,0);
     -fx-text-fill:#FFEE00;
 }
 
@@ -70,7 +70,7 @@
 
 #nextBtn:hover{
     -fx-text-fill:#FFEE00;
-    -fx-background-color:transparent;
+    -fx-background-color:rgba(0,0,0,0);
     -fx-border-radius:20px;
     -fx-border-color:#FFEE00;
     -fx-border-width:1px;
@@ -90,7 +90,7 @@
   -fx-background-size : 40px 40px;
   -fx-background-position: center;
   -fx-background-repeat:no-repeat;
-  -fx-background-color: transparent;
+  -fx-background-color: rgba(0,0,0,0);
 
 }
 
@@ -99,7 +99,7 @@
   -fx-background-repeat:no-repeat;
   -fx-background-size : 40px 40px;
   -fx-background-position: center;
-  -fx-background-color: transparent;
+  -fx-background-color: rgba(0,0,0,0);
 }
 
 #XBtn {
@@ -107,7 +107,7 @@
   -fx-background-size : 25px 25px;
   -fx-background-position: center;
   -fx-background-repeat:no-repeat;
-  -fx-background-color: transparent;
+  -fx-background-color: rgba(0,0,0,0);
 
 }
 
@@ -116,7 +116,7 @@
   -fx-background-repeat:no-repeat;
   -fx-background-size : 25px 25px;
   -fx-background-position: center;
-  -fx-background-color: transparent;
+  -fx-background-color: rgba(0,0,0,0);
 }
 
 .shoppingCartTitle{

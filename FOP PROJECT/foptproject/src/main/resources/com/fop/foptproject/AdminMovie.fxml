@@ -58,55 +58,55 @@
                         <VBox layoutX="48.0" layoutY="494.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Poster Path" />
-                              <TextField fx:id="Poster" onAction="#PreText" prefHeight="47.0" prefWidth="528.0" promptText="&quot;Browse Image&quot; If Path_Not_Found" />
+                              <TextField fx:id="posterT" prefHeight="47.0" prefWidth="528.0" promptText="&quot;Browse Image&quot; If Path_Not_Found" />
                            </children>
                         </VBox>
                         <VBox layoutX="48.0" layoutY="608.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Movie Name" />
-                              <TextField prefHeight="47.0" prefWidth="528.0" />
+                              <TextField fx:id="movieNameT" prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
                         <VBox layoutX="48.0" layoutY="722.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Movie Length" />
-                              <TextField prefHeight="47.0" prefWidth="528.0" />
+                              <TextField fx:id="lengthT" prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
                         <VBox layoutX="51.0" layoutY="837.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Release Date" />
-                              <TextField prefHeight="47.0" prefWidth="528.0" />
+                              <TextField fx:id="releaseDateT" prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
                         <VBox layoutX="51.0" layoutY="952.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Director" />
-                              <TextField prefHeight="47.0" prefWidth="528.0" />
+                              <TextField fx:id="directorT" prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
                         <VBox layoutX="51.0" layoutY="1068.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Cast" />
-                              <TextField prefHeight="47.0" prefWidth="528.0" />
+                              <TextField fx:id="castT" prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
                         <VBox layoutX="51.0" layoutY="1182.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Language" />
-                              <TextField prefHeight="47.0" prefWidth="528.0" />
+                              <TextField fx:id="languageT" prefHeight="47.0" prefWidth="528.0" />
                            </children>
                         </VBox>
                         <VBox layoutX="51.0" layoutY="1524.0" prefHeight="249.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Synopsis" />
-                              <TextArea prefHeight="200.0" prefWidth="200.0" />
+                              <TextArea fx:id="synopsisT" prefHeight="200.0" prefWidth="200.0" />
                            </children>
                         </VBox>
                         <VBox layoutX="51.0" layoutY="1412.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Show Time" />
-                              <TextField prefHeight="47.0" prefWidth="528.0" text="Make a Pop Up Here to Choose &quot;FIXED&quot; TIME for certain DATE [mon, tue, wed...]" />
+                              <TextField fx:id="showTimeT" prefHeight="47.0" prefWidth="528.0" promptText="Enter JSON Format" text="{&quot;0&quot;: [], &quot;1&quot;: [], &quot;2&quot;: [], &quot;3&quot;: [], &quot;4&quot;: [], &quot;5&quot;: [], &quot;6&quot;: []}" />
                            </children>
                         </VBox>
                         <VBox layoutX="51.0" layoutY="1298.0" prefHeight="128.0" prefWidth="528.0">
@@ -124,12 +124,12 @@
                               </HBox>
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <TextField prefHeight="47.0" prefWidth="250.0">
+                                    <TextField fx:id="iMDBT" prefHeight="47.0" prefWidth="250.0">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
                                     </TextField>
-                                    <TextField prefHeight="47.0" prefWidth="250.0">
+                                    <TextField fx:id="rottenTomatoT" prefHeight="47.0" prefWidth="250.0">
                                        <HBox.margin>
                                           <Insets left="30.0" />
                                        </HBox.margin>
@@ -138,7 +138,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <Button layoutX="483.0" layoutY="1792.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" styleClass="Button" text="Upload" />
+                        <Button fx:id="upload" layoutX="483.0" layoutY="1792.0" mnemonicParsing="false" onAction="#uploadMovie" prefHeight="31.0" prefWidth="100.0" styleClass="Button" text="Upload" />
                         <Label layoutX="686.0" layoutY="36.0" style="-fx-font-size: 25;" text="Movie Uploaded" />
                         <Label layoutX="49.0" layoutY="37.0" style="-fx-font-size: 25;" text="Add/ Edit Movie" />
                         <AnchorPane layoutX="686.0" layoutY="89.0">
