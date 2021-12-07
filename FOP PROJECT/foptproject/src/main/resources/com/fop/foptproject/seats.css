@@ -13,19 +13,19 @@
 }
 
 .check-box>.box{
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(0,0,0,0);
 }
 
 .check-box>.box>.mark {
   -fx-background-image: url("assets/availableSeat.png");
   -fx-background-position: center;
   -fx-background-repeat: stretch;
-  -fx-background-color: transparent;
+  -fx-background-color: rgba(0,0,0,0);
   -fx-shape: none;
   -fx-padding: 20;
 }
 
 .check-box:selected>.box>.mark{
-  -fx-background-color: transparent;
+  -fx-background-color: rgba(0,0,0,0);
   -fx-background-image: url("assets/selectedSeat.png");
 }

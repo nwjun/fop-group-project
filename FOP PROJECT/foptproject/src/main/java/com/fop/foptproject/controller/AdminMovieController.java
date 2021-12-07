@@ -27,6 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -83,8 +84,6 @@ public class AdminMovieController implements Initializable {
     @FXML
     private Button backToMain;
     @FXML
-    private TextField Poster;
-    @FXML
     private Button FileChooser;
     @FXML
     private GridPane movieList;
@@ -92,14 +91,70 @@ public class AdminMovieController implements Initializable {
     private Button nextPageButton;
     @FXML
     private Button prevPageButton;
+    @FXML
+    private TextField posterT;
+    @FXML
+    private TextField movieNameT;
+    @FXML
+    private TextField lengthT;
+    @FXML
+    private TextField releaseDateT;
+    @FXML
+    private TextField directorT;
+    @FXML
+    private TextField castT;
+    @FXML
+    private TextField languageT;
+    @FXML
+    private TextArea synopsisT;
+    @FXML
+    private TextField showTimeT;
+    @FXML
+    private TextField iMDBT;
+    @FXML
+    private TextField rottenTomatoT;
+    @FXML
+    private Button upload;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+//        String s = "M00007";
+//        String t = "assets\\movies\\poster7.jpg";
+//        this.sql.insertPoster(s, t);
+//        
+//        String a = "00007";
+//        String b = "Encanto";
+//        double c = 1.51;
+//        String d = "2021-12-17";
+//        String e = "{\"Cast\": [\"Vishal\", \"Arya\", \"Mirnalini Ravi\", \"Mamta Mohandas\", \"Prakash Raj\"], \"Director\": \"Deirdre Bowen\"}";
+//        String f = "En";
+//        String g = "M00007";
+//        String h = "{\"0\": [], \"1\": [], \"2\": [], \"3\": [], \"4\": [], \"5\": [], \"6\": []}";
+//        String i = "-";
+//        double j = 9;
+//        double k = 9;
+//        int l = 18;
+//        this.sql.insertMovie(a, b, c, d, e, f, g, h, i, j, k, l);
+//        
+//        String u = "S000011";
+//        String v = "assets\\foods\\food4.jpg";
+//        this.sql.insertPoster(u, v);
+//        
+//        String m = "S000011";
+//        String n = "Special Order";
+//        double o = 24;
+//        String p = "S000011";
+//        String q = "A special surprise meal.";
+//        String r = "combo";
+//        this.sql.insertProduct(m, n, o, p, q, r);
+        
         try {
             getProduct();
         } catch (ParseException ex) {
             Logger.getLogger(AdminMovieController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
     
     public void getProduct() throws ParseException{
@@ -136,7 +191,7 @@ public class AdminMovieController implements Initializable {
                     ScrollPane DETAILS = content.getDetailCard();
                     DETAILS.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
                     DETAILS.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-                    DETAILS.setStyle("-fx-padding: 0 0 0 0; -fx-background-color:transparent;");
+                    DETAILS.setStyle("-fx-padding: 0 0 0 0; -fx-background-color:rgba(0,0,0,0);");
                     DETAILS.setPrefHeight(650);
 //                    HBox card = content.getCard();
 
@@ -275,7 +330,7 @@ public class AdminMovieController implements Initializable {
         edit.setLayoutY(20);
         edit.setPrefWidth(100);
         edit.setPrefHeight(31);    
-        edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:tranparent;-fx-text-fill:#FFEE00");
+        edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:rgba(0,0,0,0);-fx-text-fill:#FFEE00");
         
         edit.setOnMouseEntered(new EventHandler<MouseEvent>(){
             
@@ -288,7 +343,7 @@ public class AdminMovieController implements Initializable {
             
             @Override
             public void handle(MouseEvent t){
-                edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:tranparent;-fx-text-fill:#FFEE00");
+                edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:rgba(0,0,0,0);-fx-text-fill:#FFEE00");
             }
         });
         edit.setOnAction(e->{ 
@@ -425,7 +480,7 @@ public class AdminMovieController implements Initializable {
             this.desktopURL = getPathway()+"movies\\";
             this.desktopPath = this.desktopURL+ this.poster;
             
-            Poster.setText(path + " -> " + this.save);
+            posterT.setText(path + " -> " + this.save);
         }
         
         //Move to Upload Button OnAction
@@ -460,9 +515,98 @@ public class AdminMovieController implements Initializable {
         SwitchScene.switchToAdminMain(event);
     }
     
-    @FXML
-    private void PreText (ActionEvent event){
-        
+    String Id;
+    String a;
+    String b;
+    String c;
+    String d;
+    String e;
+    String f;
+    String g;
+    String h;
+    String i;
+    String j;
+    String k;
+    String l;
+    
+    public String lastmovieId (){
+        String Id = Integer.toString(Integer.valueOf((String)this.movieId[movieId.length-1])+1);
+        if(Id.length()==1)
+            Id = "0000" +Id;
+        else if(Id.length() == 2)
+            Id = "000" + Id;
+        return Id;
     }
+    
+    public String JSONdc (String e, String f){
+        String director = ", \"Director\":\""+e+"\"}";
+        String cast ="{\"Cast\":[";
+        String member;
+        int i =f.length();
+        while(i!=-1){     
+            if(f.lastIndexOf(", ")==-1){
+                member = f;
+                cast += "\""+member+"\"";
+                break;     
+            }
+            member = f.substring(f.lastIndexOf(", ")+2, i);
+            cast += "\""+member+"\",";
+            i = f.lastIndexOf(", ", i);
+            f = (f.substring(0, f.lastIndexOf(", ", i)));       
+        }
+        cast += "]";
+        String JSON = cast + director;
+        return JSON;
+    }
+    
+    public void clean(){
+        DropImage.setImage(null);
+        posterT.clear();
+        movieNameT.clear();
+        lengthT.clear();
+        releaseDateT.clear();
+        directorT.clear();
+        castT.clear();     
+        languageT.clear();
+        showTimeT.clear();
+        synopsisT.clear();
+        rottenTomatoT.clear();
+        iMDBT.clear();
+        showTimeT.setText("{\"0\": [], \"1\": [], \"2\": [], \"3\": [], \"4\": [], \"5\": [], \"6\": []}");
+    }
+    
+    public void refresh() throws ParseException{
+        movieList.getChildren().clear();
+        getProduct();
+        currentPage =0;
+        checkPage();
+    }
+    
+    @FXML
+    private void uploadMovie(ActionEvent event) throws ParseException {
+        Id = lastmovieId();
+        a = this.save;
+        sql.insertPoster("M"+Id, a);
+        
+        b = movieNameT.getText();
+        c = lengthT.getText();
+        d = releaseDateT.getText();
+        
+        e = directorT.getText();
+        f = castT.getText();
+        String directorcast = JSONdc(e, f);
+        
+        g = languageT.getText();
+        h = posterT.getText();
+        i = showTimeT.getText();
+        j = synopsisT.getText();
+        k = rottenTomatoT.getText();
+        l = iMDBT.getText();
+        
+        sql.insertMovie(Id, b, Double.parseDouble(c), d, directorcast, g, "M"+Id, i, j, Double.parseDouble(k), Double.parseDouble(l));
+        
+        clean();
+        refresh();
 
+    }
 }

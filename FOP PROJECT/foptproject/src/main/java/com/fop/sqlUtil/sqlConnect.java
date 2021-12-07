@@ -382,6 +382,52 @@ public class sqlConnect {
             
         }catch(SQLException e){
                 e.printStackTrace();
+        }
+    }
+    
+    public void insertPoster(String posterId, String poster){
+        String query = "INSERT INTO pos (posterId, poster) "
+                       + "VALUES (?,?)";
+        
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1, posterId);
+            prepstat.setString(2, poster);
+            
+            int rowAffected = prepstat.executeUpdate();
+            
+        }catch(SQLException e){
+//                e.printStackTrace();
+                System.out.println("Fail");
+        }
+        
+    }
+    
+    public void insertMovie(String movieId, String movieName, double length, String releaseDate, String directorCast, String language, String posterId, String allShowTime, String synopsis, double rottenTomato, double iMDB){
+        String query = "INSERT INTO movies (movieId, movieName, length, releaseDate, directorCast, language, posterId, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict) "
+                       + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1,movieId);
+            prepstat.setString(2,movieName);
+            prepstat.setDouble(3,length);
+            prepstat.setString(4,releaseDate);
+            prepstat.setString(5,directorCast);
+            prepstat.setString(6,language);
+            prepstat.setString(7,posterId);
+            prepstat.setString(8,allShowTime);
+            prepstat.setString(9,synopsis);
+            prepstat.setDouble(10,rottenTomato);
+            prepstat.setDouble(11,iMDB);
+            prepstat.setInt(12,18);
+            
+            int rowAffected = prepstat.executeUpdate();
+            System.out.println("Success");
+        }catch(SQLException e){
+                e.printStackTrace();
                 System.out.println("Fail");
         }
     }
@@ -440,6 +486,28 @@ public class sqlConnect {
         movies.put("ageRestrict",ageRestrict);
         
         return movies;
+    }
+    
+    public void insertProduct(String productId, String productname, double price, String posterId, String productDescription, String category){
+        String query = "INSERT INTO products (productId, productname, price, posterId, productDescription, category) "
+                       +"VALUES (?,?,?,?,?,?)";
+        
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1,productId);
+            prepstat.setString(2,productname);
+            prepstat.setDouble(3,price);
+            prepstat.setString(4,posterId);
+            prepstat.setString(5,productDescription);
+            prepstat.setString(6,category);
+            
+            int rowAffected = prepstat.executeUpdate();
+            
+        }catch(SQLException e){
+//                e.printStackTrace();
+                System.out.println("Fail");
+        }
     }
     
     public static HashMap<String, ArrayList<String>> queryAllProduct(){
