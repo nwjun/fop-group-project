@@ -26,9 +26,9 @@ public class sqlConnect {
             this.conn = DriverManager.getConnection(
             prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
-            System.out.println("Succeeded");
-        }
-        catch (Exception e){
+
+        }catch(SQLException e){
+            e.printStackTrace();
             System.out.println("Fail");
             e.printStackTrace();
         
@@ -368,6 +368,22 @@ public class sqlConnect {
             }
         }
         
+    }
+    public void delete(String movieId){
+        String query = "DELETE FROM pos " 
+                       + "WHERE posterId = ?";
+        
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1, movieId);
+            
+            int rowAffected = prepstat.executeUpdate();
+            
+        }catch(SQLException e){
+                e.printStackTrace();
+                System.out.println("Fail");
+        }
     }
     
     public static HashMap<String, ArrayList<String>> queryAllMovie(){
