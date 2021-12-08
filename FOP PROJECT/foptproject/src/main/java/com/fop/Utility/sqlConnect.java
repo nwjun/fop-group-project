@@ -6,6 +6,8 @@ package com.fop.Utility;
 
 import java.sql.*;
 
+
+import com.fop.Utility.readConfig;
 import java.time.LocalDateTime;
 import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 public class sqlConnect {
     private static Connection conn;
@@ -25,11 +28,10 @@ public class sqlConnect {
             this.conn = DriverManager.getConnection(
             prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
+
         }
-        catch (Exception e){
-            System.out.println("Fail");
+        catch(SQLException e){
             e.printStackTrace();
-        
         }
     }
     
@@ -380,6 +382,68 @@ public class sqlConnect {
         }
         
     }
+    public void delete(String movieId){
+        String query = "DELETE FROM pos " 
+                       + "WHERE posterId = ?";
+        
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1, movieId);
+            
+            int rowAffected = prepstat.executeUpdate();
+            
+        }catch(SQLException e){
+                e.printStackTrace();
+        }
+    }
+    
+    public void insertPoster(String posterId, String poster){
+        String query = "INSERT INTO pos (posterId, poster) "
+                       + "VALUES (?,?)";
+        
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1, posterId);
+            prepstat.setString(2, poster);
+            
+            int rowAffected = prepstat.executeUpdate();
+            
+        }catch(SQLException e){
+//                e.printStackTrace();
+                System.out.println("Fail");
+        }
+        
+    }
+    
+    public void insertMovie(String movieId, String movieName, double length, String releaseDate, String directorCast, String language, String posterId, String allShowTime, String synopsis, double rottenTomato, double iMDB){
+        String query = "INSERT INTO movies (movieId, movieName, length, releaseDate, directorCast, language, posterId, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict) "
+                       + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1,movieId);
+            prepstat.setString(2,movieName);
+            prepstat.setDouble(3,length);
+            prepstat.setString(4,releaseDate);
+            prepstat.setString(5,directorCast);
+            prepstat.setString(6,language);
+            prepstat.setString(7,posterId);
+            prepstat.setString(8,allShowTime);
+            prepstat.setString(9,synopsis);
+            prepstat.setDouble(10,rottenTomato);
+            prepstat.setDouble(11,iMDB);
+            prepstat.setInt(12,18);
+            
+            int rowAffected = prepstat.executeUpdate();
+            System.out.println("Success");
+        }catch(SQLException e){
+                e.printStackTrace();
+                System.out.println("Fail");
+        }
+    }
     
     public static HashMap<String, ArrayList<String>> queryAllMovie(){
         String query = "SELECT movieId, movieName, length, releaseDate, directorCast, language, poster, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict "
@@ -437,10 +501,48 @@ public class sqlConnect {
         return movies;
     }
     
+    public void insertProduct(String productId, String productname, double price, String posterId, String productDescription, String category){
+        String query = "INSERT INTO products (productId, productname, price, posterId, productDescription, category) "
+                       +"VALUES (?,?,?,?,?,?)";
+        
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1,productId);
+            prepstat.setString(2,productname);
+            prepstat.setDouble(3,price);
+            prepstat.setString(4,posterId);
+            prepstat.setString(5,productDescription);
+            prepstat.setString(6,category);
+            
+            int rowAffected = prepstat.executeUpdate();
+            
+        }
+        catch(SQLException e){
+                e.printStackTrace();
+        }
+    }
+    
     public static HashMap<String, ArrayList<String>> queryAllProduct(){
         String query = "SELECT productId, productname, poster, price, productDescription, category "
                        + "FROM products "
-                       + "INNER JOIN pos USING (posterId) ";
+                       + "INNER JOIN pos USING (posterId) "
+                       + "WHERE category = \"beverage\" "
+                       + "UNION "
+                       + "SELECT productId, productname, poster, price, productDescription, category "
+                       + "FROM products "
+                       + "INNER JOIN pos USING (posterId) "
+                       + "WHERE category = \"popcorn\" "
+                       + "UNION "
+                       + "SELECT productId, productname, poster, price, productDescription, category "
+                       + "FROM products "
+                       + "INNER JOIN pos USING (posterId) "
+                       + "WHERE category = \"carte\" "
+                       + "UNION "
+                       + "SELECT productId, productname, poster, price, productDescription, category "
+                       + "FROM products "
+                       + "INNER JOIN pos USING (posterId) "
+                       + "WHERE category = \"combo\" ";
         
         HashMap<String, ArrayList<String>> items = new HashMap<>();
         ArrayList<String> productId = new ArrayList<>();
@@ -552,6 +654,19 @@ public class sqlConnect {
         return "0";
     }
     
+    public static void fillBlankToNull(){
+        String query = "UPDATE usercredentials "
+                + "SET phoneNumber = NULL "
+                + "WHERE phoneNumber = ''";
+        try{
+            PreparedStatement prep = conn.prepareStatement(query);
+            prep.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public static ArrayList<String> queryUserCredentials(String email){
         String query  = "SELECT * FROM usercredentials "
                       + "WHERE email = ?;";
@@ -567,14 +682,7 @@ public class sqlConnect {
             rs.next();
             result.add(rs.getString("userId"));
             result.add(rs.getString("username"));
-            result.add(rs.getString("email"));
-            
-            
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-        
+            result.add(rs.getString("email"));   
         return result;
     }
     

@@ -1,5 +1,5 @@
 @font-face{
-    src: url("../font/Montserrat/Montserrat-Regular.ttf");
+    /*src: url("../font/Montserrat/Montserrat-Regular.ttf");*/
 }
 
 .root{
@@ -16,21 +16,22 @@
     -fx-background-insets:0;
     -fx-font-family: "Montserrat,Regular";
     -fx-background-radius:15px;
-    -fx-font-size: 15fx;
 }
 
 .Button:hover{
     -fx-opacity : 0.6;
 }
 
+
 #backBtn{
     -fx-font-family: 'Montserrat';
     -fx-border-radius:20px;
     -fx-border-color:#FFEE00;
     -fx-border-width:1px;
-    -fx-background-color:tranparent;
+    -fx-background-color:rgba(0,0,0,0);
     -fx-text-fill:#FFEE00;
 }
+
 
 #backBtn:hover{
     -fx-background-color:#FFEE00;

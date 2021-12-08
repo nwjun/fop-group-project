@@ -29,7 +29,7 @@ public class App extends Application{
         final double HEIGHT = screenBounds.getHeight();
 
         boolean DEBUG = true;
-        String fxmlFile = "CheckOut.fxml";
+        String fxmlFile = "AdminFood.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
