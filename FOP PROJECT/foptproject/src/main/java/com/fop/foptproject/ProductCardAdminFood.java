@@ -70,7 +70,8 @@ public class ProductCardAdminFood{
         
         VBox productDetails = makeProductDescription(productId, price);
         productDetails.setPrefHeight(250);
-        productDetails.setPrefWidth(401);
+        productDetails.setPrefWidth(450);
+        productDetails.setStyle("-fx-padding: 5 0 0 25");
         
         card.getChildren().addAll(img,productDetails);
         return card;
@@ -110,7 +111,7 @@ public class ProductCardAdminFood{
 
         AnchorPane editdelete = MakeButton();
         
-        labelContainer.setPrefWidth(652);
+        labelContainer.setPrefWidth(748);
         labelContainer.setPrefHeight(166);
         labelContainer.setStyle("-fx-padding:0 0 0 20");
         labelContainer.getChildren().addAll(path, category, productName, priceTag, productDesc, editdelete);

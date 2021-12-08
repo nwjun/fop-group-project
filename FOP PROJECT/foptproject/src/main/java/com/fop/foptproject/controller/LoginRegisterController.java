@@ -9,6 +9,7 @@ import com.fop.foptproject.App;
 import com.fop.Utility.sqlConnect;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
@@ -70,14 +71,14 @@ public class LoginRegisterController implements Initializable {
     
     
     @FXML
-    public void loginButton(){
+    public void loginButton() throws SQLException{
         String email = emailField.getText();
         String password = passwordField.getText();
         System.out.printf("%s | %s\n",email,password);
         login(email,password);
     }
     
-    public void login(String email, String password){        
+    public void login(String email, String password) throws SQLException{        
         
         if (email.isBlank() || password.isBlank()){
             if (email.isBlank()){
@@ -131,7 +132,7 @@ public class LoginRegisterController implements Initializable {
     }
    
     @FXML
-    public void registerButton(ActionEvent event) throws IOException{
+    public void registerButton(ActionEvent event) throws IOException, SQLException{
         String username = usernameField.getText();
         String email = REmailField.getText();
         String phoneNumber = phoneNumberField.getText();
@@ -226,7 +227,7 @@ public class LoginRegisterController implements Initializable {
         
     }
     
-    public boolean register(String userName, String phoneNumber, String email, String password, String confirmPassword){
+    public boolean register(String userName, String phoneNumber, String email, String password, String confirmPassword) throws SQLException{
         sqlConnect conn2db = new sqlConnect();
         // check if there is any empty field
         if (userName.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()){

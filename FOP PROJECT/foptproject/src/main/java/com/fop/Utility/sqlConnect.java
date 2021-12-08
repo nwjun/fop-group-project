@@ -27,8 +27,10 @@ public class sqlConnect {
             );
         }
         catch (Exception e){
+            System.out.println("Fail");
             e.printStackTrace();
-        }  
+        
+        }
     }
     
     public void addTestData() throws SQLException{

@@ -2,6 +2,7 @@ package com.fop.foptproject.controller;
 
 import com.fop.foptproject.ProductCardAdminMovie;
 import com.fop.Utility.sqlConnect;
+import static com.fop.foptproject.ProductCardAdminMovie.castJsonProcessor;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,16 +22,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javax.imageio.ImageIO;
+import org.json.simple.parser.ParseException;
 
 public class AdminMovieController implements Initializable {
     
@@ -77,7 +82,11 @@ public class AdminMovieController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.sql = new sqlConnect();
-        getProduct();
+        try {
+            getProduct();
+        } catch (ParseException ex) {
+            Logger.getLogger(AdminMovieController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
     
     public String getPathway (){
@@ -95,7 +104,7 @@ public class AdminMovieController implements Initializable {
         return path;
     }
     
-    public void getProduct(){
+    public void getProduct() throws ParseException{
         HashMap<String,ArrayList<String>> items = sql.queryAllMovie();
         this.movieId = items.get("movieId").toArray();
         this.movieName = items.get("movieName").toArray();
@@ -117,19 +126,18 @@ public class AdminMovieController implements Initializable {
         loadCard();   
     }
     
-    public void loadCard(){
+    public void loadCard() throws ParseException{
         int n = movieId.length;
         stop:{
             for(int i = 0; i < 4;i++){
                 for(int j = 0; j < 1 ; j++){
-                    ProductCardAdminMovie content = new ProductCardAdminMovie((String)movieId[currentIndex],(String)posterPath[currentIndex],IMGW,IMGH,SCALE,Double.parseDouble((String)length[currentIndex]),(String)movieName[currentIndex],(String)synopsis[currentIndex], (String)language[currentIndex]);
+                    ProductCardAdminMovie content = new ProductCardAdminMovie((String)movieId[currentIndex], (String)movieName[currentIndex], Double.parseDouble((String)length[currentIndex]), (String)releaseDate[currentIndex], (String)directorCast[currentIndex], (String)language[currentIndex], (String)posterPath[currentIndex], (String)allShowTime[currentIndex],(String)synopsis[currentIndex], Double.parseDouble((String)rottenTomato[currentIndex]),Double.parseDouble((String)iMDB[currentIndex]), Integer.parseInt((String)ageRestrict[currentIndex]),IMGW,IMGH,SCALE);
                     HBox card = content.getCard();
                     movieList.add(card,j,i);
                     currentIndex++;
                     if (currentIndex>=n){
                         break stop;
-                    }   
-           
+                    }
                 }
             }
         }
@@ -151,7 +159,7 @@ public class AdminMovieController implements Initializable {
     }
     
     @FXML
-    public void prevPage(){
+    public void prevPage() throws ParseException{
         if (currentPage == 0)return;
         movieList.getChildren().clear();
         currentIndex = (currentPage-1)*4;
@@ -161,7 +169,7 @@ public class AdminMovieController implements Initializable {
     }      
         
     @FXML
-    public void nextPage(){
+    public void nextPage() throws ParseException{
         if(currentIndex==movieId.length)return;
         movieList.getChildren().clear();
         loadCard();
@@ -180,15 +188,15 @@ public class AdminMovieController implements Initializable {
         //Getting Path of the Image and the Saving Path
         if (f!= null){
             path = f.getAbsolutePath();
-            Poster.setText(path);
             Image img = new Image(new FileInputStream(path));
             DropImage.setImage(img);      
             this.poster = path.substring(path.lastIndexOf("\\")+1);
             ext = path.substring(path.lastIndexOf(".")+1);
             this.save = "assets\\movies\\" + this.poster;
-            
             this.desktopURL = getPathway();
             this.desktopPath = this.desktopURL+ this.poster;
+            
+            Poster.setText(path + " -> " + this.save);
         }
         
         //Move to Upload Button OnAction
@@ -228,4 +236,5 @@ public class AdminMovieController implements Initializable {
     private void PreText (ActionEvent event){
         
     }
+
 }
