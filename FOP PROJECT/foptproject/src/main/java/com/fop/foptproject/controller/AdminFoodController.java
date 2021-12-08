@@ -1,7 +1,7 @@
 package com.fop.foptproject.controller;
 
 import com.fop.foptproject.ProductCardAdminFood;
-import com.fop.sqlUtil.sqlConnect;
+import com.fop.Utility.sqlConnect;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;

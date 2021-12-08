@@ -142,4 +142,8 @@ public class SceneController {
     public void switchToAdminMain(ActionEvent event) throws IOException{
         switchScene(event, "AdminMain.fxml");
     }
+    
+    public void switchToCheckOut(ActionEvent event) throws IOException{
+        switchScene(event, "CheckOut.fxml");
+    }
 }

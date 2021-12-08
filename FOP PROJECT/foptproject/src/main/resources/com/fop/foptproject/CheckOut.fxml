@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: black;" styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="857.0" prefWidth="1760.0" style="-fx-background-color: black;" stylesheets="@checkout.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.CheckOutController">
    <children>
       <VBox prefHeight="939.0" prefWidth="1760.0">
          <children>
@@ -29,23 +35,161 @@
                   <Insets top="35.0" />
                </VBox.margin>
                <children>
-                  <VBox fx:id="purchaseDetailPane" prefHeight="886.0" prefWidth="1215.0" style="-fx-background-color: #252525;" />
-                  <VBox fx:id="paymentMethodPane" prefHeight="886.0" prefWidth="547.0" style="-fx-background-color: #ffffff;">
+                  <VBox fx:id="purchaseDetailPane" prefHeight="888.0" prefWidth="1280.0" style="-fx-background-color: #252525;">
+                     <padding>
+                        <Insets bottom="30.0" left="50.0" right="50.0" top="40.0" />
+                     </padding>
                      <children>
-                        <Label style="-fx-text-fill: #434343; -fx-font-size: 26;" text="Payment Method">
+                        <Label prefWidth="120.0" styleClass="purchaseDetailPaneTitle" text="Movie">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin></Label>
+                        <Label fx:id="movie" alignment="TOP_LEFT" prefHeight="90.0" prefWidth="450.0" styleClass="purchaseDetailPaneDesc" text="Label" />
+                        <Region maxWidth="-Infinity" prefHeight="25.0" prefWidth="1126.0" />
+                        <Label prefHeight="27.0" prefWidth="120.0" styleClass="purchaseDetailPaneTitle" text="Seat(s)">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin></Label>
+                        <Label fx:id="seats" prefHeight="30.0" prefWidth="703.0" styleClass="purchaseDetailPaneDesc" text="Label" />
+                        <Region maxWidth="-Infinity" prefHeight="25.0" prefWidth="1126.0" />
+                        <Label prefHeight="27.0" prefWidth="120.0" styleClass="purchaseDetailPaneTitle" text="Ticket(s)">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin></Label>
+                        <HBox maxWidth="-Infinity" prefWidth="1126.0">
+                           <children>
+                              <Label fx:id="ticketType" alignment="TOP_LEFT" prefHeight="60.0" prefWidth="464.0" styleClass="purchaseDetailPaneDesc" text="Label">
+                                 <HBox.margin>
+                                    <Insets right="281.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="ticketPrice" alignment="TOP_RIGHT" prefHeight="60.0" prefWidth="300.0" styleClass="purchaseDetailPaneDesc" text="RM0.00" />
+                           </children>
+                           <padding>
+                              <Insets right="173.0" />
+                           </padding>
+                        </HBox>
+                        <Region maxWidth="-Infinity" prefHeight="25.0" prefWidth="1126.0" />
+                        <Label prefHeight="27.0" prefWidth="165.0" styleClass="purchaseDetailPaneTitle" text="Food &amp; Beverage">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin></Label>
+                        <HBox maxWidth="-Infinity" prefWidth="1126.0">
+                           <children>
+                              <Label fx:id="FnB" alignment="TOP_LEFT" prefHeight="60.0" prefWidth="464.0" styleClass="purchaseDetailPaneDesc" text="Label">
+                                 <HBox.margin>
+                                    <Insets right="281.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="FnBPrice" alignment="TOP_RIGHT" prefHeight="60.0" prefWidth="300.0" styleClass="purchaseDetailPaneDesc" text="RM0.00" />
+                           </children>
+                           <padding>
+                              <Insets right="173.0" />
+                           </padding>
+                        </HBox>
+                        <Region maxWidth="-Infinity" prefHeight="25.0" prefWidth="1126.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #ffffff;" />
+                        <Region maxWidth="-Infinity" prefHeight="25.0" prefWidth="1126.0" />
+                        <HBox maxWidth="-Infinity" prefHeight="30.0" prefWidth="1126.0">
+                           <children>
+                              <GridPane maxWidth="-Infinity" prefHeight="30.0" prefWidth="1126.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="400.0" />
+                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="100.0" styleClass="purchaseDetailPaneDesc" text="TOTAL" />
+                                    <StackPane alignment="TOP_LEFT" GridPane.columnIndex="1">
+                                       <children>
+                                          <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="398.0" styleClass="purchaseDetailPaneTitle" text="(included 6% SST &amp; 10% Service Charge)">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                       </children>
+                                    </StackPane>
+                                    <StackPane alignment="CENTER_RIGHT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="500.0" GridPane.columnIndex="2">
+                                       <children>
+                                          <Label fx:id="totalAmount" alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="300.0" styleClass="purchaseDetailPaneDesc" text="RM0.00" />
+                                       </children>
+                                       <padding>
+                                          <Insets right="171.0" />
+                                       </padding>
+                                    </StackPane>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="paymentMethodPane" prefHeight="675.0" prefWidth="343.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <Label id="paymentMethodTitle" text="Payment Method">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Region prefHeight="53.0" prefWidth="426.0" />
-                        <ComboBox id="cardChoice" prefHeight="62.0" prefWidth="426.0" promptText="Select Saved Card" style="-fx-background-insets: 0; -fx-background-color: white; -fx-border-color: black; -fx-border-width: 1; -fx-border-radius: 10;" styleClass="combobox" stylesheets="@checkout.css">
+                        <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="294.0" styleClass="regionBox" />
+                        <ComboBox id="cardChoice" fx:id="selectCard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="294.0" promptText="Select Saved Card" styleClass="combobox">
                            <padding>
                               <Insets left="15.0" />
                            </padding>
                         </ComboBox>
+                        <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="294.0" styleClass="regionBox" />
+                        <Label alignment="CENTER" prefHeight="25.0" prefWidth="349.0" styleClass="checkoutPanelabel" text="OR" />
+                        <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="294.0" styleClass="regionBox" />
+                        <Label styleClass="checkoutPanelabel" text="Credit/Debit Card">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="cardNumber" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="294.0" styleClass="textField" />
+                        <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="294.0" styleClass="regionBox" />
+                        <HBox>
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label styleClass="checkoutPanelabel" text="Expiry Date">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="expiryDate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="100.0" styleClass="textField" />
+                                 </children>
+                              </VBox>
+                              <Region prefHeight="55.0" prefWidth="42.0" />
+                              <VBox>
+                                 <children>
+                                    <Label styleClass="checkoutPanelabel" text="CVV">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <PasswordField fx:id="cvv" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="100.0" styleClass="textField" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="294.0" styleClass="regionBox" />
+                        <CheckBox fx:id="saveCard" mnemonicParsing="false" text="Save card for next payment" wrapText="true">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </CheckBox>
+                        <CheckBox fx:id="TnCAgreement" alignment="TOP_LEFT" mnemonicParsing="false" text="I agree to the terms of the GSC Customer Agreement" wrapText="true" />
+                        <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="294.0" styleClass="regionBox" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button id="backButton" fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="90.0" text="Back" />
+                              <Region prefHeight="100.0" prefWidth="59.0" />
+                              <Button id="checkOutButton" fx:id="payButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pay" prefHeight="30.0" prefWidth="90.0" text="Pay" />
+                           </children>
+                        </HBox>
                      </children>
                      <padding>
-                        <Insets bottom="20.0" left="60.0" right="60.0" top="50.0" />
+                        <Insets bottom="20.0" left="40.0" right="40.0" top="40.0" />
                      </padding>
                   </VBox>
                </children>

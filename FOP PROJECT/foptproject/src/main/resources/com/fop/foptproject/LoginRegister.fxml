@@ -9,6 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
@@ -38,6 +39,11 @@
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
                         <PasswordField fx:id="passwordField" onKeyTyped="#checkIdenticalPass" prefHeight="31.0" prefWidth="273.0" />
                         <Label fx:id="passwordFieldWarning" textFill="RED" />
+                        <StackPane alignment="CENTER_RIGHT">
+                           <children>
+                              <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="26.0" prefWidth="26.0" text="Button" translateX="-5.0" translateY="-46.0" />
+                           </children>
+                        </StackPane>
                      </children>
                   </VBox>
                   <VBox layoutX="937.0" layoutY="123.0" prefHeight="139.0" prefWidth="245.0">

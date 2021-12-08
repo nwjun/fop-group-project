@@ -3,10 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.fop.foptproject.controller;
-import com.fop.EmailUtil.emailTo;
-import com.fop.checker.Checker;
+import com.fop.Utility.emailTo;
+import com.fop.Utility.Checker;
 import com.fop.foptproject.App;
-import com.fop.sqlUtil.sqlConnect;
+import com.fop.Utility.sqlConnect;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.fop.Ticket;
+package com.fop.Utility;
 
 import com.google.zxing.WriterException;
 import com.itextpdf.io.image.ImageData;
@@ -15,8 +15,6 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.kernel.pdf.xobject.PdfXObject;
-import com.itextpdf.layout.element.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 

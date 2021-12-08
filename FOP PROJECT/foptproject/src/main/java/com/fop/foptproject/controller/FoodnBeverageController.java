@@ -6,7 +6,7 @@ package com.fop.foptproject.controller;
  */
 
 import com.fop.foptproject.ProductCard;
-import com.fop.sqlUtil.sqlConnect;
+import com.fop.Utility.sqlConnect;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -61,6 +61,8 @@ public class FoodnBeverageController implements Initializable{
     @FXML
     private ScrollPane shoppingList;
     @FXML
+    private StackPane boxBlur;
+    @FXML
     private VBox priceContainer;
     @FXML
     private VBox nameContainer;
@@ -84,6 +86,8 @@ public class FoodnBeverageController implements Initializable{
     private Button openPopUp;
     @FXML
     private Button backButton;
+    @FXML
+    private Button checkOutButton;
     @FXML 
     private Label title;
     @FXML
@@ -155,8 +159,15 @@ public class FoodnBeverageController implements Initializable{
         new SceneController().switchToSeats(event);
     }
     
+    @FXML
+    public void checkOut(ActionEvent event) throws IOException{
+        new SceneController().switchToCheckOut(event);
+    }
+    
     @FXML 
     public void openPopUp(){
+        BoxBlur b = new BoxBlur(10,10,2);
+        boxBlur.setEffect(b);
         lineAnimation(1800,0,popUpPane);
         HashMap<String,Integer> current = ProductCard.retrieveAllPurchaseDetail();
         double price;
@@ -198,6 +209,7 @@ public class FoodnBeverageController implements Initializable{
     
     @FXML 
     public void closePopUp(){
+        boxBlur.setEffect(null);
         lineAnimation(0,1800,popUpPane);
         this.priceContainer.getChildren().clear();
         this.nameContainer.getChildren().clear();
@@ -224,6 +236,7 @@ public class FoodnBeverageController implements Initializable{
         getProduct("combo");
         checkPage();
     }
+    
     @FXML
     public void carte(){
         lineAnimation(TRANSLATEX,634,highlightLine);
@@ -233,6 +246,7 @@ public class FoodnBeverageController implements Initializable{
         getProduct("carte");
         checkPage();
     }
+    
     @FXML
     public void beverage(){
         lineAnimation(TRANSLATEX,785,highlightLine);
@@ -261,8 +275,7 @@ public class FoodnBeverageController implements Initializable{
         currentPage++;
         checkPage();
     }
-    
-       
+          
     @Override
     public void initialize(URL url, ResourceBundle rb){
         combo();

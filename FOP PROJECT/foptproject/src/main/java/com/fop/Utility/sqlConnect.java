@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.fop.sqlUtil;
+package com.fop.Utility;
 
 import java.sql.*;
 
-import com.fop.readConfig.readConfig;
 import java.time.LocalDateTime;
 import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -26,7 +25,6 @@ public class sqlConnect {
             this.conn = DriverManager.getConnection(
             prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
-            System.out.println("Succeeded");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -80,6 +78,19 @@ public class sqlConnect {
         
         System.out.printf("UserID : %s\nUsername : %s\nPassword : %s\nEmail : %s\nPhone : %s\nPermission : %d\n",userId,username,password,email,phone,permission);
         
+    }
+    
+    public static void fillBlankToNull(){
+        String query = "UPDATE usercredentials "
+                + "SET phoneNumber = NULL "
+                + "WHERE phoneNumber = ''";
+        try{
+            PreparedStatement prep = conn.prepareStatement(query);
+            prep.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
     }
     
     public static int checkDup(String email, String phoneNumber){ 
@@ -539,17 +550,30 @@ public class sqlConnect {
         return "0";
     }
     
-    public static void fillBlankToNull(){
-        String query = "UPDATE usercredentials "
-                + "SET phoneNumber = NULL "
-                + "WHERE phoneNumber = ''";
+    public static ArrayList<String> queryUserCredentials(String email){
+        String query  = "SELECT * FROM usercredentials "
+                      + "WHERE email = ?;";
+        ArrayList<String> result = new ArrayList<>();
+             
         try{
             PreparedStatement prep = conn.prepareStatement(query);
-            prep.executeUpdate();
+            
+            prep.setString(1,email);
+            
+            ResultSet rs = prep.executeQuery();
+            
+            rs.next();
+            result.add(rs.getString("userId"));
+            result.add(rs.getString("username"));
+            result.add(rs.getString("email"));
+            
+            
         }
         catch(SQLException e){
             e.printStackTrace();
         }
+        
+        return result;
     }
-
+    
 }

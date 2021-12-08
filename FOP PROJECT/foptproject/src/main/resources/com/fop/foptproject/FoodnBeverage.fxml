@@ -18,12 +18,11 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" pannable="true" prefHeight="777.0" prefWidth="1536.0" styleClass="root" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.FoodnBeverageController">
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" pannable="true" prefHeight="863.0" prefWidth="1536.0" styleClass="root" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.FoodnBeverageController">
    <content>
-      <StackPane>
+      <StackPane prefWidth="1534.0">
          <children>
-            <StackPane fx:id="boxBlur" prefHeight="150.0" prefWidth="200.0" translateX="1800.0" />
-            <StackPane prefHeight="863.0" prefWidth="1534.0" styleClass="root" stylesheets="@foodnbeverage.css">
+            <StackPane fx:id="boxBlur" prefHeight="863.0" prefWidth="1534.0" styleClass="root" stylesheets="@foodnbeverage.css">
                <children>
                   <VBox>
                      <children>
@@ -118,7 +117,7 @@
                                                       <Insets top="32.0" />
                                                    </HBox.margin></Button>
                                                 <Region prefHeight="98.0" prefWidth="39.0" />
-                                                <Button id="nextBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Check Out">
+                                                <Button id="nextBtn" fx:id="checkOutButton" mnemonicParsing="false" onAction="#checkOut" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Check Out">
                                                    <HBox.margin>
                                                       <Insets top="32.0" />
                                                    </HBox.margin></Button>
