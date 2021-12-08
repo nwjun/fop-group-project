@@ -40,6 +40,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import org.json.simple.parser.ParseException;
+import com.fop.foptproject.App;
 
 
 public class AdminFoodController implements Initializable {
@@ -59,15 +60,16 @@ public class AdminFoodController implements Initializable {
     private Object[] productDesc;
     private Object[] productName;
     private Object[] category;
-    private double IMGW = 250 ;
-    private double IMGH = 250;
-    private double SCALE = 0.9;
+    private final double IMGW = 250 ;
+    private final double IMGH = 250;
+    private final double SCALE = 0.9;
     private int currentIndex = 0;
     private int currentPage = 0;
     private int maxPage;
     
     private String editproductId, deleteproductId;
     private boolean deletestatus = false;   
+    private boolean updatestatus = false;
     
     @FXML
     private ImageView DropImage;
@@ -272,6 +274,32 @@ public class AdminFoodController implements Initializable {
                 edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:rgba(0,0,0,0);-fx-text-fill:#FFEE00");
             }
         });
+        edit.setOnAction(e -> {
+            this.editproductId = edit.getId();
+             
+            int index=0;
+
+            for (int i =0; i<this.productId.length;i++){
+                if(((String)this.productId[i]).equals(this.editproductId)){
+                    index = i;
+                    break;
+                }
+                
+            }
+
+            String path = App.class.getResource((String)this.posterPath[index]).toString(); 
+            Image img = new Image(path, IMGW, IMGH, false, false);
+            clean();
+            DropImage.setImage(img);
+            posterT.setText((String)this.posterPath[index]);
+            categoryT.setText((String)this.category[index]);
+            productnameT.setText((String)this.productName[index]);
+            priceT.setText((String)this.price[index]);
+            productDescriptionT.setText((String)this.productDesc[index]);
+            
+            this.updatestatus = true;
+        
+        });
         
         delete.setId(productId);
         delete.setText("Delete");
@@ -384,7 +412,8 @@ public class AdminFoodController implements Initializable {
         return path;
     }
     
-    
+    String pathpath = "";
+    String ext = "";
     @FXML
     private void singleImagePathRead(ActionEvent event) throws FileNotFoundException {
         FileChooser fc = new FileChooser();
@@ -394,29 +423,18 @@ public class AdminFoodController implements Initializable {
         String ext = "";
                 
         if (f!= null){
-            path = f.getAbsolutePath();
-            Image img = new Image(new FileInputStream(path));
+            this.pathpath = f.getAbsolutePath();
+            Image img = new Image(new FileInputStream(this.pathpath));
             DropImage.setImage(img);      
-            this.poster = path.substring(path.lastIndexOf("\\")+1);
-            ext = path.substring(path.lastIndexOf(".")+1);
+            this.poster = this.pathpath.substring(this.pathpath.lastIndexOf("\\")+1);
+            this.ext = this.pathpath.substring(this.pathpath.lastIndexOf(".")+1);
             this.save = "assets\\foods\\" + this.poster;
-            this.desktopURL = getPathway() + "foods\\";
-            this.desktopPath = this.desktopURL + this.poster;
+            this.desktopURL = getPathway()+"foods\\";
+            this.desktopPath = this.desktopURL+ this.poster;
             
-            posterT.setText(path + " -> " + this.save);
+            posterT.setText(this.save);
         }
         
-        //Move to Upload Button OnAction
-        BufferedImage img = null;
-        try{
-            img = ImageIO.read(new File(path));
-        }catch (IOException e){
-        }
-        try{
-        File outputfile = new File(this.desktopPath);
-        ImageIO.write(img, ext, outputfile);
-        }catch(IOException e){
-        }  
     }
     
     @FXML
@@ -438,18 +456,86 @@ public class AdminFoodController implements Initializable {
         SwitchScene.switchToAdminMain(event);
     }
     
+    String Id;
     String a;
     String b; 
     String c;
     String d;
     String e;
-
+    
+    public String lastproductId (){
+        String x = sql.getProductLastId(b);
+        x = x.substring(1, x.length());
+        String Id = Integer.toString(Integer.valueOf(x)+1);
+        if(Id.length()==1)
+            Id = "00000" +Id;
+        else if(Id.length() == 2)
+            Id = "0000" + Id;
+        
+        if(b.equals("beverage"))
+            Id = "B" + Id;
+        else if (b.equals("combo"))
+            Id = "S" + Id;
+        else if (b.equals("carte"))
+            Id = "F"+ Id;
+        else if (b.equals("popcorn"))
+            Id = "P" + Id;
+        
+        return Id;
+    }    
+    
+    public void clean(){
+        DropImage.setImage(null);
+        posterT.clear();
+        categoryT.clear();
+        productnameT.clear();
+        priceT.clear();
+        productDescriptionT.clear();
+    }
+    
+    public void refresh() throws ParseException{
+        productList.getChildren().clear();
+        getProduct();
+        currentPage =0;
+        checkPage();
+    }
+    
     @FXML
-    private void uploadProduct(ActionEvent event) {
-        a = this.save;
+    private void uploadProduct(ActionEvent event) throws ParseException {
+        
+        if (this.updatestatus){
+            Id = this.editproductId;
+            sql.delete(Id);
+            a = posterT.getText();
+            sql.insertPoster(Id, a);
+        }
+        else{
         b = categoryT.getText();
+        Id = lastproductId();
+        a = this.save;
+        sql.insertPoster(Id, a);
+        }
+        
         c = productnameT.getText();
         d = priceT.getText();
         e = productDescriptionT.getText();
+        sql.insertProduct(Id, c, Double.parseDouble(d), Id, e, b);
+        
+        clean();
+        refresh();
+        this.updatestatus = false;
+        
+        // from singleImagePathRead
+        BufferedImage img = null;
+        try{
+            img = ImageIO.read(new File(this.pathpath));
+            File outputfile = new File(this.desktopPath);
+            ImageIO.write(img, this.ext, outputfile);
+            System.out.println("Upload Successful: Poster Changed/Uploaded");
+            this.pathpath = "";
+            this.ext="";
+        }catch(IOException e){
+            System.out.println("Upload Successful: Poster Unchanged");
+        }
     }
 }

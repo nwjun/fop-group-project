@@ -1,6 +1,5 @@
 package com.fop.foptproject;
 
-import com.fop.Utility.sqlConnect;
 import com.fop.foptproject.controller.AdminMovieController;
 import java.util.HashMap;
 import javafx.scene.control.Label;
@@ -211,7 +210,7 @@ public class ProductCardAdminMovie{
         return cast;
     }
     
-    public String directorJsonProcesor(String directorCast){
+    public static String directorJsonProcesor(String directorCast){
         JSONObject json = new JSONObject(directorCast);
         
         String director = (String) json.get("Director");
