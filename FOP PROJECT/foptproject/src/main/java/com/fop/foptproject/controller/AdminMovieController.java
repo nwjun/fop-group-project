@@ -1,9 +1,7 @@
 package com.fop.foptproject.controller;
 
 import com.fop.foptproject.ProductCardAdminMovie;
-import static com.fop.foptproject.ProductCardAdminMovie.castJsonProcessor;
-import static com.fop.foptproject.ProductCardAdminMovie.*;
-import com.fop.sqlUtil.sqlConnect;
+import com.fop.Utility.sqlConnect;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,7 +30,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;

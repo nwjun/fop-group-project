@@ -5,7 +5,7 @@
 package com.fop.foptproject;
 
 import com.fop.foptproject.controller.FoodnBeverageController;
-import com.fop.sqlUtil.sqlConnect;
+import com.fop.Utility.sqlConnect;
 import java.util.HashMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

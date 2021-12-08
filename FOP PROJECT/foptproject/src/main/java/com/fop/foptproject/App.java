@@ -2,7 +2,7 @@ package com.fop.foptproject;
 
 import com.fop.foptproject.controller.SceneController;
 import com.fop.readConfig.readConfig;
-import com.fop.sqlUtil.sqlConnect;
+import com.fop.Utility.sqlConnect;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ public class App extends Application{
         final double HEIGHT = screenBounds.getHeight();
 
         boolean DEBUG = true;
-        String fxmlFile = "AdminMovie.fxml";
+        String fxmlFile = "AdminFood.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
