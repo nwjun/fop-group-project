@@ -6,12 +6,16 @@ package com.fop.Utility;
 
 import java.sql.*;
 
-import com.fop.readConfig.readConfig;
+
+import com.fop.Utility.readConfig;
 import java.time.LocalDateTime;
 import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class sqlConnect {
     private static Connection conn;
@@ -25,11 +29,9 @@ public class sqlConnect {
             prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
 
-        }catch(SQLException e){
+        }
+        catch(SQLException e){
             e.printStackTrace();
-            System.out.println("Fail");
-            e.printStackTrace();
-        
         }
     }
     
@@ -80,6 +82,19 @@ public class sqlConnect {
         
         System.out.printf("UserID : %s\nUsername : %s\nPassword : %s\nEmail : %s\nPhone : %s\nPermission : %d\n",userId,username,password,email,phone,permission);
         
+    }
+    
+    public static void fillBlankToNull(){
+        String query = "UPDATE usercredentials "
+                + "SET phoneNumber = NULL "
+                + "WHERE phoneNumber = ''";
+        try{
+            PreparedStatement prep = conn.prepareStatement(query);
+            prep.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
     }
     
     public static int checkDup(String email, String phoneNumber){ 
@@ -502,9 +517,9 @@ public class sqlConnect {
             
             int rowAffected = prepstat.executeUpdate();
             
-        }catch(SQLException e){
-//                e.printStackTrace();
-                System.out.println("Fail");
+        }
+        catch(SQLException e){
+                e.printStackTrace();
         }
     }
     
@@ -652,4 +667,23 @@ public class sqlConnect {
         }
     }
 
+    public static ArrayList<String> queryUserCredentials(String email){
+        String query  = "SELECT * FROM usercredentials "
+                      + "WHERE email = ?;";
+        ArrayList<String> result = new ArrayList<>();
+             
+        try{
+            PreparedStatement prep = conn.prepareStatement(query);
+            
+            prep.setString(1,email);
+            
+            ResultSet rs = prep.executeQuery();
+            
+            rs.next();
+            result.add(rs.getString("userId"));
+            result.add(rs.getString("username"));
+            result.add(rs.getString("email"));   
+        return result;
+    }
+    
 }

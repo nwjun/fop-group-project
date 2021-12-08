@@ -2,6 +2,7 @@ package com.fop.foptproject.controller;
 
 import com.fop.foptproject.ProductCardAdminMovie;
 import com.fop.Utility.sqlConnect;
+import static com.fop.foptproject.ProductCardAdminMovie.castJsonProcessor;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;

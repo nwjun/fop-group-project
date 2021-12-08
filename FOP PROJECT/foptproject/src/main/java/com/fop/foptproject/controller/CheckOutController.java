@@ -1,24 +1,28 @@
 package com.fop.foptproject.controller;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
-
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
- * FXML Controller class
  *
- * @author User
+ * @author WeiXin
  */
 public class CheckOutController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    public void back(ActionEvent event) throws IOException{
+        new SceneController().switchToFnB(event);
+    }
+    
+    @FXML
+    public void pay(ActionEvent event){
+        System.out.println("Clicked Pay");
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

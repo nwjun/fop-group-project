@@ -1,7 +1,8 @@
 package com.fop.foptproject;
 
+import com.fop.Utility.emailTo;
 import com.fop.foptproject.controller.SceneController;
-import com.fop.readConfig.readConfig;
+import com.fop.Utility.readConfig;
 import com.fop.Utility.sqlConnect;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,7 +62,9 @@ public class App extends Application{
     public static void main(String[] args) throws Exception {
         Properties prop = new readConfig().readconfigfile();
         
-        sqlConnect sql = new sqlConnect();
+//        sqlConnect sql = new sqlConnect();
+//        new emailTo(prop.getProperty("configuration.testSingleEmail")).sendEmailVerification("Lim",false);
+        
         launch();
     }
 }
