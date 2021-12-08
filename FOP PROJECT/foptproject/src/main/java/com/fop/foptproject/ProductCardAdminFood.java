@@ -1,27 +1,10 @@
 package com.fop.foptproject;
 
 import static com.fop.foptproject.ProductCardAdminMovie.insertString;
-import com.fop.foptproject.controller.FoodnBeverageController;
-import com.fop.sqlUtil.sqlConnect;
 import java.util.HashMap;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
 public class ProductCardAdminFood{

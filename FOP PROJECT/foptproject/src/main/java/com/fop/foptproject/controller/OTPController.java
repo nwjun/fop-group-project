@@ -5,7 +5,7 @@ package com.fop.foptproject.controller;
  */
 
 import com.fop.EmailUtil.emailTo;
-import com.fop.sqlUtil.sqlConnect;
+import com.fop.Utility.sqlConnect;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;

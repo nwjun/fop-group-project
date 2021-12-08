@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.fop.sqlUtil;
+package com.fop.Utility;
 
 import java.sql.*;
 
@@ -12,8 +12,6 @@ import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class sqlConnect {
     private static Connection conn;
@@ -513,7 +511,23 @@ public class sqlConnect {
     public static HashMap<String, ArrayList<String>> queryAllProduct(){
         String query = "SELECT productId, productname, poster, price, productDescription, category "
                        + "FROM products "
-                       + "INNER JOIN pos USING (posterId) ";
+                       + "INNER JOIN pos USING (posterId) "
+                       + "WHERE category = \"beverage\" "
+                       + "UNION "
+                       + "SELECT productId, productname, poster, price, productDescription, category "
+                       + "FROM products "
+                       + "INNER JOIN pos USING (posterId) "
+                       + "WHERE category = \"popcorn\" "
+                       + "UNION "
+                       + "SELECT productId, productname, poster, price, productDescription, category "
+                       + "FROM products "
+                       + "INNER JOIN pos USING (posterId) "
+                       + "WHERE category = \"carte\" "
+                       + "UNION "
+                       + "SELECT productId, productname, poster, price, productDescription, category "
+                       + "FROM products "
+                       + "INNER JOIN pos USING (posterId) "
+                       + "WHERE category = \"combo\" ";
         
         HashMap<String, ArrayList<String>> items = new HashMap<>();
         ArrayList<String> productId = new ArrayList<>();

@@ -6,7 +6,7 @@ package com.fop.foptproject.controller;
  */
 
 import com.fop.foptproject.ProductCard;
-import com.fop.sqlUtil.sqlConnect;
+import com.fop.Utility.sqlConnect;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
