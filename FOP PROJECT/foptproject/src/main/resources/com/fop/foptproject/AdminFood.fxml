@@ -54,7 +54,7 @@
                         <VBox layoutX="51.0" layoutY="596.0" prefHeight="128.0" prefWidth="528.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Category" />
-                              <TextField fx:id="categoryT" prefHeight="47.0" prefWidth="528.0" promptText="combo || beverage || carte" />
+                              <TextField fx:id="categoryT" prefHeight="47.0" prefWidth="528.0" promptText="combo || beverage || carte || popcorn" />
                            </children>
                         </VBox>
                         <VBox layoutX="53.0" layoutY="724.0" prefHeight="128.0" prefWidth="528.0">
@@ -75,7 +75,7 @@
                               <TextArea fx:id="productDescriptionT" prefHeight="258.0" prefWidth="528.0" text="&#10;" />
                            </children>
                         </VBox>
-                        <Button fx:id="upload" layoutX="481.0" layoutY="1316.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="100.0" styleClass="Button" text="Upload" />
+                        <Button fx:id="upload" layoutX="481.0" layoutY="1316.0" mnemonicParsing="false" onAction="#uploadProduct" prefHeight="31.0" prefWidth="100.0" styleClass="Button" text="Upload" />
                         <Label layoutX="686.0" layoutY="36.0" style="-fx-font-size: 25;" text="Food Uploaded" />
                         <VBox layoutX="51.0" layoutY="476.0" prefHeight="128.0" prefWidth="528.0">
                            <children>

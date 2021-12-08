@@ -2,7 +2,7 @@ package com.fop.foptproject.controller;
 
 import com.fop.foptproject.ProductCardAdminMovie;
 import com.fop.Utility.sqlConnect;
-import static com.fop.foptproject.ProductCardAdminMovie.castJsonProcessor;
+import com.fop.foptproject.App;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,6 +43,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import org.json.simple.parser.ParseException;
+import static com.fop.foptproject.ProductCardAdminMovie.castJsonProcessor;
+import static com.fop.foptproject.ProductCardAdminMovie.directorJsonProcesor;
 
 public class AdminMovieController implements Initializable {
     
@@ -75,7 +77,8 @@ public class AdminMovieController implements Initializable {
     private int maxPage;
     
     private String editmovieId, deletemovieId;
-    private boolean deletestatus = false;    
+    private boolean deletestatus = false; 
+    private boolean updatestatus = false;
     
     @FXML
     private ImageView DropImage;
@@ -345,7 +348,39 @@ public class AdminMovieController implements Initializable {
             }
         });
         edit.setOnAction(e->{ 
-            this.editmovieId=edit.getId();
+            this.editmovieId=edit.getId(); 
+            int index=0;
+
+            for (int i =0; i<this.movieId.length;i++){
+                if(((String)this.movieId[i]).equals(this.editmovieId)){
+                    index = i;
+                    break;
+                }
+                
+            }
+            
+            
+            String path = App.class.getResource((String)this.posterPath[index]).toString(); 
+            Image img = new Image(path, IMGW, IMGH, false, false);
+            clean();
+            DropImage.setImage(img);
+            posterT.setText((String)this.posterPath[index]);
+            movieNameT.setText((String)this.movieName[index]);
+            lengthT.setText((String)this.length[index]);
+            releaseDateT.setText((String)this.releaseDate[index]);
+            languageT.setText((String)this.language[index]);
+            showTimeT.setText((String)this.allShowTime[index]);
+            synopsisT.setText((String)this.synopsis[index]);
+            rottenTomatoT.setText((String)this.rottenTomato[index]);
+            iMDBT.setText((String)this.iMDB[index]);
+            directorT.setText(directorJsonProcesor((String)this.directorCast[index]));
+            try {     
+                castT.setText(castJsonProcessor((String)this.directorCast[index]));
+            } catch (ParseException ex) {
+                System.out.println("Parse Error");
+            }
+            this.updatestatus = true;
+            
         });
         
         delete.setId(movieId);
@@ -459,39 +494,30 @@ public class AdminMovieController implements Initializable {
         return path;
     }
     
+    String pathpath = "";
+    String ext = "";
     @FXML
     private void singleImagePathRead(ActionEvent event) throws FileNotFoundException {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new ExtensionFilter("Image Files", lsFile));
         File f = fc.showOpenDialog(null);
-        String path = "";
-        String ext = "";
         
         //Getting Path of the Image and the Saving Path
         if (f!= null){
-            path = f.getAbsolutePath();
-            Image img = new Image(new FileInputStream(path));
+            this.pathpath = f.getAbsolutePath();
+            Image img = new Image(new FileInputStream(this.pathpath));
             DropImage.setImage(img);      
-            this.poster = path.substring(path.lastIndexOf("\\")+1);
-            ext = path.substring(path.lastIndexOf(".")+1);
+            this.poster = this.pathpath.substring(this.pathpath.lastIndexOf("\\")+1);
+            this.ext = this.pathpath.substring(this.pathpath.lastIndexOf(".")+1);
             this.save = "assets\\movies\\" + this.poster;
             this.desktopURL = getPathway()+"movies\\";
             this.desktopPath = this.desktopURL+ this.poster;
             
-            posterT.setText(path + " -> " + this.save);
+            posterT.setText(this.save);
         }
         
         //Move to Upload Button OnAction
-        BufferedImage img = null;
-        try{
-            img = ImageIO.read(new File(path));
-        }catch (IOException e){
-        }
-        try{
-        File outputfile = new File(this.desktopPath);
-        ImageIO.write(img, ext, outputfile);
-        }catch(IOException e){
-        }
+        
     }
     
     @FXML
@@ -582,9 +608,17 @@ public class AdminMovieController implements Initializable {
     
     @FXML
     private void uploadMovie(ActionEvent event) throws ParseException {
-        Id = lastmovieId();
-        a = this.save;
-        sql.insertPoster("M"+Id, a);
+        if (this.updatestatus){
+            Id = this.editmovieId;
+            sql.delete("M"+Id);
+            a = posterT.getText();
+            sql.insertPoster("M"+Id, a);
+        }
+        else{
+            Id = lastmovieId();
+            a = this.save;
+            sql.insertPoster("M"+Id, a);
+            }
         
         b = movieNameT.getText();
         c = lengthT.getText();
@@ -605,6 +639,21 @@ public class AdminMovieController implements Initializable {
         
         clean();
         refresh();
+        this.updatestatus = false;
+        
+        // from singleImagePathRead
+        BufferedImage img = null;
+        try{
+            img = ImageIO.read(new File(this.pathpath));
+            File outputfile = new File(this.desktopPath);
+            ImageIO.write(img, this.ext, outputfile);
+            System.out.println("Upload Successful: Poster Changed/Uploaded");
+            this.pathpath = "";
+            this.ext="";
+        }catch(IOException e){
+            System.out.println("Upload Successful: Poster Unchanged");
+        }
+        // 
 
     }
 }

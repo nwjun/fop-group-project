@@ -1,8 +1,6 @@
 package com.fop.foptproject;
 
 import static com.fop.foptproject.ProductCardAdminMovie.insertString;
-import com.fop.foptproject.controller.FoodnBeverageController;
-import com.fop.Utility.sqlConnect;
 import java.util.HashMap;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
