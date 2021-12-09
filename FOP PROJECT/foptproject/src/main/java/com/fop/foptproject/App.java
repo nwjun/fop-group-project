@@ -1,10 +1,15 @@
 package com.fop.foptproject;
 
+import com.fop.Utility.JSONToolSets;
 import com.fop.Utility.emailTo;
 import com.fop.foptproject.controller.SceneController;
 import com.fop.Utility.readConfig;
 import com.fop.Utility.sqlConnect;
+import com.fop.foptproject.controller.RealTimeStorage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.json.*;
 import java.util.Properties;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -26,8 +31,8 @@ public class App extends Application{
         final double WIDTH = screenBounds.getWidth();
         final double HEIGHT = screenBounds.getHeight();
 
-        boolean DEBUG = true;
-        String fxmlFile = "AdminFood.fxml";
+        boolean DEBUG = false;
+        String fxmlFile = "AppLogined.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
@@ -59,10 +64,7 @@ public class App extends Application{
 
     public static void main(String[] args) throws Exception {
         Properties prop = new readConfig().readconfigfile();
-        
-//        sqlConnect sql = new sqlConnect();
-//        new emailTo(prop.getProperty("configuration.testSingleEmail")).sendEmailVerification("Lim",false);
-        
+
         launch();
     }
 }

@@ -127,6 +127,14 @@ public class SceneController {
         switchScene(event, "App.fxml");
     }
     
+    public void switchToHomeLogined(ActionEvent event) throws IOException {
+        switchScene(event, "AppLogined.fxml");
+    }
+
+    public void switchToHomeLogined(MouseEvent event) throws IOException {
+        switchScene(event, "AppLogined.fxml");
+    }
+    
     public void switchToAdminMovie(ActionEvent event) throws IOException {
         switchScene(event, "AdminMovie.fxml");
     }
@@ -145,5 +153,9 @@ public class SceneController {
     
     public void switchToCheckOut(ActionEvent event) throws IOException{
         switchScene(event, "CheckOut.fxml");
+    }
+    
+    public void switchToUserProfile(ActionEvent event) throws IOException{
+        switchScene(event, "userProfile.fxml");
     }
 }

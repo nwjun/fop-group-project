@@ -4,8 +4,8 @@
  */
 package com.fop.foptproject;
 
-import com.fop.foptproject.controller.FoodnBeverageController;
 import com.fop.Utility.sqlConnect;
+import com.fop.foptproject.controller.RealTimeStorage;
 import java.util.HashMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -171,22 +171,34 @@ public class ProductCard{
     
     public void addPurchase(String key, int value){
         if(value == 0){
-            tempStorage.remove(key);
+            RealTimeStorage.FoodnBeverage.remove(key);
         }
-        else if(tempStorage.containsKey(key)){
-            tempStorage.replace(key, value);
+        else if(RealTimeStorage.FoodnBeverage.containsKey(key)){
+            RealTimeStorage.FoodnBeverage.replace(key, value);
         }
-        else if(!(tempStorage.containsKey(key))){
-            tempStorage.put(key,value);                 
+        else if(!(RealTimeStorage.FoodnBeverage.containsKey(key))){
+            RealTimeStorage.FoodnBeverage.put(key,value);                 
         }
         else{
             return;
         }
+//        if(value == 0){
+//            tempStorage.remove(key);
+//        }
+//        else if(tempStorage.containsKey(key)){
+//            tempStorage.replace(key, value);
+//        }
+//        else if(!(tempStorage.containsKey(key))){
+//            tempStorage.put(key,value);                 
+//        }
+//        else{
+//            return;
+//        }
     }
     
     public String retrievePurchaseDetail(String key){
-        if(tempStorage.containsKey(key)){
-            return Integer.toString(tempStorage.get(key));
+        if(RealTimeStorage.FoodnBeverage.containsKey(key)){
+            return Integer.toString(RealTimeStorage.FoodnBeverage.get(key));
         }
         else{
             return "0";
@@ -194,7 +206,7 @@ public class ProductCard{
     }
     
     public static HashMap<String,Integer> retrieveAllPurchaseDetail(){
-        return tempStorage;
+        return RealTimeStorage.FoodnBeverage;
     }
     
 

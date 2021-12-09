@@ -34,10 +34,7 @@ import javafx.util.Duration;
  *
  * @author WeiXIn
  */
-public class FoodnBeverageController implements Initializable{
-    // Record of what user choose to buy. From movie tickets to beverages
-    private HashMap<String,Integer> ShoppingCart= new HashMap<>();
-    
+public class FoodnBeverageController implements Initializable{  
     // class attributes
     private sqlConnect sql = new sqlConnect();
     private Object[] productId;
