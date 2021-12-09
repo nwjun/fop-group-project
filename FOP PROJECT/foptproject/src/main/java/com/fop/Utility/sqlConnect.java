@@ -6,8 +6,6 @@ package com.fop.Utility;
 
 import java.sql.*;
 
-
-import com.fop.Utility.readConfig;
 import java.time.LocalDateTime;
 import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -18,7 +16,7 @@ import java.util.HashMap;
 public class sqlConnect {
     private static Connection conn;
     protected static final String SALT = "c2afca4e3995e4e86caf97e63d644f";
-    private final static int trial = 5; 
+    private final static int TRIAL = 5; 
     
     public sqlConnect(){
         Properties prop = new readConfig().readconfigfile();
@@ -80,6 +78,20 @@ public class sqlConnect {
         
         System.out.printf("UserID : %s\nUsername : %s\nPassword : %s\nEmail : %s\nPhone : %s\nPermission : %d\n",userId,username,password,email,phone,permission);
         
+    }
+    
+    public static void fillBlankToNull(){
+        String query = "UPDATE usercredentials "
+                + "SET phoneNumber = NULL "
+                + "WHERE phoneNumber = ''";
+        try{
+            PreparedStatement prep = conn.prepareStatement(query);
+            prep.executeUpdate();
+        }
+        catch(Exception e){
+            return;    
+        }
+    
     }
     
     public static int checkDup(String email, String phoneNumber){ 
@@ -215,7 +227,7 @@ public class sqlConnect {
                 +"VALUE(?,?,?,?,?,?,?)";
         
         // try connection to SQL for three times before breaking
-        for(int i = 0 ; i < trial ; i++){
+        for(int i = 0 ; i < TRIAL ; i++){
             try {
                 PreparedStatement prepstat = conn.prepareStatement(query);
 
@@ -242,7 +254,7 @@ public class sqlConnect {
         
         String query = "UPDATE otps SET OTP = ? WHERE email = ?";
         
-        for(int i = 0 ; i < trial ; i++){
+        for(int i = 0 ; i < TRIAL ; i++){
             try{
                 PreparedStatement prepstat = conn.prepareStatement(query);
 
@@ -270,7 +282,7 @@ public class sqlConnect {
         
         String query = "DELETE FROM otps WHERE email = ?";
 
-        for(int i = 0 ; i < trial ; i++){
+        for(int i = 0 ; i < TRIAL ; i++){
             try{
                 PreparedStatement prepstat = conn.prepareStatement(query);
 
@@ -293,7 +305,7 @@ public class sqlConnect {
     public static String queryOTP(String email){
         String query = "SELECT OTP from otps WHERE email = ?";
         
-        for(int i = 0 ; i < trial ; i++){
+        for(int i = 0 ; i < TRIAL ; i++){
             try{
                 PreparedStatement prepstat = conn.prepareStatement(query);
                 
@@ -318,7 +330,7 @@ public class sqlConnect {
     public static Timestamp queryTimestamp(String email){
         String query = "SELECT timestamp from otps WHERE email = ?";
         
-        for(int i = 0 ; i < trial ; i++){
+        for(int i = 0 ; i < TRIAL ; i++){
             try{
                 PreparedStatement prepstat = conn.prepareStatement(query);
                 
@@ -343,7 +355,7 @@ public class sqlConnect {
     public static void transferToUserCred(String email){
         String query = "SELECT * from otps WHERE email = ?";
         
-        for(int i = 0 ; i < trial ; i++){
+        for(int i = 0 ; i < TRIAL ; i++){
             try{
                 PreparedStatement prepstat = conn.prepareStatement(query);
                 
@@ -571,8 +583,8 @@ public class sqlConnect {
             productName.add(rs.getString("productname"));   
             category.add(rs.getString("category"));
             }   
-        } catch (SQLException ex) {
-                ex.printStackTrace();
+        } catch (SQLException e) {
+                e.printStackTrace();
         }
         
         items.put("productId",productId);
@@ -608,7 +620,6 @@ public class sqlConnect {
                 ResultSet rs = prepstat.executeQuery();
                 
                 while(rs.next()){
-                    //System.out.printf("%s %s %s %s",rs.getString("productId"),rs.getString("poster"),rs.getString("price"),rs.getString("productDescription"));
                     productId.add(rs.getString("productId"));
                     posterPath.add(rs.getString("poster"));
                     price.add(rs.getString("price"));
@@ -634,7 +645,7 @@ public class sqlConnect {
     public static String queryProductInfo(String productId,String fieldName){
         String query = "SELECT %s FROM products WHERE productId = ?";
         
-        for(int i = 0 ; i < trial ; i++){
+        for(int i = 0 ; i < TRIAL ; i++){
             try{
                 query = String.format(query,fieldName);
                 PreparedStatement prepstat = conn.prepareStatement(query);
@@ -660,40 +671,47 @@ public class sqlConnect {
         return "0";
     }
     
-    public static void fillBlankToNull(){
-        String query = "UPDATE usercredentials "
-                + "SET phoneNumber = NULL "
-                + "WHERE phoneNumber = ''";
+    public static void updateLinkedCard(String jsonString,String email){
+        String query = "UPDATE usercredentials SET linkedCards = ? WHERE email = ?";
+        
         try{
             PreparedStatement prep = conn.prepareStatement(query);
-            prep.executeUpdate();
+            prep.setString(1,jsonString);
+            prep.setString(2,email);
+            
+            int rowAffected = prep.executeUpdate();
         }
         catch(SQLException e){
             e.printStackTrace();
         }
     }
-}
 
-//    public static ArrayList<String> queryUserCredentials(String email){
-//        String query  = "SELECT * FROM usercredentials "
-//                      + "WHERE email = ?;";
-//        ArrayList<String> result = new ArrayList<>();
-//             
-//        try{
-//            PreparedStatement prep = conn.prepareStatement(query);
-//            
-//            prep.setString(1,email);
-//            
-//            ResultSet rs = prep.executeQuery();
-//            
-//            rs.next();
-//            result.add(rs.getString("userId"));
-//            result.add(rs.getString("username"));
-//            result.add(rs.getString("email"));   
-//        return result;
-//        }catch(SQLException e){
-//            e.printStackTrace();
-//        }
-//    }
-//    
-//}
+    public static HashMap<String,String> queryUserCredentials(String email){
+
+        String query  = "SELECT * FROM usercredentials "
+                      + "WHERE email = ?;";
+        HashMap<String,String> result = new HashMap<>();     
+        try{
+            PreparedStatement prep = conn.prepareStatement(query);
+            prep.setString(1, email);
+
+            ResultSet rs = prep.executeQuery();
+
+            rs.next();
+            result.put("userId",rs.getString("userId"));
+            result.put("username",rs.getString("username"));
+            result.put("phoneNumber", rs.getString("phoneNumber"));
+            result.put("permission",Integer.toString(rs.getInt("permission")));
+            String linkedCard = rs.getString("linkedCards");
+            result.put("linkedCard",(linkedCard==null)?"{}":linkedCard);
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+    
+    
+
+}

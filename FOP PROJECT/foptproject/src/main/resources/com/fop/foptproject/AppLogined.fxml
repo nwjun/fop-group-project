@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fx:id="scrollpane" fitToWidth="true" hbarPolicy="NEVER" hmax="100.0" styleClass="root" stylesheets="@style.css" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.AppLoginedController">
+    <content>
+        <StackPane fx:id="landingStackPane" alignment="CENTER" stylesheets="@style.css">
+            <children>
+                <VBox fx:id="landingBody" alignment="TOP_CENTER" prefHeight="1911.0" stylesheets="@style.css">
+                    <children>
+                        <GridPane fx:id="landingGrid" alignment="TOP_CENTER">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="Infinity" minWidth="10.0" prefWidth="724.586033801061" />
+                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="Infinity" minWidth="10.0" prefWidth="716.617772082311" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <ImageView fx:id="logo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                                    <image>
+                                        <Image url="@assets/company/logo.png" />
+                                    </image>
+                                </ImageView>
+                        <StackPane GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                           <children>
+                              <HBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT">
+                                 <children>
+                                    <Label style="-fx-font-size: 13;" text="Welcome back, ">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Hyperlink id="#toProfile" fx:id="userProfileLink" onAction="#userProfile" prefHeight="25.0" style="-fx-text-fill: #ffffff; -fx-font-size: 13;" />
+                                    <Region prefHeight="29.0" prefWidth="25.0" />
+                                            <Button fx:id="signOutButton" mnemonicParsing="false" onAction="#signOut" prefHeight="24.0" prefWidth="89.0" style="-fx-background-radius: 30;" styleClass="Button" text="Sign Out" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets right="65.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                        </StackPane>
+                            </children>
+                        </GridPane>
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity">
+                            <children>
+                                <VBox fx:id="landingContent" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1411.0" prefWidth="1414.0" styleClass="root">
+                     <children>
+                        <ImageView fx:id="imgBanner" fitHeight="309.0" fitWidth="1268.0" pickOnBounds="true" preserveRatio="true" translateX="100.0" VBox.vgrow="NEVER">
+                           <image>
+                              <Image url="@assets/banner/banner1.jpg" />
+                           </image>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                        <HBox fx:id="showingContainer" prefHeight="0.0" prefWidth="1399.0">
+                                 <children>
+                                    <Label text="Now Showing">
+                                       <HBox.margin>
+                                          <Insets right="50.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label text="Advance Sales" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="60.0" top="60.0" />
+                                 </VBox.margin>
+                              </HBox>
+
+                        <HBox fx:id="movieList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="1397.0">
+                                 <VBox.margin>
+                                    <Insets left="100.0" top="30.0" />
+                                 </VBox.margin>
+                              </HBox>
+
+                              <Label fx:id="landingFoodLabel" text="Food &amp; Beverages" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets left="60.0" top="60.0" />
+                                 </VBox.margin>
+                              </Label>
+                        <HBox fx:id="foodList" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="290.0" prefWidth="1397.0">
+                                 <VBox.margin>
+                                    <Insets left="100.0" top="30.0" />
+                                 </VBox.margin>
+                        </HBox>
+                     </children>
+                           <StackPane.margin>
+                              <Insets bottom="50.0" />
+                           </StackPane.margin>
+                  </VBox>
+                            </children>
+                        </StackPane>
+                          <Line fx:id="landingLine" endX="1700.0" stroke="WHITE">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin></Line>
+                      
+                                    <GridPane fx:id="landingFooter" alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="350.0" prefWidth="1000.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="380.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="450.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="500.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                                <VBox fx:id="landingFooterVBox1" prefHeight="350.0" prefWidth="200.0">
+                                    <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                              <Hyperlink onAction="#scrollToMovies" text="Movies" textFill="#f4f2f2">
+                                                  <font>
+                                                      <Font name="Calibri Bold" size="22.0" />
+                                                  </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                              </Hyperlink>
+                                              <Hyperlink onAction="#scrollToMovies" text="Now showing" textFill="#f2f2f2b2">
+                                                  <font>
+                                                      <Font name="Calibri Bold" size="22.0" />
+                                                  </font>
+                                              </Hyperlink>
+                                              <Hyperlink onAction="#scrollToMovies" text="Advance Sales" textFill="#f2f2f2b2">
+                                                  <font>
+                                                      <Font name="Calibri Bold" size="22.0" />
+                                                  </font>
+                                              </Hyperlink>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                              <Hyperlink onAction="#openCinemas" text="Cinemas" textFill="#f4f2f2">
+                                                  <font>
+                                                      <Font name="Calibri Bold" size="22.0" />
+                                                  </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                              </Hyperlink>
+                                              <Hyperlink onAction="#openCinemas" text="Classic" textFill="#f0f0f0a8">
+                                                  <font>
+                                                      <Font name="Calibri Bold" size="22.0" />
+                                                  </font>
+                                              </Hyperlink>
+                                              <Hyperlink onAction="#openCinemas" text="Premium" textFill="#f0f0f0ae">
+                                                  <font>
+                                                      <Font name="Calibri Bold" size="22.0" />
+                                                  </font>
+                                              </Hyperlink>
+                                 </children>
+                              </VBox>
+                                    </children>
+                                </VBox>
+                                <VBox fx:id="landingFooterVBox2" prefHeight="350.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                    <children>
+                                        <Hyperlink onAction="#scrollToFB" prefHeight="0.0" prefWidth="240.0" text="Food and Beverages" textFill="#f4f2f2">
+                                            <font>
+                                                <Font name="Calibri Bold" size="22.0" />
+                                            </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                                        </Hyperlink>
+                                    </children>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                                </VBox>
+                                <VBox fx:id="landingFooterVBox3" prefHeight="350.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                    <children>
+                              <Hyperlink prefHeight="0.0" prefWidth="240.0" text="Contact Us At" textFill="#f4f2f2">
+                                 <font>
+                                    <Font name="Calibri Bold" size="22.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Hyperlink>
+                                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="13.0" prefWidth="200.0">
+                                            <children>
+                                                <ImageView fitHeight="27.0" fitWidth="40.0" opacity="0.61" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                                                    <image>
+                                                        <Image url="@assets/instagram.png" />
+                                                    </image>
+                                       <StackPane.margin>
+                                          <Insets />
+                                       </StackPane.margin>
+                                                </ImageView>
+                                                <Hyperlink onAction="#openNwjun" text="nw_jun" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
+                                                    <font>
+                                                        <Font name="Calibri Bold" size="22.0" />
+                                                    </font>
+                                       <StackPane.margin>
+                                          <Insets left="40.0" />
+                                       </StackPane.margin>
+                                                </Hyperlink>
+                                            </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                                        </StackPane>
+                                        <StackPane layoutX="10.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="2.0" prefWidth="200.0">
+                                            <children>
+                                                <ImageView fitHeight="27.0" fitWidth="40.0" opacity="0.61" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                                                    <image>
+                                                        <Image url="@assets/instagram.png" />
+                                                    </image>
+                                       <StackPane.margin>
+                                          <Insets />
+                                       </StackPane.margin>
+                                                </ImageView>
+                                                <Hyperlink onAction="#openShxao" prefHeight="36.0" prefWidth="119.0" text="shxao.yxn_" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
+                                                    <font>
+                                                        <Font name="Calibri Bold" size="22.0" />
+                                                    </font>
+                                       <StackPane.margin>
+                                          <Insets left="40.0" />
+                                       </StackPane.margin>
+                                                </Hyperlink>
+                                            </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                                        </StackPane>
+                              
+                                                                                  <StackPane layoutX="10.0" layoutY="87.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="14.0" prefWidth="200.0">
+                                            <children>
+                                                <ImageView fitHeight="27.0" fitWidth="40.0" opacity="0.61" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                                                    <image>
+                                                        <Image url="@assets/instagram.png" />
+                                                    </image>
+                                       <StackPane.margin>
+                                          <Insets />
+                                       </StackPane.margin>
+                                                </ImageView>
+                                                <Hyperlink alignment="CENTER_RIGHT" onAction="#openWxinlim" text="wxinlim" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
+                                                    <font>
+                                                        <Font name="Calibri Bold" size="22.0" />
+                                                    </font>
+                                       <StackPane.margin>
+                                          <Insets left="40.0" />
+                                       </StackPane.margin>
+                                                </Hyperlink>
+                                            </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                                        </StackPane>
+                                        <StackPane layoutX="10.0" layoutY="285.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="200.0">
+                                            <children>
+                                                <ImageView fitHeight="27.0" fitWidth="40.0" opacity="0.61" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                                                    <image>
+                                                        <Image url="@assets/instagram.png" />
+                                                    </image>
+                                       <StackPane.margin>
+                                          <Insets right="20.0" />
+                                       </StackPane.margin>
+                                                </ImageView>
+                                                <Hyperlink onAction="#openXyu27" text="xyu_27" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
+                                                    <font>
+                                                        <Font name="Calibri Bold" size="22.0" />
+                                                    </font>
+                                       <StackPane.margin>
+                                          <Insets left="40.0" />
+                                       </StackPane.margin>
+                                                </Hyperlink>
+                                            </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                                        </StackPane>
+                                        <StackPane layoutX="10.0" layoutY="316.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="0.0" prefWidth="200.0">
+                                            <children>
+                                                <ImageView fitHeight="27.0" fitWidth="40.0" opacity="0.61" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                                                    <image>
+                                                        <Image url="@assets/instagram.png" />
+                                                    </image>
+                                       <StackPane.margin>
+                                          <Insets />
+                                       </StackPane.margin>
+                                                </ImageView>
+                                                <Hyperlink onAction="#openKuck" prefHeight="0.0" prefWidth="143.0" text="kuck.nien_s" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
+                                                    <font>
+                                                        <Font name="Calibri Bold" size="22.0" />
+                                                    </font>
+                                       <StackPane.margin>
+                                          <Insets left="40.0" />
+                                       </StackPane.margin>
+                                                </Hyperlink>
+                                            </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                                        </StackPane>
+                                    </children>
+                                </VBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets right="330.0" />
+                     </VBox.margin>
+                  </GridPane>
+                    </children>
+                </VBox>
+            </children>
+         <padding>
+            <Insets left="63.0" right="63.0" />
+         </padding>
+        </StackPane>
+    </content>
+</ScrollPane>

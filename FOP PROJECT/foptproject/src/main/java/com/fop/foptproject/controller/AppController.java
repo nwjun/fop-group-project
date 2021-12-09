@@ -127,6 +127,7 @@ public class AppController implements Initializable {
         SceneController switchScene = new SceneController();
         switchScene.switchToRegisterAndLogin(event);
     }
+    
         
     public void slideshow(){                         
         ArrayList<Image> image= new ArrayList<>();

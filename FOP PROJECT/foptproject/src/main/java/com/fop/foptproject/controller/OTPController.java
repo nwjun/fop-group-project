@@ -57,6 +57,7 @@ public class OTPController implements Initializable{
     
     @FXML 
     public void backButton(ActionEvent event) throws IOException{
+        sqlConnect.removeNewRegisterOTP(email, true);
         new SceneController().switchToLandingPage(event);
     }
     
@@ -83,9 +84,9 @@ public class OTPController implements Initializable{
         else if(OTPRequired.equals(OTPRequired)){
             boolean status = sqlConnect.removeNewRegisterOTP(email, false);
             if (status){ 
+                RealTimeStorage.updateUserInfos(email);
                 SceneController switchScene = new SceneController();
-                switchScene.switchToRegisterAndLogin(event);
-                System.out.println("Done registration");
+                switchScene.switchToHomeLogined(event);
             }
         }
         else if(!(OTPRequired.equals(OTPRequired))){
