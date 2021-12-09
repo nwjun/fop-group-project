@@ -5,7 +5,6 @@
  */
 package com.fop.foptproject.controller;
 
-
 import com.fop.foptproject.CommonMethod;
 import java.io.IOException;
 import java.net.URL;
@@ -167,7 +166,6 @@ public class profileController implements Initializable {
         final double MAX_HEIGHT = 45;
         final double MAX_WIDTH = 380;
 
-
         Label usernameLabel = new Label("Username");
         Label emailLabel = new Label("Email");
         Label hpLabel = new Label("Phone number");
@@ -184,27 +182,47 @@ public class profileController implements Initializable {
         TextField[] textFields = new TextField[]{usernameField, emailField, hpField};
         String[] textFieldIds = new String[]{"profileField", "emailField", "hpField"};
 
+        String[] fieldValues = getProfileValues();
+
         for (int i = 0; i < textFields.length; i++) {
             textFields[i].getStyleClass().add("profileText");
             textFields[i].setId(textFieldIds[i]);
             textFields[i].setMaxSize(MAX_WIDTH, MAX_HEIGHT);
+            textFields[i].setText(fieldValues[i]);
         }
 
         VBox wrapper = new VBox();
 
         Button confirmBtn = new Button("Confirm");
-        Button cancelBtn = new Button("Cancel");
+        Button resetBtn = new Button("Reset");
         confirmBtn.setStyle("confirmBtn");
-        cancelBtn.setStyle("cancelBtn");
+        resetBtn.setStyle("resetBtn");
 
         confirmBtn.setOnAction(e -> {
-            System.out.println("confirm");
-        });
-        cancelBtn.setOnAction(e -> {
-            System.out.println("cancel");
+            String[] newFieldValues = new String[textFields.length];
+            boolean changed = false;
+            
+            for (int i = 0; i < textFields.length; i++) {
+                newFieldValues[i] = textFields[i].getText();
+                if(!newFieldValues[i].equals(fieldValues[i])){
+                    changed = true;
+                }
+            }
+            if(changed){
+                System.out.println("changed");
+                updateProfile(newFieldValues);
+            }
+            
+
         });
 
-        HBox btnBox = new HBox(confirmBtn, cancelBtn);
+        resetBtn.setOnAction(e -> {
+            for (int i = 0; i < textFields.length; i++) {
+                textFields[i].setText(fieldValues[i]);
+            }
+        });
+
+        HBox btnBox = new HBox(confirmBtn, resetBtn);
         btnBox.setSpacing(30);
         btnBox.setMaxWidth(MAX_WIDTH);
         VBox.setMargin(btnBox, new Insets(70, 0, 0, 0));
@@ -273,8 +291,9 @@ public class profileController implements Initializable {
 
         addBtn.setOnAction(e -> {
             Stage popupStage = SceneController.showPopUpStage("AddCardPopUp.fxml");
-            if(popupStage != null)
+            if (popupStage != null) {
                 popupStage.showAndWait();
+            }
         });
 
         banksContainer.setSpacing(30);
@@ -395,6 +414,15 @@ public class profileController implements Initializable {
         Scene scene = new Scene(vbox);
         Stage stage = new Stage();
         return stage;
+    }
+
+    private String[] getProfileValues() {
+        // retrieve field values from db
+        return new String[]{"42", "42lovesjava@gmail.com", "0123456789"};
+    }
+
+    private void updateProfile(String[] newFieldValues) {
+        // update data in database
     }
 
 }

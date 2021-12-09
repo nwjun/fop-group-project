@@ -30,12 +30,14 @@
          <children>
             <Label text="Account Number" />
             <TextField fx:id="accTextField" />
+            <Label fx:id="accErrorMsg" />
          </children>
       </VBox>
       <HBox fx:id="buttonContainer" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
          <children>
-            <Button mnemonicParsing="false" text="Add" />
-            <Button mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="addBtn" disable="true" mnemonicParsing="false" text="Add" />
+            <Button fx:id="cclBtn" mnemonicParsing="false" text="Cancel" />
+            <Label fx:id="addErrorMsg" />
          </children>
       </HBox>
    </children>

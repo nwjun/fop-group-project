@@ -5,8 +5,6 @@ import com.fop.foptproject.controller.SceneController;
 import com.fop.Utility.readConfig;
 import com.fop.Utility.sqlConnect;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Properties;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
