@@ -712,6 +712,40 @@ public class sqlConnect {
         return result;
     }
     
+    public static String querySeats(String theaterId){
+        String query = "SELECT * FROM theaters WHERE theaterId = ?";
+        String jsonString = null;
+        
+        try{
+            PreparedStatement prep = conn.prepareStatement(query);
+            prep.setString(1,theaterId);
+            
+            ResultSet rs = prep.executeQuery();
+            
+            rs.next();
+            jsonString = rs.getString("seat");
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        return jsonString;
+    }
+    
+    public static void updateSeats(String jsonString,String theaterId){
+        String query = "UPDATE theaters SET seat = ? WHERE theaterId = ?";
+        
+        try{
+            PreparedStatement prep = conn.prepareStatement(query);
+            prep.setString(1,jsonString);
+            prep.setString(2,theaterId);
+            
+            int rowAffected = prep.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
     
 
 }

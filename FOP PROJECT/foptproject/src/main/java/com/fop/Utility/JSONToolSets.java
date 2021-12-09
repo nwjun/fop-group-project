@@ -12,6 +12,7 @@ import com.fop.Utility.sqlConnect;
 
 public class JSONToolSets {
     private JSONObject jsonObj;
+    private boolean isSeat = false;
     private static sqlConnect sql = new sqlConnect();
     
     public JSONToolSets(String jsonString){
@@ -79,6 +80,172 @@ public class JSONToolSets {
         String value = temp.getJSONObject(key).toString();
         
         return value;
+    }
+    
+    public HashMap<String,ArrayList<String>> parseTheaterSeat(){
+        JSONObject temp = this.jsonObj;
+        this.isSeat = true;
+        JSONArray temp2;
+        HashMap<String,ArrayList<String>> extracted = new HashMap<>();
+        int i =0 ,j = 0;
+        
+        // iterate until empty
+        while(true){ 
+            try{
+                temp2 = temp.getJSONArray(Integer.toString(i));
+                extracted.put(Integer.toString(i),new ArrayList<String>());
+                j = 0;
+                //System.out.printf(""+j+" | ");
+                while(true){
+                    try{
+                        extracted.get(Integer.toString(i)).add(temp2.get(j).toString());
+                        //System.out.printf(" %s",temp2.get(j).toString());
+                        j++;
+                    }
+                    catch(Exception e){
+                        //System.out.println();
+                        break;
+                    }
+                }
+                i++;
+            }
+            catch(Exception e){
+                break;
+            }
+        }
+        return extracted;
+    }
+    
+    public void addColumn(int n){
+        /**
+         * precedence of increasing capacity: column > row
+         */
+        if(this.isSeat){
+            int row = 0;
+            while(true){
+                try{
+                    this.jsonObj.getJSONArray(Integer.toString(row));
+                    row++;
+                }
+                catch(Exception e){
+                    break;
+                }
+            }
+            // get number of column
+            int columnSize = this.jsonObj.getJSONArray("0").toList().size();
+            int newColumnSize = columnSize + n;
+            
+            // generate new row arrangement
+            ArrayList<Integer> notLast = new ArrayList<>();
+            ArrayList<Integer> last = new ArrayList<>();
+            
+            
+            // arrange not last row
+            for(int i = 0 ; i < newColumnSize-4 ; i++){
+                if(i%2 != 0){
+                    notLast.add(-1);
+                }
+                else{
+                    notLast.add(0);
+                }
+            }
+            
+            // arrange last row
+            int factor = 0;
+            for(int i = 0 ; i < newColumnSize-4 ; i++){
+                if((i-2)/3.0 == factor){
+                    last.add(-1);
+                    factor++;
+                }
+                else{
+                    last.add(0);
+                }
+            }
+            
+            // add in side columns
+            for(int j = 0 ; j < 2 ; j++){
+                last.add(0,0);
+                last.add(0);
+                notLast.add(0,0);
+                notLast.add(0);
+            }
+            
+            // new JSON Object to hold the structure;
+            JSONObject obj = new JSONObject();
+            for(int i = 0 ; i < row ; i++){
+                if(i+1 == row){
+                    obj.put(Integer.toString(i),new JSONArray(last));
+                }
+                else{
+                    obj.put(Integer.toString(i),new JSONArray(notLast));
+                }       
+            }
+            this.jsonObj = obj;
+        }
+        else{
+            return;
+        }
+        
+        
+    }
+    
+    public void addRow(int n){
+        /**
+         * precedence of increasing capacity: column > row
+         */
+        if(this.isSeat){
+            // generate new n x n seats arrangement which corresponds to the current size of seats arrangement
+            // get number of row
+            int row = 0;
+            while(true){
+                try{
+                    this.jsonObj.getJSONArray(Integer.toString(row));
+                    row++;
+                }
+                catch(Exception e){
+                    break;
+                }
+            }
+            // get number of column
+            int columnSize = this.jsonObj.getJSONArray("0").toList().size();
+            
+            ////generate new n x n seats arrangement
+            // copy the arrangement of !last row and last row from previous arrangement
+            ArrayList<Integer> arr = new ArrayList<>();
+            ArrayList<Integer> lastArr = new ArrayList<>();
+            for(int i = 0; i < columnSize ; i++){
+                arr.add(this.jsonObj.getJSONArray("0").getInt(i));
+                lastArr.add(this.jsonObj.getJSONArray(Integer.toString(row-1)).getInt(i));
+            }
+            
+            // new JSON object to hold the structure
+            JSONObject obj = new JSONObject();
+            
+            int newRow = row+n;
+            for(int i = 0 ; i < newRow ; i++){
+                if(i == newRow-1){
+                    obj.put(Integer.toString(i),new JSONArray(lastArr));
+                }
+                else{
+                    obj.put(Integer.toString(i),new JSONArray(arr));
+                } 
+            }
+            
+            this.jsonObj = obj;
+            
+        }
+        else{
+            return;   
+        }
+    }
+    
+    public JSONObject getNewSeatArr(){
+        if(isSeat){
+            return this.jsonObj;
+        }
+        else{
+            return null;
+        }
     }
     
     public static String writeJSONString(JSONArray jsonArray,String key){

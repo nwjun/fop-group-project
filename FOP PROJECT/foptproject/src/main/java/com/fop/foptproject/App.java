@@ -64,7 +64,10 @@ public class App extends Application{
 
     public static void main(String[] args) throws Exception {
         Properties prop = new readConfig().readconfigfile();
-
-        launch();
+        
+        sqlConnect sql = new sqlConnect();
+        JSONToolSets json = new JSONToolSets(sql.querySeats("1"));
+        json.parseTheaterSeat();
+        //launch();
     }
 }
