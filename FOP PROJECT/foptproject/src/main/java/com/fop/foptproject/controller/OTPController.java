@@ -4,8 +4,8 @@ package com.fop.foptproject.controller;
  * Author:WeiXin
  */
 
-import com.fop.EmailUtil.emailTo;
-import com.fop.sqlUtil.sqlConnect;
+import com.fop.Utility.emailTo;
+import com.fop.Utility.sqlConnect;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;

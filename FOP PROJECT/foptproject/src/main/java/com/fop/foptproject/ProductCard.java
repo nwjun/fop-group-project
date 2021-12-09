@@ -4,6 +4,8 @@
  */
 package com.fop.foptproject;
 
+import com.fop.foptproject.controller.FoodnBeverageController;
+import com.fop.Utility.sqlConnect;
 import java.util.HashMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,11 +20,12 @@ import javafx.scene.layout.VBox;
  *
  * @author WeiXin
  */
-public class ProductCard {
-    
+public class ProductCard{
     private HashMap<String,Object> productDetails = new HashMap<>();
     private HBox productCard;
     private Label quantity;
+    private static HashMap<String,Integer> tempStorage = new HashMap<>();
+    private static double totalAmount = 0;
     
     public ProductCard(String productID,String imgPath,double imgW,double imgH,double scale,double price,String productName,String productDesc){
         productDetails.put("productID",productID);
@@ -32,11 +35,11 @@ public class ProductCard {
         productDetails.put("price",price);
         productDetails.put("productName",productName);
         productDetails.put("productDesc",productDesc);
-        
+               
         this.productCard = makeCard(productID,price);
-        HBox.setMargin(this.productCard,new Insets(0,45,0,0));
+        HBox.setMargin(this.productCard,new Insets(0,45,0,0));   
     }
-    
+        
     public HashMap<String,Object> getProductDetails(){
         return productDetails;
     }
@@ -66,11 +69,11 @@ public class ProductCard {
             Image img = new Image(path,(double)getValue("imgW"),(double)getValue("imgH"),false,false);
         return img;
     }
-
+    
     private StackPane makeButtons(String productId){
         // components
         this.quantity = new Label();
-        quantity.setText("0");
+        quantity.setText(retrievePurchaseDetail(productId));
         quantity.setId(productId+"_quantity");
         quantity.setPrefSize(20,20);
         quantity.setAlignment(Pos.CENTER);
@@ -81,6 +84,8 @@ public class ProductCard {
         addition.setText("+");
         addition.setOnAction(e->{
             quantity.setText(Integer.toString(Integer.parseInt(quantity.getText())+1));
+            addPurchase(productId,Integer.parseInt(quantity.getText()));
+            totalAmount += Double.parseDouble(new sqlConnect().queryProductInfo(productId,"price"));
         });
         addition.setPrefSize(33,33);
         addition.setStyle("-fx-background-color:#FFEE00;-fx-background-radius:0 8 8 0;-fx-background-insets:0;");
@@ -92,6 +97,8 @@ public class ProductCard {
         decrement.setOnAction(e->{
             if(Integer.parseInt(quantity.getText())>0){
                 quantity.setText(Integer.toString(Integer.parseInt(quantity.getText())-1));
+                addPurchase(productId,Integer.parseInt(quantity.getText()));
+                totalAmount -= Double.parseDouble(new sqlConnect().queryProductInfo(productId,"price"));
             }
         });
         decrement.setPrefSize(33,33);
@@ -121,11 +128,13 @@ public class ProductCard {
         productName.setId(productId+"_name");
         productDesc.setId(productId+"_desc");
         productName.setStyle("-fx-text-fill:#FFFFFF;-fx-font-size:18px");
-        productDesc.setStyle("-fx-text-fill:#FFFFFF;-fx-font-size:18px");
+        productDesc.setStyle("-fx-text-fill:#FFFFFF;-fx-font-size:14px");
+        productDesc.setWrapText(true);
         productName.setText((String)this.productDetails.get("productName"));
         productDesc.setText((String)this.productDetails.get("productDesc"));
         
         labelContainer.setPrefWidth(350);
+        labelContainer.setSpacing(8);
         labelContainer.setStyle("-fx-padding:10 0 0 20");
         labelContainer.getChildren().addAll(productName,productDesc);
         
@@ -155,5 +164,39 @@ public class ProductCard {
         
         return container;
     }
+    
+    public void mergeHashMap(){
+        System.out.println("under development");
+    }
+    
+    public void addPurchase(String key, int value){
+        if(value == 0){
+            tempStorage.remove(key);
+        }
+        else if(tempStorage.containsKey(key)){
+            tempStorage.replace(key, value);
+        }
+        else if(!(tempStorage.containsKey(key))){
+            tempStorage.put(key,value);                 
+        }
+        else{
+            return;
+        }
+    }
+    
+    public String retrievePurchaseDetail(String key){
+        if(tempStorage.containsKey(key)){
+            return Integer.toString(tempStorage.get(key));
+        }
+        else{
+            return "0";
+        }
+    }
+    
+    public static HashMap<String,Integer> retrieveAllPurchaseDetail(){
+        return tempStorage;
+    }
+    
+
     
 }

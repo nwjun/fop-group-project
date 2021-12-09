@@ -2,16 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.fop.sqlUtil;
+package com.fop.Utility;
 
 import java.sql.*;
 
-import com.fop.readConfig.readConfig;
+
+import com.fop.Utility.readConfig;
 import java.time.LocalDateTime;
 import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 
 public class sqlConnect {
     private static Connection conn;
@@ -22,12 +24,13 @@ public class sqlConnect {
         Properties prop = new readConfig().readconfigfile();
         try{
             this.conn = DriverManager.getConnection(
-            "jdbc:mysql://127.0.0.1:3306/fopdb",prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
+            prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
+
         }
-        catch (Exception e){
+        catch(SQLException e){
             e.printStackTrace();
-        }  
+        }
     }
     
     public void addTestData() throws SQLException{
@@ -176,6 +179,7 @@ public class sqlConnect {
         query = "INSERT INTO usercredentials(userId, username, password, email, phoneNumber, permission)" 
               +"VALUE(?,?,?,?,?,?)";
         
+        
         int rowAffected = 0; // check sql response
         
         try{
@@ -192,6 +196,10 @@ public class sqlConnect {
 
             // execute the statement
             rowAffected = prepstat.executeUpdate();
+            
+            // fill blank field to null
+            fillBlankToNull();
+            
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -359,9 +367,226 @@ public class sqlConnect {
         }
         
     }
+    public void delete(String movieId){
+        String query = "DELETE FROM pos " 
+                       + "WHERE posterId = ?";
+        
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1, movieId);
+            
+            int rowAffected = prepstat.executeUpdate();
+            
+        }catch(SQLException e){
+                e.printStackTrace();
+        }
+    }
+    
+    public void insertPoster(String posterId, String poster){
+        String query = "INSERT INTO pos (posterId, poster) "
+                       + "VALUES (?,?)";
+        
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1, posterId);
+            prepstat.setString(2, poster);
+            
+            int rowAffected = prepstat.executeUpdate();
+            
+        }catch(SQLException e){
+//                e.printStackTrace();
+                System.out.println("Fail");
+        }
+        
+    }
+    
+    public void insertMovie(String movieId, String movieName, double length, String releaseDate, String directorCast, String language, String posterId, String allShowTime, String synopsis, double rottenTomato, double iMDB){
+        String query = "INSERT INTO movies (movieId, movieName, length, releaseDate, directorCast, language, posterId, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict) "
+                       + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1,movieId);
+            prepstat.setString(2,movieName);
+            prepstat.setDouble(3,length);
+            prepstat.setString(4,releaseDate);
+            prepstat.setString(5,directorCast);
+            prepstat.setString(6,language);
+            prepstat.setString(7,posterId);
+            prepstat.setString(8,allShowTime);
+            prepstat.setString(9,synopsis);
+            prepstat.setDouble(10,rottenTomato);
+            prepstat.setDouble(11,iMDB);
+            prepstat.setInt(12,18);
+            
+            int rowAffected = prepstat.executeUpdate();
+            System.out.println("Success");
+        }catch(SQLException e){
+                e.printStackTrace();
+                System.out.println("Fail");
+        }
+    }
+    
+    public static HashMap<String, ArrayList<String>> queryAllMovie(){
+        String query = "SELECT movieId, movieName, length, releaseDate, directorCast, language, poster, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict "
+                        + "FROM movies "
+                        + "INNER JOIN pos USING (posterId) ";
+        
+        HashMap<String, ArrayList<String>> movies = new HashMap<>();
+        ArrayList<String> movieId = new ArrayList<>();
+        ArrayList<String> movieName = new ArrayList<>();
+        ArrayList<String> length = new ArrayList<>();
+        ArrayList<String> releaseDate = new ArrayList<>();
+        ArrayList<String> directorCast = new ArrayList<>();
+        ArrayList<String> language = new ArrayList<>();
+        ArrayList<String> poster = new ArrayList<>();
+        ArrayList<String> allShowTime = new ArrayList<>();
+        ArrayList<String> synopsis = new ArrayList<>();
+        ArrayList<String> rottenTomato = new ArrayList<>();
+        ArrayList<String> iMDB = new ArrayList<>();
+        ArrayList<String> ageRestrict = new ArrayList<>();
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            ResultSet rs = prepstat.executeQuery();
+            while(rs.next()){
+                movieId.add(rs.getString("movieId"));
+                movieName.add(rs.getString("movieName"));
+                length.add(rs.getString("length"));
+                releaseDate.add(rs.getString("releaseDate"));
+                directorCast.add(rs.getString("directorCast"));
+                language.add(rs.getString("language"));
+                poster.add(rs.getString("poster"));
+                allShowTime.add(rs.getString("allShowTime"));
+                synopsis.add(rs.getString("synopsis"));
+                rottenTomato.add(rs.getString("rottenTomato"));
+                iMDB.add(rs.getString("iMDB"));
+                ageRestrict.add(rs.getString("ageRestrict"));
+            }
+        } catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+        
+        movies.put("movieId",movieId);
+        movies.put("movieName",movieName);
+        movies.put("length",length);
+        movies.put("releaseDate",releaseDate);
+        movies.put("directorCast",directorCast);
+        movies.put("language",language);
+        movies.put("poster",poster);
+        movies.put("allShowTime",allShowTime);
+        movies.put("synopsis",synopsis);
+        movies.put("rottenTomato",rottenTomato);
+        movies.put("iMDB",iMDB);
+        movies.put("ageRestrict",ageRestrict);
+        
+        return movies;
+    }
+    
+    public String getProductLastId(String category){
+        String query = "SELECT productId "
+                       + "FROM products "
+                       + "WHERE category = ? "
+                       + "ORDER BY productId DESC "
+                       + "LIMIT 1";
+        String result;
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            prepstat.setString(1,category);
+            ResultSet rs = prepstat.executeQuery();
+            rs.next();   
+            result = rs.getString("productId");
+            return result;
+        }
+        catch(SQLException e){
+                e.printStackTrace();
+        }
+        return null;
+    }
+        
+    public void insertProduct(String productId, String productname, double price, String posterId, String productDescription, String category){
+        String query = "INSERT INTO products (productId, productname, price, posterId, productDescription, category) "
+                       +"VALUES (?,?,?,?,?,?)";
+        
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1,productId);
+            prepstat.setString(2,productname);
+            prepstat.setDouble(3,price);
+            prepstat.setString(4,posterId);
+            prepstat.setString(5,productDescription);
+            prepstat.setString(6,category);
+            
+            int rowAffected = prepstat.executeUpdate();
+            
+        }
+        catch(SQLException e){
+                e.printStackTrace();
+        }
+    }
+    
+    public static HashMap<String, ArrayList<String>> queryAllProduct(){
+        String query = "SELECT productId, productname, poster, price, productDescription, category "
+                       + "FROM products "
+                       + "INNER JOIN pos USING (posterId) "
+                       + "WHERE category = 'beverage' "
+                       + "UNION "
+                       + "SELECT productId, productname, poster, price, productDescription, category "
+                       + "FROM products "
+                       + "INNER JOIN pos USING (posterId) "
+                       + "WHERE category = 'popcorn' "
+                       + "UNION "
+                       + "SELECT productId, productname, poster, price, productDescription, category "
+                       + "FROM products "
+                       + "INNER JOIN pos USING (posterId) "
+                       + "WHERE category = 'carte' "
+                       + "UNION "
+                       + "SELECT productId, productname, poster, price, productDescription, category "
+                       + "FROM products "
+                       + "INNER JOIN pos USING (posterId) "
+                       + "WHERE category = 'combo' ";
+        
+        HashMap<String, ArrayList<String>> items = new HashMap<>();
+        ArrayList<String> productId = new ArrayList<>();
+        ArrayList<String> posterPath = new ArrayList<>();
+        ArrayList<String> price = new ArrayList<>();
+        ArrayList<String> productDesc = new ArrayList<>();
+        ArrayList<String> productName = new ArrayList<>();
+        ArrayList<String> category = new ArrayList<>();
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+
+            ResultSet rs = prepstat.executeQuery();
+
+            while(rs.next()){  
+            productId.add(rs.getString("productId"));
+            posterPath.add(rs.getString("poster"));
+            price.add(rs.getString("price"));
+            productDesc.add(rs.getString("productDescription"));
+            productName.add(rs.getString("productname"));   
+            category.add(rs.getString("category"));
+            }   
+        } catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+        
+        items.put("productId",productId);
+        items.put("posterPath",posterPath);
+        items.put("price",price);
+        items.put("productDesc",productDesc);
+        items.put("productName",productName);
+        items.put("category", category);
+        
+        return items;                            
+    }
 
     public static HashMap<String,ArrayList<String>> queryProduct(String category){
-        String query = "SELECT products.productId,pos.poster,products.price,products.productDescription " 
+        String query = "SELECT products.productId,pos.poster,products.price,products.productDescription,products.productname " 
                        + "FROM pos " 
                        + "INNER JOIN products " 
                        + "ON pos.posterId = products.posterId "
@@ -372,6 +597,7 @@ public class sqlConnect {
         ArrayList<String> posterPath = new ArrayList<>();
         ArrayList<String> price = new ArrayList<>();
         ArrayList<String> productDesc = new ArrayList<>();
+        ArrayList<String> productName = new ArrayList<>();
    
         for(int i = 0; i < 5 ; i++){
             try{
@@ -387,6 +613,7 @@ public class sqlConnect {
                     posterPath.add(rs.getString("poster"));
                     price.add(rs.getString("price"));
                     productDesc.add(rs.getString("productDescription"));
+                    productName.add(rs.getString("productname"));
                 }
                 break;
             }
@@ -399,7 +626,74 @@ public class sqlConnect {
         items.put("posterPath",posterPath);
         items.put("price",price);
         items.put("productDesc",productDesc);
+        items.put("productName",productName);
         
         return items;
     }
+
+    public static String queryProductInfo(String productId,String fieldName){
+        String query = "SELECT %s FROM products WHERE productId = ?";
+        
+        for(int i = 0 ; i < trial ; i++){
+            try{
+                query = String.format(query,fieldName);
+                PreparedStatement prepstat = conn.prepareStatement(query);
+                prepstat.setString(1,productId);
+                
+                ResultSet rs = prepstat.executeQuery();
+                
+                String result;
+                if(rs.next()){
+                    result = rs.getString(fieldName);
+                }
+                else{
+                    return null;
+                }
+                return result;
+            }
+            catch(SQLException e){
+                e.printStackTrace();
+                continue;
+            }
+        }
+        
+        return "0";
+    }
+    
+    public static void fillBlankToNull(){
+        String query = "UPDATE usercredentials "
+                + "SET phoneNumber = NULL "
+                + "WHERE phoneNumber = ''";
+        try{
+            PreparedStatement prep = conn.prepareStatement(query);
+            prep.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
+
+//    public static ArrayList<String> queryUserCredentials(String email){
+//        String query  = "SELECT * FROM usercredentials "
+//                      + "WHERE email = ?;";
+//        ArrayList<String> result = new ArrayList<>();
+//             
+//        try{
+//            PreparedStatement prep = conn.prepareStatement(query);
+//            
+//            prep.setString(1,email);
+//            
+//            ResultSet rs = prep.executeQuery();
+//            
+//            rs.next();
+//            result.add(rs.getString("userId"));
+//            result.add(rs.getString("username"));
+//            result.add(rs.getString("email"));   
+//        return result;
+//        }catch(SQLException e){
+//            e.printStackTrace();
+//        }
+//    }
+//    
+//}

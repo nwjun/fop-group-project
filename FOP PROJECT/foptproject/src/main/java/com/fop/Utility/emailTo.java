@@ -1,7 +1,5 @@
-package com.fop.EmailUtil;
+package com.fop.Utility;
 
-import com.fop.Ticket.TicketGenerator;
-import com.fop.htmlMailTemplate.templateModifier;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +11,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Random;
-import com.fop.readConfig.readConfig;
 import com.google.zxing.WriterException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

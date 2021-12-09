@@ -6,7 +6,7 @@
 }
 
 .closeBtn{
-    -fx-background-color:transparent;
+    -fx-background-color:rgba(0,0,0,0);
     -fx-text-fill: white;
     -fx-font-size:22;
 }

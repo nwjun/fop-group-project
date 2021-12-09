@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -17,120 +18,212 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" pannable="true" prefWidth="1536.0" styleClass="root" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.FoodnBeverageController">
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" pannable="true" prefHeight="863.0" prefWidth="1536.0" styleClass="root" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.FoodnBeverageController">
    <content>
-      <StackPane prefHeight="863.0" prefWidth="1534.0" styleClass="root" stylesheets="@foodnbeverage.css">
+      <StackPane prefWidth="1534.0">
          <children>
-            <VBox>
+            <StackPane fx:id="boxBlur" prefHeight="863.0" prefWidth="1534.0" styleClass="root" stylesheets="@foodnbeverage.css">
                <children>
-                  <GridPane id="optionBar" prefHeight="90.0" prefWidth="1534.0">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="NEVER" maxWidth="253.60001220703126" minWidth="10.0" prefWidth="253.60001220703126" />
-                        <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="278.4000244140625" minWidth="0.0" prefWidth="150.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="0.0" prefWidth="150.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="0.0" prefWidth="150.0" />
-                      <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="191.7332763671874" minWidth="0.0" prefWidth="150.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="491.7333984375" minWidth="10.0" prefWidth="491.7333984375" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <VBox>
                      <children>
-                        <ImageView fitHeight="31.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT">
-                           <GridPane.margin>
-                              <Insets left="40.0" />
-                           </GridPane.margin>
-                           <image>
-                              <Image url="@assets/company/logo.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="comboButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#combo" prefHeight="0.0" prefWidth="150.0" styleClass="optionButton" text="COMBO SETS" translateY="2.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER" />
-                        <Button fx:id="popcornButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#popcorn" prefHeight="0.0" prefWidth="200.0" styleClass="optionButton" text="POPCORN" translateY="2.0" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER" />
-                        <Button fx:id="carteButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#carte" prefHeight="0.0" prefWidth="185.0" styleClass="optionButton" text="A LA CARTE" translateY="2.0" GridPane.columnIndex="3" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER" />
-                        <Button fx:id="beverageButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#beverage" prefHeight="0.0" prefWidth="184.0" styleClass="optionButton" text="BEVERAGES" translateY="2.0" GridPane.columnIndex="4" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER" />
-                     </children>
-                     <padding>
-                        <Insets bottom="25.0" left="40.0" top="15.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                  </GridPane>
-                  <StackPane prefHeight="1040.0" prefWidth="1538.0">
-                     <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <HBox>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
                            <children>
-                              <Line fx:id="highlightLine" endX="152.0" stroke="#ffee00" strokeLineCap="ROUND" style="-fx-fill: #FFEE00; -fx-scale-z: 4; -fx-stroke-width: 1.5;" translateX="744.0" translateY="-1.0" />
-                              <Label id="title" fx:id="title" alignment="TOP_LEFT" prefHeight="62.0" prefWidth="1450.0" style="-fx-text-fill: #FFEE00; -fx-font-size: 20;" text="POPCORNS">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="80.0" top="20.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <GridPane id="products" fx:id="productList" gridLinesVisible="true" hgap="40.0" maxHeight="-Infinity" prefHeight="520.0" prefWidth="1534.0" vgap="20.0" VBox.vgrow="NEVER">
+                              <Region prefHeight="50.0" prefWidth="50.0" />
+                              <GridPane id="optionBar" prefHeight="51.0" prefWidth="1442.0">
                                 <columnConstraints>
-                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="NEVER" maxWidth="253.60001220703126" minWidth="10.0" prefWidth="253.60001220703126" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="278.4000244140625" minWidth="0.0" prefWidth="150.0" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="0.0" prefWidth="150.0" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="0.0" prefWidth="150.0" />
+                                  <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="191.7332763671874" minWidth="0.0" prefWidth="150.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="491.7333984375" minWidth="10.0" prefWidth="491.7333984375" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <padding>
-                                    <Insets left="85.0" right="65.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </GridPane>
-                              <GridPane prefHeight="210.0" prefWidth="1534.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <HBox GridPane.columnIndex="2">
-                                       <children>
-                                          <Region prefHeight="98.0" prefWidth="143.0" />
-                                          <Label id="total" alignment="BOTTOM_LEFT" prefHeight="98.0" prefWidth="268.0" text="TOTAL : RM0.00" />
-                                          <Region prefHeight="200.0" prefWidth="200.0" />
-                                       </children>
+                                    <ImageView fitHeight="31.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT">
                                        <GridPane.margin>
-                                          <Insets />
+                                          <Insets left="10.0" />
                                        </GridPane.margin>
-                                    </HBox>
-                                    <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                       <children>
-                                          <Region prefHeight="81.0" prefWidth="57.0" />
-                                          <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Back" />
-                                          <Region prefHeight="98.0" prefWidth="39.0" />
-                                          <Button id="nextBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Check Out" />
-                                          <Region prefHeight="81.0" prefWidth="155.0" />
-                                       </children>
+                                       <image>
+                                          <Image url="@assets/company/logo.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Button fx:id="comboButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#combo" prefHeight="0.0" prefWidth="150.0" styleClass="optionButton" text="COMBO SETS" translateY="2.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER" />
+                                    <Button fx:id="popcornButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#popcorn" prefHeight="0.0" prefWidth="200.0" styleClass="optionButton" text="POPCORNS" translateY="2.0" GridPane.columnIndex="2" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER" />
+                                    <Button fx:id="carteButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#carte" prefHeight="0.0" prefWidth="185.0" styleClass="optionButton" text="A LA CARTE" translateY="2.0" GridPane.columnIndex="3" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER" />
+                                    <Button fx:id="beverageButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#beverage" prefHeight="0.0" prefWidth="184.0" styleClass="optionButton" text="BEVERAGES" translateY="2.0" GridPane.columnIndex="4" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="25.0" left="40.0" top="15.0" />
+                                 </padding>
+                              </GridPane>
+                              <Button id="shoppingCartBtn" fx:id="openPopUp" mnemonicParsing="false" onAction="#openPopUp" prefHeight="30.0" prefWidth="40.0" text="Button" translateZ="1.0">
+                                 <HBox.margin>
+                                    <Insets right="30.0" top="7.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <StackPane prefHeight="1040.0" prefWidth="1538.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Line fx:id="highlightLine" endX="153.0" stroke="#ffee00" strokeLineCap="ROUND" style="-fx-fill: #FFEE00; -fx-scale-z: 4; -fx-stroke-width: 1.5;" translateX="785.0" translateY="-1.0" />
+                                    <Label id="title" fx:id="title" alignment="TOP_LEFT" prefHeight="62.0" prefWidth="1450.0" style="-fx-text-fill: #FFEE00; -fx-font-size: 20;" text="POPCORNS">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="80.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <GridPane id="products" fx:id="productList" gridLinesVisible="true" hgap="40.0" maxHeight="-Infinity" prefHeight="520.0" prefWidth="1534.0" vgap="20.0" VBox.vgrow="NEVER">
+                                      <columnConstraints>
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
                                        <padding>
-                                          <Insets top="25.0" />
+                                          <Insets left="85.0" right="65.0" />
                                        </padding>
-                                    </HBox>
-                                    <HBox prefHeight="154.0" prefWidth="512.0" GridPane.columnIndex="1">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </GridPane>
+                                    <GridPane prefHeight="210.0" prefWidth="1534.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
                                        <children>
-                                          <Region prefHeight="106.0" prefWidth="150.0" />
-                                          <Button id="backBtn" fx:id="prevPageButton" mnemonicParsing="false" onAction="#prevPage" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Previous">
-                                             <HBox.margin>
-                                                <Insets top="25.0" />
-                                             </HBox.margin></Button>
-                                          <Region prefHeight="106.0" prefWidth="47.0" />
-                                          <Button id="backBtn" fx:id="nextPageButton" mnemonicParsing="false" onAction="#nextPage" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Next">
-                                             <HBox.margin>
-                                                <Insets top="25.0" />
-                                             </HBox.margin></Button>
-                                          <Region prefHeight="106.0" prefWidth="134.0" />
+                                          <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                             <children>
+                                                <Region prefHeight="78.0" prefWidth="174.0" />
+                                                <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButton" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Back">
+                                                   <HBox.margin>
+                                                      <Insets top="32.0" />
+                                                   </HBox.margin></Button>
+                                                <Region prefHeight="98.0" prefWidth="39.0" />
+                                                <Button id="nextBtn" fx:id="checkOutButton" mnemonicParsing="false" onAction="#checkOut" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Check Out">
+                                                   <HBox.margin>
+                                                      <Insets top="32.0" />
+                                                   </HBox.margin></Button>
+                                                <Region prefHeight="78.0" prefWidth="55.0" />
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="154.0" prefWidth="512.0" GridPane.columnIndex="1">
+                                             <children>
+                                                <Region prefHeight="106.0" prefWidth="150.0" />
+                                                <Button id="backBtn" fx:id="prevPageButton" mnemonicParsing="false" onAction="#prevPage" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Previous">
+                                                   <HBox.margin>
+                                                      <Insets top="32.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Region prefHeight="106.0" prefWidth="47.0" />
+                                                <Button id="backBtn" fx:id="nextPageButton" mnemonicParsing="false" onAction="#nextPage" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Next">
+                                                   <HBox.margin>
+                                                      <Insets top="32.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Region prefHeight="106.0" prefWidth="134.0" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+            <BorderPane fx:id="popUpPane" onMouseClicked="#closePopUp" prefHeight="732.0" prefWidth="1395.0" style="-fx-background-color: transparent;" translateX="1800.0">
+               <center>
+                  <StackPane id="popUpShadow" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: black;">
+                           <children>
+                              <GridPane prefHeight="75.0" prefWidth="1234.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="607.4000244140625" minWidth="10.0" prefWidth="285.8000793457031" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="954.19990234375" minWidth="10.0" prefWidth="954.19990234375" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="949.8000183105469" minWidth="10.0" prefWidth="269.40009765625007" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <ImageView fitHeight="131.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
+                                       <image>
+                                          <Image url="@assets/company/logo.png" />
+                                       </image>
+                                       <GridPane.margin>
+                                          <Insets left="30.0" />
+                                       </GridPane.margin>
+                                    </ImageView>
+                                    <Label id="shoppingCart" prefHeight="35.0" prefWidth="286.0" text="Shopping Cart" GridPane.columnIndex="1">
+                                       <padding>
+                                          <Insets left="75.0" />
+                                       </padding>
+                                    </Label>
+                                    <Button id="XBtn" fx:id="closePopUp" mnemonicParsing="false" onAction="#closePopUp" prefHeight="70.0" prefWidth="70.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                 </children>
+                              </GridPane>
+                              <ScrollPane fx:id="shoppingList" fitToWidth="true" hbarPolicy="NEVER" maxWidth="-Infinity" prefHeight="502.0" prefWidth="1241.0" style="-fx-background-color: #000000;" translateX="-1.0" vbarPolicy="NEVER">
+                                 <VBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </VBox.margin>
+                                 <content>
+                                    <HBox>
+                                       <children>
+                                          <VBox fx:id="nameContainer" prefHeight="502.0" prefWidth="468.0" spacing="10.0">
+                                             <padding>
+                                                <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                                             </padding>
+                                          </VBox>
+                                          <VBox fx:id="quantityContainer" alignment="TOP_CENTER" prefHeight="502.0" prefWidth="210.0" spacing="10.0">
+                                             <padding>
+                                                <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                                             </padding>
+                                          </VBox>
+                                          <Region prefHeight="502.0" prefWidth="115.0" />
+                                          <VBox fx:id="priceContainer" prefHeight="502.0" prefWidth="403.0" spacing="10.0">
+                                             <padding>
+                                                <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                                             </padding>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </content>
+                              </ScrollPane>
+                              <GridPane prefHeight="64.0" prefWidth="1234.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <HBox GridPane.columnIndex="1">
+                                       <children>
+                                          <Region prefHeight="64.0" prefWidth="568.0" />
+                                          <Label id="total" fx:id="cartValue" prefHeight="64.0" prefWidth="495.0" text="TOTAL : RM0.00" />
+                                          <Region prefHeight="200.0" prefWidth="200.0" />
                                        </children>
                                     </HBox>
                                  </children>
@@ -139,8 +232,11 @@
                         </VBox>
                      </children>
                   </StackPane>
-               </children>
-            </VBox>
+               </center>
+               <padding>
+                  <Insets bottom="100.0" left="150.0" right="150.0" top="100.0" />
+               </padding>
+            </BorderPane>
          </children>
       </StackPane>
    </content>

@@ -1,0 +1,100 @@
+@font-face{
+    src: url("../font/Montserrat/Montserrat-Regular.ttf");
+}
+
+.root {
+    -fx-text-fill : #000000;
+    -fx-font-family : 'Montserrat';
+}
+
+.checkoutPanelabel{
+    -fx-font-size : 14px;
+    -fx-font-family : 'Montserrat';
+    -fx-text-fill : #434343;
+    
+}
+
+.purchaseDetailPaneTitle{
+    -fx-font-size : 18px;
+    -fx-font-family : 'Montserrat';
+    -fx-text-fill : #FFFFFF;
+    -fx-opacity : 0.5;
+    
+}
+
+.purchaseDetailPaneDesc{
+    -fx-font-size : 18px;
+    -fx-font-family : 'Montserrat';
+    -fx-text-fill : #FFFFFF;
+
+    
+}
+
+#paymentMethodTitle{
+    -fx-font-size : 18px;
+    -fx-font-family : 'Montserrat';
+    -fx-text-fill : #434343;
+}
+
+.combobox{
+     -fx-background-color : transparent;
+     -fx-border-color : #000000;
+     -fx-border-width : 1px;
+     -fx-border-radius: 10px;
+     -fx-background-insets : 0;
+}
+
+.combobox-base:disabled {
+    -fx-opacity: .4;
+}
+
+
+.combobox .arrow, .combo-box .arrow-button{
+    -fx-background-color: transparent;
+    -fx-padding : 0;
+}
+
+
+.regionBox{
+    -fx-border-color : transparent;
+    -fx-border-width : 1px;  
+}
+
+.textField{
+    -fx-background-insets : 0;
+    -fx-background-color : #c4c4c4;
+    -fx-background-radius : 20px;
+    -fx-opacity : 0.5;
+    -fx-padding : 0 0 0 20px;
+}
+
+.button{
+    -fx-background-radius : 20px;
+    -fx-background-insets: 0;
+    -fx-font-size : 14px;
+    -fx-font-family : 'Montserrat'; 
+    -fx-text-fill : #434343;
+}
+
+#backButton{
+    -fx-background-color : #ffffff;
+    -fx-border-radius : 20px;
+    -fx-border-color : #434343;
+}
+
+#checkOutButton{
+    -fx-border-color : transparent;
+    -fx-background-color : #ffee00; 
+}
+
+#backButton:hover{
+    -fx-background-color : #ffee00;
+    -fx-border-radius : 20px;
+    -fx-border-color : transperent;
+}
+
+#checkOutButton:hover{
+    -fx-border-color : #434343;
+    -fx-background-color : #ffffff;
+    -fx-border-radius : 20px; 
+}

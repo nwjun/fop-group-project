@@ -6,22 +6,27 @@ package com.fop.foptproject.controller;
  */
 
 import com.fop.foptproject.ProductCard;
-import com.fop.sqlUtil.sqlConnect;
+import com.fop.Utility.sqlConnect;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 /**
@@ -29,23 +34,40 @@ import javafx.util.Duration;
  *
  * @author WeiXIn
  */
-public class FoodnBeverageController implements Initializable {
+public class FoodnBeverageController implements Initializable{
+    // Record of what user choose to buy. From movie tickets to beverages
     private HashMap<String,Integer> ShoppingCart= new HashMap<>();
+    
+    // class attributes
     private sqlConnect sql = new sqlConnect();
     private Object[] productId;
     private Object[] price;
     private Object[] posterPath;
     private Object[] productDesc;
+    private Object[] productName;
     private double IMGW = 180.0 ;
     private double IMGH = 185.5;
     private double SCALE = 0.9;
-    private double TRANSLATEX = 293;
+    private double TRANSLATEX = 333;
     private int currentIndex = 0;
     private int currentPage = 0;
     private int maxPage;
+    private double totalAmount = 0;
     
     @FXML
     private GridPane productList;
+    @FXML
+    private BorderPane popUpPane;
+    @FXML
+    private ScrollPane shoppingList;
+    @FXML
+    private StackPane boxBlur;
+    @FXML
+    private VBox priceContainer;
+    @FXML
+    private VBox nameContainer;
+    @FXML
+    private VBox quantityContainer;
     @FXML
     private Button comboButton;
     @FXML
@@ -58,8 +80,18 @@ public class FoodnBeverageController implements Initializable {
     private Button popcornButton;
     @FXML
     private Button beverageButton;
+    @FXML
+    private Button closePopUp;
+    @FXML
+    private Button openPopUp;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Button checkOutButton;
     @FXML 
     private Label title;
+    @FXML
+    private Label cartValue;
     @FXML
     private Line highlightLine;
     
@@ -69,6 +101,7 @@ public class FoodnBeverageController implements Initializable {
         this.price = items.get("price").toArray();
         this.posterPath = items.get("posterPath").toArray();
         this.productDesc = items.get("productDesc").toArray();
+        this.productName = items.get("productName").toArray();
         this.currentPage = 0;
         this.maxPage = (int) Math.ceil(productId.length/4.0);
         this.currentIndex = 0;
@@ -81,7 +114,7 @@ public class FoodnBeverageController implements Initializable {
         stop:{
             for(int i = 0; i < 2;i++){
                 for(int j = 0; j < 2 ; j++){
-                    ProductCard content = new ProductCard((String)productId[currentIndex],(String)posterPath[currentIndex],IMGW,IMGH,SCALE,Double.parseDouble((String)price[currentIndex]),"Product Title",(String)productDesc[currentIndex]);
+                    ProductCard content = new ProductCard((String)productId[currentIndex],(String)posterPath[currentIndex],IMGW,IMGH,SCALE,Double.parseDouble((String)price[currentIndex]),(String)productName[currentIndex],(String)productDesc[currentIndex]);
                     HBox card = content.getCard();
                     productList.add(card,j,i);
                     currentIndex++;
@@ -122,9 +155,72 @@ public class FoodnBeverageController implements Initializable {
     }
     
     @FXML
+    public void backButton(ActionEvent event) throws IOException{
+        new SceneController().switchToSeats(event);
+    }
+    
+    @FXML
+    public void checkOut(ActionEvent event) throws IOException{
+        new SceneController().switchToCheckOut(event);
+    }
+    
+    @FXML 
+    public void openPopUp(){
+        BoxBlur b = new BoxBlur(10,10,2);
+        boxBlur.setEffect(b);
+        lineAnimation(1800,0,popUpPane);
+        HashMap<String,Integer> current = ProductCard.retrieveAllPurchaseDetail();
+        double price;
+        String name;
+        sqlConnect sql = new sqlConnect();
+        int i = 0;
+        for(String key:current.keySet()){
+           if(i==0){
+                Label productName = new Label("Product Name");
+                Label quantity = new Label("Quantity");     
+                Label productPrice = new Label("Price");
+                productName.getStyleClass().add("shoppingCartTitle");
+                quantity.getStyleClass().add("shoppingCartTitle");
+                productPrice.getStyleClass().add("shoppingCartTitle");
+                
+                this.priceContainer.getChildren().add(productPrice);
+                this.nameContainer.getChildren().add(productName);
+                this.quantityContainer.getChildren().add(quantity);
+                i++;
+           }
+           price = Double.parseDouble(sql.queryProductInfo(key,"price"));
+           name = sql.queryProductInfo(key,"productname");
+           
+           Label productName = new Label(name);
+           Label productPrice = new Label(String.format("RM%.2f",price*current.get(key)));
+           Label quantity = new Label(Integer.toString(current.get(key)));         
+           productName.getStyleClass().add("shoppingCartContent");
+           quantity.getStyleClass().add("shoppingCartContent");
+           productPrice.getStyleClass().add("shoppingCartContent");
+           
+           this.totalAmount += current.get(key)*price;
+           this.priceContainer.getChildren().add(productPrice);
+           this.nameContainer.getChildren().add(productName);
+           this.quantityContainer.getChildren().add(quantity);
+        }
+        cartValue.setText(String.format("TOTAL:RM%.2f",this.totalAmount));
+        
+    }
+    
+    @FXML 
+    public void closePopUp(){
+        boxBlur.setEffect(null);
+        lineAnimation(0,1800,popUpPane);
+        this.priceContainer.getChildren().clear();
+        this.nameContainer.getChildren().clear();
+        this.quantityContainer.getChildren().clear();
+        this.totalAmount = 0;
+    }
+    
+    @FXML
     public void popcorn(){
-        lineAnimation(TRANSLATEX,444,highlightLine);
-        TRANSLATEX = 444;
+        lineAnimation(TRANSLATEX,484,highlightLine);
+        TRANSLATEX = 484;
         title.setText("POPCORNS");
         productList.getChildren().clear();
         getProduct("popcorn");
@@ -133,26 +229,28 @@ public class FoodnBeverageController implements Initializable {
     
     @FXML
     public void combo(){
-        lineAnimation(TRANSLATEX,293,highlightLine);
-        TRANSLATEX = 293;
+        lineAnimation(TRANSLATEX,333,highlightLine);
+        TRANSLATEX = 333;
         title.setText("COMBO SETS");
         productList.getChildren().clear();
         getProduct("combo");
         checkPage();
     }
+    
     @FXML
     public void carte(){
-        lineAnimation(TRANSLATEX,595,highlightLine);
-        TRANSLATEX = 595;
+        lineAnimation(TRANSLATEX,634,highlightLine);
+        TRANSLATEX = 634;
         title.setText("A LA CARTE");
         productList.getChildren().clear();
         getProduct("carte");
         checkPage();
     }
+    
     @FXML
     public void beverage(){
-        lineAnimation(TRANSLATEX,744,highlightLine);
-        TRANSLATEX = 744;
+        lineAnimation(TRANSLATEX,785,highlightLine);
+        TRANSLATEX = 785;
         title.setText("BEVERAGES");
         productList.getChildren().clear();
         getProduct("beverage");
@@ -177,14 +275,9 @@ public class FoodnBeverageController implements Initializable {
         currentPage++;
         checkPage();
     }
-    
-    
-    
-        
-    
-    
+          
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb){
         combo();
     }
 

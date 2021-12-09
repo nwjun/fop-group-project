@@ -22,7 +22,7 @@
             <Image url="@assets/company/logo.png" />
          </image>
       </ImageView>
-      <HBox alignment="CENTER" layoutX="46.0" layoutY="107.0" prefHeight="406.0" prefWidth="1482.0">
+      <HBox alignment="CENTER" layoutX="42.0" layoutY="167.0" prefHeight="406.0" prefWidth="1482.0">
          <children>
             <ImageView fx:id="moviePoster" fitHeight="386.0" fitWidth="236.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0" translateY="-10.0">
                <image>
@@ -82,7 +82,7 @@
             </VBox>
          </children>
       </HBox>
-      <VBox layoutX="198.0" layoutY="540.0" prefHeight="206.0" prefWidth="1222.0">
+      <VBox layoutX="200.0" layoutY="618.0" prefHeight="206.0" prefWidth="1222.0">
          <children>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Synopsis :" />
             <Text fx:id="synopsis" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Based on Frank Herbert`s 1965 novel of the same name, which is set far into the future. Duke Leto Atreides has accepted stewardship of the dangerous desert planet Arrakis, also known as Dune. It is the only source of a drug called &quot;the spice&quot;, the most valuable substance in the universe as it provides accelerated levels of thought and extends human life. Despite knowing that this is a complicated trap set by his enemies, the Harkonnens, Leto still takes his young son and heir Paul, his Bene Gesserit concubine Lady Jessica, and his most trusted advisers to the planet. He takes control of the spice mining operation, even though it is dangerous due to the giant sandworms in the area. When the Atreides family gets betrayed, his son Paul leads a rebellion to restore his family`s control of the planet." textAlignment="JUSTIFY" translateY="20.0" wrappingWidth="1097.962646484375" />
@@ -93,5 +93,6 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
+      <Button fx:id="backBtn" layoutX="200.0" layoutY="115.0" mnemonicParsing="false" onAction="#changeToLandingPage" prefHeight="38.0" prefWidth="107.0" style="-fx-background-color: 000000; -fx-border-color: #FFEE00; -fx-border-radius: 15;" styleClass="Button" text="Back" textFill="WHITE" />
    </children>
 </AnchorPane>

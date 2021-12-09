@@ -1,0 +1,2 @@
+This marker.txt is used to locate the location of com.fop.foptproject.assets.movies directory 
+in different computer

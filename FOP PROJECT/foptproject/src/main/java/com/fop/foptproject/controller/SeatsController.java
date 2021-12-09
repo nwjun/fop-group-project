@@ -35,16 +35,17 @@ public class SeatsController implements Initializable {
     @FXML
     private GridPane seatsContainer;
     @FXML
-    private Button studentMinus, studentAdd, adultMinus, adultAdd, okuMinus, okuAdd;
+    private Button studentMinus, studentAdd, adultMinus, adultAdd, okuMinus, okuAdd, nextButton;
     @FXML
     private Label studentCount, adultCount, okuCount, selectedTicketLabel, totalLabel;
+    
     
     @FXML
     public void changeToMovieBooking(ActionEvent event) throws IOException{
         SceneController switchScene = new SceneController();
         switchScene.switchToMovieBooking(event);
     }
-
+  
     private ArrayList<int[]> selected = new ArrayList<int[]>();
     private int selectedLength = 0;
     // no of ticket for adult, student, OKU
@@ -81,6 +82,12 @@ public class SeatsController implements Initializable {
             updateTotalTicket();
         }
 
+    }
+    
+    // switch to next scene
+    @FXML
+    void toFnB(ActionEvent event) throws IOException{
+        new SceneController().switchToFnB(event);
     }
     
     // add and minus method for each categories
