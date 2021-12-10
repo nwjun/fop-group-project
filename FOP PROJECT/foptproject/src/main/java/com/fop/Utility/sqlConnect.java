@@ -734,7 +734,7 @@ public class sqlConnect {
     
     public static void updateSeats(String jsonString,String theaterId, boolean isTemplate){
         
-        String query = (isTemplate)?"UPDATE theaters SET seat = ? WHERE theaterId = ?":"UPDATE theaters SET seatTemplate = ? WHERE theaterId = ?";
+        String query = (isTemplate)?"UPDATE theaters SET seatTemplate = ? WHERE theaterId = ?":"UPDATE theaters SET seat = ? WHERE theaterId = ?";
         
         try{
             PreparedStatement prep = conn.prepareStatement(query);
