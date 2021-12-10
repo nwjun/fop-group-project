@@ -31,8 +31,8 @@ public class App extends Application{
         final double WIDTH = screenBounds.getWidth();
         final double HEIGHT = screenBounds.getHeight();
 
-        boolean DEBUG = false;
-        String fxmlFile = "AppLogined.fxml";
+        boolean DEBUG = true;
+        String fxmlFile = "userProfile.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
@@ -68,6 +68,8 @@ public class App extends Application{
         sqlConnect sql = new sqlConnect();
         JSONToolSets json = new JSONToolSets(sql.querySeats("1"));
         json.parseTheaterSeat();
+        System.out.println(json.getRow());
+        System.out.println(json.getColumn());
         //launch();
     }
 }

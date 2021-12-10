@@ -14,11 +14,14 @@ public class readConfig {
         Properties prop = new Properties();
         try (FileInputStream fis = new FileInputStream("src\\main\\resources\\com\\fop\\config\\configuration.config")) {
             prop.load(fis);
+            System.out.println("ok");
         } 
         catch (FileNotFoundException ex){
+            System.out.println("not found");
             return prop;
         } 
         catch (IOException ex){
+            System.out.println("io");
             return prop;
         }
         return prop;

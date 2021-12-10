@@ -30,3 +30,20 @@
     -fx-background-color : #c1c1c1;
     -fx-text-fill : #ffffff;
 }
+
+#backButton {
+  -fx-background-image: url("assets/back.png");
+  -fx-background-size : 30px 30px;
+  -fx-background-position: center;
+  -fx-background-repeat:no-repeat;
+  -fx-background-color: rgba(0,0,0,0);
+
+}
+
+#backButton:hover {
+  -fx-background-image: url("assets/back-hovered.png");
+  -fx-background-repeat:no-repeat;
+  -fx-background-size : 30px 30px;
+  -fx-background-position: center;
+  -fx-background-color: rgba(0,0,0,0);
+}

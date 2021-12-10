@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -69,6 +68,11 @@ public class LoginRegisterController implements Initializable {
     @FXML
     private Label RConfirmPasswordFieldWarning;
     
+    @FXML
+    public void backButton(ActionEvent event) throws IOException{
+        SceneController scene = new SceneController();
+        scene.switchToHome(event);
+    }
     
     @FXML
     public void loginButton(ActionEvent event) throws SQLException, IOException{
