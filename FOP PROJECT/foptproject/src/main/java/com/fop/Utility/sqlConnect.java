@@ -712,7 +712,7 @@ public class sqlConnect {
         return result;
     }
     
-    public static String querySeats(String theaterId){
+    public static String querySeats(String theaterId, boolean isTemplate){
         String query = "SELECT * FROM theaters WHERE theaterId = ?";
         String jsonString = null;
         
@@ -723,7 +723,7 @@ public class sqlConnect {
             ResultSet rs = prep.executeQuery();
             
             rs.next();
-            jsonString = rs.getString("seat");
+            jsonString = rs.getString((isTemplate)?"seatTemplate":"seat");
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -732,8 +732,9 @@ public class sqlConnect {
         return jsonString;
     }
     
-    public static void updateSeats(String jsonString,String theaterId){
-        String query = "UPDATE theaters SET seat = ? WHERE theaterId = ?";
+    public static void updateSeats(String jsonString,String theaterId, boolean isTemplate){
+        
+        String query = (isTemplate)?"UPDATE theaters SET seat = ? WHERE theaterId = ?":"UPDATE theaters SET seatTemplate = ? WHERE theaterId = ?";
         
         try{
             PreparedStatement prep = conn.prepareStatement(query);

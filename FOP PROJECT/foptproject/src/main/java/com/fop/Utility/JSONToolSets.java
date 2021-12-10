@@ -12,6 +12,8 @@ import com.fop.Utility.sqlConnect;
 
 public class JSONToolSets {
     private JSONObject jsonObj;
+    private int columnSize;
+    private int rowSize;
     private boolean isSeat = false;
     private static sqlConnect sql = new sqlConnect();
     
@@ -83,8 +85,13 @@ public class JSONToolSets {
     }
     
     public HashMap<String,ArrayList<String>> parseTheaterSeat(){
-        JSONObject temp = this.jsonObj;
         this.isSeat = true;
+        JSONObject temp = this.jsonObj;        
+        
+        this.rowSize = temp.length();
+        this.columnSize = temp.getJSONArray("0").length();
+        
+       
         JSONArray temp2;
         HashMap<String,ArrayList<String>> extracted = new HashMap<>();
         int i =0 ,j = 0;
@@ -95,15 +102,12 @@ public class JSONToolSets {
                 temp2 = temp.getJSONArray(Integer.toString(i));
                 extracted.put(Integer.toString(i),new ArrayList<String>());
                 j = 0;
-                //System.out.printf(""+j+" | ");
                 while(true){
                     try{
                         extracted.get(Integer.toString(i)).add(temp2.get(j).toString());
-                        //System.out.printf(" %s",temp2.get(j).toString());
                         j++;
                     }
                     catch(Exception e){
-                        //System.out.println();
                         break;
                     }
                 }
@@ -121,19 +125,8 @@ public class JSONToolSets {
          * precedence of increasing capacity: column > row
          */
         if(this.isSeat){
-            int row = 0;
-            while(true){
-                try{
-                    this.jsonObj.getJSONArray(Integer.toString(row));
-                    row++;
-                }
-                catch(Exception e){
-                    break;
-                }
-            }
-            // get number of column
-            int columnSize = this.jsonObj.getJSONArray("0").toList().size();
-            int newColumnSize = columnSize + n;
+            // get new number of column
+            int newColumnSize = this.columnSize + n;
             
             // generate new row arrangement
             ArrayList<Integer> notLast = new ArrayList<>();
@@ -172,8 +165,8 @@ public class JSONToolSets {
             
             // new JSON Object to hold the structure;
             JSONObject obj = new JSONObject();
-            for(int i = 0 ; i < row ; i++){
-                if(i+1 == row){
+            for(int i = 0 ; i < this.rowSize ; i++){
+                if(i+1 == this.rowSize){
                     obj.put(Integer.toString(i),new JSONArray(last));
                 }
                 else{
@@ -194,34 +187,20 @@ public class JSONToolSets {
          * precedence of increasing capacity: column > row
          */
         if(this.isSeat){
-            // generate new n x n seats arrangement which corresponds to the current size of seats arrangement
-            // get number of row
-            int row = 0;
-            while(true){
-                try{
-                    this.jsonObj.getJSONArray(Integer.toString(row));
-                    row++;
-                }
-                catch(Exception e){
-                    break;
-                }
-            }
-            // get number of column
-            int columnSize = this.jsonObj.getJSONArray("0").toList().size();
             
             ////generate new n x n seats arrangement
             // copy the arrangement of !last row and last row from previous arrangement
             ArrayList<Integer> arr = new ArrayList<>();
             ArrayList<Integer> lastArr = new ArrayList<>();
-            for(int i = 0; i < columnSize ; i++){
+            for(int i = 0; i < this.columnSize ; i++){
                 arr.add(this.jsonObj.getJSONArray("0").getInt(i));
-                lastArr.add(this.jsonObj.getJSONArray(Integer.toString(row-1)).getInt(i));
+                lastArr.add(this.jsonObj.getJSONArray(Integer.toString(this.rowSize-1)).getInt(i));
             }
             
             // new JSON object to hold the structure
             JSONObject obj = new JSONObject();
             
-            int newRow = row+n;
+            int newRow = this.rowSize+n;
             for(int i = 0 ; i < newRow ; i++){
                 if(i == newRow-1){
                     obj.put(Integer.toString(i),new JSONArray(lastArr));
@@ -247,6 +226,15 @@ public class JSONToolSets {
             return null;
         }
     }
+        
+    public int getRow(){
+        return this.rowSize;
+    }
+    
+    public int getColumn(){
+        return this.columnSize;
+    }
+    
     
     public static String writeJSONString(JSONArray jsonArray,String key){
         JSONObject jsonObject = new JSONObject();
@@ -263,4 +251,6 @@ public class JSONToolSets {
         
         return jsonString;
     }
+    
+
 }
