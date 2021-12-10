@@ -137,22 +137,20 @@ public class profileController implements Initializable {
             case 1:
                 hBox.setOnMouseClicked(event -> {
                     try {
-                        sceneController.switchToHome(event);
+                        sceneController.switchToHomeLogined(event);
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                 });
+                break;
             case 2:
                 hBox.setOnMouseClicked(event -> profile());
-                System.out.println("2");
                 break;
             case 3:
                 hBox.setOnMouseClicked(event -> billing());
-                System.out.println("3");
                 break;
             case 4:
                 hBox.setOnMouseClicked(event -> history());
-                System.out.println("4");
                 break;
         }
 

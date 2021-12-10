@@ -120,7 +120,7 @@ public class JSONToolSets {
         return extracted;
     }
     
-    public void addColumn(int n){
+    public void addColumn(int n, boolean isTemplate){
         /**
          * precedence of increasing capacity: column > row
          */
@@ -132,35 +132,43 @@ public class JSONToolSets {
             ArrayList<Integer> notLast = new ArrayList<>();
             ArrayList<Integer> last = new ArrayList<>();
             
-            
-            // arrange not last row
-            for(int i = 0 ; i < newColumnSize-4 ; i++){
-                if(i%2 != 0){
-                    notLast.add(-1);
+            if(!isTemplate){
+                // arrange not last row
+                for(int i = 0 ; i < newColumnSize-4 ; i++){
+                    if(i%2 != 0){
+                        notLast.add(-1);
+                    }
+                    else{
+                        notLast.add(0);
+                    }
                 }
-                else{
+
+                // arrange last row
+                int factor = 0;
+                for(int i = 0 ; i < newColumnSize-4 ; i++){
+                    if((i-2)/3.0 == factor){
+                        last.add(-1);
+                        factor++;
+                    }
+                    else{
+                        last.add(0);
+                    }
+                }
+
+                // add in side columns
+                for(int j = 0 ; j < 2 ; j++){
+                    last.add(0,0);
+                    last.add(0);
+                    notLast.add(0,0);
                     notLast.add(0);
                 }
             }
-            
-            // arrange last row
-            int factor = 0;
-            for(int i = 0 ; i < newColumnSize-4 ; i++){
-                if((i-2)/3.0 == factor){
-                    last.add(-1);
-                    factor++;
-                }
-                else{
+            else{
+                // modify template
+                for(int i = 0 ; i < newColumnSize ; i++){
                     last.add(0);
+                    notLast.add(0);
                 }
-            }
-            
-            // add in side columns
-            for(int j = 0 ; j < 2 ; j++){
-                last.add(0,0);
-                last.add(0);
-                notLast.add(0,0);
-                notLast.add(0);
             }
             
             // new JSON Object to hold the structure;
@@ -174,11 +182,11 @@ public class JSONToolSets {
                 }       
             }
             this.jsonObj = obj;
+            this.columnSize = newColumnSize;
         }
         else{
             return;
-        }
-        
+        } 
         
     }
     
@@ -200,9 +208,9 @@ public class JSONToolSets {
             // new JSON object to hold the structure
             JSONObject obj = new JSONObject();
             
-            int newRow = this.rowSize+n;
-            for(int i = 0 ; i < newRow ; i++){
-                if(i == newRow-1){
+            int newRowSize = this.rowSize+n;
+            for(int i = 0 ; i < newRowSize ; i++){
+                if(i == newRowSize-1){
                     obj.put(Integer.toString(i),new JSONArray(lastArr));
                 }
                 else{
@@ -211,6 +219,7 @@ public class JSONToolSets {
             }
             
             this.jsonObj = obj;
+            this.rowSize = newRowSize;
             
         }
         else{
@@ -235,7 +244,6 @@ public class JSONToolSets {
         return this.columnSize;
     }
     
-    
     public static String writeJSONString(JSONArray jsonArray,String key){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(key, jsonArray);
@@ -252,5 +260,5 @@ public class JSONToolSets {
         return jsonString;
     }
     
-
+    
 }
