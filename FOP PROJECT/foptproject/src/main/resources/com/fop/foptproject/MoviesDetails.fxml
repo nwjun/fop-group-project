@@ -1,98 +1,239 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" styleClass="root" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.MoviesDetailsController">
-    <stylesheets>
-        <URL value="@moviesdetails.css" />
-      <URL value="@style.css" />
-    </stylesheets>
-   <children>
-      <ImageView fitHeight="35.0" fitWidth="169.0" layoutX="89.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@assets/company/logo.png" />
-         </image>
-      </ImageView>
-      <HBox alignment="CENTER" layoutX="42.0" layoutY="167.0" prefHeight="406.0" prefWidth="1482.0">
+<BorderPane prefHeight="950.0" prefWidth="1568.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.MoviesDetailsController">
+   <top>
+      <GridPane prefHeight="60.0" prefWidth="1662.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <ImageView fx:id="moviePoster" fitHeight="386.0" fitWidth="236.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0" translateY="-10.0">
-               <image>
-                  <Image url="@assets/movies/dune.jpg" />
-               </image>
-            </ImageView>
-            <VBox prefHeight="406.0" prefWidth="463.0" translateX="60.0" translateY="20.0">
+            <HBox alignment="CENTER_LEFT">
+               <GridPane.margin>
+                  <Insets left="60.0" />
+               </GridPane.margin>
                <children>
-                  <HBox prefHeight="66.0" prefWidth="463.0">
+                  <ImageView fitHeight="32.0" fitWidth="184.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/company/logo.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label id="header" prefHeight="27.0" prefWidth="133.0" text="Movie Details">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <StackPane alignment="CENTER_RIGHT" GridPane.columnIndex="1">
+               <children>
+                  <Button id="backButton" fx:id="backButton" mnemonicParsing="false" onAction="#changeToLandingPage" prefHeight="35.0" prefWidth="40.0" />
+               </children>
+               <padding>
+                  <Insets right="60.0" />
+               </padding>
+            </StackPane>
+         </children>
+         <BorderPane.margin>
+            <Insets top="20.0" />
+         </BorderPane.margin>
+      </GridPane>
+   </top>
+   <stylesheets>
+      <URL value="@moviesdetails.css" />
+      <URL value="@style.css" />
+   </stylesheets>
+   <center>
+      <StackPane prefHeight="1066.0" prefWidth="1630.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="50.0" left="60.0" right="60.0" />
+         </padding>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox minHeight="-Infinity" prefHeight="466.0" prefWidth="1446.0">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Title :" />
-                        <Label fx:id="movieTitle" text="Dune" textFill="WHITE" translateX="15.0" wrapText="true" />
+                        <ImageView fx:id="poster" fitHeight="320.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="100.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@assets/movies/enemy.jpg" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                        <Region minWidth="-Infinity" prefHeight="555.0" prefWidth="120.0" />
+                        <VBox maxHeight="-Infinity" prefHeight="320.0" prefWidth="340.0">
+                           <HBox.margin>
+                              <Insets bottom="70.0" top="10.0" />
+                           </HBox.margin>
+                           <children>
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Movie Title: " />
+                                    <Label fx:id="movieTitle" prefHeight="22.0" prefWidth="258.0" styleClass="descriptionText" text="Label" wrapText="true" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Director: " />
+                                    <Label fx:id="director" prefHeight="22.0" prefWidth="278.0" styleClass="descriptionText" text="Label" />
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Casts: " />
+                                    <Label fx:id="casts" alignment="TOP_LEFT" prefWidth="176.0" styleClass="descriptionText" text="Label" wrapText="true" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Language: " />
+                                    <Label fx:id="language" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Age Restriction: " />
+                                    <Label fx:id="ageRestriction" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Region minWidth="-Infinity" prefHeight="555.0" prefWidth="120.0" />
+                        <VBox maxHeight="-Infinity" prefHeight="320.0" prefWidth="340.0">
+                           <HBox.margin>
+                              <Insets bottom="70.0" top="10.0" />
+                           </HBox.margin>
+                           <children>
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Release Date: " />
+                                    <Label fx:id="releaseDate" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="22.0" styleClass="descriptionText" text="iMDB Rate: ">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="imdb" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Rotten Tomato: ">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="rottenTomato" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Length: ">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="length" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <Region prefHeight="75.0" prefWidth="338.0" />
+                              <StackPane>
+                                 <children>
+                                    <Button id="bookButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Book Ticket" />
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
                      </children>
+                     <padding>
+                        <Insets top="80.0" />
+                     </padding>
                   </HBox>
-                  <VBox>
+                  <VBox prefHeight="345.0" prefWidth="1446.0">
+                     <padding>
+                        <Insets left="100.0" right="200.0" />
+                     </padding>
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Casts :" />
-                        <Label fx:id="casts" prefHeight="139.0" prefWidth="107.0" text="Timothée Chalamet, Rebecca Ferguson, Oscar Isaac, Josh Brolin, Stellan Skarsgard, Dave Bautista, Zendaya" textFill="WHITE" wrapText="true" />
+                        <Label styleClass="descriptionText" text="Synopsis: ">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="synopsis" alignment="TOP_LEFT" prefHeight="252.0" prefWidth="1344.0" styleClass="descriptionText" text="Label" wrapText="true" />
                      </children>
                   </VBox>
-                  <HBox prefHeight="178.0" prefWidth="463.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Language : " translateY="50.0" />
-                        <Label fx:id="movieLanguage" text="English" textFill="WHITE" translateX="15.0" translateY="50.0" wrapText="true" />
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox prefHeight="406.0" prefWidth="448.0" translateX="150.0" translateY="20.0">
-               <children>
-                  <HBox prefHeight="73.0" prefWidth="448.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cinemas :" />
-                        <Label fx:id="cinemas" text="Midvalley Megamall, Kl" textFill="WHITE" translateX="15.0" wrapText="true" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="73.0" prefWidth="448.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Length : " />
-                        <Label fx:id="movieLength" text="02:15" textFill="WHITE" translateX="15.0" wrapText="true" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="73.0" prefWidth="172.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Classic :" />
-                        <Label fx:id="classicPrice" text="RM 25 " textFill="WHITE" translateX="15.0" wrapText="true" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="91.0" prefWidth="448.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Premium : " />
-                        <Label fx:id="premiumPrice" text="RM 35 " textFill="WHITE" translateX="15.0" wrapText="true" />
-                     </children>
-                  </HBox>
-                  <Button fx:id="booknowButton" mnemonicParsing="false" onAction="#changeToMovieBooking" prefHeight="38.0" prefWidth="149.0" style="-fx-background-radius: 15;" styleClass="Button" text="Book Now " />
                </children>
             </VBox>
          </children>
-      </HBox>
-      <VBox layoutX="200.0" layoutY="618.0" prefHeight="206.0" prefWidth="1222.0">
-         <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Synopsis :" />
-            <Text fx:id="synopsis" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Based on Frank Herbert`s 1965 novel of the same name, which is set far into the future. Duke Leto Atreides has accepted stewardship of the dangerous desert planet Arrakis, also known as Dune. It is the only source of a drug called &quot;the spice&quot;, the most valuable substance in the universe as it provides accelerated levels of thought and extends human life. Despite knowing that this is a complicated trap set by his enemies, the Harkonnens, Leto still takes his young son and heir Paul, his Bene Gesserit concubine Lady Jessica, and his most trusted advisers to the planet. He takes control of the spice mining operation, even though it is dangerous due to the giant sandworms in the area. When the Atreides family gets betrayed, his son Paul leads a rebellion to restore his family`s control of the planet." textAlignment="JUSTIFY" translateY="20.0" wrappingWidth="1097.962646484375" />
-         </children>
-      </VBox>
-      <Text fx:id="movieDetails" fill="WHITE" layoutX="351.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Details">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Text>
-      <Button fx:id="backBtn" layoutX="200.0" layoutY="115.0" mnemonicParsing="false" onAction="#changeToLandingPage" prefHeight="38.0" prefWidth="107.0" style="-fx-background-color: 000000; -fx-border-color: #FFEE00; -fx-border-radius: 15;" styleClass="Button" text="Back" textFill="WHITE" />
-   </children>
-</AnchorPane>
+      </StackPane>
+   </center>
+</BorderPane>

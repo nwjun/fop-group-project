@@ -748,5 +748,18 @@ public class sqlConnect {
         }
     }
     
+    public static HashMap<String,ArrayList<String>> queryLandingFood(String category,int limit){
+        HashMap<String,ArrayList<String>> foodCategory = queryProduct(category);
+        int length = foodCategory.get("productId").size();
+        for(String key : foodCategory.keySet()){
+            for(int i = length-1 ; i >= limit ; i--)
+                foodCategory.get(key).remove(i);
+            foodCategory.get(key).trimToSize();
+        }
+        
+
+
+        return foodCategory;
+    }
 
 }

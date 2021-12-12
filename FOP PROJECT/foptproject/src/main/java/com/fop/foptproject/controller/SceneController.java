@@ -60,7 +60,7 @@ public class SceneController {
         
         Parent root = FXMLLoader.load(App.class.getResource(fxmlFile));
         //lock landing H scroll
-        if(fxmlFile.equals("App.fxml")){
+        if(fxmlFile.equals("App.fxml") || fxmlFile.equals("AppLogined.fxml")){
             ScrollPane k = (ScrollPane) root;
             k.hvalueProperty().addListener(new ChangeListener<Number>() {
                 public void changed(ObservableValue<? extends Number> ov,

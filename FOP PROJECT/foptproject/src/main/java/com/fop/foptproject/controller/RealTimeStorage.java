@@ -11,12 +11,16 @@ import org.json.*;
  */
 public class RealTimeStorage {
     private static sqlConnect sql = new sqlConnect();
+    private static boolean isLogin = false;
     private static String userId;
     private static String userEmail;
     private static String userName;
     private static String phoneNumber;
     private static String permission;
     private static ArrayList<String> linkedCard;
+    private static HashMap<String, ArrayList<String>> movieDetails;
+    private static HashMap<String,ArrayList<String>> landingFoodPoster;
+    private static String lookingAtMovie;
     public static HashMap<String,String> MovieBooking = new HashMap<>();
     public static HashMap<String,Integer> FoodnBeverage = new HashMap<>();
     
@@ -45,6 +49,7 @@ public class RealTimeStorage {
         RealTimeStorage.userName = null;
         RealTimeStorage.phoneNumber = null;
         RealTimeStorage.permission = null;
+        RealTimeStorage.isLogin = false;
         RealTimeStorage.linkedCard.clear();
         RealTimeStorage.MovieBooking.clear();
         RealTimeStorage.FoodnBeverage.clear();
@@ -63,10 +68,11 @@ public class RealTimeStorage {
         RealTimeStorage.userName = result.get("username");
         RealTimeStorage.phoneNumber = result.get("phoneNumber");
         RealTimeStorage.permission = result.get("permission");
+        //update login status
+        RealTimeStorage.isLogin = true;
         // parse json
         String jsonString = result.get("linkedCard");
-        RealTimeStorage.linkedCard = new JSONToolSets(jsonString).parseOneDArray("cardDetail");
-        
+        RealTimeStorage.linkedCard = new JSONToolSets(jsonString).parseOneDArray("cardDetail"); 
         
     }
     
@@ -107,6 +113,38 @@ public class RealTimeStorage {
        
     }
     
+    public static void setLookingAt(String Id){
+        RealTimeStorage.lookingAtMovie = Id;
+    }
+    
+    public static void setAllMovies(){
+        RealTimeStorage.movieDetails = sql.queryAllMovie();
+    }
+    
+    public static void setAllLandingFood(){
+        RealTimeStorage.landingFoodPoster = sql.queryLandingFood("combo",4);
+    }
+    
+    public static String getLookingAt(){
+        return RealTimeStorage.lookingAtMovie;
+    }
+    
+    public static HashMap<String,ArrayList<String>> getAllLandingFood(){
+        return RealTimeStorage.landingFoodPoster;
+    }
+    
+    public static ArrayList<String> getFoodDetail(String key){
+        return RealTimeStorage.landingFoodPoster.get(key);
+    }
+    
+    public static HashMap<String,ArrayList<String>> getAllMovies(){
+        return RealTimeStorage.movieDetails;
+    }
+    
+    public static ArrayList<String> getMovieDetail(String key){
+        return RealTimeStorage.movieDetails.get(key);
+    }
+    
     // getter for userId
     public static String getUserId(){
         return RealTimeStorage.userId;
@@ -130,6 +168,11 @@ public class RealTimeStorage {
     // getter for permission
     public static String getPermission(){
         return RealTimeStorage.permission;
+    }
+    
+    //getter for isLogin
+    public static boolean getIsLogin(){
+        return RealTimeStorage.isLogin;
     }
     
     // getter for movieBooking
