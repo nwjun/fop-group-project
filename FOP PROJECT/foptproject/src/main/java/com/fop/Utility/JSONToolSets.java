@@ -84,6 +84,13 @@ public class JSONToolSets {
         return value;
     }
     
+    public String parseValue(String key){
+        JSONObject temp = this.jsonObj;
+        String value = temp.getString(key);
+        
+        return value;
+    }
+    
     public HashMap<String,ArrayList<String>> parseTheaterSeat(){
         this.isSeat = true;
         JSONObject temp = this.jsonObj;        

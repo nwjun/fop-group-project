@@ -39,7 +39,7 @@ import javafx.stage.Stage;
 import com.fop.foptproject.CommonMethod;
 import com.fop.foptproject.Food;
 import com.fop.foptproject.Movie;
-import com.fop.foptproject.ReadCSV;
+import com.fop.foptproject.SetUpLanding;
 
 
 public class AppController implements Initializable {
@@ -155,10 +155,8 @@ public class AppController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         slideshow();
         // Location to sample csv
-        final String sampleMovieCSV = "src/main/resources/com/fop/foptproject/testing/sampleMovie.csv";
-        final String sampleFoodCSV = "src/main/resources/com/fop/foptproject/testing/sampleFood.csv";
-        Movie[] movies = ReadCSV.csvToMovie(sampleMovieCSV);
-        Food[] foods = ReadCSV.csvToFood(sampleFoodCSV);
+        ArrayList<Movie> movies = SetUpLanding.getMovies();
+        ArrayList<Food> foods = SetUpLanding.getFood();
 
         for (Movie movie : movies) {
             StackPane card = movie.getCard();
@@ -174,7 +172,7 @@ public class AppController implements Initializable {
         
         // Set landingLine to center
         landingLine.setStartX(0);
-        landingLine.setEndX(1500);
+        landingLine.setEndX(1450);
         StackPane.setAlignment(landingLine, Pos.BOTTOM_CENTER);
     }
 }

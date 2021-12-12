@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="1175.0" style="-fx-background-color: #141414;" stylesheets="@donepayment.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.DonePaymentController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="1175.0" styleClass="background" stylesheets="@donepayment.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.DonePaymentController">
    <top>
       <ImageView fitHeight="35.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER_LEFT">
          <image>
@@ -27,7 +27,7 @@
          <children>
             <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="500.0">
                <HBox.margin>
-                  <Insets bottom="30.0" top="50.0" />
+                  <Insets bottom="30.0" top="60.0" />
                </HBox.margin>
                <padding>
                   <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
@@ -102,14 +102,14 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                      <children>
-                        <VBox alignment="CENTER">
+                        <VBox alignment="CENTER" prefHeight="94.0" prefWidth="400.0">
                            <children>
                               <Label styleClass="description" text="Thank you for choosing GSC Cinema!">
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Button id="homeButton" fx:id="toHomeButton" alignment="CENTER" mnemonicParsing="false" prefHeight="29.0" prefWidth="79.0" text="Home" />
+                              <Button id="homeButton" fx:id="toHomeButton" alignment="CENTER" mnemonicParsing="false" onAction="#toHome" prefHeight="29.0" prefWidth="97.0" text="Home" />
                            </children>
                         </VBox>
                      </children>

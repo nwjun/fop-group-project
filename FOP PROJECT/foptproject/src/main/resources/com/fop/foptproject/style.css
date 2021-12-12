@@ -23,3 +23,22 @@
 #toProfile:hover{
     -fx-text-fill : #FFEE00;
 }
+
+.BookButton:hover{
+    -fx-background-color : #FFEE00;
+    -fx-text-fill : #000000;
+    -fx-background-radius : 20;
+    -fx-background-insets : 0;
+    -fx-font-family: "Montserrat,Regular";
+    -fx-padding : 5px; 
+}
+
+.BookButton{
+    -fx-background-color : rgba(0,0,0,0);
+    -fx-text-fill : #FFEE00;
+    -fx-border-radius : 20;
+    -fx-border-color : #FFEE00;
+    -fx-font-family: "Montserrat,Regular";
+    -fx-padding : 5px; 
+    
+}

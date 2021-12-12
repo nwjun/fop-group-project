@@ -32,7 +32,7 @@ public class App extends Application{
         final double HEIGHT = screenBounds.getHeight();
 
         boolean DEBUG = true;
-        String fxmlFile = "userProfile.fxml";
+        String fxmlFile = "MoviesDetails.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
@@ -64,12 +64,33 @@ public class App extends Application{
 
     public static void main(String[] args) throws Exception {
         Properties prop = new readConfig().readconfigfile();
-        
         sqlConnect sql = new sqlConnect();
-        JSONToolSets json = new JSONToolSets(sql.querySeats("1"));
-        json.parseTheaterSeat();
-        System.out.println(json.getRow());
-        System.out.println(json.getColumn());
-        //launch();
+        
+        // query all movie from database and store in local
+        RealTimeStorage.setAllMovies();
+        // query landing food poster
+        RealTimeStorage.setAllLandingFood();
+        
+        
+        
+
+//        JSONToolSets json = new JSONToolSets(sql.querySeats("1",true));
+//        json.parseTheaterSeat();
+//        System.out.println(json.getRow());
+//        System.out.println(json.getColumn());
+//        
+//        JSONToolSets json = new JSONToolSets(sql.querySeats("1",false));
+//        HashMap<String,ArrayList<String>> seatArr = json.parseTheaterSeat();
+//        int row = json.getRow();
+//        int column = json.getColumn();
+//        System.out.printf("%d %d \n",row,column);
+//        json.addColumn(0,false);
+//        json.addRow(1);
+//        String jsonString = json.getNewSeatArr().toString();
+//        System.out.println(jsonString);
+//        sql.updateSeats(jsonString,"1",true);
+//        System.out.println("done");
+        
+        launch();
     }
 }
