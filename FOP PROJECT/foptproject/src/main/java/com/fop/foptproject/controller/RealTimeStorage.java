@@ -21,10 +21,11 @@ public class RealTimeStorage {
     private static HashMap<String, ArrayList<String>> movieDetails;
     private static HashMap<String,ArrayList<String>> landingFoodPoster;
     private static String lookingAtMovie;
-    public static HashMap<String,String> MovieBooking = new HashMap<>();
+    public static HashMap<String,Object> MovieBooking = new HashMap<>();
     public static HashMap<String,Integer> FoodnBeverage = new HashMap<>();
     
-    public static void updateMovieBooking(HashMap<String,String> input,boolean clear){
+    // setter for movie booking
+    public static void updateMovieBooking(HashMap<String,Object> input,boolean clear){
         if(!(clear)){
             RealTimeStorage.MovieBooking = input;
         }
@@ -33,12 +34,59 @@ public class RealTimeStorage {
         }
     }
     
+    // setter for food and beverage
     public static void updateFnB(HashMap<String,Integer> input,boolean clear){
         if(!(clear)){
             RealTimeStorage.FoodnBeverage = input;
         }
         else{
             RealTimeStorage.FoodnBeverage = null;
+        }
+    }
+    
+    // setter for movie booking 
+    public static void updateMovieBookingByKey(String key,ArrayList<String> value){
+        /**
+         * This method accepts an object no matter it is a multiple values or single value for each key
+         * TypeCast is needed to use the data stored in the HashMap
+         * @key can only be
+         * 1. Selected MovieId, a String
+         * 2. Selected MovieName, a String
+         * 3. Selected Cinema Name, a String
+         * 4. Selected Date, a String
+         * 5. Selected Theater type, a String
+         * 6. Selected ShowTime, a String
+         * 7. Selected Ticket Type and its quantity (even index for ticket type odd index for ticket quantity), an ArrayList
+         * 8. Selected Seats, an ArrayList
+         */     
+        if(RealTimeStorage.MovieBooking.containsKey(key)){
+            RealTimeStorage.MovieBooking.replace(key,value);
+        }
+        else{
+            RealTimeStorage.MovieBooking.put(key, value);
+        }
+    }
+    
+    // setter for movie booking
+    public static void updateMovieBookingByKey(String key,String value){
+        /**
+         * This method accepts an object no matter it is a multiple values or single value for each key
+         * TypeCast is needed to use the data stored in the HashMap
+         * @key can only be
+         * 1. Selected MovieId, a String
+         * 2. Selected MovieName, a String
+         * 3. Selected Cinema Name, a String
+         * 4. Selected Date, a String
+         * 5. Selected Theater type, a String
+         * 6. Selected ShowTime, a String
+         * 7. Selected Ticket Type and its quantity (even index for ticket type odd index for ticket quantity), an ArrayList
+         * 8. Selected Seats, an ArrayList
+         */       
+        if(RealTimeStorage.MovieBooking.containsKey(key)){
+            RealTimeStorage.MovieBooking.replace(key,value);
+        }
+        else{
+            RealTimeStorage.MovieBooking.put(key, value);
         }
     }
     
@@ -49,6 +97,7 @@ public class RealTimeStorage {
         RealTimeStorage.userName = null;
         RealTimeStorage.phoneNumber = null;
         RealTimeStorage.permission = null;
+        RealTimeStorage.lookingAtMovie = null;
         RealTimeStorage.isLogin = false;
         RealTimeStorage.linkedCard.clear();
         RealTimeStorage.MovieBooking.clear();
@@ -109,8 +158,7 @@ public class RealTimeStorage {
        }
        else{
            return;
-       }
-       
+       }       
     }
     
     public static void setLookingAt(String Id){
@@ -176,7 +224,7 @@ public class RealTimeStorage {
     }
     
     // getter for movieBooking
-    public static HashMap<String,String> getMovieBooking(){
+    public static HashMap<String,Object> getMovieBooking(){
         return RealTimeStorage.MovieBooking;
     }
     

@@ -21,6 +21,9 @@ public class sqlConnect {
     public sqlConnect(){
         Properties prop = new readConfig().readconfigfile();
         try{
+//            System.out.println(prop.getProperty("configuration.sqlConnection"));
+//            System.out.println(prop.getProperty("configuration.sqlUser"));
+//            System.out.println(prop.getProperty("configuration.sqlPassword"));
             this.conn = DriverManager.getConnection(
             prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
@@ -712,7 +715,7 @@ public class sqlConnect {
         return result;
     }
     
-    public static String querySeats(String theaterId, boolean isTemplate){
+    public static String querySeats(String theaterId,String time,boolean isTemplate){
         String query = "SELECT * FROM theaters WHERE theaterId = ?";
         String jsonString = null;
         
@@ -723,7 +726,7 @@ public class sqlConnect {
             ResultSet rs = prep.executeQuery();
             
             rs.next();
-            jsonString = rs.getString((isTemplate)?"seatTemplate":"seat");
+            jsonString = rs.getString((isTemplate)?"seatTemplate":"seat"+time);
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -757,8 +760,6 @@ public class sqlConnect {
             foodCategory.get(key).trimToSize();
         }
         
-
-
         return foodCategory;
     }
 
