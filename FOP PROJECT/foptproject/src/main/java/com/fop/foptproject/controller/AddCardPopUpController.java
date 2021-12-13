@@ -60,20 +60,14 @@ public class AddCardPopUpController implements Initializable {
             Stage window = (Stage) addBtn.getScene().getWindow();
             String selectedBank = (String) bankChoiceBox.getValue();
             String accNo = accTextField.getText();
+            addToDb(accNo, selectedBank);
+            addErrorMsg.setText("Added bank account successfully");
 
-            if (addToDb(accNo, selectedBank)) {
-                addErrorMsg.setText("Added bank account successfully");
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), ev -> {
+                window.close();
+            }));
 
-                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), ev->{
-                    window.close();
-                    // TODO: Link back to DB and update the list
-                }));
-
-                timeline.play();
-
-            } else {
-                addErrorMsg.setText("Unable to add bank account");
-            }
+            timeline.play();
         });
 
         cclBtn.setOnAction(e -> {
@@ -92,8 +86,8 @@ public class AddCardPopUpController implements Initializable {
         return false;
     }
 
-    private boolean addToDb(String accNo, String selectedBank) {
+    private void addToDb(String accNo, String selectedBank) {
         // add accNo and selectedBank to database
-        return true;
+        RealTimeStorage.updateLinkedCard2D(new String[]{selectedBank, accNo});
     }
 }

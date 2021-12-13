@@ -19,6 +19,7 @@ public class RealTimeStorage {
     private static ArrayList<String> linkedCard;
     public static HashMap<String,String> MovieBooking = new HashMap<>();
     public static HashMap<String,Integer> FoodnBeverage = new HashMap<>();
+    private static ArrayList<String[]> linkedCard2D;
     
     public static void updateMovieBooking(HashMap<String,String> input,boolean clear){
         if(!(clear)){
@@ -109,21 +110,33 @@ public class RealTimeStorage {
     
     // getter for userId
     public static String getUserId(){
+        if (RealTimeStorage.userId == null){
+            return "U123";
+        }
         return RealTimeStorage.userId;
     }
     
     // getter for userEmail
     public static String getUserEmail(){
+        if (RealTimeStorage.userEmail == null){
+            return "test@gmail.com";
+        }
         return RealTimeStorage.userEmail;
     }
     
     // getter for username
     public static String getUsername(){
+        if (RealTimeStorage.userName == null){
+            return "Testing";
+        }
         return RealTimeStorage.userName;
     }
     
     // getter for phonenumber
     public static String getPNumber(){
+        if (RealTimeStorage.phoneNumber == null){
+            return "012345678";
+        }
         return RealTimeStorage.phoneNumber;
     }
     
@@ -142,7 +155,44 @@ public class RealTimeStorage {
         return RealTimeStorage.FoodnBeverage;
     }
     
+    public static ArrayList<String[]> getLinkedCard2D(){
+        
+        if(linkedCard2D == null){
+        final int NUM = 5;
+        
+         ArrayList<String[]> dummyCards = new ArrayList<>();
+         String[] bankTypes = new String[]{"Ambank", "Maybank", "Public Bank"};
+
+        for (int i = 0; i < NUM; i++) {
+            dummyCards.add(new String[]{bankTypes[i%3],"888123456****"});
+        }
+        linkedCard2D = dummyCards;
+        }else{
+            // TODO: Convert linked card(String) to 2D arr
+        }
+        
+            return linkedCard2D;
+    }
     
+    public static void setLinkedCard2D(ArrayList<String[]> alteredCard){
+        RealTimeStorage.linkedCard2D = alteredCard;
+    }
+    
+    public static void updateLinkedCard2D(String[] bank){
+        RealTimeStorage.linkedCard2D.add(bank);
+    }
+    
+    public static void setUsername(String newVal){
+        RealTimeStorage.userName = newVal;
+    }
+    
+    public static void setEmail(String newVal){
+        RealTimeStorage.userEmail=newVal;
+    }
+    
+    public static void setPNumber(String newVal){
+        RealTimeStorage.phoneNumber=newVal;
+    }
     
 }
 

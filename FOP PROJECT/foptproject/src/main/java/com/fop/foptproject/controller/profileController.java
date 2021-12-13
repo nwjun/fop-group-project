@@ -5,17 +5,21 @@
  */
 package com.fop.foptproject.controller;
 
+import com.fop.foptproject.App;
 import com.fop.foptproject.CommonMethod;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -55,7 +59,8 @@ public class profileController implements Initializable {
     StackPane centerContainer;
 
     CommonMethod commonMethod = new CommonMethod();
-
+    ArrayList<String[]> banks;
+    
     //https://stackoverflow.com/questions/28717343/javafx-create-a-vertical-menu-ribbon
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -193,30 +198,24 @@ public class profileController implements Initializable {
 
         Button confirmBtn = new Button("Confirm");
         Button resetBtn = new Button("Reset");
-        confirmBtn.setStyle("confirmBtn");
-        resetBtn.setStyle("resetBtn");
+        resetBtn.getStyleClass().add("transparentBtn");
 
         confirmBtn.setOnAction(e -> {
             String[] newFieldValues = new String[textFields.length];
-            boolean changed = false;
             
             for (int i = 0; i < textFields.length; i++) {
                 newFieldValues[i] = textFields[i].getText();
                 if(!newFieldValues[i].equals(fieldValues[i])){
-                    changed = true;
+                    updateProfile(newFieldValues[i], i);
                 }
             }
-            if(changed){
-                System.out.println("changed");
-                updateProfile(newFieldValues);
-            }
-            
 
         });
 
         resetBtn.setOnAction(e -> {
+            String[] vals = getProfileValues();
             for (int i = 0; i < textFields.length; i++) {
-                textFields[i].setText(fieldValues[i]);
+                textFields[i].setText(vals[i]);
             }
         });
 
@@ -232,74 +231,76 @@ public class profileController implements Initializable {
     }
 
     private void billing() {
-        /**
-         * contentContainer |-scrollPaneContainer |-scrollPane |-banksContainer
-         * |-bankContainer |-detailsContainer |-removeBtn
-         *
-         * |-btnHbox |-saveBtn |-cclBtn
-         */
+
         titleLabel.setText("Billing");
         contentContainer.getChildren().clear();
         addRemoveLogo("billing");
 
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setFitToWidth(true);
-        HBox btnHbox = new HBox();
         VBox scrollPaneContainer = new VBox();
         VBox banksContainer = new VBox();
-
+        
+        scrollPane.setFitToWidth(true);
+       
         Button addBtn = new Button("Add");
         Button saveBtn = new Button("Save");
-        Button cclBtn = new Button("Cancel");
 
-        btnHbox.getChildren().addAll(saveBtn, cclBtn);
         scrollPane.setContent(banksContainer);
         scrollPaneContainer.getChildren().addAll(scrollPane, addBtn);
-        VBox wrapper = new VBox(scrollPaneContainer, btnHbox);
+        
+        
+        VBox wrapper = new VBox(scrollPaneContainer, saveBtn);
         contentContainer.getChildren().addAll(wrapper);
+        
+        // Layout
         scrollPaneContainer.setAlignment(Pos.TOP_CENTER);
-        btnHbox.setAlignment(Pos.BOTTOM_CENTER);
-        btnHbox.setSpacing(30);
+        saveBtn.setAlignment(Pos.BOTTOM_CENTER);
+        banksContainer.setAlignment(Pos.CENTER);
         wrapper.setSpacing(40);
+        
+        // Style
         scrollPane.setStyle("-fx-background-color:transparent");
         banksContainer.setStyle("-fx-background-color:#252525");
         scrollPaneContainer.setId("billingScrollPaneContainer");
 
-        banksContainer.setAlignment(Pos.CENTER);
-        String[][] banks = getBanks();
+        banks = getBanks();
+        
+//        ArrayList<HBox> bankButtonContainer = new ArrayList<>();
 
-        ArrayList<HBox> bankContainers = new ArrayList<>();
-
-        for (int i = 0; i < banks.length; i++) {
-            String[] bank = banks[i];
+        for (int i = 0; i < banks.size(); i++) {
+            String[] bank = banks.get(i);
             Label bankLabel = new Label(bank[0]);
             Label accLabel = new Label(bank[1]);
+            
             VBox detailsContainer = new VBox(bankLabel, accLabel);
             Region region = new Region();
             HBox.setHgrow(region, Priority.ALWAYS);
             Button removeBtn = new Button("-");
-            HBox bankContainer = new HBox(detailsContainer, region, removeBtn);
-            bankContainer.setAlignment(Pos.CENTER_LEFT);
-            bankContainers.add(bankContainer);
+            HBox bankButtonRow = new HBox(detailsContainer, region, removeBtn);
+            bankButtonRow.setAlignment(Pos.CENTER_LEFT);
+            banksContainer.getChildren().add(bankButtonRow);
+            
             removeBtn.setOnAction(e -> {
-                banksContainer.getChildren().remove(bankContainer);
-                bankContainers.remove(bankContainer);
+                banksContainer.getChildren().remove(bankButtonRow);
             });
         }
 
         addBtn.setOnAction(e -> {
             Stage popupStage = SceneController.showPopUpStage("AddCardPopUp.fxml");
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("AddCardPopUp.fxml"));
+            AddCardPopUpController addCardPopUpController = fxmlLoader.getController();
+
+            
             if (popupStage != null) {
+                
                 popupStage.showAndWait();
             }
         });
 
         banksContainer.setSpacing(30);
 
-        banksContainer.getChildren().addAll(bankContainers);
-
         saveBtn.setOnAction(e -> {
-            updateBank(bankContainers);
+            updateBank(banksContainer.getChildren());
         });
     }
 
@@ -376,21 +377,22 @@ public class profileController implements Initializable {
         return histories;
     }
 
-    private String[][] getBanks() {
-        final int NUM = 5;
-        String[][] banks = new String[NUM][2];
-
-        for (int i = 0; i < NUM; i++) {
-            banks[i][0] = "Ambank";
-            banks[i][1] = "888123456****";
-        }
-        return banks;
+    private ArrayList<String[]> getBanks() {
+        return RealTimeStorage.getLinkedCard2D();
     }
 
-    private void updateBank(ArrayList<HBox> bankContainers) {
+    private void updateBank(ObservableList<Node> bankContainers) {
         // send back to server
-        System.out.println(bankContainers.size());
-        System.out.println("updateBank");
+        ArrayList<String[]> tempBanks = new ArrayList<>();
+        
+        for(int i =0; i<bankContainers.size();i++){
+            HBox bankContainer = (HBox) bankContainers.get(i);
+            VBox bank = (VBox)bankContainer.getChildren().get(0);
+            String bankAcc = ((Label)bank.getChildren().get(0)).getText();
+            String bankNo = ((Label)bank.getChildren().get(1)).getText();
+            tempBanks.add(new String[]{bankAcc,bankNo});
+        }
+        RealTimeStorage.setLinkedCard2D(tempBanks);
     }
 
     private void addRemoveLogo(String section) {
@@ -416,11 +418,23 @@ public class profileController implements Initializable {
 
     private String[] getProfileValues() {
         // retrieve field values from db
-        return new String[]{"42", "42lovesjava@gmail.com", "0123456789"};
+        return new String[]{RealTimeStorage.getUsername(),RealTimeStorage.getUserEmail(), RealTimeStorage.getPNumber()};
     }
 
-    private void updateProfile(String[] newFieldValues) {
+    private void updateProfile(String newFieldValue, int item) {
         // update data in database
+        switch(item){
+            case 0:
+                RealTimeStorage.setUsername(newFieldValue);
+                break;
+            case 1:
+                RealTimeStorage.setEmail(newFieldValue);
+                break;
+            case 2:
+                RealTimeStorage.setPNumber(newFieldValue);
+                break;
+                       
+        }
     }
 
 }
