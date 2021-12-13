@@ -15,10 +15,17 @@ public class JSONToolSets {
     private int columnSize;
     private int rowSize;
     private boolean isSeat = false;
+    private boolean isTemplate = false;
     private static sqlConnect sql = new sqlConnect();
     
     public JSONToolSets(String jsonString){
         this.jsonObj = new JSONObject(jsonString);
+    }
+    
+    public JSONToolSets(String jsonString, boolean isTemplate){
+        this.jsonObj = new JSONObject(jsonString);
+        this.isSeat = true;
+        this.isTemplate = isTemplate;
     }
     
     public JSONObject getJsonObj(){
@@ -91,13 +98,28 @@ public class JSONToolSets {
         return value;
     }
     
-    public HashMap<String,ArrayList<String>> parseTheaterSeat(){
-        this.isSeat = true;
+    public String[][] parseLinkedCard(){
+        ArrayList<String> toBeProcessed = parseOneDArray("cardDetails");
+        String[] temp;
+        String[][] result = new String[toBeProcessed.size()][];
+        int i = 0;
+        for(String item : toBeProcessed){
+            temp = item.split("#");
+            result[i] = temp;
+            i++;
+        }
+        
+        return result;
+    }
+    
+    public HashMap<String,ArrayList<String>> parseTheaterSeat(int day){
         JSONObject temp = this.jsonObj;        
         
         this.rowSize = temp.length();
-        this.columnSize = temp.getJSONArray("0").length();
-        
+        if(!this.isTemplate)
+            this.columnSize = temp.getJSONObject("0").getJSONArray("0").length();
+        else
+            this.columnSize = temp.getJSONArray("0").length();
        
         JSONArray temp2;
         HashMap<String,ArrayList<String>> extracted = new HashMap<>();
@@ -106,7 +128,11 @@ public class JSONToolSets {
         // iterate until empty
         while(true){ 
             try{
-                temp2 = temp.getJSONArray(Integer.toString(i));
+                if(!this.isTemplate)
+                    temp2 = temp.getJSONObject(Integer.toString(day)).getJSONArray(Integer.toString(i));
+                else
+                    temp2 = temp.getJSONArray(Integer.toString(i));
+                
                 extracted.put(Integer.toString(i),new ArrayList<String>());
                 j = 0;
                 while(true){
@@ -124,6 +150,14 @@ public class JSONToolSets {
                 break;
             }
         }
+        for(String key : extracted.keySet()){
+            for(String item : extracted.get(key)){
+                if(item.equals("-1"))System.out.print("X ");
+                else System.out.print(item+" ");
+            }
+            System.out.println();
+        }
+        
         return extracted;
     }
     
@@ -258,6 +292,7 @@ public class JSONToolSets {
         
         return jsonString;
     }
+    
     
     public static String writeJSONString(JSONObject jsonObjectIn,String key){
         JSONObject jsonObject = new JSONObject();

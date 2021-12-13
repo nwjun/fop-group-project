@@ -1,71 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="1082.0" prefWidth="1920.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.MovieBookingController">
+<AnchorPane id="AnchorPane" prefHeight="1082.0" prefWidth="1479.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.MovieBookingController">
     <stylesheets>
         <URL value="@moviebooking.css" />
       <URL value="@style.css" />
     </stylesheets>
    <children>
-      <ImageView fitHeight="41.0" fitWidth="164.0" layoutX="212.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@assets/company/logo.png" />
-         </image>
-      </ImageView>
-      <Text fill="WHITE" layoutX="463.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Booking">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Text>
+      <HBox alignment="CENTER_LEFT" layoutX="165.0" layoutY="50.0" prefHeight="34.0" prefWidth="1171.0">
+         <children>
+            <ImageView fitHeight="41.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/company/logo.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="90.0" />
+               </HBox.margin>
+            </ImageView>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Booking">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <StackPane alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="799.0">
+               <children>
+                  <Button fx:id="homeButton" mnemonicParsing="false" text="Button" />
+               </children>
+            </StackPane>
+         </children>
+      </HBox>
       <VBox fx:id="movieBooking" layoutX="201.0" layoutY="131.0" prefHeight="621.0" prefWidth="1100.0" style="-fx-background-color: #252525; -fx-background-radius: 20;" styleClass="mainFxmlClass" stylesheets="@moviebooking.css">
          <children>
             <HBox alignment="CENTER" prefHeight="113.0" prefWidth="1493.0">
                <children>
-                  <VBox alignment="CENTER_LEFT">
+                  <VBox alignment="CENTER">
                      <children>
-                        <Label text="Select Cinema :" />
-                        <ChoiceBox fx:id="selectCinema" prefWidth="225.0" />
+                        <Label text="Select Cinema :">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin></Label>
+                        <ComboBox fx:id="selectCinema" prefHeight="26.0" prefWidth="225.0">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin></ComboBox>
+                        <Label fx:id="cinemaFieldWarningText" styleClass="warningText" text="Please select a cinema" textFill="WHITE" visible="false" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" />
                </children>
             </HBox>
             <Line endX="882.5791625976562" endY="-7.66273832321167" startX="116.88623809814453" startY="-7.662712574005127" stroke="#ffee00" translateX="170.0" />
             <VBox alignment="TOP_CENTER" prefHeight="416.0" prefWidth="1470.0" translateY="50.0">
                <children>
-                  <HBox alignment="TOP_CENTER">
+                  <VBox alignment="TOP_CENTER">
                      <children>
-                        <CheckBox fx:id="selectClassic" mnemonicParsing="false" text="Classic" />
-                        <Region prefHeight="113.0" prefWidth="87.0" />
-                        <CheckBox fx:id="selectPremium" mnemonicParsing="false" text="Premium" />
+                        <HBox alignment="TOP_CENTER" prefHeight="0.0" prefWidth="1100.0">
+                           <children>
+                              <RadioButton fx:id="selectPremium" mnemonicParsing="false" selected="true" text="Classic">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="ticketType" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <Region prefHeight="113.0" prefWidth="87.0" />
+                              <RadioButton fx:id="selectClassic1" mnemonicParsing="false" text="Premium" toggleGroup="$ticketType" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Label fx:id="theaterTypeWarningText" styleClass="warningText" text="Please select a theater type" textFill="WHITE" visible="false" />
                      </children>
-                  </HBox>
-                  <Label text="Select Date :" textFill="#666666" />
-                  <DatePicker fx:id="selectDate" prefWidth="225.0" />
-                  <Region prefHeight="138.0" prefWidth="1498.0" />
-                  <Label text="Select Time :" />
-                  <ChoiceBox fx:id="selectTime" prefHeight="26.0" prefWidth="225.0" />
-                  <Region prefHeight="138.0" prefWidth="1498.0" />
+                     <VBox.margin>
+                        <Insets bottom="42.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="246.0" prefWidth="1100.0">
+                     <children>
+                        <Label text="Select Date :" textFill="#666666">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <DatePicker fx:id="selectDate" prefWidth="225.0">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </DatePicker>
+                        <Label fx:id="dateWarningText" styleClass="warningText" text="Please select a date" textFill="WHITE" visible="false" />
+                        <Region prefHeight="138.0" prefWidth="1498.0" />
+                        <Label text="Select Time :">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <ComboBox fx:id="selectTime" prefHeight="26.0" prefWidth="225.0">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </ComboBox>
+                        <Label fx:id="showTimeWarningText" styleClass="warningText" text="Please select a desired showtime" textFill="WHITE" visible="false" />
+                        <Region prefHeight="138.0" prefWidth="1498.0" />
+                     </children>
+                  </VBox>
                   <HBox alignment="TOP_CENTER" prefHeight="121.0" prefWidth="1498.0">
                      <children>
-                        <Button fx:id="backToMoviesDetailsBtn" mnemonicParsing="false" onAction="#changeToMoviesDetails" prefHeight="31.0" prefWidth="139.0" style="-fx-background-color: 000000; -fx-border-color: #FFEE00; -fx-border-radius: 15;" styleClass="Button" stylesheets="@moviebooking.css" text="Back" textFill="WHITE" />
-                        <Region prefHeight="200.0" prefWidth="200.0" />
-                        <Button fx:id="nextToSeatsBtn" mnemonicParsing="false" onAction="#changeToSeats" prefHeight="31.0" prefWidth="139.0" style="-fx-background-radius: 15;" styleClass="Button" stylesheets="@moviebooking.css" text="Next" />
+                        <Button fx:id="backToMoviesDetailsBtn" mnemonicParsing="false" onAction="#changeToMoviesDetails" prefHeight="31.0" prefWidth="107.0" style="-fx-background-color: 000000; -fx-border-color: #FFEE00; -fx-border-radius: 15;" styleClass="Button" stylesheets="@moviebooking.css" text="Back" textFill="WHITE" />
+                        <Region prefHeight="74.0" prefWidth="149.0" />
+                        <Button fx:id="nextButton" mnemonicParsing="false" onAction="#next" prefHeight="31.0" prefWidth="107.0" style="-fx-background-radius: 15;" styleClass="Button" stylesheets="@moviebooking.css" text="Next" />
                      </children>
                   </HBox>
                </children>
