@@ -163,13 +163,13 @@ public class ProductCardAdminMovie{
 //        AnchorPane editdelete = MakeButton(movieId, length);
 //        Label x = makeDateLabel((String)this.movieDetails.get("allShowTime"), this.currentPage);
         
-        labelContainer.setPrefWidth(450);
-        labelContainer.setPrefHeight(2500);
-        labelContainer.setStyle("-fx-padding:0 0 0 0");
+        labelContainer.setPrefWidth(425);
+        labelContainer.setPrefHeight(2150);
+        labelContainer.setStyle("-fx-padding:10 0 0 0");
         
 //        if(this.currentPage==0){
             labelContainer.getChildren().clear();
-            labelContainer.getChildren().addAll(path, movieName, movielength, releaseDate, language, rottenTomato, iMDB, ageRestrict, director, cast, synopsis, listShowTime);
+            labelContainer.getChildren().addAll(movieName, movielength, releaseDate, language, rottenTomato, iMDB, ageRestrict, director, cast, synopsis, listShowTime);
 //        }
 //        else{
 //            labelContainer.getChildren().clear();
@@ -207,6 +207,7 @@ public class ProductCardAdminMovie{
             for(int i =0; i<length; i++)
                 cast+=ja.getString(i) +", ";
         }
+        cast = cast.substring(0, cast.length()-2);
         return cast;
     }
     

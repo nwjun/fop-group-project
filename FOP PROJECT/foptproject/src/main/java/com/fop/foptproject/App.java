@@ -19,6 +19,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -32,7 +33,7 @@ public class App extends Application{
         final double HEIGHT = screenBounds.getHeight();
 
         boolean DEBUG = true;
-        String fxmlFile = "MovieBooking.fxml";
+        String fxmlFile = "AdminMovie.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
@@ -54,6 +55,7 @@ public class App extends Application{
         // set Scene's width and height based on screen size
         Scene scene = new Scene(root, HEIGHT, WIDTH);
         SceneController.setPrimaryStage(primaryStage);
+        primaryStage.getIcons().add(new Image("/com/fop/foptproject/assets/company/logo2.png"));
         primaryStage.setTitle("Movie Ticketing System");
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
@@ -70,7 +72,21 @@ public class App extends Application{
         //query landing food poster
         RealTimeStorage.setAllLandingFood();
         
-        
+//        JSONToolSets json = new JSONToolSets(sql.querySeats("8","1",false),false);
+//        System.out.println("1");
+//        json.parseTheaterSeat(0);
+//        System.out.println("2");
+//        json.parseTheaterSeat(1);
+//        System.out.println("3");
+//        json.parseTheaterSeat(2);
+//        System.out.println("4");
+//        json.parseTheaterSeat(3);
+//        System.out.println("5");
+//        json.parseTheaterSeat(4);
+//        System.out.println("6");
+//        json.parseTheaterSeat(5);
+//        System.out.println("7");
+//        json.parseTheaterSeat(6);
         
         launch();
     }

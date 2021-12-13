@@ -382,6 +382,7 @@ public class sqlConnect {
         }
         
     }
+    
     public void delete(String movieId){
         String query = "DELETE FROM pos " 
                        + "WHERE posterId = ?";
@@ -445,6 +446,111 @@ public class sqlConnect {
         }
     }
     
+    public HashMap<String, Double> queryTicketPrice(){
+        String query = "SELECT productId, price "
+                       + "FROM products "
+                       + "WHERE category = \"ticket\"";
+        
+        HashMap<String, Double> tickets = new HashMap<>();
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            ResultSet rs = prepstat.executeQuery();
+            while(rs.next()){
+                tickets.put(rs.getString("productId"), rs.getDouble("price"));
+                
+            }
+            return tickets;
+        } catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    public void changeTicketPrice(String Id, Double price){
+        String query = "UPDATE products "
+                       + "SET price = ? "
+                       + "WHERE productId = ?";
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setDouble(1, price);
+            prepstat.setString(2, Id);
+            
+            prepstat.executeUpdate();
+            
+        } catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+    }
+    
+    public HashMap<String, ArrayList<String>> queryAdmin(){
+        String query = "SELECT userId, username, email "
+                       + "FROM usercredentials "
+                       + "WHERE permission = 2";
+        
+        HashMap<String, ArrayList<String>> admin = new HashMap<>();
+        ArrayList<String> Id = new ArrayList<>();
+        ArrayList<String> username = new ArrayList<>();
+        ArrayList<String> email = new ArrayList<>();
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            ResultSet rs = prepstat.executeQuery();
+            while(rs.next()){
+                Id.add(rs.getString("userId"));
+                username.add(rs.getString("username"));
+                email.add(rs.getString("email"));
+            }
+        }catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+        admin.put("Id",Id);
+        admin.put("username",username);
+        admin.put("email",email);
+        
+        return admin;
+    }
+    
+    public void addAdmin(String email){
+        String query = "UPDATE usercredentials "
+                       + "SET permission = 2 "
+                       + "WHERE email = ?";
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1, email);
+            
+            prepstat.executeUpdate();
+            
+        } catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+    }
+    
+    public void removeAdmin(String email, String password){
+        String query = "UPDATE usercredentials "
+                       + "SET permission = 1 "
+                       + "WHERE email = ? AND password = ?";
+        
+        String combination = email + SALT + password;
+        password = DigestUtils.sha256Hex(combination);
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1, email);
+            prepstat.setString(2, password);
+            
+            prepstat.executeUpdate();
+            
+        } catch (SQLException ex) {
+                System.out.println("Incorrect Email or Password! Try Again!");
+        }
+    }
+        
     public static HashMap<String, ArrayList<String>> queryAllMovie(){
         String query = "SELECT movieId, movieName, length, releaseDate, directorCast, language, poster, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict "
                         + "FROM movies "
