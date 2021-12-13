@@ -127,6 +127,14 @@ public class AdminMovieController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if(RealTimeStorage.getPermission().equals("3")){
+            adminAdd.setDisable(false);
+            adminAdd.setVisible(true);
+            String path = App.class.getResource("assets/company/master.png").toString(); 
+            Image img = new Image(path/*, IMGW, IMGH, false, false*/);
+            logo.setImage(img);
+        }
+        
         try {
             getProduct();
         } catch (ParseException ex) {
@@ -134,7 +142,7 @@ public class AdminMovieController implements Initializable {
         }
         
     }
-    
+
     public void getProduct() throws ParseException{
         HashMap<String,ArrayList<String>> items = sql.queryAllMovie();
         this.movieId = items.get("movieId").toArray();

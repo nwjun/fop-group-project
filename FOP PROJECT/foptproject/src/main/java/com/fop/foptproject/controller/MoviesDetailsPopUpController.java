@@ -63,25 +63,13 @@ public class MoviesDetailsPopUpController implements Initializable {
     @FXML
     private Label movieTitleT;
     @FXML
-    private Label casts11;
-    @FXML
     private Label directorT;
     @FXML
     private Label castT;
     @FXML
-    private Label casts111;
-    @FXML
-    private Label casts1111;
-    @FXML
     private Label iMDBT;
     @FXML
-    private Label casts1112;
-    @FXML
-    private Label casts11111;
-    @FXML
     private Label rottenTomatoT;
-    @FXML
-    private Label casts11121;
     @FXML
     private Label movieLengthT;
     @FXML
@@ -99,6 +87,8 @@ public class MoviesDetailsPopUpController implements Initializable {
     public void changeToMovieBooking(ActionEvent event) throws IOException{
         SceneController switchScene = new SceneController();
         switchScene.switchToMovieBooking(event);
+        Stage stage = (Stage) booknowButton.getScene().getWindow();
+        stage.close();
     }
     
     @FXML

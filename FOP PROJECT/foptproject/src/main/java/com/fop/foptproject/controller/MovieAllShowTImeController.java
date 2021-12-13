@@ -23,6 +23,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -174,8 +176,19 @@ public class MovieAllShowTImeController implements Initializable {
         });
         
         booknow.setOnAction((e)->{ 
+            if(RealTimeStorage.getPermission()==null){
+                Alert a = new Alert(AlertType.ERROR);
+                a.setTitle("Unauthorized Access");
+                a.setContentText("Please login to book a movie");
+                a.showAndWait();
+                try {
+                    new SceneController().switchToRegisterAndLogin(e);
+                } catch (IOException ex) {
+                    return;
+                }
+                return;
+            }
             this.movieID = booknow.getId();
-
             FXMLLoader loader = new FXMLLoader(App.class.getResource("MoviesDetailsPopUp.fxml"));
             Stage stage = new Stage(StageStyle.UNDECORATED);
             stage.initModality(Modality.WINDOW_MODAL);

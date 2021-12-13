@@ -95,9 +95,16 @@ public class AdminFoodController implements Initializable {
     private TextArea productDescriptionT;
     @FXML
     private Button upload;
+    @FXML
+    private ImageView logo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if(RealTimeStorage.getPermission().equals("3")){
+            String path = App.class.getResource("assets/company/master.png").toString(); 
+            Image img = new Image(path/*, IMGW, IMGH, false, false*/);
+            logo.setImage(img);
+        }
         getProduct();
     }    
     

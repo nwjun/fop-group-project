@@ -47,7 +47,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                            <children>
-                              <Button fx:id="adminAdd" layoutX="18.0" layoutY="44.0" mnemonicParsing="false" onAction="#adminAdd" prefHeight="31.0" prefWidth="134.0" styleClass="Button" text="Add Admin" />
+                              <Button fx:id="adminAdd" disable="true" layoutX="18.0" layoutY="44.0" mnemonicParsing="false" onAction="#adminAdd" prefHeight="31.0" prefWidth="134.0" styleClass="Button" text="Add Admin" visible="false" />
                            </children>
                         </AnchorPane>
                      </children>

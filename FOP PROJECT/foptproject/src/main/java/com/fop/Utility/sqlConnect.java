@@ -531,8 +531,7 @@ public class sqlConnect {
     }
     
     public void removeAdmin(String email, String password){
-        String query = "UPDATE usercredentials "
-                       + "SET permission = 1 "
+        String query = "DELETE FROM usercredentials "
                        + "WHERE email = ? AND password = ?";
         
         String combination = email + SALT + password;

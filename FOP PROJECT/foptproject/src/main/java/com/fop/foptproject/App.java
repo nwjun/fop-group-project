@@ -32,8 +32,8 @@ public class App extends Application{
         final double WIDTH = screenBounds.getWidth();
         final double HEIGHT = screenBounds.getHeight();
 
-        boolean DEBUG = true;
-        String fxmlFile = "AdminMovie.fxml";
+        boolean DEBUG = false;
+        String fxmlFile = "LoginRegister.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";

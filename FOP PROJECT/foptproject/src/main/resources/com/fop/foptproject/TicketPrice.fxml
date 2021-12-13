@@ -23,7 +23,7 @@
                   <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="76.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fitHeight="46.0" fitWidth="248.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                  <ImageView fx:id="logo" fitHeight="46.0" fitWidth="248.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
                         <Image url="@assets/company/Admin.png" />
                      </image>

@@ -5,6 +5,7 @@
 package com.fop.foptproject.controller;
 
 import com.fop.Utility.sqlConnect;
+import com.fop.foptproject.App;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -16,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -42,12 +45,19 @@ public class EditPricePopUpController implements Initializable {
     private TextField TP;
     @FXML
     private Button FinishEdit;
+    @FXML
+    private ImageView logo;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if(RealTimeStorage.getPermission().equals("3")){
+            String path = App.class.getResource("assets/company/master.png").toString(); 
+            Image img = new Image(path/*, IMGW, IMGH, false, false*/);
+            logo.setImage(img);
+        }
         getPrice();
     }    
 
