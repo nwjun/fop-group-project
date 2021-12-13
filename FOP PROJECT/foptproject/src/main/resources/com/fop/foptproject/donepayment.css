@@ -3,16 +3,22 @@
     src: url("../font/Montserrat/Montserrat-Regular.ttf");
 }
 
+.background{
+    -fx-background-image : url("assets/darkGrey.jpg");
+    -fx-background-size : 125%; 
+    -fx-background-repeat : no-repeat;
+}
+
 .description{
     -fx-text-fill : #ffffff;
     -fx-font-family : 'Montserrat';
-    -fx-font-size : 18px;
+    -fx-font-size : 20px;
 }
 
 #title{
     -fx-text-fill : #ffee00;
     -fx-font-family : 'Montserrat';
-    -fx-font-size : 20px;
+    -fx-font-size : 22px;
 }
 
 #homeButton{
@@ -24,7 +30,7 @@
     -fx-border-color : #ffee00;
     -fx-border-radius : 20px;
     -fx-font-family : 'Montserrat';
-    -fx-font-size : 12px;  
+    -fx-font-size : 14px;  
 }
 
 #homeButton:hover{

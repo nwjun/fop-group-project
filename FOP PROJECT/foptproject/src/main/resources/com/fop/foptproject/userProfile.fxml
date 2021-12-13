@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.profileController">
+<StackPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.profileController">
    <children>
       <ImageView fx:id="menuIcon" fitHeight="45.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
          <image>
@@ -28,28 +28,30 @@
                   <Image url="@assets/company/sign-logo-new.jpg" />
                </image>
             </ImageView>
-            <VBox id="contentContainer" fx:id="contentContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="733.0" prefWidth="772.0" StackPane.alignment="TOP_LEFT">
+            <VBox id="contentContainer" fx:id="contentContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="772.0" StackPane.alignment="TOP_LEFT">
                <StackPane.margin>
-                  <Insets top="140.0" />
+                  <Insets />
                </StackPane.margin>
+               <children>
+                  <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="55.0" prefWidth="314.0">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                           <image>
+                              <Image url="@assets/company/logo.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="titleLabel" text="Profile" StackPane.alignment="CENTER_RIGHT" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </StackPane>
+               </children>
+               <padding>
+                  <Insets left="50.0" top="90.0" />
+               </padding>
             </VBox>
          </children>
-      </StackPane>
-      <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="55.0" prefWidth="314.0" StackPane.alignment="TOP_LEFT">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
-               <image>
-                  <Image url="@assets/company/logo.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="titleLabel" text="Profile" StackPane.alignment="CENTER_RIGHT" />
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <StackPane.margin>
-            <Insets left="450.0" top="150.0" />
-         </StackPane.margin>
       </StackPane>
    </children>
    <stylesheets>

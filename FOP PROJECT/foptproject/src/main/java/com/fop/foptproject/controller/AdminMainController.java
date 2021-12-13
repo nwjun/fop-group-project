@@ -2,9 +2,10 @@ package com.fop.foptproject.controller;
 
 import com.fop.foptproject.Food;
 import com.fop.foptproject.Movie;
-import com.fop.foptproject.ReadCSV;
+import com.fop.foptproject.SetUpLanding;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,10 +43,8 @@ public class AdminMainController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        final String sampleMovieCSV = "src/main/resources/com/fop/foptproject/testing/sampleMovie.csv";
-        final String sampleFoodCSV = "src/main/resources/com/fop/foptproject/testing/sampleFood.csv";
-        Movie[] movies = ReadCSV.csvToMovie(sampleMovieCSV);
-        Food[] foods = ReadCSV.csvToFood(sampleFoodCSV);
+        ArrayList<Movie> movies = SetUpLanding.getMovies();
+        ArrayList<Food> foods = SetUpLanding.getFood();
 
         for (Movie movie : movies) {
             StackPane card = movie.getCard();

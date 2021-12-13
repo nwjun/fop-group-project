@@ -32,7 +32,7 @@ public class App extends Application{
         final double HEIGHT = screenBounds.getHeight();
 
         boolean DEBUG = true;
-        String fxmlFile = "userProfile.fxml";
+        String fxmlFile = "MovieBooking.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
@@ -64,12 +64,14 @@ public class App extends Application{
 
     public static void main(String[] args) throws Exception {
         Properties prop = new readConfig().readconfigfile();
-        
         sqlConnect sql = new sqlConnect();
-        JSONToolSets json = new JSONToolSets(sql.querySeats("1"));
-        json.parseTheaterSeat();
-        System.out.println(json.getRow());
-        System.out.println(json.getColumn());
-        //launch();
+        //query all movie from database and store in local
+        RealTimeStorage.setAllMovies();
+        //query landing food poster
+        RealTimeStorage.setAllLandingFood();
+        
+        
+        
+        launch();
     }
 }

@@ -5,11 +5,19 @@
  */
 package com.fop.foptproject;
 
+import com.fop.foptproject.controller.RealTimeStorage;
+import com.fop.foptproject.controller.SceneController;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -170,31 +178,69 @@ public class Item {
         title.setId(id + "Title");
         // Make title settle below poster
         StackPane.setAlignment(title, Pos.BOTTOM_CENTER);
-
+        
+        StackPane imageContainer = new StackPane();
         Image poster = this.getPoster(posterW, posterH, scale);
         ImageView imageView = new ImageView(poster);
         // Add id for poster
-        imageView.setId(id + "Img");
-        // Add animation to mouse event
-        imageView.setOnMouseEntered(event -> startAnimation(event));
-        imageView.setOnMouseExited(event -> stopAnimation());
-
+        imageView.setId(id+"Img");
+        imageContainer.setId(id);
+        // Add animation to mouse event of movie card only
+        try{
+            Integer.parseInt(id.substring(0,1));
+            imageContainer.setOnMouseEntered(event -> startAnimation(event));
+            imageContainer.setOnMouseExited(event -> stopAnimation(event));
+        }
+        catch(Exception e){
+            // Do nothing
+        }
+        imageContainer.getChildren().add(imageView);
+        
         // Add title and poster to card
-        card.getChildren().addAll(title, imageView);
+        card.getChildren().addAll(title, imageContainer);
 
         return card;
     }
 
     public void startAnimation(MouseEvent event) {
-        final Node source = (Node) event.getSource();
-        final String id = source.getId();
+        final StackPane source = (StackPane) event.getSource();
+        source.getChildren().get(0).setEffect(new BoxBlur(5,5,2));
+        StackPane buttonContainer = new StackPane();
+        Button book = new Button();
+        book.setText("Info");
+        book.setId(source.getId());
+        book.setMinSize(70,30);
+        
+        book.getStyleClass().add("BookButton");
+        book.setOnAction(e->{
+            try {
+                toMovieBooking(e);
+            } catch (IOException ex) {
+                Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        buttonContainer.getChildren().add(book);
+        source.getChildren().add(buttonContainer);
+    }
+
+    public void stopAnimation(MouseEvent event) {
+        final StackPane source = (StackPane) event.getSource();
+        source.getChildren().get(0).setEffect(null);
+        source.getChildren().remove(1,2);
+    }
+    
+    public void toMovieDetails(ActionEvent e){
+        System.out.println("to info");
+    }
+    
+    public void toMovieBooking(ActionEvent e) throws IOException{
+        Button book = (Button)e.getSource();
+        String id = book.getId();
         System.out.println(id);
+        RealTimeStorage.setLookingAt(id);
+        new SceneController().switchToMoviesDetails(e);
     }
-
-    public void stopAnimation() {
-        System.out.println("stop");
-    }
-
+    
     @Override
     public String toString() {
         /**
