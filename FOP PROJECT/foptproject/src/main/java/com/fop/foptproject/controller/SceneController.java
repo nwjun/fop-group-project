@@ -162,4 +162,9 @@ public class SceneController {
     public void switchToUserProfile(ActionEvent event) throws IOException{
         switchScene(event, "userProfile.fxml");
     }
+    
+    public void switchToAllShowTime(ActionEvent event) throws IOException{
+        switchScene(event, "MovieAllShowTime.fxml");
+    }
+    
 }

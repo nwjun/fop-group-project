@@ -83,8 +83,8 @@ public class AppController implements Initializable {
     private VBox landingFooterVBox3;
     
     @FXML
-    void scrollToMovies(ActionEvent event) {
-        scrollpane.setVvalue(0.3);
+    void scrollToMovies(ActionEvent event) throws IOException {
+        new SceneController().switchToAllShowTime(event);
     }
 
     @FXML

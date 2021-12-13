@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane hbarPolicy="NEVER" hmax="100.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1440.0" styleClass="root" stylesheets="@adminmain.css" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.AdminMainController">
+<ScrollPane hbarPolicy="NEVER" hmax="100.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1100.0" prefWidth="1440.0" styleClass="root" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.AdminMainController">
    <content>
       <StackPane prefHeight="1100.0" prefWidth="1436.0">
          <children>
@@ -27,11 +27,19 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ImageView fitHeight="154.0" fitWidth="311.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                        <ImageView fx:id="logo" fitHeight="154.0" fitWidth="311.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                            <image>
                               <Image url="@assets/company/Admin%20Logo.png" />
                            </image>
                         </ImageView>
+                        <StackPane alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#signOut" prefHeight="31.0" prefWidth="100.0" styleClass="Button" text="Sign Out" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           </children>
+                           <padding>
+                              <Insets right="50.0" />
+                           </padding>
+                        </StackPane>
                      </children>
                   </GridPane>
                   <StackPane prefHeight="912.0" prefWidth="1310.0">
@@ -130,4 +138,8 @@
          </padding>
       </StackPane>
    </content>
+   <stylesheets>
+      <URL value="@style.css" />
+      <URL value="@adminmain.css" />
+   </stylesheets>
 </ScrollPane>

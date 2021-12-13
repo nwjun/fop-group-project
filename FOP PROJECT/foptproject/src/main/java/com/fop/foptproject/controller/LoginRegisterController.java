@@ -107,20 +107,17 @@ public class LoginRegisterController implements Initializable {
                     case 1:
                         //normal user scene
                         RealTimeStorage.updateUserInfos(email);
-                        SceneController switchScene = new SceneController();
                         switchScene.switchToHomeLogined(event);
                         break;
                     case 2:
                         //admin scene
-                        alert.setContentText("Remember do admin page");
-                        alert.show();
-                        //RealTimeStorage.updateUserInfos(email);
+                        RealTimeStorage.updateUserInfos(email);
+                        switchScene.switchToAdminMain(event);
                         break;
                     case 3:
                         //master scene
-                        alert.setContentText("Remember do master page");
-                        alert.show();
-                        //RealTimeStorage.updateUserInfos(email);
+                        RealTimeStorage.updateUserInfos(email);
+                        switchScene.switchToAdminMain(event);
                         break;
                     case -1:
                         passwordField.clear();
