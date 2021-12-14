@@ -214,7 +214,7 @@ public class Item {
         Button book = new Button();
         Region seperator = new Region();
         Button info = new Button();
-        
+
         info.setText("Info");
         info.setId(source.getId());
         info.setMinSize(70,30);
@@ -252,17 +252,18 @@ public class Item {
                 Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
+
         buttonContainer.getChildren().addAll(info,seperator,book);
         buttonContainer.setAlignment(Pos.CENTER);
         source.getChildren().add(buttonContainer);
+        
     }
 
     public void stopAnimation(MouseEvent event) {
-        final StackPane source = (StackPane) event.getSource();
-        source.getChildren().get(0).setEffect(null);
-        source.getChildren().get(0).setOpacity(1);
-        source.getChildren().remove(1,2);
+            final StackPane source = (StackPane) event.getSource();
+            source.getChildren().get(0).setEffect(null);
+            source.getChildren().get(0).setOpacity(1);
+            source.getChildren().remove(1,2);
     }
     
     public void toMovieBooking(ActionEvent e) throws IOException{
