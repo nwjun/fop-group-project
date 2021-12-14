@@ -208,7 +208,7 @@
                               <Region prefHeight="75.0" prefWidth="338.0" />
                               <StackPane>
                                  <children>
-                                    <Button id="bookButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Book Ticket" />
+                                    <Button id="bookButton" mnemonicParsing="false" onAction="#toMovieBooking" prefHeight="34.0" prefWidth="137.0" text="Book Ticket" />
                                  </children>
                               </StackPane>
                            </children>

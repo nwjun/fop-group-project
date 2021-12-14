@@ -179,8 +179,10 @@ public class MovieAllShowTImeController implements Initializable {
             if(RealTimeStorage.getPermission()==null){
                 Alert a = new Alert(AlertType.ERROR);
                 a.setTitle("Unauthorized Access");
-                a.setContentText("Please login to book a movie");
-                a.showAndWait();
+                a.setContentText("Please log in to book a movie");
+                Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                stage.showAndWait();
                 try {
                     new SceneController().switchToRegisterAndLogin(e);
                 } catch (IOException ex) {
