@@ -34,7 +34,7 @@ public class App extends Application{
 
 
         boolean DEBUG = false;
-        String fxmlFile = "FoodnBeverage.fxml";
+        String fxmlFile = "MovieBooking.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
@@ -56,7 +56,7 @@ public class App extends Application{
         // set Scene's width and height based on screen size
         Scene scene = new Scene(root, HEIGHT, WIDTH);
         SceneController.setPrimaryStage(primaryStage);
-        primaryStage.getIcons().add(new Image("/com/fop/foptproject/assets/company/logo2.png"));
+        primaryStage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
         primaryStage.setTitle("Movie Ticketing System");
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
@@ -80,6 +80,6 @@ public class App extends Application{
 //        System.out.println(json.getNewSeatArr().toString());
 //        
 //        System.out.println(0/0);
-        //launch();
+        launch();
     }
 }

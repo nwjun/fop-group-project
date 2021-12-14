@@ -21,9 +21,6 @@ public class sqlConnect {
     public sqlConnect(){
         Properties prop = new readConfig().readconfigfile();
         try{
-//            System.out.println(prop.getProperty("configuration.sqlConnection"));
-//            System.out.println(prop.getProperty("configuration.sqlUser"));
-//            System.out.println(prop.getProperty("configuration.sqlPassword"));
             this.conn = DriverManager.getConnection(
             prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
@@ -126,7 +123,6 @@ public class sqlConnect {
     public static int checkCredentials(String userEmail, String password){
         // preprocess input
         // SHA-256
-        System.out.println("checking cred");
         String combination = userEmail + SALT + password;
         String inputPass = DigestUtils.sha256Hex(combination);
         
@@ -279,7 +275,6 @@ public class sqlConnect {
     public static boolean removeNewRegisterOTP(String email, boolean isCancelled){
         
         if(!(isCancelled)){
-            System.out.println("transferring");
             transferToUserCred(email);
         }
         
@@ -372,7 +367,6 @@ public class sqlConnect {
                 String phonenumber = rs.getString("phoneNumber");
 
                 boolean status = addNewUser(username,email,password,phonenumber,1);
-                System.out.println(status);
                 return;
             }
             catch(SQLException e){
@@ -551,9 +545,9 @@ public class sqlConnect {
     }
         
     public static HashMap<String, ArrayList<String>> queryAllMovie(){
-        String query = "SELECT movieId, movieName, length, releaseDate, directorCast, language, poster, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict "
+        String query = "SELECT movieId, movieName, length, releaseDate, directorCast, language, poster, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict, theaterId "
                         + "FROM movies "
-                        + "INNER JOIN pos USING (posterId) ";
+                        + "INNER JOIN pos USING (posterId)";
         
         HashMap<String, ArrayList<String>> movies = new HashMap<>();
         ArrayList<String> movieId = new ArrayList<>();
@@ -568,6 +562,7 @@ public class sqlConnect {
         ArrayList<String> rottenTomato = new ArrayList<>();
         ArrayList<String> iMDB = new ArrayList<>();
         ArrayList<String> ageRestrict = new ArrayList<>();
+        ArrayList<String> theaterId = new ArrayList<>();
         
         try {
             PreparedStatement prepstat = conn.prepareStatement(query);
@@ -585,6 +580,7 @@ public class sqlConnect {
                 rottenTomato.add(rs.getString("rottenTomato"));
                 iMDB.add(rs.getString("iMDB"));
                 ageRestrict.add(rs.getString("ageRestrict"));
+                theaterId.add(rs.getString("theaterId"));
             }
         } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -602,6 +598,7 @@ public class sqlConnect {
         movies.put("rottenTomato",rottenTomato);
         movies.put("iMDB",iMDB);
         movies.put("ageRestrict",ageRestrict);
+        movies.put("theaterId",theaterId);
         
         return movies;
     }

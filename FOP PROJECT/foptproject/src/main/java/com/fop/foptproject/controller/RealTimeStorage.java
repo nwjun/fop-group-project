@@ -12,6 +12,7 @@ import org.json.*;
 public class RealTimeStorage {
     private static sqlConnect sql = new sqlConnect();
     private static boolean isLogin = false;
+    private static final String[] SLOTS = {"10.00AM","03.30PM","08.00PM","01.00PM","11.00PM"}; 
     private static int alteringDay;
     private static String userId;
     private static String userEmail;
@@ -178,6 +179,22 @@ public class RealTimeStorage {
     
     public static void setAllLandingFood(){
         RealTimeStorage.landingFoodPoster = sql.queryLandingFood("combo",4);
+    }
+    
+    public static String getSlot(int i){
+        return RealTimeStorage.SLOTS[i];
+    }
+    
+    public static String[] getSlots(int i){
+        String[] ranged = new String[i];
+        for(int j = 0 ; j < i ; j++){
+            ranged[j] = RealTimeStorage.SLOTS[j];
+        }
+        return ranged;
+    }
+    
+    public static String[] getAllSlots(){
+        return RealTimeStorage.SLOTS;
     }
     
     public static int getAlteringDay(){
