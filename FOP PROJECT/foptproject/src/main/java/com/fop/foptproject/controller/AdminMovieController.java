@@ -207,9 +207,12 @@ public class AdminMovieController implements Initializable {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Delete \""+ (String)movieName[x]+ "\"");
         window.setMinWidth(340);
-        window.setMinHeight(210);
-        window.setY(350);
+        window.setMinHeight(225);
+        window.setY(300);
         window.setX(570);
+        String path1 = App.class.getResource("assets/company/logo2.png").toString(); 
+        Image img1 = new Image(path1/*, IMGW, IMGH, false, false*/);
+        window.getIcons().add(img1);
         
         
         Label label = new Label();
@@ -265,12 +268,16 @@ public class AdminMovieController implements Initializable {
         
             }
         }); 
-        
-        String path = getPathway()+"company\\Admin.png\\";
+        String path;
+        if(RealTimeStorage.getPermission().equals("3")){
+            path = App.class.getResource("assets/company/master.png").toString();    
+        }
+        else{
+        path = getPathway()+"company\\Admin.png\\";
+        }
         Image img = new Image(path, 168.75, 24.375, false, false);
         ImageView setImg = new ImageView();
         setImg.setImage(img);
-        
         HBox row0 = new HBox();
         Label spacing8 = new Label("     ");
         row0.setStyle("-fx-padding: 20 0 0 0");
