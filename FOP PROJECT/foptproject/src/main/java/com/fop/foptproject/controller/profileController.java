@@ -5,6 +5,7 @@
  */
 package com.fop.foptproject.controller;
 
+import com.fop.Utility.Checker;
 import com.fop.foptproject.App;
 import com.fop.foptproject.CommonMethod;
 import java.io.IOException;
@@ -173,7 +174,13 @@ public class profileController implements Initializable {
         Label emailLabel = new Label("Email");
         Label hpLabel = new Label("Phone number");
         Label[] labels = new Label[]{usernameLabel, emailLabel, hpLabel};
-
+        
+        Label emailErrorLabel = new Label("Incorrect format");
+        emailErrorLabel.getStyleClass().add("errorLabel");
+        emailErrorLabel.setVisible(false);
+        emailErrorLabel.setStyle("-fx-text-fill:#FF0000");
+        emailErrorLabel.setPadding(new Insets(5,0,0,10));
+        
         for (Label label : labels) {
             label.getStyleClass().add("profileLabel");
             VBox.setMargin(label, new Insets(50, 0, 20, 0));
@@ -186,7 +193,7 @@ public class profileController implements Initializable {
         String[] textFieldIds = new String[]{"profileField", "emailField", "hpField"};
 
         String[] fieldValues = getProfileValues();
-
+        
         for (int i = 0; i < textFields.length; i++) {
             textFields[i].getStyleClass().add("profileText");
             textFields[i].setId(textFieldIds[i]);
@@ -200,6 +207,16 @@ public class profileController implements Initializable {
         Button resetBtn = new Button("Reset");
         resetBtn.getStyleClass().add("transparentBtn");
 
+        emailField.setOnKeyTyped(eh->{
+            if(! Checker.checkEmail(emailField.getText())){
+                emailErrorLabel.setVisible(true);
+                confirmBtn.setDisable(true);
+            }else{
+                emailErrorLabel.setVisible(false);
+                confirmBtn.setDisable(false);
+            }
+        });
+        
         confirmBtn.setOnAction(e -> {
             String[] newFieldValues = new String[textFields.length];
             
@@ -224,7 +241,7 @@ public class profileController implements Initializable {
         btnBox.setMaxWidth(MAX_WIDTH);
         VBox.setMargin(btnBox, new Insets(70, 0, 0, 0));
 
-        wrapper.getChildren().addAll(usernameLabel, usernameField, emailLabel, emailField, hpLabel, hpField, btnBox);
+        wrapper.getChildren().addAll(usernameLabel, usernameField, emailLabel, emailField, emailErrorLabel, hpLabel, hpField, btnBox);
         wrapper.getStyleClass().add("wrapper");
         contentContainer.getChildren().addAll(wrapper);
 
@@ -292,8 +309,8 @@ public class profileController implements Initializable {
 
             
             if (popupStage != null) {
-                
                 popupStage.showAndWait();
+                billing();
             }
         });
 
