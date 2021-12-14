@@ -32,8 +32,9 @@ public class App extends Application{
         final double WIDTH = screenBounds.getWidth();
         final double HEIGHT = screenBounds.getHeight();
 
+
         boolean DEBUG = false;
-        String fxmlFile = "LoginRegister.fxml";
+        String fxmlFile = "FoodnBeverage.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
@@ -72,22 +73,13 @@ public class App extends Application{
         //query landing food poster
         RealTimeStorage.setAllLandingFood();
         
-//        JSONToolSets json = new JSONToolSets(sql.querySeats("8","1",false),false);
-//        System.out.println("1");
+//        JSONToolSets json = new JSONToolSets(sql.querySeats("1","1",true),true);
 //        json.parseTheaterSeat(0);
-//        System.out.println("2");
-//        json.parseTheaterSeat(1);
-//        System.out.println("3");
-//        json.parseTheaterSeat(2);
-//        System.out.println("4");
-//        json.parseTheaterSeat(3);
-//        System.out.println("5");
-//        json.parseTheaterSeat(4);
-//        System.out.println("6");
-//        json.parseTheaterSeat(5);
-//        System.out.println("7");
-//        json.parseTheaterSeat(6);
-        
-        launch();
+//        json.setSeatStat(new int[]{0,1,2}, new int[]{0,1,2}, new int[]{-1,1,-1});
+//        System.out.println("After modifying:");
+//        System.out.println(json.getNewSeatArr().toString());
+//        
+//        System.out.println(0/0);
+        //launch();
     }
 }
