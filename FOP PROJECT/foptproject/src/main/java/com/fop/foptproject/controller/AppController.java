@@ -116,11 +116,6 @@ public class AppController implements Initializable {
     void openShxao(ActionEvent event) throws URISyntaxException, IOException {
         Desktop.getDesktop().browse(new URI("https://www.instagram.com/shxao.yxn_/?hl=en"));
     }
-
-    @FXML
-    void openCinemas(ActionEvent event) throws URISyntaxException, IOException {
-        Desktop.getDesktop().browse(new URI("https://www.google.com/"));
-    }
     
     @FXML
     public void changeToLoginAndRegister(ActionEvent event) throws IOException{

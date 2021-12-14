@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -98,10 +99,10 @@
                         <Insets bottom="20.0" />
                      </VBox.margin></Line>
                       
-                                    <GridPane fx:id="landingFooter" alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="350.0" prefWidth="1000.0">
+                                    <GridPane fx:id="landingFooter" alignment="CENTER_LEFT" gridLinesVisible="true" maxWidth="-Infinity" prefHeight="350.0" prefWidth="1000.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="380.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="450.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="500.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -110,7 +111,7 @@
                      <children>
                                 <VBox fx:id="landingFooterVBox1" prefHeight="350.0" prefWidth="200.0">
                                     <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
+                              <VBox prefHeight="252.0" prefWidth="270.0">
                                  <children>
                                               <Hyperlink onAction="#scrollToMovies" text="Movies" textFill="#f4f2f2">
                                                   <font>
@@ -130,11 +131,8 @@
                                                       <Font name="Calibri Bold" size="22.0" />
                                                   </font>
                                               </Hyperlink>
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                              <Hyperlink onAction="#openCinemas" text="Cinemas" textFill="#f4f2f2">
+                                    <Region prefHeight="45.0" prefWidth="380.0" />
+                                              <Hyperlink onAction="#scrollToFB" prefHeight="24.0" prefWidth="240.0" text="Food and Beverages" textFill="#f4f2f2">
                                                   <font>
                                                       <Font name="Calibri Bold" size="22.0" />
                                                   </font>
@@ -142,31 +140,11 @@
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                               </Hyperlink>
-                                              <Hyperlink onAction="#openCinemas" text="Classic" textFill="#f0f0f0a8">
-                                                  <font>
-                                                      <Font name="Calibri Bold" size="22.0" />
-                                                  </font>
-                                              </Hyperlink>
-                                              <Hyperlink onAction="#openCinemas" text="Premium" textFill="#f0f0f0ae">
-                                                  <font>
-                                                      <Font name="Calibri Bold" size="22.0" />
-                                                  </font>
-                                              </Hyperlink>
                                  </children>
                               </VBox>
                                     </children>
                                 </VBox>
-                                <VBox fx:id="landingFooterVBox2" prefHeight="350.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                    <children>
-                                        <Hyperlink onAction="#scrollToFB" prefHeight="0.0" prefWidth="240.0" text="Food and Beverages" textFill="#f4f2f2">
-                                            <font>
-                                                <Font name="Calibri Bold" size="22.0" />
-                                            </font>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                                        </Hyperlink>
-                                    </children>
+                                <VBox fx:id="landingFooterVBox2" prefHeight="346.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
