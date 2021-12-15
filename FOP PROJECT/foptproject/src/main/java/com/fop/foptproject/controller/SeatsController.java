@@ -163,8 +163,7 @@ public class SeatsController implements Initializable {
 
         int maxRow = seatsTemp.size();
         int maxCol = seatsTemp.get(0).size();
-        System.out.println(maxCol);
-        // gridPane.add(item, col,row)
+
         for (int row = 0; row < maxRow + 1; row++) {
             // RowConstraints(double minHeight, double prefHeight, double maxHeight)
             RowConstraints rowConstraint = new RowConstraints(10, 30, Double.MAX_VALUE);
@@ -185,34 +184,32 @@ public class SeatsController implements Initializable {
                 }
 
                 if (col == 3 || col == maxCol) {
+                    // skip lane
                     continue;
                 }
 
-                if (col >= maxCol) {
-                    tempCol = col - 3;
-
-                } else if (col >= 3) {
-                    tempCol = col - 2;
-                }
+                tempCol = colIndex(col, maxCol);
 
                 if (row == 0) {
+                    // Add column label, starting from 1
                     if (col != 0) {
-                        Label val = new Label(String.valueOf(tempCol+1));
+                        Label val = new Label(String.valueOf(tempCol + 1));
                         val.getStyleClass().add("seatsLabel");
                         val.setAlignment(Pos.CENTER);
-
+                        // gridPane.add(item, col,row)
                         seatsContainer.add(val, col, row);
                     }
 
                 } else {
                     if (col == 0) {
+                        // Add row label, starting from A
                         Label val = new Label((char) (65 + (row - 1)) + "");
                         val.getStyleClass().add("seatsLabel");
                         val.setAlignment(Pos.CENTER);
                         seatsContainer.add(val, col, row);
                     } else {
                         CheckBox newSeat = new CheckBox();
-
+                        // Set seat availability
                         String val = seatsTemp.get(tempRow).get(tempCol);
                         if (val.equals("1")) {
                             newSeat.setDisable(true);
@@ -237,15 +234,16 @@ public class SeatsController implements Initializable {
                 seat.selectedProperty().addListener(
                         (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
                             int row = GridPane.getRowIndex(seat) - 1;
-                            int col = GridPane.getColumnIndex(seat) - 1;
-
+                            int col = colIndex(GridPane.getColumnIndex(seat), maxCol);
+                            
+                            
                             // Selected
                             if (old_val == false && new_val == true && selectedLength < totalTicket) {
                                 selected.add(new String[]{String.valueOf(row), String.valueOf(col)});
 
                             } // Unselected
                             else if (old_val == true && new_val == false) {
-                                // new int[]{1,2} == new int[]{1,2} will return false as "==" compare references to objects(address)
+                                // new string[]{1,2} == new string[]{1,2} will return false as "==" compare references to objects(address)
                                 // have to use equals to compare content
                                 // remove [row,col] from ArrayList if unchecked
                                 selected.removeIf(n -> Arrays.equals(n, new String[]{String.valueOf(row), String.valueOf(col)}));
@@ -256,11 +254,11 @@ public class SeatsController implements Initializable {
                             selectedLength = selected.size();
                             selectedTicketLabel.setText(Integer.toString(selectedLength));
                         });
-                
+
             }
         }
-        
-        nextButton.setOnAction(e->{
+
+        nextButton.setOnAction(e -> {
             RealTimeStorage.setSelectedSeats(selected);
             RealTimeStorage.setTicketType(tickets);
         });
@@ -283,10 +281,21 @@ public class SeatsController implements Initializable {
                     temp.add("1");
                 }
                 seatsArr.add(temp);
-                System.out.println(seatsArr.size());
             }
 
         }
         return seatsArr;
+    }
+
+    private int colIndex(int col, int maxCol) {
+        // change from gridpane col to array col
+
+        if (col >= maxCol) {
+            return col - 3;
+        } else if (col >= 3) {
+            return col - 2;
+        } else {
+            return col - 1;
+        }
     }
 }
