@@ -3,6 +3,7 @@ package com.fop.foptproject.controller;
 import com.fop.Utility.JSONToolSets;
 import com.fop.Utility.sqlConnect;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import org.json.*;
 
@@ -26,7 +27,9 @@ public class RealTimeStorage {
     private static String lookingAtMovie;
     public static HashMap<String,Object> MovieBooking = new HashMap<>();
     public static HashMap<String,Integer> FoodnBeverage = new HashMap<>();
-    
+    private static ArrayList<String[]> linkedCard2D;
+    private static ArrayList<String[]> selectedSeats = new ArrayList<>();
+    private static int[] ticketType = new int[3]; // no of ticket for adult, student, OKU
     
     // setter for movie booking
     public static void updateMovieBooking(HashMap<String,Object> input,boolean clear){
@@ -290,6 +293,15 @@ public class RealTimeStorage {
     public static void setPNumber(String newVal){
         RealTimeStorage.phoneNumber=newVal;
     }
+    
+    public static void setSelectedSeats(ArrayList<String[]> newSeats){
+        RealTimeStorage.selectedSeats = newSeats;
+    }
+    
+    public static void setTicketType(int[] ticketType){
+        RealTimeStorage.ticketType = ticketType;
+    }
+
     
 }
 
