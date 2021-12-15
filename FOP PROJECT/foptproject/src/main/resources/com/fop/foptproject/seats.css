@@ -29,3 +29,8 @@
   -fx-background-color: rgba(0,0,0,0);
   -fx-background-image: url("assets/selectedSeat.png");
 }
+
+#soldSeat{
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-background-image: url("assets/bookedSeat.png");
+}

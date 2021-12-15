@@ -5,22 +5,34 @@ package com.fop.foptproject.controller;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import com.fop.Utility.JSONToolSets;
+import com.fop.Utility.sqlConnect;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 
 /**
  * FXML Controller class
@@ -38,15 +50,15 @@ public class SeatsController implements Initializable {
     private Button studentMinus, studentAdd, adultMinus, adultAdd, okuMinus, okuAdd, nextButton;
     @FXML
     private Label studentCount, adultCount, okuCount, selectedTicketLabel, totalLabel;
-    
-    
+
     @FXML
-    public void changeToMovieBooking(ActionEvent event) throws IOException{
+    public void changeToMovieBooking(ActionEvent event) throws IOException {
         SceneController switchScene = new SceneController();
         switchScene.switchToMovieBooking(event);
     }
-  
-    private ArrayList<int[]> selected = new ArrayList<int[]>();
+
+    private ArrayList<String[]> selected = new ArrayList<String[]>();
+    private sqlConnect sql = new sqlConnect();
     private int selectedLength = 0;
     // no of ticket for adult, student, OKU
     private int[] tickets = new int[]{0, 0, 0};
@@ -60,7 +72,7 @@ public class SeatsController implements Initializable {
             updateTotalTicket();
         }
         // reset
-        if (totalTicket == 0) {
+        if (totalTicket == 0 || totalTicket < selectedLength) {
             ObservableList<Node> children = seatsContainer.getChildren();
 
             for (Node node : children) {
@@ -69,7 +81,7 @@ public class SeatsController implements Initializable {
                     seat.setSelected(false);
                 }
                 selectedLength = 0;
-                selected = new ArrayList<int[]>();
+                selected = new ArrayList<>();
             }
         }
     }
@@ -83,13 +95,13 @@ public class SeatsController implements Initializable {
         }
 
     }
-    
+
     // switch to next scene
     @FXML
-    void toFnB(ActionEvent event) throws IOException{
+    void toFnB(ActionEvent event) throws IOException {
         new SceneController().switchToFnB(event);
     }
-    
+
     // add and minus method for each categories
     @FXML
     void adultMinusCount(ActionEvent event) {
@@ -142,8 +154,82 @@ public class SeatsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ObservableList<Node> seats = seatsContainer.getChildren();
+        final String THEATER_ID, SLOT, DAY;
+        THEATER_ID = "1";
+        SLOT = "1";
+        DAY = "0";
 
+        ArrayList<ArrayList<String>> seatsTemp = getMovieSeats(THEATER_ID, SLOT, DAY);
+
+        int maxRow = seatsTemp.size();
+        int maxCol = seatsTemp.get(0).size();
+        System.out.println(maxCol);
+        // gridPane.add(item, col,row)
+        for (int row = 0; row < maxRow + 1; row++) {
+            // RowConstraints(double minHeight, double prefHeight, double maxHeight)
+            RowConstraints rowConstraint = new RowConstraints(10, 30, Double.MAX_VALUE);
+            rowConstraint.setVgrow(Priority.SOMETIMES);
+            rowConstraint.setValignment(VPos.CENTER);
+            seatsContainer.getRowConstraints().add(rowConstraint);
+            for (int col = 0; col < maxCol + 3; col++) {
+
+                int tempRow = row - 1;
+                int tempCol = col - 1;
+
+                if (row == 0) {
+                    // ColumnConstraints(double minWidth, double prefWidth, double maxWidth)
+                    ColumnConstraints colConstraint = new ColumnConstraints(10, 100, Double.MAX_VALUE);
+                    colConstraint.setHgrow(Priority.SOMETIMES);
+                    colConstraint.setHalignment(HPos.CENTER);
+                    seatsContainer.getColumnConstraints().add(colConstraint);
+                }
+
+                if (col == 3 || col == maxCol) {
+                    continue;
+                }
+
+                if (col >= maxCol) {
+                    tempCol = col - 3;
+
+                } else if (col >= 3) {
+                    tempCol = col - 2;
+                }
+
+                if (row == 0) {
+                    if (col != 0) {
+                        Label val = new Label(String.valueOf(tempCol+1));
+                        val.getStyleClass().add("seatsLabel");
+                        val.setAlignment(Pos.CENTER);
+
+                        seatsContainer.add(val, col, row);
+                    }
+
+                } else {
+                    if (col == 0) {
+                        Label val = new Label((char) (65 + (row - 1)) + "");
+                        val.getStyleClass().add("seatsLabel");
+                        val.setAlignment(Pos.CENTER);
+                        seatsContainer.add(val, col, row);
+                    } else {
+                        CheckBox newSeat = new CheckBox();
+
+                        String val = seatsTemp.get(tempRow).get(tempCol);
+                        if (val.equals("1")) {
+                            newSeat.setDisable(true);
+                            newSeat.setId("soldSeat");
+                        } else if (val.equals("-1")) {
+                            newSeat.setDisable(true);
+
+                        }
+                        seatsContainer.add(newSeat, col, row);
+                    }
+
+                }
+            }
+
+        }
+
+        ObservableList<Node> seats = seatsContainer.getChildren();
         for (Node node : seats) {
             if (node instanceof CheckBox) {
                 CheckBox seat = (CheckBox) node;
@@ -155,14 +241,14 @@ public class SeatsController implements Initializable {
 
                             // Selected
                             if (old_val == false && new_val == true && selectedLength < totalTicket) {
-                                selected.add(new int[]{row, col});
+                                selected.add(new String[]{String.valueOf(row), String.valueOf(col)});
 
                             } // Unselected
                             else if (old_val == true && new_val == false) {
                                 // new int[]{1,2} == new int[]{1,2} will return false as "==" compare references to objects(address)
                                 // have to use equals to compare content
                                 // remove [row,col] from ArrayList if unchecked
-                                selected.removeIf(n -> Arrays.equals(n, new int[]{row, col}));
+                                selected.removeIf(n -> Arrays.equals(n, new String[]{String.valueOf(row), String.valueOf(col)}));
 
                             } else {
                                 seat.selectedProperty().set(old_val);
@@ -170,9 +256,37 @@ public class SeatsController implements Initializable {
                             selectedLength = selected.size();
                             selectedTicketLabel.setText(Integer.toString(selectedLength));
                         });
-
+                
             }
         }
+        
+        nextButton.setOnAction(e->{
+            RealTimeStorage.setSelectedSeats(selected);
+            RealTimeStorage.setTicketType(tickets);
+        });
     }
 
+    public ArrayList<ArrayList<String>> getMovieSeats(String theaterID, String slot, String day) {
+        JSONToolSets json = new JSONToolSets(sql.querySeats(theaterID, slot, false), false);
+        HashMap<String, ArrayList<String>> seatsHash = json.parseTheaterSeat(Integer.parseInt(day));
+        ArrayList<ArrayList<String>> seatsArr = new ArrayList<>();
+        Set<String> rowsNo = seatsHash.keySet();
+
+        for (String rowNo : rowsNo) {
+            seatsArr.add(Integer.parseInt(rowNo), seatsHash.get(rowNo));
+        }
+
+        if (seatsArr.size() == 0) {
+            for (int i = 0; i < 10; i++) {
+                ArrayList<String> temp = new ArrayList<>();
+                for (int j = 0; j < 10; j++) {
+                    temp.add("1");
+                }
+                seatsArr.add(temp);
+                System.out.println(seatsArr.size());
+            }
+
+        }
+        return seatsArr;
+    }
 }

@@ -7,7 +7,6 @@ package com.fop.Utility;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.json.*;
-import com.fop.Utility.sqlConnect;
 import com.fop.foptproject.controller.RealTimeStorage;
 
 
@@ -449,5 +448,5 @@ public class JSONToolSets {
         return jsonString;
     }
     
-    
+ 
 }
