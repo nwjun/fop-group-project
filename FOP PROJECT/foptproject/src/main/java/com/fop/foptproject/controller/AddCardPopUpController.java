@@ -26,6 +26,10 @@ public class AddCardPopUpController implements Initializable {
     @FXML
     private TextField accTextField;
     @FXML
+    private TextField expTextField;
+    @FXML
+    private TextField cvvTextField;
+    @FXML
     private HBox buttonContainer;
     @FXML
     private Button addBtn;
@@ -38,7 +42,7 @@ public class AddCardPopUpController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
         String[] banks = new String[]{"Ambank", "Maybank", "Public Bank"};
 
         for (String bank : banks) {
@@ -60,7 +64,9 @@ public class AddCardPopUpController implements Initializable {
             Stage window = (Stage) addBtn.getScene().getWindow();
             String selectedBank = (String) bankChoiceBox.getValue();
             String accNo = accTextField.getText();
-            addToDb(accNo, selectedBank);
+            String expNo = expTextField.getText();
+            String cvvNo = cvvTextField.getText();
+            addToDb(accNo, expNo, cvvNo, selectedBank);
             addErrorMsg.setText("Added bank account successfully");
 
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), ev -> {
@@ -86,8 +92,8 @@ public class AddCardPopUpController implements Initializable {
         return false;
     }
 
-    private void addToDb(String accNo, String selectedBank) {
+    private void addToDb(String accNo, String expNo, String cvvNo, String selectedBank) {
         // add accNo and selectedBank to database
-        RealTimeStorage.updateLinkedCard2D(new String[]{selectedBank, accNo});
+        RealTimeStorage.updateLinkedCard(new String[]{selectedBank, accNo, expNo, cvvNo});
     }
 }

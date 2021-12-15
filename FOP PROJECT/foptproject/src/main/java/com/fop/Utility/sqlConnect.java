@@ -24,7 +24,6 @@ public class sqlConnect {
             this.conn = DriverManager.getConnection(
             prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
-
         }
         catch(SQLException e){
             e.printStackTrace();
