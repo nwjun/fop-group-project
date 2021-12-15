@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="600.0" styleClass="root" stylesheets="@adminmovie.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.EditPricePopUpController">
+   <children>
+      <VBox prefHeight="336.0" prefWidth="600.0">
+         <children>
+            <GridPane prefHeight="56.0" prefWidth="600.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="28.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="217.0" minWidth="10.0" prefWidth="127.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="163.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="318.0" minWidth="10.0" prefWidth="293.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="76.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fx:id="logo" fitHeight="46.0" fitWidth="248.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@assets/company/Admin.png" />
+                     </image>
+                  </ImageView>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
+                     <children>
+                        <Button fx:id="closeWindow" layoutX="254.0" layoutY="16.0" mnemonicParsing="false" onAction="#closeWindow" style="-fx-background-color: #ff0000; -fx-border-radius: 10px;" text="X" />
+                     </children>
+                  </AnchorPane>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </GridPane>
+            <VBox prefHeight="250.0" prefWidth="600.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="32.0" prefWidth="133.0" style="-fx-font-size: 20; -fx-text-fill: #FFEE00; -fx-border-radius: 20px; -fx-border-color: FFEE00;" text="Ticket Price:">
+                     <VBox.margin>
+                        <Insets left="20.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <VBox prefHeight="210.0" prefWidth="600.0">
+                     <children>
+                        <HBox prefHeight="29.0" prefWidth="600.0">
+                           <children>
+                              <Label prefHeight="21.0" prefWidth="50.0" style="-fx-text-fill: yellow;" text="No.">
+                                 <HBox.margin>
+                                    <Insets left="25.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="80.0" style="-fx-text-fill: yellow;" text="Ticket ID">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="120.0" style="-fx-text-fill: yellow;" text="Ticket Name" />
+                              <Label prefHeight="21.0" prefWidth="115.0" style="-fx-text-fill: yellow;" text="Price" />
+                              <Label prefWidth="100.0" style="-fx-text-fill: yellow;" text="Description">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin></Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="35.0" prefWidth="600.0">
+                           <children>
+                              <Label prefHeight="21.0" prefWidth="50.0" text="1">
+                                 <HBox.margin>
+                                    <Insets left="25.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="80.0" text="TS">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="120.0" text="Student Ticket">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="32.0" text="RM: ">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="TS" onAction="#TS" prefHeight="31.0" prefWidth="60.0" />
+                              <Label prefWidth="100.0" text="Classic">
+                                 <HBox.margin>
+                                    <Insets left="45.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" top="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="35.0" prefWidth="600.0">
+                           <children>
+                              <Label prefHeight="21.0" prefWidth="50.0" text="2">
+                                 <HBox.margin>
+                                    <Insets left="25.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="80.0" text="TC">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="120.0" text="Adult Ticket">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="32.0" text="RM: ">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="TC" onAction="#TC" prefHeight="31.0" prefWidth="60.0" />
+                              <Label prefWidth="100.0" text="Classic">
+                                 <HBox.margin>
+                                    <Insets left="45.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" top="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="35.0" prefWidth="600.0">
+                           <children>
+                              <Label prefHeight="21.0" prefWidth="50.0" text="3">
+                                 <HBox.margin>
+                                    <Insets left="25.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="80.0" text="TE">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="120.0" text="Elderly Ticket">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="32.0" text="RM: ">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="TE" onAction="#TE" prefHeight="31.0" prefWidth="60.0" />
+                              <Label prefWidth="100.0" text="Classic">
+                                 <HBox.margin>
+                                    <Insets left="45.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" top="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="35.0" prefWidth="600.0">
+                           <children>
+                              <Label prefHeight="21.0" prefWidth="50.0" text="4">
+                                 <HBox.margin>
+                                    <Insets left="25.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="80.0" text="TO">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="120.0" text="OKU Ticket">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="32.0" text="RM: ">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="TO" onAction="#TO" prefHeight="31.0" prefWidth="60.0" />
+                              <Label prefWidth="100.0" text="Classic">
+                                 <HBox.margin>
+                                    <Insets left="45.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" top="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="35.0" prefWidth="600.0">
+                           <children>
+                              <Label prefHeight="21.0" prefWidth="50.0" text="5">
+                                 <HBox.margin>
+                                    <Insets left="25.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="80.0" text="TP">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="120.0" text="Premium Ticket">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="21.0" prefWidth="32.0" text="RM: ">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="TP" onAction="#TP" prefHeight="31.0" prefWidth="60.0" />
+                              <Label prefHeight="21.0" prefWidth="187.0" text="Fixed Price for All Class">
+                                 <HBox.margin>
+                                    <Insets left="45.0" top="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" top="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="35.0" prefWidth="600.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <HBox prefHeight="38.0" prefWidth="600.0">
+               <children>
+                  <Button fx:id="FinishEdit" mnemonicParsing="false" onAction="#closeWindow" prefHeight="28.0" prefWidth="88.0" styleClass="Button" text="Finish Edit">
+                     <HBox.margin>
+                        <Insets left="505.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</StackPane>

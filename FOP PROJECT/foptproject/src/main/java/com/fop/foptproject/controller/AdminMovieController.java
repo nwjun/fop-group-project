@@ -45,6 +45,8 @@ import javax.imageio.ImageIO;
 import org.json.simple.parser.ParseException;
 import static com.fop.foptproject.ProductCardAdminMovie.castJsonProcessor;
 import static com.fop.foptproject.ProductCardAdminMovie.directorJsonProcesor;
+import static com.fop.foptproject.controller.SceneController.showPopUpStage;
+import javafx.stage.StageStyle;
 
 public class AdminMovieController implements Initializable {
     
@@ -116,39 +118,22 @@ public class AdminMovieController implements Initializable {
     private TextField rottenTomatoT;
     @FXML
     private Button upload;
+    @FXML
+    private Button ticketPrice;
+    @FXML
+    private Button adminAdd;
+    @FXML
+    private ImageView logo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-//        String s = "M00007";
-//        String t = "assets\\movies\\poster7.jpg";
-//        this.sql.insertPoster(s, t);
-//        
-//        String a = "00007";
-//        String b = "Encanto";
-//        double c = 1.51;
-//        String d = "2021-12-17";
-//        String e = "{\"Cast\": [\"Vishal\", \"Arya\", \"Mirnalini Ravi\", \"Mamta Mohandas\", \"Prakash Raj\"], \"Director\": \"Deirdre Bowen\"}";
-//        String f = "En";
-//        String g = "M00007";
-//        String h = "{\"0\": [], \"1\": [], \"2\": [], \"3\": [], \"4\": [], \"5\": [], \"6\": []}";
-//        String i = "-";
-//        double j = 9;
-//        double k = 9;
-//        int l = 18;
-//        this.sql.insertMovie(a, b, c, d, e, f, g, h, i, j, k, l);
-//        
-//        String u = "S000011";
-//        String v = "assets\\foods\\food4.jpg";
-//        this.sql.insertPoster(u, v);
-//        
-//        String m = "S000011";
-//        String n = "Special Order";
-//        double o = 24;
-//        String p = "S000011";
-//        String q = "A special surprise meal.";
-//        String r = "combo";
-//        this.sql.insertProduct(m, n, o, p, q, r);
+        if(RealTimeStorage.getPermission().equals("3")){
+            adminAdd.setDisable(false);
+            adminAdd.setVisible(true);
+            String path = App.class.getResource("assets/company/master.png").toString(); 
+            Image img = new Image(path/*, IMGW, IMGH, false, false*/);
+            logo.setImage(img);
+        }
         
         try {
             getProduct();
@@ -157,7 +142,7 @@ public class AdminMovieController implements Initializable {
         }
         
     }
-    
+
     public void getProduct() throws ParseException{
         HashMap<String,ArrayList<String>> items = sql.queryAllMovie();
         this.movieId = items.get("movieId").toArray();
@@ -222,9 +207,12 @@ public class AdminMovieController implements Initializable {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Delete \""+ (String)movieName[x]+ "\"");
         window.setMinWidth(340);
-        window.setMinHeight(210);
-        window.setY(350);
+        window.setMinHeight(225);
+        window.setY(300);
         window.setX(570);
+        String path1 = App.class.getResource("assets/company/logo2.png").toString(); 
+        Image img1 = new Image(path1/*, IMGW, IMGH, false, false*/);
+        window.getIcons().add(img1);
         
         
         Label label = new Label();
@@ -280,12 +268,16 @@ public class AdminMovieController implements Initializable {
         
             }
         }); 
-        
-        String path = getPathway()+"company\\Admin.png\\";
+        String path;
+        if(RealTimeStorage.getPermission().equals("3")){
+            path = App.class.getResource("assets/company/master.png").toString();    
+        }
+        else{
+        path = getPathway()+"company\\Admin.png\\";
+        }
         Image img = new Image(path, 168.75, 24.375, false, false);
         ImageView setImg = new ImageView();
         setImg.setImage(img);
-        
         HBox row0 = new HBox();
         Label spacing8 = new Label("     ");
         row0.setStyle("-fx-padding: 20 0 0 0");
@@ -655,5 +647,19 @@ public class AdminMovieController implements Initializable {
         }
         // 
 
+    }
+
+    @FXML
+    private void ticketPrice(ActionEvent event) {
+        Stage x = showPopUpStage("TicketPrice.fxml");
+        x.initStyle(StageStyle.UNDECORATED);
+        x.show();
+    }
+
+    @FXML
+    private void adminAdd(ActionEvent event) {
+        Stage x = showPopUpStage("EditAdmin.fxml");
+        x.initStyle(StageStyle.UNDECORATED);
+        x.show();
     }
 }

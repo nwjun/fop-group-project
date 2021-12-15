@@ -91,6 +91,7 @@ public class ProductCardAdminMovie{
         Label language = new Label();
         Label path = new Label();
         Label listShowTime = new Label();
+        listShowTime.setWrapText(true);
         Label synopsis = new Label();
         Label rottenTomato = new Label();
         Label iMDB = new Label();
@@ -163,13 +164,13 @@ public class ProductCardAdminMovie{
 //        AnchorPane editdelete = MakeButton(movieId, length);
 //        Label x = makeDateLabel((String)this.movieDetails.get("allShowTime"), this.currentPage);
         
-        labelContainer.setPrefWidth(450);
-        labelContainer.setPrefHeight(2500);
-        labelContainer.setStyle("-fx-padding:0 0 0 0");
+        labelContainer.setPrefWidth(425);
+        labelContainer.setPrefHeight(2150);
+        labelContainer.setStyle("-fx-padding:10 0 0 0");
         
 //        if(this.currentPage==0){
             labelContainer.getChildren().clear();
-            labelContainer.getChildren().addAll(path, movieName, movielength, releaseDate, language, rottenTomato, iMDB, ageRestrict, director, cast, synopsis, listShowTime);
+            labelContainer.getChildren().addAll(movieName, movielength, releaseDate, language, rottenTomato, iMDB, ageRestrict, director, cast, synopsis, listShowTime);
 //        }
 //        else{
 //            labelContainer.getChildren().clear();
@@ -207,6 +208,7 @@ public class ProductCardAdminMovie{
             for(int i =0; i<length; i++)
                 cast+=ja.getString(i) +", ";
         }
+        cast = cast.substring(0, cast.length()-2);
         return cast;
     }
     
@@ -220,7 +222,7 @@ public class ProductCardAdminMovie{
     
     public String allShowTimeJsonProcessor(String allShowTime){
         String listShowTime = "";
-        String Mon = "\tMonday: ";
+        String Mon = "Monday: ";
         String Tue = "\t\nTuesday: ";
         String Wed = "\t\nWednesday: ";
         String Thur = "\t\nThursday: ";
@@ -231,13 +233,13 @@ public class ProductCardAdminMovie{
         for (Integer i=0; i<7; i++){
             JSONArray ja = json.getJSONArray(i.toString());
             int length = ja.length();
-            String H01 = "\n\t\tH01: ";
-            String H02 = "\n\t\tH02: ";
-            String H03 = "\n\t\tH03: ";
-            String H04 = "\n\t\tH04: ";
-            String H05 = "\n\t\tH05: ";
-            String H06 = "\n\t\tH06: ";
-            String H07 = "\n\t\tH07: ";
+            String H01 = "\n\tH01: ";
+            String H02 = "\n\tH02: ";
+            String H03 = "\n\tH03: ";
+            String H04 = "\n\tH04: ";
+            String H05 = "\n\tH05: ";
+            String H06 = "\n\tH06: ";
+            String H07 = "\n\tH07: ";
             for(int j=0; j<length; j++){
                 JSONArray jainja = ja.getJSONArray(j);
                 String x = jainja.getString(0);

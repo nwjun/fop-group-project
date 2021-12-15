@@ -15,14 +15,18 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 /**
  *
@@ -205,37 +209,74 @@ public class Item {
     public void startAnimation(MouseEvent event) {
         final StackPane source = (StackPane) event.getSource();
         source.getChildren().get(0).setEffect(new BoxBlur(5,5,2));
-        StackPane buttonContainer = new StackPane();
+        source.getChildren().get(0).setOpacity(0.4);
+        VBox buttonContainer = new VBox();
         Button book = new Button();
-        book.setText("Info");
+        Region seperator = new Region();
+        Button info = new Button();
+
+        info.setText("Info");
+        info.setId(source.getId());
+        info.setMinSize(70,30);
+        book.setText("Book");
         book.setId(source.getId());
         book.setMinSize(70,30);
-        
+        seperator.setMinHeight(15);
+        info.getStyleClass().add("InfoButton");
         book.getStyleClass().add("BookButton");
+        info.setOnAction(e->{
+            try {
+                toMovieDetails(e);
+            } catch (IOException ex) {
+                Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         book.setOnAction(e->{
+            if(!RealTimeStorage.getIsLogin()){
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Unauthorized Access");
+                a.setContentText("Please log in to book a movie");
+                Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                stage.showAndWait();
+                try {
+                    new SceneController().switchToRegisterAndLogin(e);
+                } catch (IOException ex) {
+                    return;
+                }
+                return;
+            }
             try {
                 toMovieBooking(e);
             } catch (IOException ex) {
                 Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        buttonContainer.getChildren().add(book);
+
+        buttonContainer.getChildren().addAll(info,seperator,book);
+        buttonContainer.setAlignment(Pos.CENTER);
         source.getChildren().add(buttonContainer);
+        
     }
 
     public void stopAnimation(MouseEvent event) {
-        final StackPane source = (StackPane) event.getSource();
-        source.getChildren().get(0).setEffect(null);
-        source.getChildren().remove(1,2);
-    }
-    
-    public void toMovieDetails(ActionEvent e){
-        System.out.println("to info");
+            final StackPane source = (StackPane) event.getSource();
+            source.getChildren().get(0).setEffect(null);
+            source.getChildren().get(0).setOpacity(1);
+            source.getChildren().remove(1,2);
     }
     
     public void toMovieBooking(ActionEvent e) throws IOException{
         Button book = (Button)e.getSource();
         String id = book.getId();
+        System.out.println(id);
+        RealTimeStorage.setLookingAt(id);
+        new SceneController().switchToMovieBooking(e);
+    }
+    
+    public void toMovieDetails(ActionEvent e) throws IOException{
+        Button info = (Button)e.getSource();
+        String id = info.getId();
         System.out.println(id);
         RealTimeStorage.setLookingAt(id);
         new SceneController().switchToMoviesDetails(e);

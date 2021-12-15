@@ -21,9 +21,6 @@ public class sqlConnect {
     public sqlConnect(){
         Properties prop = new readConfig().readconfigfile();
         try{
-//            System.out.println(prop.getProperty("configuration.sqlConnection"));
-//            System.out.println(prop.getProperty("configuration.sqlUser"));
-//            System.out.println(prop.getProperty("configuration.sqlPassword"));
             this.conn = DriverManager.getConnection(
             prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
             );
@@ -126,7 +123,6 @@ public class sqlConnect {
     public static int checkCredentials(String userEmail, String password){
         // preprocess input
         // SHA-256
-        System.out.println("checking cred");
         String combination = userEmail + SALT + password;
         String inputPass = DigestUtils.sha256Hex(combination);
         
@@ -279,7 +275,6 @@ public class sqlConnect {
     public static boolean removeNewRegisterOTP(String email, boolean isCancelled){
         
         if(!(isCancelled)){
-            System.out.println("transferring");
             transferToUserCred(email);
         }
         
@@ -372,7 +367,6 @@ public class sqlConnect {
                 String phonenumber = rs.getString("phoneNumber");
 
                 boolean status = addNewUser(username,email,password,phonenumber,1);
-                System.out.println(status);
                 return;
             }
             catch(SQLException e){
@@ -382,6 +376,7 @@ public class sqlConnect {
         }
         
     }
+    
     public void delete(String movieId){
         String query = "DELETE FROM pos " 
                        + "WHERE posterId = ?";
@@ -445,10 +440,114 @@ public class sqlConnect {
         }
     }
     
+    public HashMap<String, Double> queryTicketPrice(){
+        String query = "SELECT productId, price "
+                       + "FROM products "
+                       + "WHERE category = \"ticket\"";
+        
+        HashMap<String, Double> tickets = new HashMap<>();
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            ResultSet rs = prepstat.executeQuery();
+            while(rs.next()){
+                tickets.put(rs.getString("productId"), rs.getDouble("price"));
+                
+            }
+            return tickets;
+        } catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    public void changeTicketPrice(String Id, Double price){
+        String query = "UPDATE products "
+                       + "SET price = ? "
+                       + "WHERE productId = ?";
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setDouble(1, price);
+            prepstat.setString(2, Id);
+            
+            prepstat.executeUpdate();
+            
+        } catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+    }
+    
+    public HashMap<String, ArrayList<String>> queryAdmin(){
+        String query = "SELECT userId, username, email "
+                       + "FROM usercredentials "
+                       + "WHERE permission = 2";
+        
+        HashMap<String, ArrayList<String>> admin = new HashMap<>();
+        ArrayList<String> Id = new ArrayList<>();
+        ArrayList<String> username = new ArrayList<>();
+        ArrayList<String> email = new ArrayList<>();
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            ResultSet rs = prepstat.executeQuery();
+            while(rs.next()){
+                Id.add(rs.getString("userId"));
+                username.add(rs.getString("username"));
+                email.add(rs.getString("email"));
+            }
+        }catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+        admin.put("Id",Id);
+        admin.put("username",username);
+        admin.put("email",email);
+        
+        return admin;
+    }
+    
+    public void addAdmin(String email){
+        String query = "UPDATE usercredentials "
+                       + "SET permission = 2 "
+                       + "WHERE email = ?";
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1, email);
+            
+            prepstat.executeUpdate();
+            
+        } catch (SQLException ex) {
+                ex.printStackTrace();
+        }
+    }
+    
+    public void removeAdmin(String email, String password){
+        String query = "DELETE FROM usercredentials "
+                       + "WHERE email = ? AND password = ?";
+        
+        String combination = email + SALT + password;
+        password = DigestUtils.sha256Hex(combination);
+        
+        try {
+            PreparedStatement prepstat = conn.prepareStatement(query);
+            
+            prepstat.setString(1, email);
+            prepstat.setString(2, password);
+            
+            prepstat.executeUpdate();
+            
+        } catch (SQLException ex) {
+                System.out.println("Incorrect Email or Password! Try Again!");
+        }
+    }
+        
     public static HashMap<String, ArrayList<String>> queryAllMovie(){
-        String query = "SELECT movieId, movieName, length, releaseDate, directorCast, language, poster, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict "
+        String query = "SELECT movieId, movieName, length, releaseDate, directorCast, language, poster, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict, theaterId "
                         + "FROM movies "
-                        + "INNER JOIN pos USING (posterId) ";
+                        + "INNER JOIN pos USING (posterId)";
         
         HashMap<String, ArrayList<String>> movies = new HashMap<>();
         ArrayList<String> movieId = new ArrayList<>();
@@ -463,6 +562,7 @@ public class sqlConnect {
         ArrayList<String> rottenTomato = new ArrayList<>();
         ArrayList<String> iMDB = new ArrayList<>();
         ArrayList<String> ageRestrict = new ArrayList<>();
+        ArrayList<String> theaterId = new ArrayList<>();
         
         try {
             PreparedStatement prepstat = conn.prepareStatement(query);
@@ -480,6 +580,7 @@ public class sqlConnect {
                 rottenTomato.add(rs.getString("rottenTomato"));
                 iMDB.add(rs.getString("iMDB"));
                 ageRestrict.add(rs.getString("ageRestrict"));
+                theaterId.add(rs.getString("theaterId"));
             }
         } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -497,6 +598,7 @@ public class sqlConnect {
         movies.put("rottenTomato",rottenTomato);
         movies.put("iMDB",iMDB);
         movies.put("ageRestrict",ageRestrict);
+        movies.put("theaterId",theaterId);
         
         return movies;
     }

@@ -43,7 +43,7 @@ public class SceneController {
             root = FXMLLoader.load(App.class.getResource(fxmlFile));
             Scene scene = new Scene(root);
             Stage popupStage = new Stage();
-
+            
             popupStage.initOwner(SceneController.primaryStage);
             popupStage.initModality(Modality.WINDOW_MODAL);
             popupStage.setScene(scene);
@@ -151,6 +151,10 @@ public class SceneController {
         switchScene(event, "AdminMain.fxml");
     }
     
+    public void switchToMovieAllShowTime(ActionEvent event) throws IOException{
+        switchScene(event, "MovieAllShowTime.fxml");
+    }
+    
     public void switchToCheckOut(ActionEvent event) throws IOException{
         switchScene(event, "CheckOut.fxml");
     }
@@ -158,4 +162,9 @@ public class SceneController {
     public void switchToUserProfile(ActionEvent event) throws IOException{
         switchScene(event, "userProfile.fxml");
     }
+    
+    public void switchToAllShowTime(ActionEvent event) throws IOException{
+        switchScene(event, "MovieAllShowTime.fxml");
+    }
+    
 }

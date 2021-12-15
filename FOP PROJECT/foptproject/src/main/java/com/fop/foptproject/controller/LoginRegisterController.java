@@ -22,6 +22,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 /**
  *
@@ -78,7 +80,6 @@ public class LoginRegisterController implements Initializable {
     public void loginButton(ActionEvent event) throws SQLException, IOException{
         String email = emailField.getText();
         String password = passwordField.getText();
-        System.out.printf("%s | %s\n",email,password);
         login(email,password,event);
     }
     
@@ -102,36 +103,38 @@ public class LoginRegisterController implements Initializable {
                 int permission = new sqlConnect().checkCredentials(email, password);
                 
                 // for reminder
-                Alert alert = new Alert(AlertType.INFORMATION);
+                Alert a = new Alert(AlertType.ERROR);
+                a.setTitle("Invalid User Credential");
                 switch(permission){
                     case 1:
                         //normal user scene
                         RealTimeStorage.updateUserInfos(email);
-                        SceneController switchScene = new SceneController();
                         switchScene.switchToHomeLogined(event);
                         break;
                     case 2:
                         //admin scene
-                        alert.setContentText("Remember do admin page");
-                        alert.show();
-                        //RealTimeStorage.updateUserInfos(email);
+                        RealTimeStorage.updateUserInfos(email);
+                        switchScene.switchToAdminMain(event);
                         break;
                     case 3:
                         //master scene
-                        alert.setContentText("Remember do master page");
-                        alert.show();
-                        //RealTimeStorage.updateUserInfos(email);
+                        RealTimeStorage.updateUserInfos(email);
+                        switchScene.switchToAdminMain(event);
                         break;
                     case -1:
                         passwordField.clear();
-                        alert.setContentText("Remember do wrong password popup pane");
-                        alert.show();
+                        a.setContentText("Please enter the correct password");
+                        Stage stageA = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                        stageA.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                        stageA.showAndWait();
                         break;
                     case -2:
                         passwordField.clear();
                         emailField.clear();
-                        alert.setContentText("Remember do wrong email pop up pane");
-                        alert.show();
+                        a.setContentText("The email is not registered");
+                        Stage stageB = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                        stageB.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                        stageB.showAndWait();
                         break;
                 }
             }   

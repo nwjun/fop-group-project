@@ -12,6 +12,8 @@ import org.json.*;
 public class RealTimeStorage {
     private static sqlConnect sql = new sqlConnect();
     private static boolean isLogin = false;
+    private static final String[] SLOTS = {"10.00AM","03.30PM","08.00PM","01.00PM","11.00PM"}; 
+    private static int alteringDay;
     private static String userId;
     private static String userEmail;
     private static String userName;
@@ -45,21 +47,21 @@ public class RealTimeStorage {
         }
     }
     
-    // setter for movie booking 
+    // setter for movie booking
+    /**
+     * This method accepts an object no matter it is a multiple values or single value for each key
+     * TypeCast is needed to use the data stored in the HashMap
+     * @param key can only be
+     * 1. Selected MovieId, a String
+     * 2. Selected MovieName, a String
+     * 3. Selected Cinema Name, a String
+     * 4. Selected Date, a String
+     * 5. Selected Theater type, a String
+     * 6. Selected ShowTime, a String
+     * 7. Selected Ticket Type and its quantity (even index for ticket type odd index for ticket quantity), an ArrayList
+     * 8. Selected Seats, an ArrayList
+     */     
     public static void updateMovieBookingByKey(String key,ArrayList<String> value){
-        /**
-         * This method accepts an object no matter it is a multiple values or single value for each key
-         * TypeCast is needed to use the data stored in the HashMap
-         * @key can only be
-         * 1. Selected MovieId, a String
-         * 2. Selected MovieName, a String
-         * 3. Selected Cinema Name, a String
-         * 4. Selected Date, a String
-         * 5. Selected Theater type, a String
-         * 6. Selected ShowTime, a String
-         * 7. Selected Ticket Type and its quantity (even index for ticket type odd index for ticket quantity), an ArrayList
-         * 8. Selected Seats, an ArrayList
-         */     
         if(RealTimeStorage.MovieBooking.containsKey(key)){
             RealTimeStorage.MovieBooking.replace(key,value);
         }
@@ -69,20 +71,21 @@ public class RealTimeStorage {
     }
     
     // setter for movie booking
+    /**
+     * This method accepts an object no matter it is a multiple values or single value for each key
+     * TypeCast is needed to use the data stored in the HashMap
+     * @param key can only be
+     * 1. Selected MovieId, a String
+     * 2. Selected MovieName, a String
+     * 3. Selected Cinema Name, a String
+     * 4. Selected Date, a String
+     * 5. Selected Theater type, a String
+     * 6. Selected ShowTime, a String
+     * 7. Selected Ticket Type and its quantity (even index for ticket type odd index for ticket quantity), an ArrayList
+     * 8. Selected Seats, an ArrayList
+     */    
     public static void updateMovieBookingByKey(String key,String value){
-        /**
-         * This method accepts an object no matter it is a multiple values or single value for each key
-         * TypeCast is needed to use the data stored in the HashMap
-         * @key can only be
-         * 1. Selected MovieId, a String
-         * 2. Selected MovieName, a String
-         * 3. Selected Cinema Name, a String
-         * 4. Selected Date, a String
-         * 5. Selected Theater type, a String
-         * 6. Selected ShowTime, a String
-         * 7. Selected Ticket Type and its quantity (even index for ticket type odd index for ticket quantity), an ArrayList
-         * 8. Selected Seats, an ArrayList
-         */       
+           
         if(RealTimeStorage.MovieBooking.containsKey(key)){
             RealTimeStorage.MovieBooking.replace(key,value);
         }
@@ -162,6 +165,10 @@ public class RealTimeStorage {
        }       
     }
     
+    public static void setAlteringDay(int day){
+        RealTimeStorage.alteringDay = day;
+    }
+    
     public static void setLookingAt(String Id){
         RealTimeStorage.lookingAtMovie = Id;
     }
@@ -172,6 +179,26 @@ public class RealTimeStorage {
     
     public static void setAllLandingFood(){
         RealTimeStorage.landingFoodPoster = sql.queryLandingFood("combo",4);
+    }
+    
+    public static String getSlot(int i){
+        return RealTimeStorage.SLOTS[i];
+    }
+    
+    public static String[] getSlots(int i){
+        String[] ranged = new String[i];
+        for(int j = 0 ; j < i ; j++){
+            ranged[j] = RealTimeStorage.SLOTS[j];
+        }
+        return ranged;
+    }
+    
+    public static String[] getAllSlots(){
+        return RealTimeStorage.SLOTS;
+    }
+    
+    public static int getAlteringDay(){
+        return RealTimeStorage.alteringDay;
     }
     
     public static String getLookingAt(){

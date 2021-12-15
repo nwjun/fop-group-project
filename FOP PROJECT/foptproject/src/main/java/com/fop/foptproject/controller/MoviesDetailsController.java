@@ -14,10 +14,13 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -51,16 +54,35 @@ public class MoviesDetailsController implements Initializable {
     private ImageView poster;
     
     @FXML
-    public void changeToMovieBooking(ActionEvent event) throws IOException{
-        SceneController switchScene = new SceneController();
-        switchScene.switchToMovieBooking(event);
+    public void toMovieBooking(ActionEvent event) throws IOException{
+        SceneController scene = new SceneController();
+        if(!RealTimeStorage.getIsLogin()){
+            Alert a = new Alert(AlertType.ERROR);
+            a.setTitle("Unauthorized Access");
+            a.setContentText("Please log in to book a movie");
+            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+            scene.switchToRegisterAndLogin(event);
+            return;
+        }
+        scene.switchToMovieBooking(event);
     }
     
     @FXML
     public void changeToLandingPage(ActionEvent event) throws IOException{
-        SceneController switchScene = new SceneController();
-        if(RealTimeStorage.getIsLogin()) switchScene.switchToHomeLogined(event);
-        else switchScene.switchToHome(event);
+        SceneController scene = new SceneController();
+        if(RealTimeStorage.getIsLogin()){
+            if(RealTimeStorage.getPermission().equals("1")){
+                scene.switchToHomeLogined(event);
+            }
+            else{
+                scene.switchToAdminMain(event);
+            }
+        }
+        else{
+            scene.switchToHome(event);
+        }
     }
     
     @Override

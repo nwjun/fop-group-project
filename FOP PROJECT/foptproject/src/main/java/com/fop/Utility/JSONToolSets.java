@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.json.*;
 import com.fop.Utility.sqlConnect;
+import com.fop.foptproject.controller.RealTimeStorage;
 
 
 public class JSONToolSets {
@@ -114,6 +115,7 @@ public class JSONToolSets {
     
     public HashMap<String,ArrayList<String>> parseTheaterSeat(int day){
         JSONObject temp = this.jsonObj;        
+        RealTimeStorage.setAlteringDay(day);
         
         this.rowSize = temp.length();
         if(!this.isTemplate)
@@ -150,6 +152,7 @@ public class JSONToolSets {
                 break;
             }
         }
+        System.out.println("Before modifying:");
         for(String key : extracted.keySet()){
             for(String item : extracted.get(key)){
                 if(item.equals("-1"))System.out.print("X ");
@@ -161,10 +164,15 @@ public class JSONToolSets {
         return extracted;
     }
     
+    /**
+     * @param n number of columns to be added
+     * @param isTemplate determine the actions to be proceeded, true for template action, false for non template seat action
+     * 
+     * <br><br>Add n number of columns to current parsed seat template
+     * 
+     * <br><br>Precedence of increasing capacity: column > row
+     */
     public void addColumn(int n, boolean isTemplate){
-        /**
-         * precedence of increasing capacity: column > row
-         */
         if(this.isSeat){
             // get new number of column
             int newColumnSize = this.columnSize + n;
@@ -231,10 +239,14 @@ public class JSONToolSets {
         
     }
     
+    /**
+     * @param n number of columns to be added
+     * 
+     * <br><br>Add n number of rows to current parsed seat template
+     * 
+     * <br><br>Precedence of increasing capacity: column > row
+     */
     public void addRow(int n){
-        /**
-         * precedence of increasing capacity: column > row
-         */
         if(this.isSeat){
             
             ////generate new n x n seats arrangement
@@ -268,7 +280,132 @@ public class JSONToolSets {
         }
     }
     
-    public JSONObject getNewSeatArr(){
+    /**
+     * @param row integer type
+     * @param column integer type
+     * @param stat integer type
+     * <p>
+     * 0 = not booked
+     * <br>1 = booked
+     * <br>-1 = can't be booked
+     * <br><br>Middle section row and column number need to be calibrate
+     * <br>This method will update the jsonObj which is stored in the class. No action
+     * will be taken if the jsonObject is not seat template.
+     * <br>This method will return void at the end
+     * </p>
+     */
+    public void setSeatStat(int row, int column, int stat){
+        if(this.isTemplate){
+            // parse json
+            HashMap<Integer,ArrayList<Integer>> temp = new HashMap<>();
+            for(int i = 0 ; i < this.rowSize ; i++){
+                temp.put(i,new ArrayList<Integer>());
+                for(int j = 0 ; j < this.columnSize ; j++){
+                    temp.get(i).add(this.jsonObj.getJSONArray(Integer.toString(i)).getInt(j));
+                }
+            }
+            
+            // set seat status
+            temp.get(row).set(column, stat);
+            
+            // convert to json string
+            JSONObject result = new JSONObject();
+            for(int key : temp.keySet()){
+                result.put(Integer.toString(key), new JSONArray(temp.get(key)));
+            }
+            
+            this.jsonObj = result;
+        }
+    }
+    
+    /**
+     * @param row integer ArrayList object 
+     * @param column integer ArrayList object
+     * @param stat integer ArrayList object
+     * Length of the parameters must be equal to each other. Otherwise will cause error
+     * <p>
+     * 0 = not booked
+     * <br>1 = booked
+     * <br>-1 = can't be booked
+     * <br><br>Middle section row and column number need to be calibrate
+     * <br>This method will update the jsonObj which is stored in the class. No action
+     * will be taken if the jsonObject is not seat template.
+     * <br>This method will return void at the end
+     * </p>
+     */
+    public void setSeatStat(ArrayList<Integer> row, ArrayList<Integer> column, ArrayList<Integer> stat){
+        if(this.isTemplate){
+            // parse json
+            HashMap<Integer,ArrayList<Integer>> temp = new HashMap<>();
+            for(int i = 0 ; i < this.rowSize ; i++){
+                temp.put(i,new ArrayList<Integer>());
+                for(int j = 0 ; j < this.columnSize ; j++){
+                    temp.get(i).add(this.jsonObj.getJSONArray(Integer.toString(i)).getInt(j));
+                }
+            }
+            
+            // set seat status
+            for(int i = 0 ; i < row.size() ; i++)
+                temp.get(row.get(i)).set(column.get(i), stat.get(i));
+            
+            // convert to json string
+            JSONObject result = new JSONObject();
+            for(int key : temp.keySet()){
+                result.put(Integer.toString(key), new JSONArray(temp.get(key)));
+            }
+            
+            this.jsonObj = result;
+        }
+    }
+    
+    /**
+     * @param row integer array type 
+     * @param column integer array type
+     * @param stat integer array type
+     * Length of the parameters must be equal to each other. Otherwise will cause error
+     * <p>
+     * 0 = not booked
+     * <br>1 = booked
+     * <br>-1 = can't be booked
+     * <br><br>Middle section row and column number need to be calibrate
+     * <br>This method will update the jsonObj which is stored in the class. No action
+     * will be taken if the jsonObject is not seat template.
+     * <br>This method will return void at the end
+     * </p>
+     */
+    public void setSeatStat(int[] row, int[] column, int[] stat){
+        
+        if(this.isTemplate){
+            // parse json
+            HashMap<Integer,ArrayList<Integer>> temp = new HashMap<>();
+            for(int i = 0 ; i < this.rowSize ; i++){
+                temp.put(i,new ArrayList<Integer>());
+                for(int j = 0 ; j < this.columnSize ; j++){
+                    temp.get(i).add(this.jsonObj.getJSONArray(Integer.toString(i)).getInt(j));
+                }
+            }
+            
+            // set seat status
+            for(int i = 0 ; i < row.length ; i++)
+                temp.get(row[i]).set(column[i], stat[i]);
+            
+            // convert to json string
+            JSONObject result = new JSONObject();
+            for(int key : temp.keySet()){
+                result.put(Integer.toString(key), new JSONArray(temp.get(key)));
+            }
+            
+            this.jsonObj = result;
+        }
+    }
+    
+    
+    /**
+     *  Getter for new seat arrangement
+     *  
+     *  <br><br>Return a JSONObject
+     */
+    public JSONObject getNewSeatArr(){  
         if(isSeat){
             return this.jsonObj;
         }
@@ -277,10 +414,20 @@ public class JSONToolSets {
         }
     }
         
+    /**
+     * Getter for current number of rows of seat template
+     * 
+     * <br><br>return an Integer 
+     */
     public int getRow(){
         return this.rowSize;
     }
     
+    /**
+     * Getter for current number of columns of seat template
+     * 
+     * <br><br>return an Integer 
+     */
     public int getColumn(){
         return this.columnSize;
     }
