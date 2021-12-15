@@ -41,6 +41,7 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import org.json.simple.parser.ParseException;
 import com.fop.foptproject.App;
+import javafx.scene.control.Alert;
 
 
 public class AdminFoodController implements Initializable {
@@ -178,45 +179,29 @@ public class AdminFoodController implements Initializable {
         Button deleteButton = new Button();
         deleteButton.setText("Delete");
         deleteButton.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
-        deleteButton.setOnAction(e->{
+        deleteButton.setOnAction(ex->{
             if(deleteText.getText().equals("DELETE")){
                 this.deletestatus = true;
                 window.close();
         }
         });
         
-        deleteButton.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent t){
-                deleteButton.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");
-            
-            }
+        deleteButton.setOnMouseEntered((MouseEvent t) -> {
+            deleteButton.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");
         });
-        deleteButton.setOnMouseExited(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent t){
-                deleteButton.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
-        
-            }
+        deleteButton.setOnMouseExited((MouseEvent t) -> {
+            deleteButton.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
         });         
         
         Button cancel = new Button("Cancel");
         cancel.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
-        cancel.setOnAction(e -> window.close());
+        cancel.setOnAction(ex -> window.close());
         
-        cancel.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent t){
-                cancel.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");
-            
-            }
+        cancel.setOnMouseEntered((MouseEvent t) -> {
+            cancel.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");
         });
-        cancel.setOnMouseExited(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent t){
-                cancel.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
-        
-            }
+        cancel.setOnMouseExited((MouseEvent t) -> {
+            cancel.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
         }); 
         String path;
         if(RealTimeStorage.getPermission().equals("3")){
@@ -275,21 +260,13 @@ public class AdminFoodController implements Initializable {
         edit.setPrefHeight(31);    
         edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:rgba(0,0,0,0);-fx-text-fill:#FFEE00");
         
-        edit.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            
-            @Override
-            public void handle(MouseEvent t){
-                edit.setStyle("-fx-opacity: 0.6;-fx-background-radius:15px;-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:#FFEE00;-fx-text-fill:#000000");
-            }
+        edit.setOnMouseEntered((MouseEvent t) -> {
+            edit.setStyle("-fx-opacity: 0.6;-fx-background-radius:15px;-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:#FFEE00;-fx-text-fill:#000000");
         });
-        edit.setOnMouseExited(new EventHandler<MouseEvent>(){
-            
-            @Override
-            public void handle(MouseEvent t){
-                edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:rgba(0,0,0,0);-fx-text-fill:#FFEE00");
-            }
+        edit.setOnMouseExited((MouseEvent t) -> {
+            edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:rgba(0,0,0,0);-fx-text-fill:#FFEE00");
         });
-        edit.setOnAction(e -> {
+        edit.setOnAction(ex -> {
             this.editproductId = edit.getId();
              
             int index=0;
@@ -324,29 +301,21 @@ public class AdminFoodController implements Initializable {
         delete.setPrefHeight(31);        
         delete.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
         
-        delete.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            
-            @Override
-            public void handle(MouseEvent t){
-                delete.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");
-            }
+        delete.setOnMouseEntered((MouseEvent t) -> {
+            delete.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");
         });
-        delete.setOnMouseExited(new EventHandler<MouseEvent>(){
-           
-            @Override
-            public void handle(MouseEvent t){
-                delete.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
-            }
+        delete.setOnMouseExited((MouseEvent t) -> {
+            delete.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
         });  
 
-        delete.setOnAction(e->{
+        delete.setOnAction(ex->{
             this.deletestatus = DeletePopUp(x);
             this.deleteproductId = delete.getId();
             if(this.deletestatus){
                 try {
                     delete();
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
+                } catch (ParseException exp) {
+                    exp.printStackTrace();
                 }
                 this.deletestatus = false;
             }
@@ -362,8 +331,7 @@ public class AdminFoodController implements Initializable {
     }
     
     public void delete() throws ParseException{
-        String s="";
-        s = getdeleteproductId();
+        String s = getdeleteproductId();
         System.out.println("1 row(s) affected in remote database: "+s + " deleted.");
         sql.delete(s);
         productList.getChildren().clear();
@@ -434,8 +402,6 @@ public class AdminFoodController implements Initializable {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", lsFile));
         File f = fc.showOpenDialog(null);
-        String path = "";
-        String ext = "";
                 
         if (f!= null){
             this.pathpath = f.getAbsolutePath();
@@ -470,13 +436,6 @@ public class AdminFoodController implements Initializable {
         SceneController SwitchScene = new SceneController();
         SwitchScene.switchToAdminMain(event);
     }
-    
-    String Id;
-    String a;
-    String b; 
-    String c;
-    String d;
-    String e;
     
     public String lastproductId (){
         String x = sql.getProductLastId(b);
@@ -515,9 +474,16 @@ public class AdminFoodController implements Initializable {
         checkPage();
     }
     
+    String Id;
+    String a;
+    String b; 
+    String c;
+    String d;
+    String e;
+    
     @FXML
     private void uploadProduct(ActionEvent event) throws ParseException {
-        
+        try{
         if (this.updatestatus){
             Id = this.editproductId;
             sql.delete(Id);
@@ -535,21 +501,30 @@ public class AdminFoodController implements Initializable {
         d = priceT.getText();
         e = productDescriptionT.getText();
         sql.insertProduct(Id, c, Double.parseDouble(d), Id, e, b);
+        }catch(Exception ex){
+            Alert ax = new Alert(Alert.AlertType.ERROR);
+            ax.setTitle("Data Entry Error");
+            ax.setContentText("Data Entry Error. \nPlease Check Your Input.");
+            Stage stage = (Stage) ax.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+            return;
+        }
+        
         
         clean();
         refresh();
         this.updatestatus = false;
         
         // from singleImagePathRead
-        BufferedImage img = null;
         try{
-            img = ImageIO.read(new File(this.pathpath));
+            BufferedImage img = ImageIO.read(new File(this.pathpath));
             File outputfile = new File(this.desktopPath);
             ImageIO.write(img, this.ext, outputfile);
             System.out.println("Upload Successful: Poster Changed/Uploaded");
             this.pathpath = "";
             this.ext="";
-        }catch(IOException e){
+        }catch(IOException ex){
             System.out.println("Upload Successful: Poster Unchanged");
         }
     }

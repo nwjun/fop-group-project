@@ -7,9 +7,6 @@ package com.fop.foptproject.controller;
 import com.fop.Utility.sqlConnect;
 import com.fop.foptproject.App;
 import com.fop.foptproject.ProductCardAdminMovie;
-import static com.fop.foptproject.ProductCardAdminMovie.castJsonProcessor;
-import static com.fop.foptproject.ProductCardAdminMovie.directorJsonProcesor;
-import static com.fop.foptproject.controller.SceneController.showPopUpStage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,11 +23,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -63,6 +57,8 @@ public class MovieAllShowTImeController implements Initializable {
     private Object[] rottenTomato;
     private Object[] iMDB;
     private Object[] ageRestrict;
+    private Object[] theaterId;
+    private Object[] time;
     private double IMGW = 250 ;
     private double IMGH = 375;
     private double SCALE = 0.9;
@@ -105,6 +101,8 @@ public class MovieAllShowTImeController implements Initializable {
         this.rottenTomato = items.get("rottenTomato").toArray();
         this.iMDB = items.get("iMDB").toArray();
         this.ageRestrict = items.get("ageRestrict").toArray();
+        this.theaterId = items.get("theaterId").toArray();
+        this.time = items.get("time").toArray();
         
         this.currentPage = 0;
         this.maxPage = (int) Math.ceil(movieId.length/8.0);
@@ -118,7 +116,7 @@ public class MovieAllShowTImeController implements Initializable {
         stop:{
             for(int i = 0; i < 2;i++){
                 for(int j = 0; j < 4 ; j++){
-                    this.content = new ProductCardAdminMovie((String)movieId[currentIndex], (String)movieName[currentIndex], Double.parseDouble((String)length[currentIndex]), (String)releaseDate[currentIndex], (String)directorCast[currentIndex], (String)language[currentIndex], (String)posterPath[currentIndex], (String)allShowTime[currentIndex],(String)synopsis[currentIndex], Double.parseDouble((String)rottenTomato[currentIndex]),Double.parseDouble((String)iMDB[currentIndex]), Integer.parseInt((String)ageRestrict[currentIndex]),IMGW,IMGH,SCALE);
+                    this.content = new ProductCardAdminMovie((String)movieId[currentIndex], (String)movieName[currentIndex], Double.parseDouble((String)length[currentIndex]), (String)releaseDate[currentIndex], (String)directorCast[currentIndex], (String)language[currentIndex], (String)posterPath[currentIndex], (String)allShowTime[currentIndex],(String)synopsis[currentIndex], Double.parseDouble((String)rottenTomato[currentIndex]),Double.parseDouble((String)iMDB[currentIndex]), Integer.parseInt((String)ageRestrict[currentIndex]),IMGW,IMGH,SCALE, (String)theaterId[currentIndex], (String)time[currentIndex]);
                     AnchorPane MB = MakeButton((String)movieId[currentIndex],Double.parseDouble((String)length[currentIndex]), currentIndex);
                     
                     VBox img = content.getImgCard();
@@ -193,7 +191,10 @@ public class MovieAllShowTImeController implements Initializable {
             this.movieID = booknow.getId();
             FXMLLoader loader = new FXMLLoader(App.class.getResource("MoviesDetailsPopUp.fxml"));
             Stage stage = new Stage(StageStyle.UNDECORATED);
-            stage.initModality(Modality.WINDOW_MODAL);
+            String path1 = App.class.getResource("assets/company/logo2.png").toString(); 
+            Image img1 = new Image(path1/*, IMGW, IMGH, false, false*/);
+            stage.getIcons().add(img1);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
             stage.setX(250);
             stage.setY(120);
@@ -202,6 +203,7 @@ public class MovieAllShowTImeController implements Initializable {
                 stage.setScene(new Scene(loader.load()));
                 MoviesDetailsPopUpController controller = loader.getController();
                 controller.initData(booknow.getId());
+                RealTimeStorage.setLookingAt(booknow.getId());
             } catch (ParseException | IOException ex) {
                 Logger.getLogger(MovieAllShowTImeController.class.getName()).log(Level.SEVERE, null, ex);
             }
