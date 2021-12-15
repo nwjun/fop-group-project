@@ -4,6 +4,7 @@
  */
 package com.fop.Utility;
 
+import com.fop.foptproject.App;
 import java.sql.*;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,9 @@ import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 
 public class sqlConnect {
@@ -87,7 +91,7 @@ public class sqlConnect {
             PreparedStatement prep = conn.prepareStatement(query);
             prep.executeUpdate();
         }
-        catch(Exception e){
+        catch(SQLException e){
             return;    
         }
     
@@ -411,9 +415,37 @@ public class sqlConnect {
         
     }
     
-    public void insertMovie(String movieId, String movieName, double length, String releaseDate, String directorCast, String language, String posterId, String allShowTime, String synopsis, double rottenTomato, double iMDB){
-        String query = "INSERT INTO movies (movieId, movieName, length, releaseDate, directorCast, language, posterId, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict) "
-                       + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+    
+    public boolean theaterIDCheck(int x, String movieName){
+        String query = "SELECT movieName, COUNT(theaterId) as DUP "
+                       + "FROM movies "
+                       + "WHERE theaterId = ?";
+        
+        boolean dup = false;
+        try{
+            PreparedStatement prepstat = conn.prepareStatement(query);
+                
+            prepstat.setInt(1,x);
+                
+            ResultSet rs = prepstat.executeQuery();
+                
+            rs.next();
+            
+            int count = rs.getInt("DUP");
+            String movie = rs.getString("movieName");
+            
+            if (count==1 && !(movie.contains(movieName) || movieName.contains(movie)))
+                dup = true;
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return dup;
+    }
+    
+    public void insertMovie(String movieId, String movieName, double length, String releaseDate, String directorCast, String language, String posterId, String synopsis, double rottenTomato, double iMDB, int theaterId, String time){
+        String query = "INSERT INTO movies (movieId, movieName, length, releaseDate, directorCast, language, posterId, synopsis, rottenTomato, iMDB, ageRestrict, theaterId, time) "
+                       + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         
         try{
             PreparedStatement prepstat = conn.prepareStatement(query);
@@ -425,17 +457,24 @@ public class sqlConnect {
             prepstat.setString(5,directorCast);
             prepstat.setString(6,language);
             prepstat.setString(7,posterId);
-            prepstat.setString(8,allShowTime);
-            prepstat.setString(9,synopsis);
-            prepstat.setDouble(10,rottenTomato);
-            prepstat.setDouble(11,iMDB);
-            prepstat.setInt(12,18);
+            prepstat.setString(8,synopsis);
+            prepstat.setDouble(9,rottenTomato);
+            prepstat.setDouble(10,iMDB);
+            prepstat.setInt(11,18);
+            prepstat.setInt(12, theaterId);
+            prepstat.setString(13, time);
             
             int rowAffected = prepstat.executeUpdate();
             System.out.println("Success");
-        }catch(SQLException e){
-                e.printStackTrace();
-                System.out.println("Fail");
+        }catch(SQLException e){  
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Data Entry Error");
+            a.setContentText("Data Entry Error. \nPlease Check Your Input.");
+            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+            e.printStackTrace();
+                
         }
     }
     
@@ -544,7 +583,7 @@ public class sqlConnect {
     }
         
     public static HashMap<String, ArrayList<String>> queryAllMovie(){
-        String query = "SELECT movieId, movieName, length, releaseDate, directorCast, language, poster, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict, theaterId "
+        String query = "SELECT movieId, movieName, length, releaseDate, directorCast, language, poster, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict, theaterId, slot, time "
                         + "FROM movies "
                         + "INNER JOIN pos USING (posterId)";
         
@@ -562,6 +601,8 @@ public class sqlConnect {
         ArrayList<String> iMDB = new ArrayList<>();
         ArrayList<String> ageRestrict = new ArrayList<>();
         ArrayList<String> theaterId = new ArrayList<>();
+        ArrayList<String> slot = new ArrayList<>();
+        ArrayList<String> time = new ArrayList<>();
         
         try {
             PreparedStatement prepstat = conn.prepareStatement(query);
@@ -580,6 +621,8 @@ public class sqlConnect {
                 iMDB.add(rs.getString("iMDB"));
                 ageRestrict.add(rs.getString("ageRestrict"));
                 theaterId.add(rs.getString("theaterId"));
+                slot.add(rs.getString("slot"));
+                time.add(rs.getString("time"));
             }
         } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -598,6 +641,8 @@ public class sqlConnect {
         movies.put("iMDB",iMDB);
         movies.put("ageRestrict",ageRestrict);
         movies.put("theaterId",theaterId);
+        movies.put("slot", slot);
+        movies.put("time", time);
         
         return movies;
     }
@@ -641,7 +686,13 @@ public class sqlConnect {
             
         }
         catch(SQLException e){
-                e.printStackTrace();
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Data Entry Error");
+            a.setContentText("Data Entry Error. \nPlease Check Your Input.");
+            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+            e.printStackTrace();
         }
     }
     
