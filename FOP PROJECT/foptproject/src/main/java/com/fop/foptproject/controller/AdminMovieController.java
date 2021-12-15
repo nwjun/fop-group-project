@@ -46,7 +46,11 @@ import org.json.simple.parser.ParseException;
 import static com.fop.foptproject.ProductCardAdminMovie.castJsonProcessor;
 import static com.fop.foptproject.ProductCardAdminMovie.directorJsonProcesor;
 import static com.fop.foptproject.controller.SceneController.showPopUpStage;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.stage.StageStyle;
+import org.controlsfx.control.CheckComboBox;
 
 public class AdminMovieController implements Initializable {
     
@@ -71,6 +75,9 @@ public class AdminMovieController implements Initializable {
     private Object[] rottenTomato;
     private Object[] iMDB;
     private Object[] ageRestrict;
+    private Object[] theaterId;
+    private Object[] slot;
+    private Object[] time;
     private double IMGW = 250 ;
     private double IMGH = 375;
     private double SCALE = 0.9;
@@ -111,8 +118,6 @@ public class AdminMovieController implements Initializable {
     @FXML
     private TextArea synopsisT;
     @FXML
-    private TextField showTimeT;
-    @FXML
     private TextField iMDBT;
     @FXML
     private TextField rottenTomatoT;
@@ -124,6 +129,10 @@ public class AdminMovieController implements Initializable {
     private Button adminAdd;
     @FXML
     private ImageView logo;
+    @FXML
+    private CheckComboBox<String> checkCombo;
+    @FXML
+    private ComboBox<String> combobox;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -136,11 +145,19 @@ public class AdminMovieController implements Initializable {
         }
         
         try {
+            setValue();
             getProduct();
         } catch (ParseException ex) {
             Logger.getLogger(AdminMovieController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    public void setValue(){
+        
+        combobox.getItems().addAll("H01","H02","H03","H04","H05","H06","H07","H08");
+        checkCombo.getItems().addAll("10.00AM","03.30PM","08.00PM","01.00PM","11.00PM");
+        
+        combobox.getSelectionModel().select(combobox.getValue());
     }
 
     public void getProduct() throws ParseException{
@@ -157,6 +174,10 @@ public class AdminMovieController implements Initializable {
         this.rottenTomato = items.get("rottenTomato").toArray();
         this.iMDB = items.get("iMDB").toArray();
         this.ageRestrict = items.get("ageRestrict").toArray();
+        this.theaterId = items.get("theaterId").toArray();
+        this.slot = items.get("slot").toArray();
+        this.time = items.get("time").toArray();
+       
         
         this.currentPage = 0;
         this.maxPage = (int) Math.ceil(movieId.length/4.0);
@@ -170,7 +191,7 @@ public class AdminMovieController implements Initializable {
         stop:{
             for(int i = 0; i < 4;i++){
                 for(int j = 0; j < 1 ; j++){
-                    this.content = new ProductCardAdminMovie((String)movieId[currentIndex], (String)movieName[currentIndex], Double.parseDouble((String)length[currentIndex]), (String)releaseDate[currentIndex], (String)directorCast[currentIndex], (String)language[currentIndex], (String)posterPath[currentIndex], (String)allShowTime[currentIndex],(String)synopsis[currentIndex], Double.parseDouble((String)rottenTomato[currentIndex]),Double.parseDouble((String)iMDB[currentIndex]), Integer.parseInt((String)ageRestrict[currentIndex]),IMGW,IMGH,SCALE);
+                    this.content = new ProductCardAdminMovie((String)movieId[currentIndex], (String)movieName[currentIndex], Double.parseDouble((String)length[currentIndex]), (String)releaseDate[currentIndex], (String)directorCast[currentIndex], (String)language[currentIndex], (String)posterPath[currentIndex], (String)allShowTime[currentIndex],(String)synopsis[currentIndex], Double.parseDouble((String)rottenTomato[currentIndex]),Double.parseDouble((String)iMDB[currentIndex]), Integer.parseInt((String)ageRestrict[currentIndex]),IMGW,IMGH,SCALE, (String)theaterId[currentIndex], (String)time[currentIndex]);
                     AnchorPane MB = MakeButton((String)movieId[currentIndex],Double.parseDouble((String)length[currentIndex]), currentIndex);
                     
                     VBox img = content.getImgCard();
@@ -235,38 +256,22 @@ public class AdminMovieController implements Initializable {
         }
         });
         
-        deleteButton.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent t){
-                deleteButton.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");
-            
-            }
+        deleteButton.setOnMouseEntered((MouseEvent t) -> {
+            deleteButton.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");
         });
-        deleteButton.setOnMouseExited(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent t){
-                deleteButton.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
-        
-            }
+        deleteButton.setOnMouseExited((MouseEvent t) -> {
+            deleteButton.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
         });         
         
         Button cancel = new Button("Cancel");
         cancel.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
         cancel.setOnAction(e -> window.close());
         
-        cancel.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent t){
-                cancel.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");
-            
-            }
+        cancel.setOnMouseEntered((MouseEvent t) -> {
+            cancel.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");
         });
-        cancel.setOnMouseExited(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent t){
-                cancel.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
-        
-            }
+        cancel.setOnMouseExited((MouseEvent t) -> {
+            cancel.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
         }); 
         String path;
         if(RealTimeStorage.getPermission().equals("3")){
@@ -325,19 +330,11 @@ public class AdminMovieController implements Initializable {
         edit.setPrefHeight(31);    
         edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:rgba(0,0,0,0);-fx-text-fill:#FFEE00");
         
-        edit.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            
-            @Override
-            public void handle(MouseEvent t){
-                edit.setStyle("-fx-opacity: 0.6;-fx-background-radius:15px;-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:#FFEE00;-fx-text-fill:#000000");    
-            }
+        edit.setOnMouseEntered((MouseEvent t) -> {
+            edit.setStyle("-fx-opacity: 0.6;-fx-background-radius:15px;-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:#FFEE00;-fx-text-fill:#000000");
         });
-        edit.setOnMouseExited(new EventHandler<MouseEvent>(){
-            
-            @Override
-            public void handle(MouseEvent t){
-                edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:rgba(0,0,0,0);-fx-text-fill:#FFEE00");
-            }
+        edit.setOnMouseExited((MouseEvent t) -> {
+            edit.setStyle("-fx-border-radius:20px;-fx-border-color:#FFEE00;-fx-border-width:1px;-fx-background-color:rgba(0,0,0,0);-fx-text-fill:#FFEE00");
         });
         edit.setOnAction(e->{ 
             this.editmovieId=edit.getId(); 
@@ -361,11 +358,14 @@ public class AdminMovieController implements Initializable {
             lengthT.setText((String)this.length[index]);
             releaseDateT.setText((String)this.releaseDate[index]);
             languageT.setText((String)this.language[index]);
-            showTimeT.setText((String)this.allShowTime[index]);
             synopsisT.setText((String)this.synopsis[index]);
             rottenTomatoT.setText((String)this.rottenTomato[index]);
             iMDBT.setText((String)this.iMDB[index]);
             directorT.setText(directorJsonProcesor((String)this.directorCast[index]));
+            combobox.setValue("H0"+(String)this.theaterId[index]);
+            
+            boxchecking(index);
+
             try {     
                 castT.setText(castJsonProcessor((String)this.directorCast[index]));
             } catch (ParseException ex) {
@@ -383,19 +383,11 @@ public class AdminMovieController implements Initializable {
         delete.setPrefHeight(31);        
         delete.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
         
-        delete.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            
-            @Override
-            public void handle(MouseEvent t){
-                delete.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");  
-            }
+        delete.setOnMouseEntered((MouseEvent t) -> {
+            delete.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");
         });
-        delete.setOnMouseExited(new EventHandler<MouseEvent>(){
-            
-            @Override
-            public void handle(MouseEvent t){
-                delete.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
-            }
+        delete.setOnMouseExited((MouseEvent t) -> {
+            delete.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
         });  
 
         delete.setOnAction(e->{
@@ -406,7 +398,6 @@ public class AdminMovieController implements Initializable {
                     delete();
 //                sql.deleteMovie(movieId);
                 } catch (ParseException ex) {
-                    ex.printStackTrace();
                 }
                 this.deletestatus = false;
             }
@@ -421,9 +412,22 @@ public class AdminMovieController implements Initializable {
         return editdelete;       
     }   
     
+    public void boxchecking(int index){
+        String y = (String)this.time[index];
+            if(y.contains("10.00AM"))
+                checkCombo.getCheckModel().check(0);
+            if(y.contains("03.30PM"))
+                checkCombo.getCheckModel().check(1);
+            if(y.contains("08.00PM"))
+                checkCombo.getCheckModel().check(2);
+            if(y.contains("01.00PM"))
+                checkCombo.getCheckModel().check(3);
+            if(y.contains("11.00PM"))
+                checkCombo.getCheckModel().check(4);
+    }
+    
     public void delete() throws ParseException{
-        String s="";
-        s = getdeletemovieId();
+        String s = getdeletemovieId();
         System.out.println("1 row(s) affected in remote database: "+s + " deleted.");
         sql.delete(s);
         movieList.getChildren().clear();
@@ -531,20 +535,6 @@ public class AdminMovieController implements Initializable {
         SwitchScene.switchToAdminMain(event);
     }
     
-    String Id;
-    String a;
-    String b;
-    String c;
-    String d;
-    String e;
-    String f;
-    String g;
-    String h;
-    String i;
-    String j;
-    String k;
-    String l;
-    
     public String lastmovieId (){
         String Id = Integer.toString(Integer.valueOf((String)this.movieId[movieId.length-1])+1);
         if(Id.length()==1)
@@ -584,11 +574,11 @@ public class AdminMovieController implements Initializable {
         directorT.clear();
         castT.clear();     
         languageT.clear();
-        showTimeT.clear();
         synopsisT.clear();
         rottenTomatoT.clear();
         iMDBT.clear();
-        showTimeT.setText("{\"0\": [], \"1\": [], \"2\": [], \"3\": [], \"4\": [], \"5\": [], \"6\": []}");
+        combobox.setValue("");
+        checkCombo.getCheckModel().clearChecks(); 
     }
     
     public void refresh() throws ParseException{
@@ -600,6 +590,24 @@ public class AdminMovieController implements Initializable {
     
     @FXML
     private void uploadMovie(ActionEvent event) throws ParseException {
+        try{
+        String m = combobox.getValue();
+        m = m.substring(m.length()-1);
+        Integer m1 = Integer.parseInt(m);
+        String b = movieNameT.getText();
+        
+        if(sql.theaterIDCheck(m1,b)){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Theater Hall Occupied");
+            a.setContentText("Theater Hall H0"+m1+" Occupied. \nPlease Choose Another Hall.");
+            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+            return;
+        }
+        
+        String a;
+        String Id;
         if (this.updatestatus){
             Id = this.editmovieId;
             sql.delete("M"+Id);
@@ -612,37 +620,48 @@ public class AdminMovieController implements Initializable {
             sql.insertPoster("M"+Id, a);
             }
         
-        b = movieNameT.getText();
-        c = lengthT.getText();
-        d = releaseDateT.getText();
         
-        e = directorT.getText();
-        f = castT.getText();
+        String c = lengthT.getText();
+        String d = releaseDateT.getText(); 
+        String e = directorT.getText();
+        String f = castT.getText();
         String directorcast = JSONdc(e, f);
+        String g = languageT.getText();
+        String j = synopsisT.getText();
+        String k = rottenTomatoT.getText();
+        String l = iMDBT.getText();
+
+        String n = "";
+        ObservableList list = checkCombo.getCheckModel().getCheckedItems();
+        for(Object obj : list){
+            n += obj.toString() + ", ";
+        }
+        n = n.substring(0, n.length()-2);
         
-        g = languageT.getText();
-        h = posterT.getText();
-        i = showTimeT.getText();
-        j = synopsisT.getText();
-        k = rottenTomatoT.getText();
-        l = iMDBT.getText();
-        
-        sql.insertMovie(Id, b, Double.parseDouble(c), d, directorcast, g, "M"+Id, i, j, Double.parseDouble(k), Double.parseDouble(l));
+        sql.insertMovie(Id, b, Double.parseDouble(c), d, directorcast, g, "M"+Id, j, Double.parseDouble(k), Double.parseDouble(l), m1, n);
+        }catch(Exception ex){
+            Alert ax = new Alert(Alert.AlertType.ERROR);
+            ax.setTitle("Data Entry Error");
+            ax.setContentText("Data Entry Error. \nPlease Check Your Input.");
+            Stage stage = (Stage) ax.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+            return;
+        }
         
         clean();
         refresh();
         this.updatestatus = false;
         
         // from singleImagePathRead
-        BufferedImage img = null;
         try{
-            img = ImageIO.read(new File(this.pathpath));
+            BufferedImage img = ImageIO.read(new File(this.pathpath));
             File outputfile = new File(this.desktopPath);
             ImageIO.write(img, this.ext, outputfile);
             System.out.println("Upload Successful: Poster Changed/Uploaded");
             this.pathpath = "";
             this.ext="";
-        }catch(IOException e){
+        }catch(IOException ex){
             System.out.println("Upload Successful: Poster Unchanged");
         }
         // 
