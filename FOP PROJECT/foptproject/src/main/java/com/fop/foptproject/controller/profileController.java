@@ -11,6 +11,7 @@ import com.fop.foptproject.CommonMethod;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.collections.ObservableList;
@@ -22,7 +23,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -44,7 +48,6 @@ import javafx.util.Duration;
  * @author jun
  */
 public class profileController implements Initializable {
-
     @FXML
     Label titleLabel;
     @FXML
@@ -143,6 +146,7 @@ public class profileController implements Initializable {
             case 1:
                 hBox.setOnMouseClicked(event -> {
                     try {
+                        RealTimeStorage.appendLinkedCards();
                         sceneController.switchToHomeLogined(event);
                     } catch (IOException ex) {
                         ex.printStackTrace();
@@ -258,56 +262,70 @@ public class profileController implements Initializable {
         VBox banksContainer = new VBox();
         
         scrollPane.setFitToWidth(true);
+        scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
+        scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
        
         Button addBtn = new Button("Add");
-        Button saveBtn = new Button("Save");
 
         scrollPane.setContent(banksContainer);
         scrollPaneContainer.getChildren().addAll(scrollPane, addBtn);
         
         
-        VBox wrapper = new VBox(scrollPaneContainer, saveBtn);
+        VBox wrapper = new VBox(scrollPaneContainer);
         contentContainer.getChildren().addAll(wrapper);
         
         // Layout
         scrollPaneContainer.setAlignment(Pos.TOP_CENTER);
-        saveBtn.setAlignment(Pos.BOTTOM_CENTER);
         banksContainer.setAlignment(Pos.CENTER);
         wrapper.setSpacing(40);
         
         // Style
-        scrollPane.setStyle("-fx-background-color:transparent");
+        scrollPane.setStyle("-fx-background-color:#252525");
         banksContainer.setStyle("-fx-background-color:#252525");
         scrollPaneContainer.setId("billingScrollPaneContainer");
 
         banks = getBanks();
-        
+        int bankNumber = (banks==null)?0:banks.size();
 //        ArrayList<HBox> bankButtonContainer = new ArrayList<>();
 
-        for (int i = 0; i < banks.size(); i++) {
-            String[] bank = banks.get(i);
-            Label bankLabel = new Label(bank[0]);
-            Label accLabel = new Label(bank[1]);
-            
-            VBox detailsContainer = new VBox(bankLabel, accLabel);
-            Region region = new Region();
-            HBox.setHgrow(region, Priority.ALWAYS);
-            Button removeBtn = new Button("-");
-            HBox bankButtonRow = new HBox(detailsContainer, region, removeBtn);
-            bankButtonRow.setAlignment(Pos.CENTER_LEFT);
-            banksContainer.getChildren().add(bankButtonRow);
-            
-            removeBtn.setOnAction(e -> {
-                banksContainer.getChildren().remove(bankButtonRow);
-            });
+        for (int i = -1; i < bankNumber; i++) {
+            if(bankNumber == 0){
+                Label emptyLabel = new Label("No credit/debit card being added yet");
+                emptyLabel.setOpacity(0.7);
+                VBox detailsContainer = new VBox(emptyLabel,new Label(" "));
+                detailsContainer.setAlignment(Pos.CENTER);
+                banksContainer.getChildren().add(detailsContainer);
+            }
+            else{
+                if(i == -1)i = i+1;
+                String[] bank = banks.get(i);
+                Label bankLabel = new Label(bank[0]);
+                Label accLabel = new Label(bank[1]);
+
+                VBox detailsContainer = new VBox(bankLabel, accLabel);
+                Region region = new Region();
+                HBox.setHgrow(region, Priority.ALWAYS);
+                Button removeBtn = new Button("-");
+                removeBtn.setId(String.join("#",bank));
+                HBox bankButtonRow = new HBox(detailsContainer, region, removeBtn);
+                bankButtonRow.setAlignment(Pos.CENTER_LEFT);
+                banksContainer.getChildren().add(bankButtonRow);
+
+                removeBtn.setOnAction(e -> {
+                    banksContainer.getChildren().remove(bankButtonRow);
+                    Button source = (Button)e.getSource();
+                    RealTimeStorage.removeLinkedCards(source.getId());
+                    billing();
+                });
+            }
         }
 
         addBtn.setOnAction(e -> {
             Stage popupStage = SceneController.showPopUpStage("AddCardPopUp.fxml");
+            popupStage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("AddCardPopUp.fxml"));
             AddCardPopUpController addCardPopUpController = fxmlLoader.getController();
 
-            
             if (popupStage != null) {
                 popupStage.showAndWait();
                 billing();
@@ -316,9 +334,7 @@ public class profileController implements Initializable {
 
         banksContainer.setSpacing(30);
 
-        saveBtn.setOnAction(e -> {
-            updateBank(banksContainer.getChildren());
-        });
+
     }
 
     private void history() {
@@ -396,20 +412,6 @@ public class profileController implements Initializable {
 
     private ArrayList<String[]> getBanks() {
         return RealTimeStorage.getLinkedCard2D();
-    }
-
-    private void updateBank(ObservableList<Node> bankContainers) {
-        // send back to server
-        ArrayList<String[]> tempBanks = new ArrayList<>();
-        
-        for(int i =0; i<bankContainers.size();i++){
-            HBox bankContainer = (HBox) bankContainers.get(i);
-            VBox bank = (VBox)bankContainer.getChildren().get(0);
-            String bankAcc = ((Label)bank.getChildren().get(0)).getText();
-            String bankNo = ((Label)bank.getChildren().get(1)).getText();
-            tempBanks.add(new String[]{bankAcc,bankNo});
-        }
-        RealTimeStorage.setLinkedCard2D(tempBanks);
     }
 
     private void addRemoveLogo(String section) {

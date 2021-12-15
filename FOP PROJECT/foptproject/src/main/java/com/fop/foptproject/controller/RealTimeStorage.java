@@ -20,12 +20,13 @@ public class RealTimeStorage {
     private static String phoneNumber;
     private static String permission;
     private static ArrayList<String> linkedCard;
+    private static ArrayList<String[]> linkedCardtemp  = new ArrayList<>();
     private static HashMap<String, ArrayList<String>> movieDetails;
     private static HashMap<String,ArrayList<String>> landingFoodPoster;
     private static String lookingAtMovie;
     public static HashMap<String,Object> MovieBooking = new HashMap<>();
     public static HashMap<String,Integer> FoodnBeverage = new HashMap<>();
-    private static ArrayList<String[]> linkedCard2D;
+    
     
     // setter for movie booking
     public static void updateMovieBooking(HashMap<String,Object> input,boolean clear){
@@ -125,15 +126,12 @@ public class RealTimeStorage {
         RealTimeStorage.isLogin = true;
         // parse json
         String jsonString = result.get("linkedCard");
-        RealTimeStorage.linkedCard = new JSONToolSets(jsonString).parseOneDArray("cardDetail"); 
+        RealTimeStorage.linkedCard = new JSONToolSets(jsonString).parseOneDArray("cardDetails"); 
         
     }
     
     // setter for linked cards
-    public static void appendLinkedCards(String cardDetails){
-        // add to real time database
-        RealTimeStorage.linkedCard.add(cardDetails);
-        
+    public static void appendLinkedCards(){
         // update remote database
         // convert to json object
         JSONArray jsonArray = new JSONArray();
@@ -142,28 +140,11 @@ public class RealTimeStorage {
             jsonArray.put(RealTimeStorage.linkedCard.get(i));
         }
         
-        String jsonString = JSONToolSets.writeJSONString(jsonArray, "cardDetail");
+        String jsonString = JSONToolSets.writeJSONString(jsonArray, "cardDetails");
         sql.updateLinkedCard(jsonString,userEmail);
     }
     
-    // setter for linkedCards
-    public static void removeLinkedCards(String cardDetails){
-        // remove specified cards
-       boolean isExist = RealTimeStorage.linkedCard.remove(cardDetails);
-       if(isExist){
-           JSONArray jsonArray = new JSONArray();
-           
-           for(int i = 0 ; i < RealTimeStorage.linkedCard.size() ; i++){
-               jsonArray.put(RealTimeStorage.linkedCard.get(i));
-           }
-           
-           String jsonString = JSONToolSets.writeJSONString(jsonArray, "cardDetail");
-           sql.updateLinkedCard(jsonString,userEmail);
-       }
-       else{
-           return;
-       }       
-    }
+    
     
     public static void setAlteringDay(int day){
         RealTimeStorage.alteringDay = day;
@@ -248,7 +229,7 @@ public class RealTimeStorage {
     // getter for phonenumber
     public static String getPNumber(){
         if (RealTimeStorage.phoneNumber == null){
-            return "012345678";
+            return "";
         }
         return RealTimeStorage.phoneNumber;
     }
@@ -275,29 +256,27 @@ public class RealTimeStorage {
     
     public static ArrayList<String[]> getLinkedCard2D(){
         
-        if(linkedCard2D == null){
-        final int NUM = 5;
-        
-         ArrayList<String[]> dummyCards = new ArrayList<>();
-         String[] bankTypes = new String[]{"Ambank", "Maybank", "Public Bank"};
-
-        for (int i = 0; i < NUM; i++) {
-            dummyCards.add(new String[]{bankTypes[i%3],"888123456****"});
+        if(linkedCard == null){
+            return null;
         }
-        linkedCard2D = dummyCards;
-        }else{
-            // TODO: Convert linked card(String) to 2D arr
+        else{
+            ArrayList<String[]> converted = new ArrayList<>();
+            for(int i = 0 ; i < RealTimeStorage.linkedCard.size() ; i++){
+                converted.add(RealTimeStorage.linkedCard.get(i).split("#"));
+            }
+            return converted;
         }
-        
-            return linkedCard2D;
     }
     
-    public static void setLinkedCard2D(ArrayList<String[]> alteredCard){
-        RealTimeStorage.linkedCard2D = alteredCard;
+    public static void updateLinkedCard(String[] bank){
+        String storedBank = String.join("#", bank);
+        RealTimeStorage.linkedCard.add(storedBank);
     }
     
-    public static void updateLinkedCard2D(String[] bank){
-        RealTimeStorage.linkedCard2D.add(bank);
+    // setter for linkedCards
+    public static void removeLinkedCards(String cardDetails){
+        // remove specified cards
+       RealTimeStorage.linkedCard.remove(cardDetails);
     }
     
     public static void setUsername(String newVal){

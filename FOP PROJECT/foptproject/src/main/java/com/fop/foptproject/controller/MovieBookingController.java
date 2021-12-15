@@ -67,6 +67,7 @@ public class MovieBookingController implements Initializable {
     private String chosenCinema;
     private String chosenTime;
     private String chosenType;
+    private String theaterId;
     
     @FXML
     public void changeToMoviesDetails(ActionEvent event) throws IOException{
@@ -146,6 +147,8 @@ public class MovieBookingController implements Initializable {
             RealTimeStorage.updateMovieBookingByKey("showdate",this.chosenDate);
             RealTimeStorage.updateMovieBookingByKey("theaterType",this.chosenType);
             RealTimeStorage.updateMovieBookingByKey("showTime",this.chosenTime);
+            RealTimeStorage.updateMovieBookingByKey("day",this.chosenDay);
+            RealTimeStorage.updateMovieBookingByKey("theaterid", this.theaterId);
             new SceneController().switchToSeats(event);
         }
     }
@@ -175,6 +178,7 @@ public class MovieBookingController implements Initializable {
 
         int index = RealTimeStorage.getMovieDetail("movieId").indexOf(RealTimeStorage.getLookingAt());
         String theaterId = RealTimeStorage.getMovieDetail("theaterId").get(index);
+        this.theaterId = theaterId;
 
         HashMap<String,ArrayList<String>> result;
         int total;

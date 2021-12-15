@@ -34,7 +34,7 @@ public class App extends Application{
 
 
         boolean DEBUG = false;
-        String fxmlFile = "MovieBooking.fxml";
+        String fxmlFile = "userProfile.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
@@ -67,8 +67,10 @@ public class App extends Application{
 
     public static void main(String[] args) throws Exception {
         Properties prop = new readConfig().readconfigfile();
+        System.out.println("yay");
         sqlConnect sql = new sqlConnect();
         //query all movie from database and store in local
+        System.out.println("yay");
         RealTimeStorage.setAllMovies();
         //query landing food poster
         RealTimeStorage.setAllLandingFood();
@@ -81,5 +83,6 @@ public class App extends Application{
 //        
 //        System.out.println(0/0);
         launch();
+        System.out.println("launched");
     }
 }
