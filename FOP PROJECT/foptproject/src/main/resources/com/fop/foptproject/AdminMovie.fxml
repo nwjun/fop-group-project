@@ -31,11 +31,11 @@
                <children>
                   <GridPane prefHeight="76.0" prefWidth="1435.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="705.0" minWidth="10.0" prefWidth="326.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1119.0" minWidth="10.0" prefWidth="160.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1119.0" minWidth="10.0" prefWidth="172.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1119.0" minWidth="10.0" prefWidth="266.199951171875" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1119.0" minWidth="10.0" prefWidth="552.6000488281248" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="705.0" minWidth="10.0" prefWidth="324.1999877929687" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1119.0" minWidth="10.0" prefWidth="138.3332946777344" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1119.0" minWidth="10.0" prefWidth="158.5333374023437" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1119.0" minWidth="10.0" prefWidth="179.3333862304687" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1119.0" minWidth="10.0" prefWidth="603.8666137695311" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -46,11 +46,6 @@
                               <Image url="@assets/company/Admin%20Logo.png" />
                            </image>
                         </ImageView>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
-                           <children>
-                              <Button fx:id="backToMain" layoutX="654.0" layoutY="44.0" mnemonicParsing="false" onAction="#switchToAdminMain" prefHeight="31.0" prefWidth="100.0" style="-fx-font-size: 15px;" styleClass="Button" text="Back" textAlignment="CENTER" />
-                           </children>
-                        </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
                               <Button fx:id="ticketPrice" layoutX="20.0" layoutY="43.0" mnemonicParsing="false" onAction="#ticketPrice" prefHeight="31.0" prefWidth="134.0" styleClass="Button" text="Ticket Price" />
@@ -58,12 +53,17 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                            <children>
-                              <Button fx:id="adminAdd" disable="true" layoutX="18.0" layoutY="44.0" mnemonicParsing="false" onAction="#adminAdd" prefHeight="31.0" prefWidth="134.0" styleClass="Button" text="Add Admin" />
+                              <Button fx:id="adminAdd" disable="true" layoutX="18.0" layoutY="44.0" mnemonicParsing="false" onAction="#adminAdd" prefHeight="31.0" prefWidth="134.0" styleClass="Button" text="Add Admin" visible="false" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                            <children>
                               <Button fx:id="EditSeat" layoutX="26.0" layoutY="44.0" mnemonicParsing="false" onAction="#EditSeats" prefHeight="31.0" prefWidth="134.0" styleClass="Button" text="Movie Seats" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
+                           <children>
+                              <Button fx:id="backToMain" layoutX="477.0" layoutY="44.0" mnemonicParsing="false" onAction="#switchToAdminMain" prefHeight="31.0" prefWidth="100.0" style="-fx-font-size: 15px;" styleClass="Button" text="Back" textAlignment="CENTER" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -250,6 +250,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                         </GridPane>
+                        <Button fx:id="clearButton" layoutX="373.0" layoutY="1841.0" mnemonicParsing="false" onAction="#clearButtonAct" prefHeight="31.0" prefWidth="100.0" styleClass="Button" text="Clear" />
                      </children>
                   </AnchorPane>
                </children>
