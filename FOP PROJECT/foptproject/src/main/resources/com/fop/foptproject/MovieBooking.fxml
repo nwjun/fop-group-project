@@ -37,7 +37,7 @@
             </Text>
             <StackPane alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="799.0">
                <children>
-                  <Button fx:id="homeButton" mnemonicParsing="false" text="Button" />
+                  <Button id="homeButton" fx:id="homeButton" mnemonicParsing="false" onAction="#changeToHome" prefHeight="34.0" prefWidth="48.0" />
                </children>
             </StackPane>
          </children>
@@ -116,9 +116,9 @@
                   </VBox>
                   <HBox alignment="TOP_CENTER" prefHeight="121.0" prefWidth="1498.0">
                      <children>
-                        <Button fx:id="backToMoviesDetailsBtn" mnemonicParsing="false" onAction="#changeToMoviesDetails" prefHeight="31.0" prefWidth="107.0" style="-fx-background-color: 000000; -fx-border-color: #FFEE00; -fx-border-radius: 15;" styleClass="Button" stylesheets="@moviebooking.css" text="Back" textFill="WHITE" />
+                        <Button id="backButton" fx:id="backToMoviesDetailsBtn" mnemonicParsing="false" onAction="#changeToMoviesDetails" prefHeight="31.0" prefWidth="107.0" stylesheets="@moviebooking.css" text="Back" textFill="WHITE" />
                         <Region prefHeight="74.0" prefWidth="149.0" />
-                        <Button fx:id="nextButton" mnemonicParsing="false" onAction="#next" prefHeight="31.0" prefWidth="107.0" style="-fx-background-radius: 15;" styleClass="Button" stylesheets="@moviebooking.css" text="Next" />
+                        <Button id="nextButton" fx:id="nextButton" mnemonicParsing="false" onAction="#next" prefHeight="31.0" prefWidth="107.0" text="Next" />
                      </children>
                   </HBox>
                </children>

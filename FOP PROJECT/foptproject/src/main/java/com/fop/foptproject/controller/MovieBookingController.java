@@ -11,6 +11,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -68,17 +69,34 @@ public class MovieBookingController implements Initializable {
     private String chosenTime;
     private String chosenType;
     private String theaterId;
+    private int ind;
     
     @FXML
     public void changeToMoviesDetails(ActionEvent event) throws IOException{
-        SceneController switchScene = new SceneController();
-        switchScene.switchToMoviesDetails(event); 
+        new SceneController().switchToMoviesDetails(event); 
     }
     
     @FXML
-    public void changeToSeats(ActionEvent event) throws IOException{
-        SceneController switchScene = new SceneController();
-        switchScene.switchToSeats(event);
+    public void next(ActionEvent event) throws IOException{
+        if(!validateAll()){
+            getTheaterType();
+            RealTimeStorage.updateMovieBookingByKey("movieId",RealTimeStorage.getLookingAt());
+            RealTimeStorage.updateMovieBookingByKey("movieName",RealTimeStorage.getMovieDetail("movieName").get(RealTimeStorage.getMovieDetail("movieId").indexOf(RealTimeStorage.getLookingAt())));
+            RealTimeStorage.updateMovieBookingByKey("cinemaName",this.chosenCinema);
+            RealTimeStorage.updateMovieBookingByKey("showdate",this.chosenDate);
+            RealTimeStorage.updateMovieBookingByKey("theaterType",this.chosenType);
+            RealTimeStorage.updateMovieBookingByKey("showTime",this.chosenTime);
+            RealTimeStorage.updateMovieBookingByKey("chosenDay",this.chosenDay);
+            RealTimeStorage.updateMovieBookingByKey("theaterId", this.theaterId);
+            RealTimeStorage.updateMovieBookingByKey("slots",Arrays.asList(RealTimeStorage.getMovieDetail("time").get(RealTimeStorage.getMovieDetail("movieId").indexOf(RealTimeStorage.getLookingAt())).split(", ")).indexOf(this.chosenTime)+1+"");
+            new SceneController().switchToSeats(event);
+        }
+    }
+    
+    @FXML
+    public void changeToHome(ActionEvent event) throws IOException{
+        RealTimeStorage.updateMovieBooking(null, true); // clear all movieBooking
+        new SceneController().switchToHomeLogined(event);
     }
     
     @FXML
@@ -137,28 +155,13 @@ public class MovieBookingController implements Initializable {
         nextButton.setDisable(validateAll());
     }
     
-    @FXML
-    public void next(ActionEvent event) throws IOException{
-        if(!validateAll()){
-            getTheaterType();
-            RealTimeStorage.updateMovieBookingByKey("movieId",RealTimeStorage.getLookingAt());
-            RealTimeStorage.updateMovieBookingByKey("movieName",RealTimeStorage.getMovieDetail("movieName").get(RealTimeStorage.getMovieDetail("movieId").indexOf(RealTimeStorage.getLookingAt())));
-            RealTimeStorage.updateMovieBookingByKey("cinemaName",this.chosenCinema);
-            RealTimeStorage.updateMovieBookingByKey("showdate",this.chosenDate);
-            RealTimeStorage.updateMovieBookingByKey("theaterType",this.chosenType);
-            RealTimeStorage.updateMovieBookingByKey("showTime",this.chosenTime);
-            RealTimeStorage.updateMovieBookingByKey("day",this.chosenDay);
-            RealTimeStorage.updateMovieBookingByKey("theaterid", this.theaterId);
-            new SceneController().switchToSeats(event);
-        }
-    }
     
     public boolean validateAll(){
         return (this.chosenCinema==null||this.chosenDate==null||this.chosenTime==null);
     }
     
     public void getTheaterType(){
-        this.chosenType = (selectClassic.isPressed())?"Classic":"Premium";
+        this.chosenType = (selectClassic.isSelected())?"Classic":"Premium";
     }
     
     public void getCinema(){
@@ -177,43 +180,17 @@ public class MovieBookingController implements Initializable {
         this.chosenDay = Day;
 
         int index = RealTimeStorage.getMovieDetail("movieId").indexOf(RealTimeStorage.getLookingAt());
+        this.ind = index;
         String theaterId = RealTimeStorage.getMovieDetail("theaterId").get(index);
         this.theaterId = theaterId;
 
-        HashMap<String,ArrayList<String>> result;
-        int total;
-        int unoccupied=0;
-        for(int i = 1 ; i <= 3 ; i++){
-            JSONToolSets json = new JSONToolSets(sql.querySeats(theaterId,Integer.toString(i),false),false);
-            result = json.parseTheaterSeat(day);
-            total = result.size()*result.get("0").size();
-            for(int m = 0 ; m < result.size() ; m++){
-                for(int n = 0 ; n < result.get("0").size() ; n++){
-                    if(result.get(Integer.toString(m)).get(n).equals("0")){
-                        unoccupied++;
-                    }
-                    if(result.get(Integer.toString(m)).get(n).equals("-1")){
-                        total--;
-                    }
-                }
-            }
-            if(unoccupied > 0){
-                selectTime.getItems().add(String.format("%s - %d/%d",RealTimeStorage.getSlot(i),unoccupied,total));
-            }
-            unoccupied = 0;
-            total = 0;
-        }
+        selectTime.getItems().clear();
         
-        if(selectTime.getItems().isEmpty()){
-            selectTime.setPromptText("The seats for today are all booked!");
-        }
-        else{
-            selectTime.setDisable(false);
-        }
+        populateTime(index,day);
     }
     
     public void getTime(){
-        this.chosenTime = selectTime.getValue().toString();
+        this.chosenTime = selectTime.getValue().toString().split(" - ")[0];
     }
     
     public void restrictDatePicker(DatePicker datePicker, LocalDate minDate, LocalDate maxDate) {
@@ -233,6 +210,41 @@ public class MovieBookingController implements Initializable {
         datePicker.setDayCellFactory(dayCellFactory);
     }
     
+    public void populateTime(int ind,int day){
+        HashMap<String,ArrayList<String>> result;
+        int total;
+        int unoccupied=0;
+        int length = RealTimeStorage.getMovieDetail("time").get(ind).split(", ").length;
+        
+        for(int i = 1 ; i <= length ; i++){
+            JSONToolSets json = new JSONToolSets(sql.querySeats(theaterId,Integer.toString(i),false),false);
+            result = json.parseTheaterSeat(day);
+            total = result.size()*result.get("0").size();
+            for(int m = 0 ; m < result.size() ; m++){
+                for(int n = 0 ; n < result.get("0").size() ; n++){
+                    if(result.get(Integer.toString(m)).get(n).equals("0")){
+                        unoccupied++;
+                    }
+                    if(result.get(Integer.toString(m)).get(n).equals("-1")){
+                        total--;
+                    }
+                }
+            }
+            if(unoccupied > 0){
+                selectTime.getItems().add(String.format("%s - %d/%d",RealTimeStorage.getTime(i-1),unoccupied,total));
+            }
+            unoccupied = 0;
+            total = 0;
+        }
+        
+        if(selectTime.getItems().isEmpty()){
+            selectTime.setPromptText("The seats for today are all booked!");
+        }
+        else{
+            selectTime.setDisable(false);
+        }
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // init
@@ -249,6 +261,9 @@ public class MovieBookingController implements Initializable {
             selectDate.setValue(LocalDate.parse(RealTimeStorage.getMovieBooking().get("showdate").toString()));
             selectTime.setValue(RealTimeStorage.getMovieBooking().get("showTime").toString());
             selectCinema.setValue(RealTimeStorage.getMovieBooking().get("cinemaName").toString());
+            validateCinemaField();
+            validateDateField();
+            validateShowtimeField();
             if(RealTimeStorage.getMovieBooking().get("theaterType").toString().equals("Classic")){
                 selectClassic.setSelected(true);
             }

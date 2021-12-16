@@ -191,9 +191,11 @@ public class Item {
         imageContainer.setId(id);
         // Add animation to mouse event of movie card only
         try{
-            Integer.parseInt(id.substring(0,1));
-            imageContainer.setOnMouseEntered(event -> startAnimation(event));
-            imageContainer.setOnMouseExited(event -> stopAnimation(event));
+            if(!(RealTimeStorage.getPermission().equals("2") || RealTimeStorage.getPermission().equals("3"))){
+                Integer.parseInt(id.substring(0,1));
+                imageContainer.setOnMouseEntered(event -> startAnimation(event));
+                imageContainer.setOnMouseExited(event -> stopAnimation(event));
+            }      
         }
         catch(Exception e){
             // Do nothing
@@ -256,7 +258,7 @@ public class Item {
         buttonContainer.getChildren().addAll(info,seperator,book);
         buttonContainer.setAlignment(Pos.CENTER);
         source.getChildren().add(buttonContainer);
-        
+
     }
 
     public void stopAnimation(MouseEvent event) {
