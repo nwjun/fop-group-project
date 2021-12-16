@@ -151,14 +151,14 @@ public class JSONToolSets {
                 break;
             }
         }
-        System.out.println("Before modifying:");
-        for(String key : extracted.keySet()){
-            for(String item : extracted.get(key)){
-                if(item.equals("-1"))System.out.print("X ");
-                else System.out.print(item+" ");
-            }
-            System.out.println();
-        }
+//        System.out.println("Before modifying:");
+//        for(String key : extracted.keySet()){
+//            for(String item : extracted.get(key)){
+//                if(item.equals("-1"))System.out.print("X ");
+//                else System.out.print(item+" ");
+//            }
+//            System.out.println();
+//        }
         
         return extracted;
     }
@@ -373,7 +373,6 @@ public class JSONToolSets {
      * </p>
      */
     public void setSeatStat(int[] row, int[] column, int[] stat){
-        
         if(this.isTemplate){
             // parse json
             HashMap<Integer,ArrayList<Integer>> temp = new HashMap<>();
@@ -398,6 +397,15 @@ public class JSONToolSets {
         }
     }
     
+    /**
+     * Apply changes to current seat arrangement immediately
+     */
+//    public void commitToCurrentSeats(){
+//        int ind = RealTimeStorage.getMovieDetail("movieId").indexOf(RealTimeStorage.getLookingAt());
+//        String theaterId = RealTimeStorage.getMovieDetail("theaterId").get(ind);
+//        
+//        HashMap<String,ArrayList<String>> = new JSONToolSets(sql.querySeats(, ,false),false);
+//    }
     
     /**
      *  Getter for new seat arrangement

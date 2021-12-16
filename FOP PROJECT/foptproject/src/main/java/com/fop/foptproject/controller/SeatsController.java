@@ -44,6 +44,13 @@ public class SeatsController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    private ArrayList<String[]> selected = new ArrayList<>();
+    private sqlConnect sql = new sqlConnect();
+    private int selectedLength = 0;
+    // no of ticket for adult, student, OKU
+    private int[] tickets = new int[]{0, 0, 0};
+    private int totalTicket = 0;
+    
     @FXML
     private GridPane seatsContainer;
     @FXML
@@ -57,13 +64,45 @@ public class SeatsController implements Initializable {
         switchScene.switchToMovieBooking(event);
     }
 
-    private ArrayList<String[]> selected = new ArrayList<String[]>();
-    private sqlConnect sql = new sqlConnect();
-    private int selectedLength = 0;
-    // no of ticket for adult, student, OKU
-    private int[] tickets = new int[]{0, 0, 0};
-    private int totalTicket = 0;
+    // switch to next scene
+    @FXML
+    public void toFnB(ActionEvent event) throws IOException {
+        RealTimeStorage.setSelectedSeats(selected);
+        RealTimeStorage.setTicketType(tickets);
+        new SceneController().switchToFnB(event);
+    }
 
+    // add and minus method for each categories
+    @FXML
+    public void adultMinusCount(ActionEvent event) {
+        minusCount(0, adultCount);
+    }
+
+    @FXML
+    public void studentMinusCount(ActionEvent event) {
+        minusCount(1, studentCount);
+    }
+
+    @FXML
+    public void okuMinusCount(ActionEvent event) {
+        minusCount(2, okuCount);
+    }
+
+    @FXML
+    public void adultAddCount(ActionEvent event) {
+        addCount(0, adultCount);
+    }
+
+    @FXML
+    public void studentAddCount(ActionEvent event) {
+        addCount(1, studentCount);
+    }
+
+    @FXML
+    public void okuAddCount(ActionEvent event) {
+        addCount(2, okuCount);
+    }
+    
     private void minusCount(int index, Label label) {
         // deduct number of tickets
         if (tickets[index] > 0) {
@@ -94,43 +133,6 @@ public class SeatsController implements Initializable {
             updateTotalTicket();
         }
 
-    }
-
-    // switch to next scene
-    @FXML
-    void toFnB(ActionEvent event) throws IOException {
-        new SceneController().switchToFnB(event);
-    }
-
-    // add and minus method for each categories
-    @FXML
-    void adultMinusCount(ActionEvent event) {
-        minusCount(0, adultCount);
-    }
-
-    @FXML
-    void studentMinusCount(ActionEvent event) {
-        minusCount(1, studentCount);
-    }
-
-    @FXML
-    void okuMinusCount(ActionEvent event) {
-        minusCount(2, okuCount);
-    }
-
-    @FXML
-    void adultAddCount(ActionEvent event) {
-        addCount(0, adultCount);
-    }
-
-    @FXML
-    void studentAddCount(ActionEvent event) {
-        addCount(1, studentCount);
-    }
-
-    @FXML
-    void okuAddCount(ActionEvent event) {
-        addCount(2, okuCount);
     }
 
     private void updateTotalTicket() {
@@ -257,11 +259,6 @@ public class SeatsController implements Initializable {
 
             }
         }
-
-        nextButton.setOnAction(e -> {
-            RealTimeStorage.setSelectedSeats(selected);
-            RealTimeStorage.setTicketType(tickets);
-        });
     }
 
     public ArrayList<ArrayList<String>> getMovieSeats(String theaterID, String slot, String day) {

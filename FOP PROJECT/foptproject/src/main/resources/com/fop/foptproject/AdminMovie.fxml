@@ -20,7 +20,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="2100.0" prefWidth="1500.0" styleClass="root" stylesheets="@adminmovie.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.AdminMovieController">
+<ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="2100.0" prefWidth="1500.0" styleClass="root" stylesheets="@adminmovie.css" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.AdminMovieController">
    <content>
       <StackPane prefHeight="2109.0" prefWidth="1498.0">
          <padding>
@@ -58,7 +58,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                            <children>
-                              <Button fx:id="EditSeat" layoutX="26.0" layoutY="44.0" mnemonicParsing="false" onAction="#EditSeats" prefHeight="31.0" prefWidth="134.0" styleClass="Button" text="Movie Seats" />
+                              <Button fx:id="editSeat" layoutX="26.0" layoutY="44.0" mnemonicParsing="false" onAction="#EditSeats" prefHeight="31.0" prefWidth="134.0" styleClass="Button" text="Movie Seats" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
