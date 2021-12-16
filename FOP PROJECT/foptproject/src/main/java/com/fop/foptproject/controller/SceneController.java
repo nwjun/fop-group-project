@@ -167,4 +167,7 @@ public class SceneController {
         switchScene(event, "MovieAllShowTime.fxml");
     }
     
+    public void switchToAdminSeats(ActionEvent event) throws IOException{
+        switchScene(event, "AdminSeats.fxml");
+    }
 }
