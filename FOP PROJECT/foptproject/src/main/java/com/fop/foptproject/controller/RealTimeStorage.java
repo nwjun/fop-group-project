@@ -29,7 +29,8 @@ public class RealTimeStorage {
     public static HashMap<String,Integer> FoodnBeverage = new HashMap<>();
     private static ArrayList<String[]> linkedCard2D;
     private static ArrayList<String[]> selectedSeats = new ArrayList<>();
-    private static int[] ticketType = new int[3]; // no of ticket for adult, student, OKU
+    private static int[] ticketType = new int[4]; // no of ticket for elder, adult, student, OKU
+    private static String[] ticketPrices = new String[4];// ticket price for elder, adult, student, OKU
     
     // setter for movie booking
     public static void updateMovieBooking(HashMap<String,Object> input,boolean clear){
@@ -273,6 +274,14 @@ public class RealTimeStorage {
         }
     }
     
+    public static String[] getTicketPrices(){
+        if(RealTimeStorage.ticketPrices[0] == null){
+            return new String[]{"14","14","14","14"};
+        }
+        
+        return RealTimeStorage.ticketPrices;
+    }
+    
     public static void updateLinkedCard(String[] bank){
         String storedBank = String.join("#", bank);
         RealTimeStorage.linkedCard.add(storedBank);
@@ -302,6 +311,10 @@ public class RealTimeStorage {
     
     public static void setTicketType(int[] ticketType){
         RealTimeStorage.ticketType = ticketType;
+    }
+    
+    public static void setTicketPrice (String[] ticketPrices){
+        RealTimeStorage.ticketPrices= ticketPrices;
     }
 
     
