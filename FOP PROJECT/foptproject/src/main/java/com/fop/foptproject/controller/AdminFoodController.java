@@ -98,6 +98,8 @@ public class AdminFoodController implements Initializable {
     private Button upload;
     @FXML
     private ImageView logo;
+    @FXML
+    private Button clearButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -527,5 +529,10 @@ public class AdminFoodController implements Initializable {
         }catch(IOException ex){
             System.out.println("Upload Successful: Poster Unchanged");
         }
+    }
+
+    @FXML
+    private void ClearButtonAct(ActionEvent event) {
+        clean();
     }
 }
