@@ -47,16 +47,20 @@ public class SeatsController implements Initializable {
     private ArrayList<String[]> selected = new ArrayList<>();
     private sqlConnect sql = new sqlConnect();
     private int selectedLength = 0;
-    // no of ticket for adult, student, OKU
-    private int[] tickets = new int[]{0, 0, 0};
+    // no of ticket for elder, adult, student, OKU
+    private int[] tickets = new int[]{0, 0, 0, 0};
     private int totalTicket = 0;
-    
+    private final String[] ticketPrices = RealTimeStorage.getTicketPrices();
+
     @FXML
     private GridPane seatsContainer;
     @FXML
-    private Button studentMinus, studentAdd, adultMinus, adultAdd, okuMinus, okuAdd, nextButton;
+    private Button studentMinus, studentAdd, adultMinus, adultAdd, okuMinus, okuAdd, elderAdd, elderMinus, nextButton;
     @FXML
-    private Label studentCount, adultCount, okuCount, selectedTicketLabel, totalLabel;
+    private Label studentCount, adultCount, okuCount, elderCount, selectedTicketLabel,
+            totalLabel, elderPrice, adultPrice, studentPrice, OKUPrice;
+
+    private Label[] priceLabels;
 
     @FXML
     public void changeToMovieBooking(ActionEvent event) throws IOException {
@@ -74,35 +78,45 @@ public class SeatsController implements Initializable {
 
     // add and minus method for each categories
     @FXML
+    public void elderMinusCount(ActionEvent event) {
+        minusCount(0, elderCount);
+    }
+
+    @FXML
     public void adultMinusCount(ActionEvent event) {
-        minusCount(0, adultCount);
+        minusCount(1, adultCount);
     }
 
     @FXML
     public void studentMinusCount(ActionEvent event) {
-        minusCount(1, studentCount);
+        minusCount(2, studentCount);
     }
 
     @FXML
     public void okuMinusCount(ActionEvent event) {
-        minusCount(2, okuCount);
+        minusCount(3, okuCount);
+    }
+
+    @FXML
+    public void elderAddCount(ActionEvent event) {
+        addCount(0, elderCount);
     }
 
     @FXML
     public void adultAddCount(ActionEvent event) {
-        addCount(0, adultCount);
+        addCount(1, adultCount);
     }
 
     @FXML
     public void studentAddCount(ActionEvent event) {
-        addCount(1, studentCount);
+        addCount(2, studentCount);
     }
 
     @FXML
     public void okuAddCount(ActionEvent event) {
-        addCount(2, okuCount);
+        addCount(3, okuCount);
     }
-    
+
     private void minusCount(int index, Label label) {
         // deduct number of tickets
         if (tickets[index] > 0) {
@@ -130,6 +144,7 @@ public class SeatsController implements Initializable {
         if (tickets[index] < 20) {
             ++tickets[index];
             label.setText(Integer.toString(tickets[index]));
+            System.out.println(label);
             updateTotalTicket();
         }
 
@@ -145,24 +160,29 @@ public class SeatsController implements Initializable {
     }
 
     private void updateTotalPrice() {
-        double[] prices = new double[]{14.0, 14.0, 14.0};
         double total = 0;
-        for (int i = 0; i < prices.length; i++) {
-            total += prices[i] * tickets[i];
+
+        for (int i = 0; i < ticketPrices.length; i++) {
+            total += Double.parseDouble(ticketPrices[i]) * tickets[i];
         }
         totalLabel.setText(String.format("TOTAL: RM %.2f", total));
 
     }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         final String THEATER_ID, SLOT, DAY;
-        THEATER_ID = RealTimeStorage.getMovieBooking().get("theaterId").toString();
-        SLOT = RealTimeStorage.getMovieBooking().get("slots").toString();
-        DAY = RealTimeStorage.getMovieBooking().get("chosenDay").toString();
+//        THEATER_ID = RealTimeStorage.getMovieBooking().get("theaterId").toString();
+//        SLOT = RealTimeStorage.getMovieBooking().get("slots").toString();
+//        DAY = RealTimeStorage.getMovieBooking().get("chosenDay").toString();
 
+        THEATER_ID = "1";
+        SLOT = "1";
+        DAY = "1";
         ArrayList<ArrayList<String>> seatsTemp = getMovieSeats(THEATER_ID, SLOT, DAY);
-
+        
+        priceLabels = new Label[]{elderPrice, adultPrice, studentPrice, OKUPrice};
+        
         int maxRow = seatsTemp.size();
         int maxCol = seatsTemp.get(0).size();
 
@@ -237,8 +257,7 @@ public class SeatsController implements Initializable {
                         (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
                             int row = GridPane.getRowIndex(seat) - 1;
                             int col = colIndex(GridPane.getColumnIndex(seat), maxCol);
-                            
-                            
+
                             // Selected
                             if (old_val == false && new_val == true && selectedLength < totalTicket) {
                                 selected.add(new String[]{String.valueOf(row), String.valueOf(col)});
@@ -259,6 +278,10 @@ public class SeatsController implements Initializable {
 
             }
         }
+
+        for (int i = 0; i < ticketPrices.length; i++) {
+            priceLabels[i].setText("RM " + ticketPrices[i]);
+        }
     }
 
     public ArrayList<ArrayList<String>> getMovieSeats(String theaterID, String slot, String day) {
@@ -271,7 +294,7 @@ public class SeatsController implements Initializable {
             seatsArr.add(Integer.parseInt(rowNo), seatsHash.get(rowNo));
         }
 
-        if (seatsArr.size() == 0) {
+        if (seatsArr.isEmpty()) {
             for (int i = 0; i < 10; i++) {
                 ArrayList<String> temp = new ArrayList<>();
                 for (int j = 0; j < 10; j++) {
