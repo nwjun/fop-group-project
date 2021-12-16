@@ -134,7 +134,7 @@ public class AdminMovieController implements Initializable {
     @FXML
     private ComboBox<String> combobox;
     @FXML
-    private Button EditSeat;
+    private Button editSeat;
     @FXML
     private Button clearButton;
 
@@ -343,7 +343,7 @@ public class AdminMovieController implements Initializable {
         edit.setOnAction(e->{ 
             this.editmovieId=edit.getId(); 
             int index=0;
-
+            editSeat.setDisable(true);
             for (int i =0; i<this.movieId.length;i++){
                 if(((String)this.movieId[i]).equals(this.editmovieId)){
                     index = i;
@@ -572,7 +572,7 @@ public class AdminMovieController implements Initializable {
     public void clean(){
         DropImage.setImage(null);
         posterT.clear();
-        movieNameT.clear();
+        movieNameT.setText(null);
         lengthT.clear();
         releaseDateT.clear();
         directorT.clear();
@@ -581,7 +581,7 @@ public class AdminMovieController implements Initializable {
         synopsisT.clear();
         rottenTomatoT.clear();
         iMDBT.clear();
-        combobox.setValue("");
+        combobox.setValue(null);
         checkCombo.getCheckModel().clearChecks(); 
     }
     
@@ -665,6 +665,7 @@ public class AdminMovieController implements Initializable {
             System.out.println("Upload Successful: Poster Changed/Uploaded");
             this.pathpath = "";
             this.ext="";
+            editSeat.setDisable(false);
         }catch(IOException ex){
             System.out.println("Upload Successful: Poster Unchanged");
         }
@@ -688,12 +689,39 @@ public class AdminMovieController implements Initializable {
 
     @FXML
     private void EditSeats(ActionEvent event) throws IOException {
-        SceneController SwitchScene = new SceneController();
-        SwitchScene.switchToAdminSeats(event);
+        String m = combobox.getValue();
+        String b = movieNameT.getText();
+        Alert a = new Alert(Alert.AlertType.ERROR);
+        
+        if(m == null||b == null){
+            a.setTitle("Empty theatre hall or movie name");
+            a.setContentText("Please select a theatre hall or enter your movie name");
+            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+            return;
+        }
+        else{
+            m = m.substring(m.length()-1);
+            Integer m1 = Integer.parseInt(m);
+            if(sql.theaterIDCheck(m1,b)){
+                a.setTitle("Theater Hall Occupied");
+                a.setContentText("Theater Hall H0"+m1+" Occupied. \nPlease Choose Another Hall.");
+                Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                stage.showAndWait();
+                return;
+
+            }
+
+        new SceneController().switchToAdminSeats(event);
+
+        }
     }
 
     @FXML
     private void clearButtonAct(ActionEvent event) {
+        editSeat.setDisable(false);
         clean();
     }
 }

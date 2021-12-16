@@ -88,7 +88,7 @@ public class MovieBookingController implements Initializable {
             RealTimeStorage.updateMovieBookingByKey("showTime",this.chosenTime);
             RealTimeStorage.updateMovieBookingByKey("chosenDay",this.chosenDay);
             RealTimeStorage.updateMovieBookingByKey("theaterId", this.theaterId);
-            RealTimeStorage.updateMovieBookingByKey("slots",Arrays.asList(RealTimeStorage.getMovieDetail("time").get(RealTimeStorage.getMovieDetail("movieId").indexOf(RealTimeStorage.getLookingAt())).split(", ")).indexOf(this.chosenTime)+1+"");
+            RealTimeStorage.updateMovieBookingByKey("slots",Integer.toString(Arrays.asList(RealTimeStorage.getMovieDetail("time").get(RealTimeStorage.getMovieDetail("movieId").indexOf(RealTimeStorage.getLookingAt())).split(", ")).indexOf(this.chosenTime)+1));
             new SceneController().switchToSeats(event);
         }
     }

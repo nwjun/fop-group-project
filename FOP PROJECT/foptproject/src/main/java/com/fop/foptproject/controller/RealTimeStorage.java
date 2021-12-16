@@ -145,9 +145,7 @@ public class RealTimeStorage {
         
         String jsonString = JSONToolSets.writeJSONString(jsonArray, "cardDetails");
         sql.updateLinkedCard(jsonString,userEmail);
-    }
-    
-    
+    }  
     
     public static void setAlteringDay(int day){
         RealTimeStorage.alteringDay = day;

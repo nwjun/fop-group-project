@@ -421,6 +421,10 @@ public class sqlConnect {
                        + "FROM movies "
                        + "WHERE theaterId = ?";
         
+        if(movieName == null){
+            return true;
+        }
+        
         boolean dup = false;
         try{
             PreparedStatement prepstat = conn.prepareStatement(query);
