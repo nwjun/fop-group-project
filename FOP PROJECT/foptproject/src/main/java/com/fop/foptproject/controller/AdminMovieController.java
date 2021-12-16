@@ -133,6 +133,8 @@ public class AdminMovieController implements Initializable {
     private CheckComboBox<String> checkCombo;
     @FXML
     private ComboBox<String> combobox;
+    @FXML
+    private Button EditSeat;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -680,5 +682,11 @@ public class AdminMovieController implements Initializable {
         Stage x = showPopUpStage("EditAdmin.fxml");
         x.initStyle(StageStyle.UNDECORATED);
         x.show();
+    }
+
+    @FXML
+    private void EditSeats(ActionEvent event) throws IOException {
+        SceneController SwitchScene = new SceneController();
+        SwitchScene.switchToAdminSeats(event);
     }
 }
