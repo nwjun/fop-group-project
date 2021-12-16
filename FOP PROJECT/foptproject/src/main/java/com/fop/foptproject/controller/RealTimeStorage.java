@@ -19,7 +19,7 @@ public class RealTimeStorage {
     private static String userEmail;
     private static String userName;
     private static String phoneNumber;
-    private static String permission;
+    private static String permission = "0";
     private static ArrayList<String> linkedCard;
     private static ArrayList<String[]> linkedCardtemp  = new ArrayList<>();
     private static HashMap<String, ArrayList<String>> movieDetails;
@@ -37,7 +37,7 @@ public class RealTimeStorage {
             RealTimeStorage.MovieBooking = input;
         }
         else{
-            RealTimeStorage.MovieBooking = null;
+            RealTimeStorage.MovieBooking.clear();
         }
     }
     
@@ -47,7 +47,7 @@ public class RealTimeStorage {
             RealTimeStorage.FoodnBeverage = input;
         }
         else{
-            RealTimeStorage.FoodnBeverage = null;
+            RealTimeStorage.FoodnBeverage.clear();
         }
     }
     
@@ -104,7 +104,7 @@ public class RealTimeStorage {
         RealTimeStorage.userEmail = null;
         RealTimeStorage.userName = null;
         RealTimeStorage.phoneNumber = null;
-        RealTimeStorage.permission = null;
+        RealTimeStorage.permission = "0";
         RealTimeStorage.lookingAtMovie = null;
         RealTimeStorage.isLogin = false;
         RealTimeStorage.linkedCard.clear();
@@ -179,6 +179,10 @@ public class RealTimeStorage {
     
     public static String[] getAllSlots(){
         return RealTimeStorage.SLOTS;
+    }
+    
+    public static String getTime(int i){
+        return RealTimeStorage.getMovieDetail("time").get(RealTimeStorage.getMovieDetail("movieId").indexOf(RealTimeStorage.lookingAtMovie)).split(", ")[i];
     }
     
     public static int getAlteringDay(){

@@ -155,9 +155,9 @@ public class SeatsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         final String THEATER_ID, SLOT, DAY;
-        THEATER_ID = "1";
-        SLOT = "1";
-        DAY = "0";
+        THEATER_ID = RealTimeStorage.getMovieBooking().get("theaterId").toString();
+        SLOT = RealTimeStorage.getMovieBooking().get("slots").toString();
+        DAY = RealTimeStorage.getMovieBooking().get("chosenDay").toString();
 
         ArrayList<ArrayList<String>> seatsTemp = getMovieSeats(THEATER_ID, SLOT, DAY);
 

@@ -74,6 +74,7 @@ public class MoviesDetailsController implements Initializable {
         SceneController scene = new SceneController();
         if(RealTimeStorage.getIsLogin()){
             if(RealTimeStorage.getPermission().equals("1")){
+                RealTimeStorage.updateMovieBooking(null, true); // clear all movieBooking
                 scene.switchToHomeLogined(event);
             }
             else{

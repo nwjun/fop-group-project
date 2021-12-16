@@ -152,28 +152,6 @@
                                               </Hyperlink>
                                  </children>
                               </VBox>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                              <Hyperlink onAction="#openCinemas" text="Cinemas" textFill="#f4f2f2">
-                                                  <font>
-                                                      <Font name="Calibri Bold" size="22.0" />
-                                                  </font>
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" />
-                                       </VBox.margin>
-                                              </Hyperlink>
-                                              <Hyperlink onAction="#openCinemas" text="Classic" textFill="#f0f0f0a8">
-                                                  <font>
-                                                      <Font name="Calibri Bold" size="22.0" />
-                                                  </font>
-                                              </Hyperlink>
-                                              <Hyperlink onAction="#openCinemas" text="Premium" textFill="#f0f0f0ae">
-                                                  <font>
-                                                      <Font name="Calibri Bold" size="22.0" />
-                                                  </font>
-                                              </Hyperlink>
-                                 </children>
-                              </VBox>
                                     </children>
                                 </VBox>
                                 <VBox fx:id="landingFooterVBox2" prefHeight="350.0" prefWidth="200.0" GridPane.columnIndex="1">

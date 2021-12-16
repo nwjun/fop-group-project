@@ -23,5 +23,49 @@
     -fx-font-family : 'Montserrat';
 }
 
-          
+#homeButton {
+  -fx-background-image: url("assets/profile/home-white.png");
+  -fx-background-size : 35px 35px;
+  -fx-background-position: center;
+  -fx-background-repeat:no-repeat;
+  -fx-background-color: rgba(0,0,0,0);
 
+}
+
+#homeButton:hover {
+  -fx-background-image: url("assets/profile/home-yellow.png");
+  -fx-background-repeat:no-repeat;
+  -fx-background-size : 35px 35px;
+  -fx-background-position: center;
+  -fx-background-color: rgba(0,0,0,0);
+}
+
+#backButton{
+    -fx-font-family: 'Montserrat';
+    -fx-border-radius:20px;
+    -fx-border-color:#FFEE00;
+    -fx-border-width:1px;
+    -fx-background-color:rgba(0,0,0,0);
+    -fx-text-fill:#FFEE00;
+}
+
+#backButton:hover{
+    -fx-background-color:#FFEE00;
+    -fx-text-fill:#000000;
+    -fx-background-radius:20px;
+}
+
+#nextButton{
+    -fx-font-family: 'Montserrat';
+    -fx-background-radius:20px;
+    -fx-background-color:#FFEE00;
+    -fx-text-fill:#000000; 
+}
+
+#nextButton:hover{
+    -fx-text-fill:#FFEE00;
+    -fx-background-color:rgba(0,0,0,0);
+    -fx-border-radius:20px;
+    -fx-border-color:#FFEE00;
+    -fx-border-width:1px;
+}
