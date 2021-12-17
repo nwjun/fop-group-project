@@ -6,9 +6,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
@@ -69,33 +71,57 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" />
                      </VBox.margin>
                   </GridPane>
-                  <StackPane prefHeight="177.0" prefWidth="512.0">
+                  <StackPane prefHeight="232.0" prefWidth="1237.0">
                      <children>
-                        <HBox prefHeight="171.0" prefWidth="1167.0">
+                        <HBox prefHeight="192.0" prefWidth="1168.0">
                            <children>
-                              <StackPane alignment="TOP_LEFT" prefHeight="92.0" prefWidth="76.0">
+                              <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="223.0" prefWidth="327.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
                                  <children>
-                                    <Label text="Adult" />
-                                    <Label text="Student" StackPane.alignment="CENTER_LEFT" />
-                                    <Label text="OKU" StackPane.alignment="BOTTOM_LEFT" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" top="10.0" />
-                                 </HBox.margin>
-                              </StackPane>
-                              <StackPane alignment="TOP_CENTER" prefHeight="92.0" prefWidth="118.0">
-                                 <children>
-                                    <Label text="RM14.00" StackPane.alignment="TOP_CENTER" />
-                                    <Label text="RM14.00" StackPane.alignment="CENTER" />
-                                    <Label text="RM14.00" StackPane.alignment="BOTTOM_CENTER" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" top="10.0" />
-                                 </HBox.margin>
-                              </StackPane>
-                              <StackPane prefHeight="167.0" prefWidth="114.0">
-                                 <children>
-                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="116.0" StackPane.alignment="TOP_LEFT">
+                                    <Label text="Elder" />
+                                    <Label text="Adult" GridPane.rowIndex="1" />
+                                    <Label text="Student" GridPane.rowIndex="2" />
+                                    <Label text="OKU" GridPane.rowIndex="3" />
+                                    <Label fx:id="elderPrice" text="RM14.00" GridPane.columnIndex="1" />
+                                    <Label fx:id="adultPrice" text="RM14.00" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label fx:id="studentPrice" text="RM14.00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="OKUPrice" text="RM14.00" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="116.0" GridPane.columnIndex="2">
+                                       <children>
+                                          <Button fx:id="elderMinus" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#elderMinusCount" prefHeight="33.0" prefWidth="33.0" style="-fx-background-radius: 8 0 0 8; -fx-background-color: #434343;" text="-" textFill="WHITE">
+                                             <HBox.margin>
+                                                <Insets right="12.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Label fx:id="elderCount" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="20.0" text="0">
+                                             <HBox.margin>
+                                                <Insets right="12.0" top="8.0" />
+                                             </HBox.margin>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                          </Label>
+                                          <Button fx:id="elderAdd" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#elderAddCount" prefHeight="33.0" prefWidth="33.0" style="-fx-background-radius: 0 8 8 0; -fx-background-color: #FFEE00;" text="+">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </HBox>
+                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="116.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                        <children>
                                           <Button fx:id="adultMinus" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#adultMinusCount" prefHeight="33.0" prefWidth="33.0" style="-fx-background-radius: 8 0 0 8; -fx-background-color: #434343;" text="-" textFill="WHITE">
                                              <HBox.margin>
@@ -116,14 +142,11 @@
                                              </HBox.margin>
                                           </Button>
                                        </children>
-                                       <StackPane.margin>
-                                          <Insets />
-                                       </StackPane.margin>
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
                                     </HBox>
-                                    <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="43.0" prefWidth="114.0" StackPane.alignment="CENTER_LEFT">
+                                    <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="43.0" prefWidth="114.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                        <children>
                                           <Button fx:id="studentMinus" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#studentMinusCount" prefHeight="33.0" prefWidth="33.0" style="-fx-background-radius: 8 0 0 8; -fx-background-color: #434343;" text="-" textFill="WHITE">
                                              <HBox.margin>
@@ -141,11 +164,8 @@
                                              </HBox.margin>
                                           </Button>
                                        </children>
-                                       <StackPane.margin>
-                                          <Insets />
-                                       </StackPane.margin>
                                     </HBox>
-                                    <HBox alignment="BOTTOM_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="116.0" StackPane.alignment="BOTTOM_LEFT">
+                                    <HBox alignment="BOTTOM_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="116.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                        <children>
                                           <Button fx:id="okuMinus" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#okuMinusCount" prefHeight="33.0" prefWidth="33.0" style="-fx-background-radius: 8 0 0 8; -fx-background-color: #434343;" text="-" textFill="WHITE">
                                              <HBox.margin>
@@ -163,13 +183,10 @@
                                              </HBox.margin>
                                           </Button>
                                        </children>
-                                       <StackPane.margin>
-                                          <Insets />
-                                       </StackPane.margin>
                                     </HBox>
                                  </children>
-                              </StackPane>
-                              <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                              </GridPane>
+                              <Region prefHeight="223.0" prefWidth="268.0" HBox.hgrow="ALWAYS" />
                               <StackPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="167.0" prefWidth="287.0">
                                  <children>
                                     <Label text="Selected" StackPane.alignment="TOP_LEFT">
