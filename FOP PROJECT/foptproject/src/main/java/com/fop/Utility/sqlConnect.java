@@ -618,7 +618,8 @@ public class sqlConnect {
                 releaseDate.add(rs.getString("releaseDate"));
                 directorCast.add(rs.getString("directorCast"));
                 language.add(rs.getString("language"));
-                poster.add(rs.getString("poster"));
+                String path = rs.getString("poster");
+                poster.add(path.replace("\\","/")); // preprocess to fit linux system
                 allShowTime.add(rs.getString("allShowTime"));
                 synopsis.add(rs.getString("synopsis"));
                 rottenTomato.add(rs.getString("rottenTomato"));
@@ -736,7 +737,8 @@ public class sqlConnect {
 
             while(rs.next()){  
             productId.add(rs.getString("productId"));
-            posterPath.add(rs.getString("poster"));
+            String path = rs.getString("poster");
+            posterPath.add(path.replace("\\","/"));
             price.add(rs.getString("price"));
             productDesc.add(rs.getString("productDescription"));
             productName.add(rs.getString("productname"));   
@@ -780,7 +782,8 @@ public class sqlConnect {
                 
                 while(rs.next()){
                     productId.add(rs.getString("productId"));
-                    posterPath.add(rs.getString("poster"));
+                    String path = rs.getString("poster"); // preprocess to fit linux system
+                    posterPath.add(path.replace("\\","/"));
                     price.add(rs.getString("price"));
                     productDesc.add(rs.getString("productDescription"));
                     productName.add(rs.getString("productname"));
