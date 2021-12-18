@@ -36,12 +36,14 @@
 
 .historyHeading{
    -fx-font-weight: bold;
-    
 }
 
 .historyText{
 }
 
+.errorLabel{
+    -fx-text-fill: #FF0000;
+}
 
 .wrapper{
     -fx-padding: 0 0 0 80;

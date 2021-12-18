@@ -276,7 +276,7 @@ public class RealTimeStorage {
     
     public static String[] getTicketPrices(){
         if(RealTimeStorage.ticketPrices[0] == null){
-            return new String[]{"14","14","14","14"};
+            return new String[]{"14.00","14.00","14.00","14.00"};
         }
         
         return RealTimeStorage.ticketPrices;
