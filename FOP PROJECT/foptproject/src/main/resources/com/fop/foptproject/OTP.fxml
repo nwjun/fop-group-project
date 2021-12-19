@@ -39,7 +39,7 @@
             </VBox>
             <VBox id="subinstructionContainer" alignment="CENTER" prefHeight="26.0" prefWidth="1913.0">
                <children>
-                  <Label id="subInstruction" fx:id="sentToEmail" prefHeight="33.0" prefWidth="338.0" text="A one-time-password has been sent to limweixin17@gmail.com" textFill="#c1c1c1" />
+                  <Label id="subInstruction" fx:id="sentToEmail" alignment="CENTER" prefHeight="33.0" text="A one-time-password has been sent to limweixin17@gmail.com" textFill="#c1c1c1" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="72.0" prefWidth="539.0">

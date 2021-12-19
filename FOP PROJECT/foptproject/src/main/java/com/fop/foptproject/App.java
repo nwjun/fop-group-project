@@ -34,7 +34,7 @@ public class App extends Application{
 
 
         boolean DEBUG = false;
-        String fxmlFile = "FoodnBeverage.fxml";
+        String fxmlFile = "DonePayment.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
@@ -75,6 +75,12 @@ public class App extends Application{
         //query landing food poster
         RealTimeStorage.setAllLandingFood();
         
+        //new emailTo("limweixin17@gmail.com").sendBookingConfirmations("MovieName", "FirstName", "R12345", "R12345", "2021-12-20", "12:00PM", "E1", 20.00);
+//        JSONToolSets json = new JSONToolSets(sql.querySeats("1","1",false),false);
+//        json.parseTheaterSeat(1)
+//        System.out.println("");
+//        json.setSeatStat(0, 0, 1, "1");
+//        json.parseTheaterSeat(1);
         launch();
         System.out.println("launched");
     }

@@ -24,7 +24,6 @@ public class ProductCard{
     private HashMap<String,Object> productDetails = new HashMap<>();
     private HBox productCard;
     private Label quantity;
-    private static HashMap<String,Integer> tempStorage = new HashMap<>();
     private static double totalAmount = 0;
     
     public ProductCard(String productID,String imgPath,double imgW,double imgH,double scale,double price,String productName,String productDesc){
@@ -73,7 +72,7 @@ public class ProductCard{
     private StackPane makeButtons(String productId){
         // components
         this.quantity = new Label();
-        quantity.setText(retrievePurchaseDetail(productId));
+        quantity.setText(RealTimeStorage.retrievePurchaseDetail(productId));
         quantity.setId(productId+"_quantity");
         quantity.setPrefSize(20,20);
         quantity.setAlignment(Pos.CENTER);
@@ -165,10 +164,6 @@ public class ProductCard{
         return container;
     }
     
-    public void mergeHashMap(){
-        System.out.println("under development");
-    }
-    
     public void addPurchase(String key, int value){
         if(value == 0){
             RealTimeStorage.FoodnBeverage.remove(key);
@@ -182,33 +177,5 @@ public class ProductCard{
         else{
             return;
         }
-//        if(value == 0){
-//            tempStorage.remove(key);
-//        }
-//        else if(tempStorage.containsKey(key)){
-//            tempStorage.replace(key, value);
-//        }
-//        else if(!(tempStorage.containsKey(key))){
-//            tempStorage.put(key,value);                 
-//        }
-//        else{
-//            return;
-//        }
-    }
-    
-    public String retrievePurchaseDetail(String key){
-        if(RealTimeStorage.FoodnBeverage.containsKey(key)){
-            return Integer.toString(RealTimeStorage.FoodnBeverage.get(key));
-        }
-        else{
-            return "0";
-        }
-    }
-    
-    public static HashMap<String,Integer> retrieveAllPurchaseDetail(){
-        return RealTimeStorage.FoodnBeverage;
-    }
-    
-
-    
+    } 
 }
