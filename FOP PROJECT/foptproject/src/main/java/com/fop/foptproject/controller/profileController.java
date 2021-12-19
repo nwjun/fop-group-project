@@ -6,6 +6,7 @@
 package com.fop.foptproject.controller;
 
 import com.fop.Utility.Checker;
+import com.fop.Utility.sqlConnect;
 import com.fop.foptproject.App;
 import com.fop.foptproject.CommonMethod;
 import java.io.IOException;
@@ -28,6 +29,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextField;
@@ -48,6 +50,7 @@ import javafx.util.Duration;
  * @author jun
  */
 public class profileController implements Initializable {
+
     @FXML
     Label titleLabel;
     @FXML
@@ -64,7 +67,8 @@ public class profileController implements Initializable {
 
     CommonMethod commonMethod = new CommonMethod();
     ArrayList<String[]> banks;
-    
+    boolean overallReturnVal = true;
+
     //https://stackoverflow.com/questions/28717343/javafx-create-a-vertical-menu-ribbon
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -177,14 +181,15 @@ public class profileController implements Initializable {
         Label usernameLabel = new Label("Username");
         Label emailLabel = new Label("Email");
         Label hpLabel = new Label("Phone number");
-        Label[] labels = new Label[]{usernameLabel, emailLabel, hpLabel};
-        
+        Label newPassLabel = new Label("New password");
+        Label[] labels = new Label[]{usernameLabel, emailLabel, hpLabel, newPassLabel};
+
         Label emailErrorLabel = new Label("Incorrect format");
         emailErrorLabel.getStyleClass().add("errorLabel");
         emailErrorLabel.setVisible(false);
         emailErrorLabel.setStyle("-fx-text-fill:#FF0000");
-        emailErrorLabel.setPadding(new Insets(5,0,0,10));
-        
+        emailErrorLabel.setPadding(new Insets(5, 0, 0, 10));
+
         for (Label label : labels) {
             label.getStyleClass().add("profileLabel");
             VBox.setMargin(label, new Insets(50, 0, 20, 0));
@@ -193,11 +198,12 @@ public class profileController implements Initializable {
         TextField usernameField = new TextField();
         TextField emailField = new TextField();
         TextField hpField = new TextField();
-        TextField[] textFields = new TextField[]{usernameField, emailField, hpField};
-        String[] textFieldIds = new String[]{"profileField", "emailField", "hpField"};
+        PasswordField newPassField = new PasswordField();
+        TextField[] textFields = new TextField[]{usernameField, emailField, hpField, newPassField};
+        String[] textFieldIds = new String[]{"profileField", "emailField", "hpField", "newPassField"};
 
         String[] fieldValues = getProfileValues();
-        
+
         for (int i = 0; i < textFields.length; i++) {
             textFields[i].getStyleClass().add("profileText");
             textFields[i].setId(textFieldIds[i]);
@@ -211,22 +217,22 @@ public class profileController implements Initializable {
         Button resetBtn = new Button("Reset");
         resetBtn.getStyleClass().add("transparentBtn");
 
-        emailField.setOnKeyTyped(eh->{
-            if(! Checker.checkEmail(emailField.getText())){
+        emailField.setOnKeyTyped(eh -> {
+            if (!Checker.checkEmail(emailField.getText())) {
                 emailErrorLabel.setVisible(true);
                 confirmBtn.setDisable(true);
-            }else{
+            } else {
                 emailErrorLabel.setVisible(false);
                 confirmBtn.setDisable(false);
             }
         });
-        
+
         confirmBtn.setOnAction(e -> {
             String[] newFieldValues = new String[textFields.length];
-            
+
             for (int i = 0; i < textFields.length; i++) {
                 newFieldValues[i] = textFields[i].getText();
-                if(!newFieldValues[i].equals(fieldValues[i])){
+                if (!newFieldValues[i].equals(fieldValues[i])) {
                     updateProfile(newFieldValues[i], i);
                 }
             }
@@ -245,7 +251,7 @@ public class profileController implements Initializable {
         btnBox.setMaxWidth(MAX_WIDTH);
         VBox.setMargin(btnBox, new Insets(70, 0, 0, 0));
 
-        wrapper.getChildren().addAll(usernameLabel, usernameField, emailLabel, emailField, emailErrorLabel, hpLabel, hpField, btnBox);
+        wrapper.getChildren().addAll(usernameLabel, usernameField, emailLabel, emailField, emailErrorLabel, newPassLabel, newPassField, hpLabel, hpField, btnBox);
         wrapper.getStyleClass().add("wrapper");
         contentContainer.getChildren().addAll(wrapper);
 
@@ -260,44 +266,44 @@ public class profileController implements Initializable {
         ScrollPane scrollPane = new ScrollPane();
         VBox scrollPaneContainer = new VBox();
         VBox banksContainer = new VBox();
-        
+
         scrollPane.setFitToWidth(true);
         scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-       
+
         Button addBtn = new Button("Add");
 
         scrollPane.setContent(banksContainer);
         scrollPaneContainer.getChildren().addAll(scrollPane, addBtn);
-        
-        
+
         VBox wrapper = new VBox(scrollPaneContainer);
         contentContainer.getChildren().addAll(wrapper);
-        
+
         // Layout
         scrollPaneContainer.setAlignment(Pos.TOP_CENTER);
         banksContainer.setAlignment(Pos.CENTER);
         wrapper.setSpacing(40);
-        
+
         // Style
         scrollPane.setStyle("-fx-background-color:#252525");
         banksContainer.setStyle("-fx-background-color:#252525");
         scrollPaneContainer.setId("billingScrollPaneContainer");
 
         banks = getBanks();
-        int bankNumber = (banks==null)?0:banks.size();
+        int bankNumber = (banks == null) ? 0 : banks.size();
 //        ArrayList<HBox> bankButtonContainer = new ArrayList<>();
 
         for (int i = -1; i < bankNumber; i++) {
-            if(bankNumber == 0){
+            if (bankNumber == 0) {
                 Label emptyLabel = new Label("No credit/debit card being added yet");
                 emptyLabel.setOpacity(0.7);
-                VBox detailsContainer = new VBox(emptyLabel,new Label(" "));
+                VBox detailsContainer = new VBox(emptyLabel, new Label(" "));
                 detailsContainer.setAlignment(Pos.CENTER);
                 banksContainer.getChildren().add(detailsContainer);
-            }
-            else{
-                if(i == -1)i = i+1;
+            } else {
+                if (i == -1) {
+                    i = i + 1;
+                }
                 String[] bank = banks.get(i);
                 Label bankLabel = new Label(bank[0]);
                 Label accLabel = new Label(bank[1]);
@@ -306,14 +312,14 @@ public class profileController implements Initializable {
                 Region region = new Region();
                 HBox.setHgrow(region, Priority.ALWAYS);
                 Button removeBtn = new Button("-");
-                removeBtn.setId(String.join("#",bank));
+                removeBtn.setId(String.join("#", bank));
                 HBox bankButtonRow = new HBox(detailsContainer, region, removeBtn);
                 bankButtonRow.setAlignment(Pos.CENTER_LEFT);
                 banksContainer.getChildren().add(bankButtonRow);
 
                 removeBtn.setOnAction(e -> {
                     banksContainer.getChildren().remove(bankButtonRow);
-                    Button source = (Button)e.getSource();
+                    Button source = (Button) e.getSource();
                     RealTimeStorage.removeLinkedCards(source.getId());
                     billing();
                 });
@@ -333,7 +339,6 @@ public class profileController implements Initializable {
         });
 
         banksContainer.setSpacing(30);
-
 
     }
 
@@ -437,23 +442,52 @@ public class profileController implements Initializable {
 
     private String[] getProfileValues() {
         // retrieve field values from db
-        return new String[]{RealTimeStorage.getUsername(),RealTimeStorage.getUserEmail(), RealTimeStorage.getPNumber()};
+        return new String[]{RealTimeStorage.getUsername(), RealTimeStorage.getUserEmail(), RealTimeStorage.getPNumber(), ""};
+    }
+
+    private void createAlert() {
+        Alert a = new Alert(AlertType.INFORMATION);
+        if (overallReturnVal) {
+            a.setContentText("Changes are made successfully");
+            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+        } else {
+            a.setContentText("Failed to changed");
+            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+        }
     }
 
     private void updateProfile(String newFieldValue, int item) {
         // update data in database
-        switch(item){
+        int returnVal;
+        sqlConnect sqlConn = new sqlConnect();
+        
+        switch (item) {
             case 0:
                 RealTimeStorage.setUsername(newFieldValue);
+                returnVal = sqlConn.setNewUsernameOrPhoneNumber(RealTimeStorage.getUserEmail(), newFieldValue, false);
+                overallReturnVal = returnVal == 1? true:false;
                 break;
             case 1:
                 RealTimeStorage.setEmail(newFieldValue);
+                returnVal = sqlConn.setNewUserEmail(RealTimeStorage.getUserId(), newFieldValue);
+                overallReturnVal = returnVal == 1? true:false;
                 break;
             case 2:
                 RealTimeStorage.setPNumber(newFieldValue);
+                returnVal = sqlConn.setNewUsernameOrPhoneNumber(RealTimeStorage.getUserEmail(), newFieldValue, true);
+                overallReturnVal = returnVal == 1? true:false;
                 break;
-                       
+            case 3:
+                returnVal = new sqlConnect().setNewPassword(RealTimeStorage.getUserEmail(), newFieldValue);
+                overallReturnVal = returnVal == 1? true:false;
+                break;
+
         }
+        createAlert();
     }
 
 }

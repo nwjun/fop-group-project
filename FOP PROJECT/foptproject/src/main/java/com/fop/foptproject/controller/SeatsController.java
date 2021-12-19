@@ -7,6 +7,7 @@ package com.fop.foptproject.controller;
  */
 import com.fop.Utility.JSONToolSets;
 import com.fop.Utility.sqlConnect;
+import com.fop.foptproject.App;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,13 +27,16 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -144,7 +148,6 @@ public class SeatsController implements Initializable {
         if (tickets[index] < 20) {
             ++tickets[index];
             label.setText(Integer.toString(tickets[index]));
-            System.out.println(label);
             updateTotalTicket();
         }
 
@@ -157,6 +160,7 @@ public class SeatsController implements Initializable {
         }
         totalTicket = sum;
         updateTotalPrice();
+        toggleNextBtn();
     }
 
     private void updateTotalPrice() {
@@ -168,7 +172,7 @@ public class SeatsController implements Initializable {
         totalLabel.setText(String.format("TOTAL: RM %.2f", total));
 
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         final String THEATER_ID, SLOT, DAY;
@@ -180,9 +184,9 @@ public class SeatsController implements Initializable {
 //        SLOT = "1";
 //        DAY = "1";
         ArrayList<ArrayList<String>> seatsTemp = getMovieSeats(THEATER_ID, SLOT, DAY);
-        
+
         priceLabels = new Label[]{elderPrice, adultPrice, studentPrice, OKUPrice};
-        
+
         int maxRow = seatsTemp.size();
         int maxCol = seatsTemp.get(0).size();
 
@@ -274,6 +278,7 @@ public class SeatsController implements Initializable {
                             }
                             selectedLength = selected.size();
                             selectedTicketLabel.setText(Integer.toString(selectedLength));
+                            toggleNextBtn();
                         });
 
             }
@@ -317,6 +322,15 @@ public class SeatsController implements Initializable {
             return col - 2;
         } else {
             return col - 1;
+        }
+    }
+
+    private void toggleNextBtn() {
+        // Only can proceed if the number of tickets added and the seats chosen match
+        if (totalTicket == selectedLength && totalTicket != 0) {
+            nextButton.setDisable(false);
+        } else {
+            nextButton.setDisable(true);
         }
     }
 }

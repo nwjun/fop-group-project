@@ -243,7 +243,7 @@
                         <Label layoutX="886.0" layoutY="35.0" text="Status :" textFill="WHITE" />
                         <Label fx:id="statusLabel" layoutX="981.0" layoutY="35.0" text="Label" textFill="WHITE" />
                         <Button fx:id="changeStatusButton" layoutX="911.0" layoutY="159.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="98.0" style="-fx-background-radius: 10;" styleClass="Button" text="Change status" />
-                        <Button fx:id="backButton" layoutX="14.0" layoutY="197.0" mnemonicParsing="false" onAction="#switchToAdminMain" prefHeight="25.0" prefWidth="70.0" style="-fx-background-radius: 10;" styleClass="Button" text="Back" />
+                        <Button fx:id="backButton" layoutX="14.0" layoutY="197.0" mnemonicParsing="false" onAction="#switchToAdminMovie" prefHeight="25.0" prefWidth="70.0" style="-fx-background-radius: 10;" styleClass="Button" text="Back" />
                         <Button fx:id="nextButton" layoutX="1154.0" layoutY="197.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-radius: 10;" styleClass="Button" text="Next" />
                         <ComboBox fx:id="hallComboBox" layoutX="456.0" layoutY="31.0" prefWidth="150.0" style="-fx-background-color: #434343;" />
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#272727" height="203.0" layoutX="47.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="303.0" />
@@ -253,8 +253,8 @@
                         <Button fx:id="columnMinus" layoutX="173.0" layoutY="105.0" mnemonicParsing="false" onAction="#columnMinusCount" prefHeight="33.0" prefWidth="33.0" style="-fx-background-radius: 8 0 0 8; -fx-background-color: #434343;" text="-" textFill="WHITE" />
                         <Button fx:id="rowAdd" layoutX="246.0" layoutY="29.0" mnemonicParsing="false" onAction="#rowAddCount" prefHeight="33.0" prefWidth="33.0" style="-fx-background-radius: 0 8 8 0; -fx-background-color: #FFEE00;" text="+" />
                         <Button fx:id="columnAdd" layoutX="246.0" layoutY="105.0" mnemonicParsing="false" onAction="#columnAddCount" prefHeight="33.0" prefWidth="33.0" style="-fx-background-radius: 0 8 8 0; -fx-background-color: #FFEE00;" text="+" />
-                        <Label fx:id="rowCount" layoutX="219.0" layoutY="37.0" text="7" textFill="WHITE" />
-                        <Label fx:id="columnCount" layoutX="219.0" layoutY="113.0" text="15" textFill="WHITE" />
+                        <Label fx:id="rowCount" layoutX="219.0" layoutY="37.0" text="0" textFill="WHITE" />
+                        <Label fx:id="columnCount" layoutX="219.0" layoutY="113.0" text="0" textFill="WHITE" />
                         <Button fx:id="modifyButton" layoutX="177.0" layoutY="161.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="98.0" style="-fx-background-radius: 10;" styleClass="Button" text="Modify" />
                      </children>
                   </AnchorPane>
