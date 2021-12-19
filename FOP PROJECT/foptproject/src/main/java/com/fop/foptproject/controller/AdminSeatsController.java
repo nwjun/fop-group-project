@@ -37,6 +37,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.GridPane;
+import java.lang.String;
 
 
 public class AdminSeatsController implements Initializable{
@@ -53,24 +54,25 @@ private Label hallLabel, cinemaLabel, totalSeatsAvailableLabel, totalSeatsUnavai
 @FXML
 private ComboBox<String> hallComboBox;
 
+
     @FXML
     public void rowAddCount(ActionEvent event){
-        addCount(0,rowCount);
+        addCountR(0,rowCount);
     }
     
     @FXML
     public void rowMinusCount(ActionEvent event){
-        minusCount(0,rowCount);
+        minusCountR(0,rowCount);
     }
     
     @FXML
     public void columnAddCount(ActionEvent event){
-        addCount(0,columnCount);
+        addCountC(0,columnCount);
     }
     
     @FXML
     public void columnMinusCount(ActionEvent event){
-        minusCount(0,columnCount);
+        minusCountC(0,columnCount);
         
     }
     
@@ -79,42 +81,58 @@ private ComboBox<String> hallComboBox;
     
 
 @FXML
-public void switchToAdminMain(ActionEvent event) throws IOException{
+public void switchToAdminMovie(ActionEvent event) throws IOException{
     SceneController switchScene = new SceneController();
-    switchScene.switchToAdminMain(event);
+    switchScene.switchToAdminMovie(event);
 }
-private int[] rowColumns=new int[]{0,0};
-private int totalRowColumn=0;
 
-private void minusCount(int index, Label label) {
-        // deduct number of tickets
-        if (rowColumns[index] > 0) {
-            --rowColumns[index];
-            label.setText(Integer.toString(rowColumns[index]));
-            updateTotalRowColumn();
+
+private int totalRowColumn=0;
+private int[]row= new int[]{0};
+private int[]column= new int []{0};
+
+private void minusCountR(int index, Label label) {
+        // deduct number of row 
+        if (row[index] > 0) {
+            --row[index];
+            label.setText(Integer.toString(row[index]));
+            
         }
       
     }
 
-   private void addCount(int index, Label label) {
-        // add number of tickets
-        if (rowColumns[index] < 20) {
-            ++rowColumns[index];
-            label.setText(Integer.toString(rowColumns[index]));
-            updateTotalRowColumn();
+private void minusCountC(int index, Label label){
+    //deduct number of column
+    if (column[index]>0){
+        --column[index];
+        label.setText(Integer.toString(column[index]));
+       
+    }
+}
+
+   private void addCountR(int index, Label label) {
+        // add number of row
+        if (row[index] < 4) {
+            ++row[index];
+            label.setText(Integer.toString(row[index]));
+            
         }
 
     }
    
-        private void updateTotalRowColumn() {
-        int sum = 0;
-        for (int rowColumn : rowColumns) {
-            sum += rowColumn;
-        }
-        totalRowColumn = sum;
-    }
+   private void addCountC(int index1, Label label){
+       //add number of column
+       if (column[index1]<6){
+           ++column[index1];
+           label.setText(Integer.toString(column[index1]));
+         
+       }
+   }
+   
+ 
  @Override
     public void initialize(URL url, ResourceBundle rb) {
+       
         
         seatsContainer.setAlignment(Pos.CENTER);
         int col_num = 0; //Follow sql, Column index need +2
@@ -143,8 +161,18 @@ private void minusCount(int index, Label label) {
 //8 Hall options ComboBox
         hallComboBox.getItems().addAll("Hall 01", "Hall 02", "Hall 03","Hall 04","Hall 05","Hall 06","Hall 07","Hall 08");
         
-          
-
+        
+        
+        
+        sqlConnect sql = new sqlConnect();
+        JSONToolSets json = new JSONToolSets(sql.querySeats("8","1",true),true);
+        HashMap<String,ArrayList<String>> seatArr = json.parseTheaterSeat(5);
+        int row = json.getRow();
+        int column = json.getColumn();
+        json.addColumn(1,true);
+        json.addRow(1);
+        String jsonString = json.getNewSeatArr().toString();
+        sql.updateSeats(jsonString,"1",true);
     }
 
   

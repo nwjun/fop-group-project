@@ -158,6 +158,20 @@ public class FoodnBeverageController implements Initializable{
     
     @FXML
     public void checkOut(ActionEvent event) throws IOException{
+        if(RealTimeStorage.getMovieBooking().get("theaterType").equals("Premium")){
+            String key = "S000005P";
+            int quantity = 0;
+            for(int i = 0 ; i < RealTimeStorage.ticketTypeQuantity ; i++){
+                quantity += RealTimeStorage.getTicketType()[i];
+            }
+            if(RealTimeStorage.FoodnBeverage.containsKey(key)){
+                RealTimeStorage.FoodnBeverage.replace(key, quantity);
+            }
+            else if(!(RealTimeStorage.FoodnBeverage.containsKey(key))){
+                RealTimeStorage.FoodnBeverage.put(key,quantity);                 
+            }
+        
+        }
         new SceneController().switchToCheckOut(event);
     }
     
@@ -166,7 +180,7 @@ public class FoodnBeverageController implements Initializable{
         BoxBlur b = new BoxBlur(10,10,2);
         boxBlur.setEffect(b);
         lineAnimation(1800,0,popUpPane);
-        HashMap<String,Integer> current = ProductCard.retrieveAllPurchaseDetail();
+        HashMap<String,Integer> current = RealTimeStorage.getFnB();
         double price;
         String name;
         sqlConnect sql = new sqlConnect();
@@ -185,6 +199,9 @@ public class FoodnBeverageController implements Initializable{
                 this.quantityContainer.getChildren().add(quantity);
                 i++;
            }
+           
+           if(key.equals("S000005P"))continue; // skip premium gift
+           
            price = Double.parseDouble(sql.queryProductInfo(key,"price"));
            name = sql.queryProductInfo(key,"productname");
            

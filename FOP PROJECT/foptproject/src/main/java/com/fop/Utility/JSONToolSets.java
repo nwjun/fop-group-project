@@ -151,14 +151,15 @@ public class JSONToolSets {
                 break;
             }
         }
-//        System.out.println("Before modifying:");
+        
 //        for(String key : extracted.keySet()){
 //            for(String item : extracted.get(key)){
 //                if(item.equals("-1"))System.out.print("X ");
 //                else System.out.print(item+" ");
 //            }
-//            System.out.println();
+//            System.out.println("");
 //        }
+//        System.out.println("\n");
         
         return extracted;
     }
@@ -293,7 +294,7 @@ public class JSONToolSets {
      * <br>This method will return void at the end
      * </p>
      */
-    public void setSeatStat(int row, int column, int stat){
+    public void setSeatStat(int row, int column, int stat, String day){
         if(this.isTemplate){
             // parse json
             HashMap<Integer,ArrayList<Integer>> temp = new HashMap<>();
@@ -315,7 +316,43 @@ public class JSONToolSets {
             
             this.jsonObj = result;
         }
+        else{
+            // handle changes on non template
+            JSONObject newJson = new JSONObject();
+            for(int i = 0 ; i < 7 ; i++){
+                if(i == Integer.parseInt(day)){
+                    // get the day seat
+                    HashMap<Integer,ArrayList<Integer>> temp = new HashMap<>();
+                    for(int j = 0 ; j < this.rowSize ; j++){
+                        temp.put(j,new ArrayList<Integer>());
+                        for(int k = 0 ; k < this.columnSize ; k++){
+                            //System.out.print(this.jsonObj.getJSONObject(Integer.toString(i)).getJSONArray(Integer.toString(j)).getInt(k) + " ");
+                            temp.get(j).add(this.jsonObj.getJSONObject(Integer.toString(i)).getJSONArray(Integer.toString(j)).getInt(k));
+                        }
+                        //System.out.println("");
+                    }
+                    
+                    // set seat status
+                    temp.get(row).set(column, stat);
+                    
+                    JSONObject result = new JSONObject();
+                    for(int key : temp.keySet()){
+                        result.put(Integer.toString(key), new JSONArray(temp.get(key)));
+                    }
+                    
+                    newJson.put(Integer.toString(i),result);
+                    
+                }
+                else{
+                    // copy unaffected day
+                    //System.out.println(this.jsonObj.getJSONObject(Integer.toString(i)));
+                    newJson.put(Integer.toString(i),this.jsonObj.getJSONObject(Integer.toString(i)));
+                }    
+            }
+            this.jsonObj = newJson;
+        } 
     }
+    
     
     /**
      * @param row integer ArrayList object 
@@ -454,6 +491,41 @@ public class JSONToolSets {
         String jsonString = jsonObject.toString();
         
         return jsonString;
+    }
+    
+    public static String writeReceiptJSON(HashMap<String,Integer> FnB, int[] tickets, boolean isPremium){
+        final String[] category = {"Elder","Adult","Student","Disabled"};
+        final String[] ticketId = {"TE","TC","TS","TO","TP"};
+        JSONObject receiptObject = new JSONObject();
+        JSONObject ticket = new JSONObject();
+        JSONObject purchasedFnB = new JSONObject();
+        for(int i = 0 ; i < RealTimeStorage.ticketTypeQuantity ; i++){
+            if(RealTimeStorage.getMovieBooking().get("theaterType").equals("Classic")){
+                double price = Double.parseDouble(sql.queryProductInfo(ticketId[i],"price"));
+                String[] concat = {ticketId[i],tickets[i]+"",price+""};
+                ticket.put(category[i], String.join(",",concat));
+            }
+            else{
+                double price = Double.parseDouble(sql.queryProductInfo(ticketId[4],"price"));
+                int quantity = tickets[3]+tickets[2]+tickets[1]+tickets[0];
+                ticket.put("Premium",String.join(",",new String[]{ticketId[4],quantity+"",price+""}));
+            }
+        }
+        for(String productId : FnB.keySet()){
+            if(productId.equals("S000005P")){
+                String[] concat = {FnB.get(productId)+"","FREE"};
+                purchasedFnB.put(productId,String.join(",",concat));
+                continue;
+            }
+            double price = Double.parseDouble(sql.queryProductInfo(productId,"price"));
+            String[] concat = {FnB.get(productId)+"",price+""};
+            purchasedFnB.put(productId,String.join(",",concat));
+        }
+        receiptObject.put("ticket",ticket);
+        receiptObject.put("fnb",purchasedFnB);
+        
+        
+        return receiptObject.toString();
     }
     
  

@@ -7,13 +7,15 @@ package com.fop.foptproject.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
+import java.util.Date;
+import java.text.SimpleDateFormat;
 /**
  * FXML Controller class
  *
@@ -38,6 +40,7 @@ public class DonePaymentController implements Initializable {
     
     @FXML
     public void toHome(ActionEvent event) throws IOException{
+        RealTimeStorage.clearBookingDetails();
         SceneController scene = new SceneController();
         scene.switchToHomeLogined(event);
     }
@@ -45,12 +48,12 @@ public class DonePaymentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // initialize the scene
-//        movieName.setText();
-//        cinema.setText("Kuala Lumpur - Mid Valley");
-//        showDateTime.setText();
-//        transactionId.setText();
-//        transactionTime.setText();
-//        amount.setText();
+        movieName.setText(RealTimeStorage.getMovieBooking().get("movieName").toString());
+        cinema.setText(RealTimeStorage.getMovieBooking().get("cinemaName").toString());
+        showDateTime.setText(RealTimeStorage.getMovieBooking().get("showdate").toString()+" "+RealTimeStorage.getMovieBooking().get("showTime").toString().split(" - ")[0]);
+        transactionId.setText(RealTimeStorage.getBookingNumber());
+        transactionTime.setText(RealTimeStorage.getTimestamp());
+        amount.setText(RealTimeStorage.getToBePaid());
         
     }    
     

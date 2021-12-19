@@ -44,13 +44,13 @@
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin></Label>
-                        <Label fx:id="movie" alignment="TOP_LEFT" prefHeight="90.0" prefWidth="450.0" styleClass="purchaseDetailPaneDesc" text="Label" />
+                        <Label fx:id="movie" alignment="TOP_LEFT" prefHeight="60.0" prefWidth="450.0" styleClass="purchaseDetailPaneDesc" text="Label" wrapText="true" />
                         <Region maxWidth="-Infinity" prefHeight="25.0" prefWidth="1126.0" />
                         <Label prefHeight="27.0" prefWidth="120.0" styleClass="purchaseDetailPaneTitle" text="Seat(s)">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin></Label>
-                        <Label fx:id="seats" prefHeight="30.0" prefWidth="703.0" styleClass="purchaseDetailPaneDesc" text="Label" />
+                        <Label fx:id="seats" prefHeight="30.0" prefWidth="703.0" styleClass="purchaseDetailPaneDesc" text="Label" wrapText="true" />
                         <Region maxWidth="-Infinity" prefHeight="25.0" prefWidth="1126.0" />
                         <Label prefHeight="27.0" prefWidth="120.0" styleClass="purchaseDetailPaneTitle" text="Ticket(s)">
                            <VBox.margin>
@@ -58,7 +58,7 @@
                            </VBox.margin></Label>
                         <HBox maxWidth="-Infinity" prefWidth="1126.0">
                            <children>
-                              <Label fx:id="ticketType" alignment="TOP_LEFT" prefHeight="60.0" prefWidth="464.0" styleClass="purchaseDetailPaneDesc" text="Label">
+                              <Label fx:id="ticketType" alignment="TOP_LEFT" prefHeight="60.0" prefWidth="460.0" styleClass="purchaseDetailPaneDesc" text="Label" wrapText="true">
                                  <HBox.margin>
                                     <Insets right="281.0" />
                                  </HBox.margin>
@@ -76,7 +76,7 @@
                            </VBox.margin></Label>
                         <HBox maxWidth="-Infinity" prefWidth="1126.0">
                            <children>
-                              <Label fx:id="FnB" alignment="TOP_LEFT" prefHeight="60.0" prefWidth="464.0" styleClass="purchaseDetailPaneDesc" text="Label">
+                              <Label fx:id="FnB" alignment="TOP_LEFT" prefHeight="100.0" prefWidth="460.0" styleClass="purchaseDetailPaneDesc" text="Label" wrapText="true">
                                  <HBox.margin>
                                     <Insets right="281.0" />
                                  </HBox.margin>
@@ -132,7 +132,7 @@
                            </font>
                         </Label>
                         <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="294.0" styleClass="regionBox" />
-                        <ComboBox id="cardChoice" fx:id="selectCard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="294.0" promptText="Select Saved Card" styleClass="combobox">
+                        <ComboBox id="cardChoice" fx:id="selectCard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#autoFillCardDetails" prefHeight="40.0" prefWidth="294.0" promptText="Select Saved Card" styleClass="combobox">
                            <padding>
                               <Insets left="15.0" />
                            </padding>
@@ -140,12 +140,18 @@
                         <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="294.0" styleClass="regionBox" />
                         <Label alignment="CENTER" prefHeight="25.0" prefWidth="349.0" styleClass="checkoutPanelabel" text="OR" />
                         <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="294.0" styleClass="regionBox" />
-                        <Label styleClass="checkoutPanelabel" text="Credit/Debit Card">
+                        <ComboBox id="bankChoice" fx:id="selectBank" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#clearCardSelectionOnChange" prefHeight="40.0" prefWidth="294.0" promptText="Select Bank" styleClass="combobox">
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </ComboBox>
+                        <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="294.0" styleClass="regionBox" />
+                        <Label styleClass="checkoutPanelabel" text="Credit/Debit Card Number">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Label>
-                        <TextField fx:id="cardNumber" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="294.0" styleClass="textField" />
+                        <TextField fx:id="cardNumber" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#clearCardSelectionOnChange" prefHeight="35.0" prefWidth="294.0" styleClass="textField" />
                         <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="294.0" styleClass="regionBox" />
                         <HBox>
                            <children>
@@ -156,7 +162,7 @@
                                           <Insets bottom="5.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <TextField fx:id="expiryDate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="100.0" styleClass="textField" />
+                                    <TextField fx:id="expiryDate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#clearCardSelectionOnChange" prefHeight="35.0" prefWidth="100.0" styleClass="textField" />
                                  </children>
                               </VBox>
                               <Region prefHeight="55.0" prefWidth="42.0" />
@@ -167,7 +173,7 @@
                                           <Insets bottom="5.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <PasswordField fx:id="cvv" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="100.0" styleClass="textField" />
+                                    <PasswordField fx:id="cvv" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#clearCardSelectionOnChange" prefHeight="35.0" prefWidth="100.0" styleClass="textField" />
                                  </children>
                               </VBox>
                            </children>
@@ -178,8 +184,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="TnCAgreement" alignment="TOP_LEFT" mnemonicParsing="false" text="I agree to the terms of the GSC Customer Agreement" wrapText="true" />
-                        <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="294.0" styleClass="regionBox" />
+                        <CheckBox fx:id="agreement" alignment="TOP_LEFT" mnemonicParsing="false" text="I agree to the terms of the GSC Customer Agreement" wrapText="true" />
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Button id="backButton" fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="90.0" text="Back" />

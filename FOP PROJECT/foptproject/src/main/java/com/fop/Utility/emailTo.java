@@ -1,5 +1,7 @@
 package com.fop.Utility;
 
+import com.fop.foptproject.App;
+import com.fop.foptproject.controller.RealTimeStorage;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -104,8 +106,26 @@ public class emailTo{
     // for email with pdf attachment
     private static Message prepMail(Session session,String email,String recepient, String subject, String contentText, boolean isConfirm) throws IOException, WriterException{
         ByteArrayOutputStream ops = new ByteArrayOutputStream();
-        ops = new TicketGenerator().genTicket(ops,"ABC1234", "11/11/2021", "3:45pm", "Eternals", "Hall A", "24/11/2021", "Wednesday 2:00pm", "Student x 2", "E11, E10, E9", "Set A Bundle x 1");
         
+        // other details
+        String userId = RealTimeStorage.getUserId();
+        String cinema = RealTimeStorage.getMovieBooking().get("cinemaName").toString();
+        String movieName = RealTimeStorage.getMovieBooking().get("movieName").toString();
+        String showDate = RealTimeStorage.getMovieBooking().get("showdate").toString();
+        String showtime = RealTimeStorage.getMovieBooking().get("showTime").toString().split(" - ")[0];
+        String theaterId = RealTimeStorage.getMovieBooking().get("theaterId").toString();
+        String bookingNumber = RealTimeStorage.getBookingNumber();
+        String transactionTimeStamp = RealTimeStorage.getTimestamp();
+
+        // get booked ticketType
+        String ticketType = RealTimeStorage.getTypeByQuantity();
+        // get booked seats
+        String seats = RealTimeStorage.getSeats();
+        // get FnB purchase
+        String fnb = RealTimeStorage.getfnb();
+        
+        ops = new TicketGenerator().genTicket(ops,bookingNumber, transactionTimeStamp, movieName, "H0"+theaterId, showDate, showtime, ticketType, seats, fnb);
+        //ByteArrayOutputStream ops,String refId, String transactionTimeStamp, String movieName, String hall, String date, String time,String type, String seats, String FnB
         if(isConfirm){
             try{
                 // create a MimeMessage object and set recipients and subject
@@ -124,7 +144,7 @@ public class emailTo{
                 
                 // set GSC Icon at the top of the email
                 MimeBodyPart messageHead = new MimeBodyPart();
-                DataSource imgsrc = new FileDataSource("src\\main\\resources\\com\\fop\\foptproject\\assets\\company\\logo.png");
+                DataSource imgsrc = new FileDataSource("src/main/resources/com/fop/foptproject/assets/company/logo.png");
                 messageHead.setDataHandler(new DataHandler(imgsrc));
                 messageHead.setContentID("<logoimage>");
                 messageHead.setDisposition(MimeBodyPart.INLINE);
@@ -174,7 +194,7 @@ public class emailTo{
 
             // set GSC Icon at the top of the email
             MimeBodyPart messageHead = new MimeBodyPart();
-            DataSource imgsrc = new FileDataSource("src\\main\\resources\\com\\fop\\foptproject\\assets\\company\\logo.png");
+            DataSource imgsrc = new FileDataSource("src/main/resources/com/fop/foptproject/assets/company/logo.png");
             messageHead.setDataHandler(new DataHandler(imgsrc));
             messageHead.setContentID("<logoimage>");
             messageHead.setDisposition(MimeBodyPart.INLINE);
@@ -254,7 +274,7 @@ public class emailTo{
         
         if(password == false){
             try {
-                content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\Templates\\emailVerificationTemplate.html");
+                content = new templateModifier().readHTML("src/main/resources/com/fop/Templates/emailVerificationTemplate.html");
                 subject = "GSC Email Account Verification";
                 content = String.format(content,firstName,OTP);
             }
@@ -265,7 +285,7 @@ public class emailTo{
         }
         else{
             try {
-                content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\Templates\\changePasswordTemplate.html");
+                content = new templateModifier().readHTML("src/main/resources/com/fop/Templates/changePasswordTemplate.html");
                 subject = "GSC Change Account Password";
                 content = String.format(content,firstName,OTP);
             }
@@ -290,7 +310,7 @@ public class emailTo{
     public boolean sendNotification(String firstName, String bookingId, String bookingNumber ,String movieName, String date, String time, String hall, String seats){
         // multiple recipients are enabled
         try{
-            String content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\Templates\\movieNotificationTemplate.html");
+            String content = new templateModifier().readHTML("src/main/resources/com/fop/Templates/movieNotificationTemplate.html");
             String subject = "GSC Movie Notification";
             content = String.format(content,firstName,bookingNumber,bookingId,movieName,date,time,hall,seats);
             Message message = prepMail(session,EMAIL,reci,subject,content);
@@ -306,7 +326,7 @@ public class emailTo{
     // send booking details after successful purchase  
     public boolean sendBookingConfirmations(String movieName,String firstName,String bookingNumber,String bookingId, String date,String time, String seats, double payment){
         try {
-            String content = new templateModifier().readHTML("src\\main\\resources\\com\\fop\\Templates\\bookingConfirmationTemplate.html");
+            String content = new templateModifier().readHTML("src/main/resources/com/fop/Templates/bookingConfirmationTemplate.html");
             String subject = "Booking Confirmation for " + movieName;
             content = String.format(content,firstName,bookingNumber,bookingId,movieName,date,time,seats,payment);
             Message message = prepMail(session,EMAIL,reci,subject,content,true);

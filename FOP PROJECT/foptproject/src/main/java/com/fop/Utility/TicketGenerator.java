@@ -21,7 +21,7 @@ import java.io.IOException;
 
 public class TicketGenerator {
     
-    public ByteArrayOutputStream genTicket(ByteArrayOutputStream ops,String refId, String transactionDate, String transactionTime, String movieName, String hall, String date, String time,String type, String seats, String FnB) throws IOException, WriterException{
+    public ByteArrayOutputStream genTicket(ByteArrayOutputStream ops,String refId, String transactionTimeStamp, String movieName, String hall, String date, String time,String type, String seats, String FnB) throws IOException, WriterException{
         String src = "src/main/resources/com/fop/Templates/MovieTicketTemplate.pdf";
         
         // get qr code image data
@@ -32,7 +32,7 @@ public class TicketGenerator {
         PdfDocument doc = new PdfDocument(new PdfReader(src),new PdfWriter(ops)); // write the pdf into buffer
         
         // custom font and color
-        PdfFont montserratFont = PdfFontFactory.createFont("src/main/resources/com/fop/font/Montserrat Family/Montserrat-Regular.ttf",true);
+        PdfFont montserratFont = PdfFontFactory.createFont("src/main/resources/com/fop/font/Montserrat/Montserrat-Regular.ttf",true);
         Color white = new DeviceRgb(255,255,255);
         
         // add details
@@ -48,7 +48,7 @@ public class TicketGenerator {
                 .endText();
         canvas.beginText().setFontAndSize(montserratFont,20)
                 .moveText(745,y-286)
-                .showText(String.format("%s %s",transactionDate,transactionTime))
+                .showText(transactionTimeStamp)
                 .endText();
         canvas.beginText().setFontAndSize(montserratFont,20)
                 .moveText(745,y-378)

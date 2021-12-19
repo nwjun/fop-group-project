@@ -54,7 +54,7 @@ public class SeatsController implements Initializable {
     // no of ticket for elder, adult, student, OKU
     private int[] tickets = new int[]{0, 0, 0, 0};
     private int totalTicket = 0;
-    private final String[] ticketPrices = RealTimeStorage.getTicketPrices();
+    private final String[] ticketPrices = RealTimeStorage.getTicketPrices(RealTimeStorage.getMovieBooking().get("theaterType").equals("Premium"));
 
     @FXML
     private GridPane seatsContainer;
@@ -176,13 +176,13 @@ public class SeatsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         final String THEATER_ID, SLOT, DAY;
-//        THEATER_ID = RealTimeStorage.getMovieBooking().get("theaterId").toString();
-//        SLOT = RealTimeStorage.getMovieBooking().get("slots").toString();
-//        DAY = RealTimeStorage.getMovieBooking().get("chosenDay").toString();
+        THEATER_ID = RealTimeStorage.getMovieBooking().get("theaterId").toString();
+        SLOT = RealTimeStorage.getMovieBooking().get("slots").toString();
+        DAY = RealTimeStorage.getMovieBooking().get("chosenDay").toString();
 
-        THEATER_ID = "1";
-        SLOT = "1";
-        DAY = "1";
+//        THEATER_ID = "1";
+//        SLOT = "1";
+//        DAY = "1";
         ArrayList<ArrayList<String>> seatsTemp = getMovieSeats(THEATER_ID, SLOT, DAY);
 
         priceLabels = new Label[]{elderPrice, adultPrice, studentPrice, OKUPrice};
@@ -285,7 +285,8 @@ public class SeatsController implements Initializable {
         }
 
         for (int i = 0; i < ticketPrices.length; i++) {
-            priceLabels[i].setText("RM " + ticketPrices[i]);
+            
+            priceLabels[i].setText(String.format("RM%.2f",Double.parseDouble(ticketPrices[i])));
         }
     }
 
