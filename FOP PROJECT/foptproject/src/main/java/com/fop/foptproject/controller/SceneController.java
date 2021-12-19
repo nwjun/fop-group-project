@@ -170,4 +170,8 @@ public class SceneController {
     public void switchToAdminSeats(ActionEvent event) throws IOException{
         switchScene(event, "AdminSeats.fxml");
     }
+    
+    public void switchToDonePayment(ActionEvent event) throws IOException{
+        switchScene(event, "DonePayment.fxml");
+    }
 }

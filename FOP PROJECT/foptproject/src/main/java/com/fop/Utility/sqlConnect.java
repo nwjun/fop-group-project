@@ -894,9 +894,8 @@ public class sqlConnect {
         return jsonString;
     }
     
-    public static void updateSeats(String jsonString,String theaterId, boolean isTemplate){
-        
-        String query = (isTemplate)?"UPDATE theaters SET seatTemplate = ? WHERE theaterId = ?":"UPDATE theaters SET seat = ? WHERE theaterId = ?";
+    public static void updateSeats(String jsonString,String theaterId, String slots, boolean isTemplate){
+        String query = (isTemplate)?"UPDATE theaters SET seatTemplate = ? WHERE theaterId = ?":String.format("UPDATE theaters SET seat%s = ? WHERE theaterId = ?",slots);
         
         try{
             PreparedStatement prep = conn.prepareStatement(query);
@@ -920,6 +919,62 @@ public class sqlConnect {
         }
         
         return foodCategory;
+    }
+    
+    public static String addTransactionDetail(String userId, String purchasedItem, String seatNumber, String theaterId, String showdate, String showtime, String movieName, String cinema){
+        String receiptId = "";
+        String query = "SELECT receiptNumber " +
+                     "FROM receipts "+
+                     "ORDER BY receiptNumber DESC "+
+                     "LIMIT 1";
+
+        try{
+            //get last receiptNumber
+            PreparedStatement prepstat1 = conn.prepareStatement(query);
+            ResultSet rs = prepstat1.executeQuery();
+            rs.next();
+            receiptId = rs.getString("receiptNumber");
+            receiptId = (receiptId==null)?"R00000":receiptId;
+            // increment by 1
+            receiptId = String.format("R%05d",Integer.parseInt(receiptId.substring(1))+1);
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+        
+        // SQL Statement
+        query = "INSERT INTO receipts(receiptNumber, userId, purchasedItem, seatNumber, showDate, showTime, movie, cinema, theaterId)" 
+              +"VALUE(?,?,?,?,?,?,?,?,?)";
+        
+        
+        int rowAffected = 0; // check sql response
+        
+        try{
+            // create a SQL prepare statement object
+            PreparedStatement prepstat = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+
+            // filling the fields
+            prepstat.setString(1, receiptId);
+            prepstat.setString(2, userId);
+            prepstat.setString(3, purchasedItem);
+            prepstat.setString(4, seatNumber);
+            prepstat.setString(5, showdate);
+            prepstat.setString(6, showtime);
+            prepstat.setString(7, movieName);
+            prepstat.setString(8, cinema);
+            prepstat.setString(9, theaterId);
+            
+            // execute the statement
+            rowAffected = prepstat.executeUpdate();
+            
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+        
+        return receiptId;
     }
 
 }

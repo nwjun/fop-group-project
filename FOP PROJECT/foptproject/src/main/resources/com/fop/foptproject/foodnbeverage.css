@@ -80,9 +80,7 @@
     -fx-text-fill: #FFFFFF;
     -fx-font-family: 'Montserrat';
     -fx-font-size: 24px;
-    -fx-padding : 0 0 0 75px;
-    
-    
+    -fx-padding : 0 0 0 75px;    
 }
 
 #shoppingCartBtn {
