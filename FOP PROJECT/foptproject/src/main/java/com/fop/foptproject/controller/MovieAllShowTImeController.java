@@ -226,9 +226,13 @@ public class MovieAllShowTImeController implements Initializable {
     }
     
     @FXML
-    private void switchToAdminMain(ActionEvent event) throws IOException {
-        SceneController switchScene = new SceneController();
-        switchScene.switchToLandingPage(event);
+    private void switchToHome(ActionEvent event) throws IOException {
+        if(RealTimeStorage.getIsLogin()){
+            new SceneController().switchToHomeLogined(event);
+        }
+        else{
+            new SceneController().switchToHome(event);
+        }
     }
 
     @FXML
