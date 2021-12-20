@@ -63,7 +63,7 @@ public class SeatsController implements Initializable {
     private Button studentMinus, studentAdd, adultMinus, adultAdd, okuMinus, okuAdd, elderAdd, elderMinus, nextButton;
     @FXML
     private Label studentCount, adultCount, okuCount, elderCount, selectedTicketLabel,
-            totalLabel, elderPrice, adultPrice, studentPrice, OKUPrice;
+            totalLabel, elderPrice, adultPrice, studentPrice, OKUPrice, hallLabel;
 
     private Label[] priceLabels;
 
@@ -184,6 +184,8 @@ public class SeatsController implements Initializable {
 //        THEATER_ID = "1";
 //        SLOT = "1";
 //        DAY = "1";
+        
+        hallLabel.setText("HALL "+ THEATER_ID);
         ArrayList<ArrayList<String>> seatsTemp = getMovieSeats(THEATER_ID, SLOT, DAY);
 
         priceLabels = new Label[]{elderPrice, adultPrice, studentPrice, OKUPrice};
@@ -253,10 +255,16 @@ public class SeatsController implements Initializable {
 
         }
 
-        ObservableList<Node> seats = seatsContainer.getChildren();
-        for (Node node : seats) {
+        boolean coupleAdd = false;
+        final ObservableList<Node> gridPaneChildren = seatsContainer.getChildren();
+        for (int i = 0; i < gridPaneChildren.size(); i++) {
+            Node node = gridPaneChildren.get(i);
+            final int k = i;
+            final boolean tempCoupleAdd = coupleAdd;
+//        for (Node node : gridPaneChildren) {
             if (node instanceof CheckBox) {
                 CheckBox seat = (CheckBox) node;
+
                 // add listener for checking and unchecking box
                 seat.selectedProperty().addListener(
                         (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
@@ -267,6 +275,24 @@ public class SeatsController implements Initializable {
                             if (old_val == false && new_val == true && selectedLength < totalTicket) {
                                 selected.add(new String[]{String.valueOf(row), String.valueOf(col)});
 
+                                // seat selected is double-seat
+                                if (row == maxRow - 1 || col == 0 || col == 1 || col == maxCol - 2 || col == maxCol - 1) {
+                                    // can choose double seat
+                                    if ((totalTicket - selectedLength) >= 2) {
+                                        CheckBox temp = getDoubleSeat(row, col, maxRow, maxCol, gridPaneChildren, k);
+                                        
+                                        // if next seat is not disabled seat
+                                        if (!temp.isDisable()) {
+                                            temp.setSelected(true);
+                                        }
+                                        
+                                        
+                                    } else {
+                                        // unselect seat for those who aren't couple
+                                        ((CheckBox) gridPaneChildren.get(k)).setSelected(false);
+                                    }
+                                }
+
                             } // Unselected
                             else if (old_val == true && new_val == false) {
                                 // new string[]{1,2} == new string[]{1,2} will return false as "==" compare references to objects(address)
@@ -274,9 +300,20 @@ public class SeatsController implements Initializable {
                                 // remove [row,col] from ArrayList if unchecked
                                 selected.removeIf(n -> Arrays.equals(n, new String[]{String.valueOf(row), String.valueOf(col)}));
 
+                                // seat selected is double-seat
+                                if (row == maxRow - 1 || col == 0 || col == 1 || col == maxCol - 2 || col == maxCol - 1) {
+                                    CheckBox temp = getDoubleSeat(row, col, maxRow, maxCol, gridPaneChildren, k);
+                                    
+                                    // if next seat is not disabled seat
+                                    if (!temp.isDisable()) {
+                                        temp.setSelected(false);
+                                    }
+
+                                }
                             } else {
                                 seat.selectedProperty().set(old_val);
                             }
+                            // set number of selected seat
                             selectedLength = selected.size();
                             selectedTicketLabel.setText(Integer.toString(selectedLength));
                             toggleNextBtn();
@@ -286,8 +323,8 @@ public class SeatsController implements Initializable {
         }
 
         for (int i = 0; i < ticketPrices.length; i++) {
-            
-            priceLabels[i].setText(String.format("RM%.2f",Double.parseDouble(ticketPrices[i])));
+
+            priceLabels[i].setText(String.format("RM%.2f", Double.parseDouble(ticketPrices[i])));
         }
     }
 
@@ -333,5 +370,24 @@ public class SeatsController implements Initializable {
         } else {
             nextButton.setDisable(true);
         }
+    }
+
+    private CheckBox getDoubleSeat(int row, int col, int maxRow, int maxCol, ObservableList<Node> gridPaneChildren, int k) {
+        // return another double seat based on current selected seat
+        CheckBox temp;
+        // selected right-hand side seat, so couple seat is at left-hand side
+        if (col == maxCol - 1 || col == 1 || col == maxCol - 3) {
+            temp = (CheckBox) gridPaneChildren.get(k - 1);
+        } else {
+            // couple seat is at right-hand side
+            temp = (CheckBox) gridPaneChildren.get(k + 1);
+            // if right-hand side seat is disabled, get left-hand side seat
+            // particularly for last row, or else selecting one seat will select the whole row
+            if (temp.isDisable()) {
+                temp = (CheckBox) gridPaneChildren.get(k - 1);
+            }
+        }
+
+        return temp;
     }
 }
