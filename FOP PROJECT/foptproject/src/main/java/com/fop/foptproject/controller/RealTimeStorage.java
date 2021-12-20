@@ -414,35 +414,4 @@ public class RealTimeStorage {
     public static HashMap<String, Integer> retrieveAllPurchaseDetail() {
         return RealTimeStorage.FoodnBeverage;
     }
-
 }
-
-// reference for iterating thru the result set
-//        HashMap<String,HashMap<String,ArrayList<String>>> resultset = json.parseAllShowTimes();
-//        
-//        int j = 0;
-//        for(int i = 0; i < 7 ; i++){
-//            j = 0;
-//            System.out.println();
-//            while(true){
-//                try{
-//                    System.out.printf("%s | %s \n",resultset.get("hall").get(Integer.toString(i)).get(j),resultset.get("showtime").get(Integer.toString(i)).get(j));
-//                    j++;
-//                }
-//                catch(Exception e){
-//                    break;
-//                }
-//            }
-//        }
-//        
-//        ArrayList<String> casts = json.parseOneDArray("Cast");
-//        int i = 0;
-//        while(true){
-//            try{
-//                System.out.println(casts.get(i));
-//                i++;
-//            }
-//            catch(Exception e){
-//                break;
-//            }
-//        }

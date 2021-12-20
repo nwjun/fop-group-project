@@ -148,47 +148,33 @@ public class MovieAllShowTImeController implements Initializable {
     }
     
     private AnchorPane MakeButton(String movieId, double length, int x){
-        Button booknow = new Button();
+        Button info = new Button();
         
-        booknow.setId(movieId);
-        booknow.setText("Book Now");
-        booknow.setLayoutX(304);
-        booknow.setLayoutY(20);
-        booknow.setPrefWidth(100);
-        booknow.setPrefHeight(31);
-        booknow.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
+        info.setId(movieId);
+        info.setText("Info");
+        info.setLayoutX(304);
+        info.setLayoutY(20);
+        info.setPrefWidth(100);
+        info.setPrefHeight(31);
+        info.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
         
-        booknow.setOnMouseEntered(new EventHandler<MouseEvent>(){
+        info.setOnMouseEntered(new EventHandler<MouseEvent>(){
             
             @Override
             public void handle(MouseEvent t){
-                booknow.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");  
+                info.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");  
             }
         });
-        booknow.setOnMouseExited(new EventHandler<MouseEvent>(){
+        info.setOnMouseExited(new EventHandler<MouseEvent>(){
             
             @Override
             public void handle(MouseEvent t){
-                booknow.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
+                info.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
             }
         });
         
-        booknow.setOnAction((e)->{ 
-            if(RealTimeStorage.getPermission()==null){
-                Alert a = new Alert(AlertType.ERROR);
-                a.setTitle("Unauthorized Access");
-                a.setContentText("Please log in to book a movie");
-                Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
-                stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
-                stage.showAndWait();
-                try {
-                    new SceneController().switchToRegisterAndLogin(e);
-                } catch (IOException ex) {
-                    return;
-                }
-                return;
-            }
-            this.movieID = booknow.getId();
+        info.setOnAction((e)->{ 
+            this.movieID = info.getId();
             FXMLLoader loader = new FXMLLoader(App.class.getResource("MoviesDetailsPopUp.fxml"));
             Stage stage = new Stage(StageStyle.UNDECORATED);
             String path1 = App.class.getResource("assets/company/logo2.png").toString(); 
@@ -202,21 +188,21 @@ public class MovieAllShowTImeController implements Initializable {
             try {
                 stage.setScene(new Scene(loader.load()));
                 MoviesDetailsPopUpController controller = loader.getController();
-                controller.initData(booknow.getId());
-                RealTimeStorage.setLookingAt(booknow.getId());
+                controller.initData(info.getId());
+                RealTimeStorage.setLookingAt(info.getId());
             } catch (ParseException | IOException ex) {
                 Logger.getLogger(MovieAllShowTImeController.class.getName()).log(Level.SEVERE, null, ex);
             }
             stage.show();
         });
         
-        AnchorPane booknowbtn = new AnchorPane();
-        booknowbtn.setStyle("-fx-padding: 0 0 45 0");
-        booknowbtn.setPrefWidth(401);
-        booknowbtn.setPrefHeight(0);
-        booknowbtn.getChildren().addAll(booknow);
+        AnchorPane infobtn = new AnchorPane();
+        infobtn.setStyle("-fx-padding: 0 0 45 0");
+        infobtn.setPrefWidth(401);
+        infobtn.setPrefHeight(0);
+        infobtn.getChildren().addAll(info);
         
-        return booknowbtn;       
+        return infobtn;       
     }
     
     public String getMovieID(){

@@ -160,10 +160,7 @@ private void minusCountC(int index, Label label){
 
 //8 Hall options ComboBox
         hallComboBox.getItems().addAll("Hall 01", "Hall 02", "Hall 03","Hall 04","Hall 05","Hall 06","Hall 07","Hall 08");
-        
-        
-        
-        
+           
         sqlConnect sql = new sqlConnect();
         JSONToolSets json = new JSONToolSets(sql.querySeats("8","1",true),true);
         HashMap<String,ArrayList<String>> seatArr = json.parseTheaterSeat(5);
@@ -172,7 +169,7 @@ private void minusCountC(int index, Label label){
         json.addColumn(1,true);
         json.addRow(1);
         String jsonString = json.getNewSeatArr().toString();
-        sql.updateSeats(jsonString,"1",true);
+        //sql.updateSeats(jsonString,"1",true);
     }
 
   
