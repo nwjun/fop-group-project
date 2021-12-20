@@ -53,7 +53,7 @@
                            </fill>
                         </Rectangle>
                         <Label prefHeight="7.0" prefWidth="46.0" text="Screen" textFill="WHITE" StackPane.alignment="BOTTOM_CENTER" />
-                        <Label text="HALL A" textFill="WHITE" translateX="-5.0" StackPane.alignment="TOP_CENTER">
+                        <Label fx:id="hallLabel" text="HALL A" textFill="WHITE" translateX="-5.0" StackPane.alignment="TOP_CENTER">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
