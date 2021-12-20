@@ -12,6 +12,7 @@ import com.fop.foptproject.CommonMethod;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
@@ -23,6 +24,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -236,6 +238,7 @@ public class profileController implements Initializable {
                     updateProfile(newFieldValues[i], i);
                 }
             }
+            createAlert();
 
         });
 
@@ -291,7 +294,6 @@ public class profileController implements Initializable {
 
         banks = getBanks();
         int bankNumber = (banks == null) ? 0 : banks.size();
-//        ArrayList<HBox> bankButtonContainer = new ArrayList<>();
 
         for (int i = -1; i < bankNumber; i++) {
             if (bankNumber == 0) {
@@ -300,7 +302,8 @@ public class profileController implements Initializable {
                 VBox detailsContainer = new VBox(emptyLabel, new Label(" "));
                 detailsContainer.setAlignment(Pos.CENTER);
                 banksContainer.getChildren().add(detailsContainer);
-            } else {
+            } 
+            else {
                 if (i == -1) {
                     i = i + 1;
                 }
@@ -330,7 +333,7 @@ public class profileController implements Initializable {
             Stage popupStage = SceneController.showPopUpStage("AddCardPopUp.fxml");
             popupStage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("AddCardPopUp.fxml"));
-            AddCardPopUpController addCardPopUpController = fxmlLoader.getController();
+            Parent addCardPopUpController = fxmlLoader.getController();
 
             if (popupStage != null) {
                 popupStage.showAndWait();
@@ -403,13 +406,21 @@ public class profileController implements Initializable {
     }
 
     public String[][] getHistories() {
-        final int NUM = 30;
+        HashMap<String,ArrayList<String>> fetched = new HashMap<>();
+        final int NUM = fetched.size();
+        
+        // if no record is found
+        if(NUM == 0){
+            return new String[][]{};
+        }
+        
+        // if record is found
         String[][] histories = new String[NUM][4];
         for (int i = 0; i < NUM; i++) {
-            histories[i][0] = "Eternals";
-            histories[i][1] = "21/11/2021 11:45am";
-            histories[i][2] = "Sunway Pyramid";
-            histories[i][3] = "E11, E12, E13";
+            histories[i][0] = fetched.get("movieName").get(i);
+            histories[i][1] = fetched.get("showDateTime").get(i);
+            histories[i][2] = fetched.get("cinemaName").get(i);
+            histories[i][3] = fetched.get("seatNumber").get(i);
         }
 
         return histories;
@@ -487,7 +498,6 @@ public class profileController implements Initializable {
                 break;
 
         }
-        createAlert();
     }
 
 }

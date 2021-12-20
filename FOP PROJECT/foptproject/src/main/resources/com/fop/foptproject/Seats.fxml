@@ -195,15 +195,21 @@
                                        </padding></Label>
                                     <Label fx:id="totalLabel" text="TOTAL: RM0.00" StackPane.alignment="CENTER_LEFT">
                                        <StackPane.margin>
-                                          <Insets />
+                                          <Insets bottom="30.0" />
                                        </StackPane.margin></Label>
-                                    <Button mnemonicParsing="false" onAction="#changeToMovieBooking" prefHeight="25.0" prefWidth="70.0" style="-fx-background-radius: 10;" styleClass="Button" text="Back" StackPane.alignment="BOTTOM_LEFT" />
-                                    <Button fx:id="nextButton" disable="true" mnemonicParsing="false" onAction="#toFnB" prefHeight="25.0" prefWidth="70.0" style="-fx-background-radius: 10;" styleClass="Button" text="Next" StackPane.alignment="BOTTOM_RIGHT" />
+                                    <Button fx:id="nextButton" disable="true" mnemonicParsing="false" onAction="#toFnB" prefHeight="25.0" prefWidth="70.0" style="-fx-background-radius: 10;" styleClass="Button" text="Next" StackPane.alignment="BOTTOM_RIGHT">
+                                       <StackPane.margin>
+                                          <Insets bottom="30.0" />
+                                       </StackPane.margin></Button>
                                     <Label fx:id="selectedTicketLabel" alignment="CENTER" style="-fx-border-width: 1; -fx-border-style: solid; -fx-border-radius: 50; -fx-border-color: #ffee00;" text="0" translateX="-60.0" StackPane.alignment="TOP_CENTER">
                                        <padding>
                                           <Insets bottom="4.0" left="8.0" right="8.0" top="4.0" />
                                        </padding>
                                    </Label>
+                                    <Button mnemonicParsing="false" onAction="#changeToMovieBooking" prefHeight="25.0" prefWidth="70.0" style="-fx-background-radius: 10;" styleClass="Button" text="Back" StackPane.alignment="BOTTOM_LEFT">
+                                       <StackPane.margin>
+                                          <Insets bottom="30.0" />
+                                       </StackPane.margin></Button>
                                  </children>
                               </StackPane>
                               <Region prefHeight="167.0" prefWidth="184.0" HBox.hgrow="ALWAYS" />

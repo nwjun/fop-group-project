@@ -23,7 +23,8 @@ import javafx.stage.Stage;
 public class sqlConnect {
 
     private static Connection conn;
-    protected static final String SALT = "c2afca4e3995e4e86caf97e63d644f";
+    protected static final String SALT2 = "c2afca4e3995e4e86caf97e63d644f";
+    protected static final String SALT1 = "e4f83486a26ecd0ad4d50939b6460d";
     private final static int TRIAL = 5;
 
     public sqlConnect() {
@@ -129,7 +130,7 @@ public class sqlConnect {
     public static int checkCredentials(String userEmail, String password) {
         // preprocess input
         // SHA-256
-        String combination = userEmail + SALT + password;
+        String combination = SALT1 + password + SALT2;
         String inputPass = DigestUtils.sha256Hex(combination);
 
         // query statement
@@ -173,7 +174,7 @@ public class sqlConnect {
                 + "FROM usercredentials "
                 + "ORDER BY userId DESC "
                 + "LIMIT 1";
-        String combination = email + SALT + password;
+        String combination = SALT1 + password + SALT2;
         password = DigestUtils.sha256Hex(combination);
 
         try {
@@ -561,7 +562,7 @@ public class sqlConnect {
         String query = "DELETE FROM usercredentials "
                 + "WHERE email = ? AND password = ?";
 
-        String combination = email + SALT + password;
+        String combination = SALT1 + password + SALT2;
         password = DigestUtils.sha256Hex(combination);
 
         try {
@@ -963,7 +964,7 @@ public class sqlConnect {
     public static int setNewPassword(String userEmail, String newPassword) {
         // preprocess input
         // SHA-256
-        String combination = userEmail + SALT + newPassword;
+        String combination = SALT1 + newPassword + SALT2;
         String inputPass = DigestUtils.sha256Hex(combination);
 
         // query statement
@@ -1017,7 +1018,7 @@ public class sqlConnect {
         // query statement
         String query = "UPDATE usercredentials SET email = ? "
                 + "WHERE userId = ?";
-
+        System.out.println(newFieldValue);
         int rowAffected = 0;
         try {
             // retrieve from Database
@@ -1036,7 +1037,42 @@ public class sqlConnect {
     }
     
     public HashMap<String,ArrayList<String>> queryPurchaseHistory(String userId){
-        return null;
+        
+        String query = "SELECT movie,showDate,showTime,seatNumber,cinema FROM receipts WHERE userId = ?";
+        
+        // initialize the HashMap
+        HashMap<String,ArrayList<String>> result = new HashMap<>();
+        // initialize all ArrayList that are going to put into HashMap
+        ArrayList<String> movie = new ArrayList<>();
+        ArrayList<String> cinema = new ArrayList<>();
+        ArrayList<String> showDateTime = new ArrayList<>();
+        ArrayList<String> seatNumber = new ArrayList<>();
+        
+        try{
+            PreparedStatement prep = conn.prepareStatement(query);
+            prep.setString(1,userId);
+     
+            ResultSet rs = prep.executeQuery();
+            
+            // get all fetched data
+            while(rs.next()){
+                movie.add(rs.getString("movie"));
+                cinema.add(rs.getString("cinema"));
+                showDateTime.add(rs.getString("showDate") + " " + rs.getString("showTime"));
+                seatNumber.add(rs.getString("seatNumber"));
+            }
+        }
+        catch(SQLException e){
+            return null;
+        }
+        
+        // put into HashMap
+        result.put("movieName",movie);
+        result.put("cinemaName",cinema);
+        result.put("showDateTime",showDateTime);
+        result.put("seatNumber",seatNumber);
+        
+        return result;
     }
 
 }

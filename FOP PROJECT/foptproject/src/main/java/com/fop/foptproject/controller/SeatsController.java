@@ -54,8 +54,8 @@ public class SeatsController implements Initializable {
     // no of ticket for elder, adult, student, OKU
     private int[] tickets = new int[]{0, 0, 0, 0};
     private int totalTicket = 0;
-//    private final String[] ticketPrices = RealTimeStorage.getTicketPrices(RealTimeStorage.getMovieBooking().get("theaterType").equals("Premium"));
-    private final String[] ticketPrices = RealTimeStorage.getTicketPrices(false);
+    private final String[] ticketPrices = RealTimeStorage.getTicketPrices(RealTimeStorage.getMovieBooking().get("theaterType").equals("Premium"));
+    //private final String[] ticketPrices = RealTimeStorage.getTicketPrices(false);
 
     @FXML
     private GridPane seatsContainer;
