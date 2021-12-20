@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import org.json.simple.parser.ParseException;
 /**
@@ -85,10 +86,25 @@ public class MoviesDetailsPopUpController implements Initializable {
     
     @FXML
     public void changeToMovieBooking(ActionEvent event) throws IOException{
-        SceneController switchScene = new SceneController();
-        switchScene.switchToMovieBooking(event);
-        Stage stage = (Stage) booknowButton.getScene().getWindow();
-        stage.close();
+        if(!RealTimeStorage.getIsLogin()){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Unauthorized Access");
+            a.setContentText("Please log in to book a movie");
+            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+            Stage stage1 = (Stage) booknowButton.getScene().getWindow();
+            stage1.close();
+            new SceneController().switchToRegisterAndLogin(event);
+            return;
+        }
+        else{
+            Stage stage = (Stage) booknowButton.getScene().getWindow();
+            stage.close();
+            SceneController switchScene = new SceneController();
+            switchScene.switchToMovieBooking(event);
+        }
+        
     }
     
     @FXML

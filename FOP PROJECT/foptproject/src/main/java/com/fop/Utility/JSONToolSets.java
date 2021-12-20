@@ -9,7 +9,10 @@ import java.util.HashMap;
 import org.json.*;
 import com.fop.foptproject.controller.RealTimeStorage;
 
-
+/**
+ * 
+ * @author WeiXin
+ */
 public class JSONToolSets {
     private JSONObject jsonObj;
     private int columnSize;
