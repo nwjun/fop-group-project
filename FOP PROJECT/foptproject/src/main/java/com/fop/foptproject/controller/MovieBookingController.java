@@ -33,7 +33,7 @@ import javafx.util.Callback;
 /**
  * FXML Controller class
  *
- * @author shiao
+ * @author shiao, WeiXin
  */
 public class MovieBookingController implements Initializable {
     

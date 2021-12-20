@@ -16,6 +16,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ *
+ * @author WeiXin, Kuck
+ */
 public class sqlConnect {
 
     private static Connection conn;
@@ -1029,6 +1033,10 @@ public class sqlConnect {
         }
 
         return rowAffected;
+    }
+    
+    public HashMap<String,ArrayList<String>> queryPurchaseHistory(String userId){
+        return null;
     }
 
 }

@@ -12,7 +12,7 @@ import java.io.IOException;
 public class readConfig {
     public Properties readconfigfile(){
         Properties prop = new Properties();
-        try (FileInputStream fis = new FileInputStream("src\\main\\resources\\com\\fop\\config\\configuration.config")) {
+        try (FileInputStream fis = new FileInputStream("src/main/resources/com/fop/config/configuration.config")) {
             prop.load(fis);
         } 
         catch (FileNotFoundException ex){
