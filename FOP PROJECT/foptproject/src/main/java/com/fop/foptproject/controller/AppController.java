@@ -41,7 +41,10 @@ import com.fop.foptproject.Food;
 import com.fop.foptproject.Movie;
 import com.fop.foptproject.SetUpLanding;
 
-
+/**
+ * 
+ * @author jun
+ */
 public class AppController implements Initializable {
     private CommonMethod method = new CommonMethod();
     

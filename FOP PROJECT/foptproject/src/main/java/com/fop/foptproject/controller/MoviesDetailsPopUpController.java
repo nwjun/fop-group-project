@@ -32,7 +32,7 @@ import org.json.simple.parser.ParseException;
 /**
  * FXML Controller class
  *
- * @author shiao
+ * @author shiao, kuckn, WeiXin
  */
 public class MoviesDetailsPopUpController implements Initializable {
     

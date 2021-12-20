@@ -3,40 +3,38 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.fop.Utility;
-import java.io.File;
+
 import java.io.IOException;
-import java.util.Hashtable;
-
-import javax.imageio.ImageIO;
-
 import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.qrcode.QRCodeWriter;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 
+/**
+ * 
+ * @author WeiXin
+ */
 public class qrGenerator {
-    public static ByteArrayOutputStream genQR(String refID, String movieID, String time, String date, String hall, String seat) throws WriterException, UnsupportedEncodingException, IOException{
+
+    public static ByteArrayOutputStream genQR(String refID, String movieID, String time, String date, String hall, String seat) throws WriterException, UnsupportedEncodingException, IOException {
         ByteArrayOutputStream ops = new ByteArrayOutputStream();
         String timestamp = time + " " + date;
-        String compiledData = String.format("%s#%s#%s#%s#%s#",refID,timestamp,movieID,hall,seat);
-        
+        String compiledData = String.format("%s#%s#%s#%s#%s#", refID, timestamp, movieID, hall, seat);
+
         BitMatrix canvas = new MultiFormatWriter().encode(
-                new String(compiledData.getBytes("utf-8"),"utf-8"),
-                BarcodeFormat.QR_CODE,130,130
+                new String(compiledData.getBytes("utf-8"), "utf-8"),
+                BarcodeFormat.QR_CODE, 130, 130
         );
-        
+
         MatrixToImageWriter.writeToStream(
                 canvas,
                 "png",
-                ops     
+                ops
         );
-        
+
         return ops;
     }
 }

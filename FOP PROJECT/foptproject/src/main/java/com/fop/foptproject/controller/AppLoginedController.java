@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author User
+ * @author WeiXin
  */
 public class AppLoginedController extends AppController implements Initializable{
     private CommonMethod method = new CommonMethod();      

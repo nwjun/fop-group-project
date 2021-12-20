@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author User
+ * @author WeiXin
  */
 public class LoginRegisterController implements Initializable {
     // class attribute

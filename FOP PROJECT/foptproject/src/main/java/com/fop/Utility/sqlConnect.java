@@ -1056,10 +1056,14 @@ public class sqlConnect {
             
             // get all fetched data
             while(rs.next()){
-                movie.add(rs.getString("movie"));
-                cinema.add(rs.getString("cinema"));
-                showDateTime.add(rs.getString("showDate") + " " + rs.getString("showTime"));
-                seatNumber.add(rs.getString("seatNumber"));
+                String movieName = rs.getString("movie");
+                String cinemaName = rs.getString("cinema");
+                String showTimeStamp = rs.getString("showDate") + " " + rs.getString("showTime");
+                String seats = rs.getString("seatNumber");
+                movie.add(movieName);
+                cinema.add(cinemaName);
+                showDateTime.add(showTimeStamp);
+                seatNumber.add(seats);
             }
         }
         catch(SQLException e){
