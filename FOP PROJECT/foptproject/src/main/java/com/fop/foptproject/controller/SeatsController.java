@@ -242,10 +242,12 @@ public class SeatsController implements Initializable {
                         String val = seatsTemp.get(tempRow).get(tempCol);
                         if (val.equals("1")) {
                             newSeat.setDisable(true);
-                            newSeat.setId("soldSeat");
+                            newSeat.getStyleClass().add("soldSeat");
                         } else if (val.equals("-1")) {
                             newSeat.setDisable(true);
-
+                            newSeat.getStyleClass().add("availableSeat");
+                        }else{
+                            newSeat.getStyleClass().add("availableSeat");
                         }
                         seatsContainer.add(newSeat, col, row);
                     }

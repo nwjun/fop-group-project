@@ -17,20 +17,21 @@
 }
 
 .check-box>.box>.mark {
-  -fx-background-image: url("assets/availableSeat.png");
   -fx-background-position: center;
   -fx-background-repeat: stretch;
-  -fx-background-color: rgba(0,0,0,0);
   -fx-shape: none;
   -fx-padding: 20;
 }
 
-.check-box:selected>.box>.mark{
-  -fx-background-color: rgba(0,0,0,0);
+.availableSeat>.box>.mark{
+    -fx-background-image: url("assets/availableSeat.png");
+}
+
+.availableSeat:selected>.box>.mark{
   -fx-background-image: url("assets/selectedSeat.png");
 }
 
-#soldSeat{
-    -fx-background-color: rgba(0,0,0,0);
+
+.soldSeat:disabled>.box>.mark{
     -fx-background-image: url("assets/bookedSeat.png");
 }
