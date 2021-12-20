@@ -1,15 +1,10 @@
 package com.fop.foptproject;
 
-import com.fop.Utility.JSONToolSets;
-import com.fop.Utility.emailTo;
 import com.fop.foptproject.controller.SceneController;
 import com.fop.Utility.readConfig;
 import com.fop.Utility.sqlConnect;
 import com.fop.foptproject.controller.RealTimeStorage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import org.json.*;
 import java.util.Properties;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -24,7 +19,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class App extends Application{
-
+    
     @Override
     public void start(Stage primaryStage) throws IOException {
 
@@ -34,7 +29,7 @@ public class App extends Application{
 
 
         boolean DEBUG = false;
-        String fxmlFile = "Seats.fxml";
+        String fxmlFile = "userProfile.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";

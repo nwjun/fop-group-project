@@ -2,11 +2,6 @@ package com.fop.foptproject.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -19,6 +14,10 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * 
+ * @author jun, WeiXin
+ */
 public class AddCardPopUpController implements Initializable {
 
     @FXML

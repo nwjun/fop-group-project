@@ -47,6 +47,10 @@ To be changed:
 1. convert all hardcoded details into arguments
 */
 
+/**
+ * 
+ * @author WeiXin
+ */
 public class emailTo{
     // shared attributes
     private static String EMAIL;

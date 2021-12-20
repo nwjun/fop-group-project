@@ -7,19 +7,16 @@ package com.fop.foptproject.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 /**
  * FXML Controller class
  *
- * @author User
+ * @author WeiXin
  */
 public class DonePaymentController implements Initializable {
 

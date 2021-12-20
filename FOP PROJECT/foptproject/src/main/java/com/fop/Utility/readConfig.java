@@ -9,6 +9,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * 
+ * @author WeiXin
+ */
 public class readConfig {
     public Properties readconfigfile(){
         Properties prop = new Properties();

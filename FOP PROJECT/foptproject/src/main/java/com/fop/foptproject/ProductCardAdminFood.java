@@ -7,6 +7,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 
+/**
+ * 
+ * @author kuckn
+ */
 public class ProductCardAdminFood{
     private HashMap<String,Object> productDetails = new HashMap<>();
 //    private HBox productCard;

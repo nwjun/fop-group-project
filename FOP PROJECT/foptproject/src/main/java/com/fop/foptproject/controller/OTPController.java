@@ -1,9 +1,5 @@
 package com.fop.foptproject.controller;
 
-/**
- * Author:WeiXin
- */
-
 import com.fop.Utility.emailTo;
 import com.fop.Utility.sqlConnect;
 import java.io.IOException;
@@ -17,7 +13,6 @@ import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,7 +22,11 @@ import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
 
-
+/**
+ * FXML Controller Class
+ * 
+ * @author WeiXin
+ */
 public class OTPController implements Initializable{
     @FXML
     private Button resendButton;

@@ -11,6 +11,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 
+/**
+ * 
+ * @author kuckn
+ */
 public class ProductCardAdminMovie{
     private HashMap<String,Object> movieDetails = new HashMap<>();
     private VBox imgCard;

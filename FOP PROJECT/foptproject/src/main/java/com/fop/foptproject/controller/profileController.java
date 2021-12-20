@@ -13,23 +13,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
@@ -68,6 +64,7 @@ public class profileController implements Initializable {
     StackPane centerContainer;
 
     CommonMethod commonMethod = new CommonMethod();
+    sqlConnect sql = new sqlConnect();
     ArrayList<String[]> banks;
     boolean overallReturnVal = true;
 
@@ -298,8 +295,8 @@ public class profileController implements Initializable {
         for (int i = -1; i < bankNumber; i++) {
             if (bankNumber == 0) {
                 Label emptyLabel = new Label("No credit/debit card being added yet");
-                emptyLabel.setOpacity(0.7);
-                VBox detailsContainer = new VBox(emptyLabel, new Label(" "));
+                emptyLabel.setStyle("-fx-font-size:14px; -fx-padding:10 0 10 0; -fx-opacity:0.6;");
+                VBox detailsContainer = new VBox(emptyLabel);
                 detailsContainer.setAlignment(Pos.CENTER);
                 banksContainer.getChildren().add(detailsContainer);
             } 
@@ -386,9 +383,17 @@ public class profileController implements Initializable {
             String[] history = histories[i];
             VBox historyContainer = new VBox();
 
-            for (int j = 0; j < history.length; j++) {
-                Label label = new Label(history[j]);
-
+            for (int j = -1; j < history.length; j++) {
+                Label label = new Label();
+                if(history.length == 0){
+                    label.setText("No record is found");
+                    label.setStyle("-fx-font-size:18px; -fx-opacity:0.7; -fx-padding:10 0 10 0");
+                    j++;
+                }
+                else{
+                    if(j==-1)j++;
+                    label.setText(history[j]);
+                }
                 if (j == 0) {
                     label.getStyleClass().add("historyHeading");
                 } else {
@@ -396,6 +401,7 @@ public class profileController implements Initializable {
                 }
 
                 historyContainer.getChildren().add(label);
+                
             }
             historyContainers.add(historyContainer);
 
@@ -406,12 +412,12 @@ public class profileController implements Initializable {
     }
 
     public String[][] getHistories() {
-        HashMap<String,ArrayList<String>> fetched = new HashMap<>();
-        final int NUM = fetched.size();
-        
+        HashMap<String,ArrayList<String>> fetched = sql.queryPurchaseHistory(RealTimeStorage.getUserId());
+        final int NUM = fetched.get("movieName").size();
+        System.out.println(NUM);
         // if no record is found
         if(NUM == 0){
-            return new String[][]{};
+            return new String[][]{{}};
         }
         
         // if record is found
@@ -483,11 +489,13 @@ public class profileController implements Initializable {
                 overallReturnVal = returnVal == 1? true:false;
                 break;
             case 1:
+                // check dup
                 RealTimeStorage.setEmail(newFieldValue);
                 returnVal = sqlConn.setNewUserEmail(RealTimeStorage.getUserId(), newFieldValue);
                 overallReturnVal = returnVal == 1? true:false;
                 break;
             case 2:
+                // check dup
                 RealTimeStorage.setPNumber(newFieldValue);
                 returnVal = sqlConn.setNewUsernameOrPhoneNumber(RealTimeStorage.getUserEmail(), newFieldValue, true);
                 overallReturnVal = returnVal == 1? true:false;

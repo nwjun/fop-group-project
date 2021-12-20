@@ -3,7 +3,6 @@ package com.fop.foptproject.controller;
 import com.fop.Utility.JSONToolSets;
 import com.fop.Utility.sqlConnect;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import org.json.*;
 
@@ -11,25 +10,30 @@ import org.json.*;
  * @author WeiXin
  */
 public class RealTimeStorage {
-
+    
+    // must not be cleared
     private static sqlConnect sql = new sqlConnect();
-    private static boolean isLogin = false;
     private static final String[] SLOTS = {"10.00AM", "03.30PM", "08.00PM", "01.00PM", "11.00PM"};
-    private static int alteringDay;
+    private static HashMap<String, ArrayList<String>> movieDetails;
+    private static HashMap<String, ArrayList<String>> landingFoodPoster;
+
+    // clear orrest after log out
+    private static boolean isLogin = false;
     private static String userId;
     private static String userEmail;
     private static String userName;
     private static String phoneNumber;
     private static String permission = "0";
+    private static ArrayList<String> linkedCard;
+    private static int alteringDay;
+    
+    // clear or reset after checkout
     private static String bookingNumber;
     private static String transactionTimestamp;
     private static String typeByQuantity;
     private static String seats;
     private static String fnb;
     private static String toBePaid;
-    private static ArrayList<String> linkedCard;
-    private static HashMap<String, ArrayList<String>> movieDetails;
-    private static HashMap<String, ArrayList<String>> landingFoodPoster;
     private static String lookingAtMovie;
     private static boolean isPremium = false;
     public static HashMap<String, Object> MovieBooking = new HashMap<>();
@@ -119,7 +123,6 @@ public class RealTimeStorage {
         RealTimeStorage.MovieBooking.clear();
         RealTimeStorage.FoodnBeverage.clear();
         RealTimeStorage.selectedSeats.clear();
-        System.out.println("all cleared");
     }
     
     // clear booking details
@@ -134,6 +137,8 @@ public class RealTimeStorage {
         RealTimeStorage.MovieBooking.clear();
         RealTimeStorage.FoodnBeverage.clear();
         RealTimeStorage.selectedSeats.clear();
+        RealTimeStorage.ticketType = new int[4];
+        RealTimeStorage.ticketPrices = new String[4];
     }
 
     // setter for username, userId, userEmail, phoneNumber, permission, linkedCard

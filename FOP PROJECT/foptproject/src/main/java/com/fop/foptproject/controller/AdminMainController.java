@@ -19,7 +19,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
-
+/**
+ * 
+ * @author kuckn
+ */
 public class AdminMainController implements Initializable {
 
     @FXML

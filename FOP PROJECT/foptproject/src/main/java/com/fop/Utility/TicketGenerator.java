@@ -18,7 +18,10 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-
+/**
+ * 
+ * @author WeiXin
+ */
 public class TicketGenerator {
     
     public ByteArrayOutputStream genTicket(ByteArrayOutputStream ops,String refId, String transactionTimeStamp, String movieName, String hall, String date, String time,String type, String seats, String FnB) throws IOException, WriterException{
