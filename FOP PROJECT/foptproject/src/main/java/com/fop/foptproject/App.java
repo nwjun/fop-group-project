@@ -63,12 +63,13 @@ public class App extends Application{
     public static void main(String[] args) throws Exception {
         Properties prop = new readConfig().readconfigfile();
         System.out.println("yay");
-        sqlConnect sql = new sqlConnect();
-        //query all movie from database and store in local
-        System.out.println("yay");
-        RealTimeStorage.setAllMovies();
-        //query landing food poster
-        RealTimeStorage.setAllLandingFood();
+        readConfig.readSeatTemplate();
+//        sqlConnect sql = new sqlConnect();
+//        //query all movie from database and store in local
+//        System.out.println("yay");
+//        RealTimeStorage.setAllMovies();
+//        //query landing food poster
+//        RealTimeStorage.setAllLandingFood();
         
         //new emailTo("limweixin17@gmail.com").sendBookingConfirmations("MovieName", "FirstName", "R12345", "R12345", "2021-12-20", "12:00PM", "E1", 20.00);
 //        JSONToolSets json = new JSONToolSets(sql.querySeats("1","1",false),false);
