@@ -4,10 +4,13 @@
  */
 package com.fop.Utility;
 
+import java.io.File;
 import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 /**
  * 
@@ -28,4 +31,22 @@ public class readConfig {
         return prop;
     }
     
+    public static String readSeatTemplate() throws FileNotFoundException{
+        FileInputStream in = new FileInputStream("src/main/resources/com/fop/config/seatTemplate.txt");
+        Scanner read = new Scanner(in);
+        String json = read.nextLine();
+        return json;
+    }
+    
+    public static void updateSeatTemplate(String jsonString) throws FileNotFoundException{
+        PrintWriter writer = new PrintWriter("src/main/resources/com/fop/config/seatTemplate.txt");
+        writer.print(jsonString);
+        writer.close();
+    }
+    
+    public static void updateActualSeat(String jsonString) throws FileNotFoundException{
+        PrintWriter writer = new PrintWriter("src/main/resources/com/fop/config/actualSeat.txt");
+        writer.print(jsonString);
+        writer.close();
+    }
 }
