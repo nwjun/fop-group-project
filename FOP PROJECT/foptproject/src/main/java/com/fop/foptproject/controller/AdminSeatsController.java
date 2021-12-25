@@ -5,7 +5,9 @@
 package com.fop.foptproject.controller;
 
 import com.fop.Utility.JSONToolSets;
+import com.fop.Utility.readConfig;
 import com.fop.Utility.sqlConnect;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,10 +28,17 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.Priority;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 
 /**
  *
- * @author xyche
+ * @author xyche, shiaoyin
  */
 public class AdminSeatsController implements Initializable {
 
@@ -39,9 +48,10 @@ public class AdminSeatsController implements Initializable {
     @FXML
     private GridPane seatsContainer;
     @FXML
-    private Button changeStatusButton, nextButton, backButton, rowMinus, rowAdd, columnMinus, columnAdd, modifyButton;
+    private Button confirmButton, backButton, rowMinus, rowAdd, columnMinus, columnAdd;
     @FXML
-    private Label hallLabel, cinemaLabel, totalSeatsAvailableLabel, totalSeatsUnavailableLabel, totalSeatsLabel, statusLabel, rowCount, columnCount;
+
+    private Label hallLabel, cinemaLabel, totalSeatsAvailableLabel, totalSeatsUnavailableLabel, totalSeatsLabel, rowCount, columnCount;
 
     @FXML
     public void rowAddCount(ActionEvent event) {
@@ -85,6 +95,8 @@ public class AdminSeatsController implements Initializable {
         SceneController switchScene = new SceneController();
         switchScene.switchToAdminMovie(event);
     }
+    
+    ArrayList<int[]> alteredSeats = new ArrayList<>();
 
     
     private int row = 0;
@@ -93,6 +105,10 @@ public class AdminSeatsController implements Initializable {
     private int maxCol;
     CheckBox newSeat= new CheckBox();
     Label newLabel= new Label();
+    private int status = 0;
+    private int totalSeats = 105;
+    private int unavailableSeats = 0;
+  
     private void minusCountR(int index, Label label) {
         // deduct number of row 
         if (row > 0) {
@@ -131,12 +147,32 @@ public class AdminSeatsController implements Initializable {
         }
     }
 
+    private int colIndex(int col, int maxcolumn) {
+        // change from gridpane col to array col
+
+        if (col >= maxcolumn) {
+            return col - 3;
+        } else if (col >= 3) {
+            return col - 2;
+        } else {
+            return col - 1;
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
       final String THEATER_ID, SLOT, DAY;
             THEATER_ID = RealTimeStorage.getMovieBooking().get("theaterId").toString();
             SLOT = RealTimeStorage.getMovieBooking().get("slots").toString();
             DAY = RealTimeStorage.getMovieBooking().get("chosenDay").toString();
+
+        // Initialise 
+        totalSeatsLabel.setText(String.valueOf(totalSeats));
+        totalSeatsAvailableLabel.setText(String.valueOf(totalSeats));
+        totalSeatsUnavailableLabel.setText(String.valueOf(unavailableSeats));
+        
+
 
 //        THEATER_ID = "1";
 //        SLOT = "1";
@@ -182,6 +218,7 @@ public class AdminSeatsController implements Initializable {
                         // gridPane.add(item, col,row)
                         seatsContainer.add(val, col, row);
                     }
+
 
                 } else {
                     if (col == 0) {
@@ -230,6 +267,70 @@ public class AdminSeatsController implements Initializable {
             return seatArr;
             //sql.updateSeats(jsonString,"1",true);
         
+
+
+//        sqlConnect sql = new sqlConnect();
+//        JSONToolSets json = new JSONToolSets(sql.querySeats("8", "1", true), true);
+        JSONToolSets json;
+        try {
+            json = new JSONToolSets(readConfig.readSeatTemplate());
+        } catch (FileNotFoundException ex) {
+            json = null;
+            Logger.getLogger(AdminSeatsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        HashMap<String, ArrayList<String>> seatArr = json.parseTheaterSeat(5);
+        int maxcolumn = json.getColumn();
+        int maxrow = json.getRow();
+        json.addColumn(1, true);
+        json.addRow(1);
+        String jsonString = json.getNewSeatArr().toString();
+        final ObservableList<Node> gridPaneChildren = seatsContainer.getChildren();
+        for (int i = 0; i < gridPaneChildren.size(); i++) {
+            Node node = gridPaneChildren.get(i);
+            final int k = i;
+
+            if (node instanceof CheckBox) {
+                CheckBox seat = (CheckBox) node;
+                final int gridCol = GridPane.getColumnIndex(seat);
+                seat.selectedProperty().addListener(
+                        (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+                            if (old_val == false && new_val == true) {
+                                unavailableSeats++;
+                            } else {
+                                unavailableSeats--;
+                            }
+                            
+                            totalSeatsLabel.setText(String.valueOf(totalSeats));
+                            totalSeatsAvailableLabel.setText(String.valueOf(totalSeats - unavailableSeats));
+                            totalSeatsUnavailableLabel.setText(String.valueOf(unavailableSeats));
+                        });
+            }
+            
+                
+                
+          
+        }
+        confirmButton.setOnAction(e->{
+                for (int j = 0; j < gridPaneChildren.size(); j++){
+                    final Node m = gridPaneChildren.get(j);
+                    final int n = j;
+
+                    if (m instanceof CheckBox) {
+                        CheckBox seat = (CheckBox) m;
+                        final int gridCol = GridPane.getColumnIndex(seat);
+                        int row = GridPane.getRowIndex(seat) - 1;
+                        int col = colIndex(gridCol, maxcolumn);
+                        
+                        if (seat.selectedProperty().get()==true){
+                            
+                        }}
+                        
+                        
+                    
+        //sql.updateSeats(jsonString,"1",true);
+    }});
+                
+    }
 
 }
         
