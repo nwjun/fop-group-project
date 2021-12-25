@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -51,14 +50,6 @@
                      </fill>
                   </Rectangle>
                   <Label prefHeight="7.0" prefWidth="46.0" text="Screen" textFill="WHITE" StackPane.alignment="BOTTOM_CENTER" />
-                  <Label text="HALL A" textFill="WHITE" translateX="-5.0" StackPane.alignment="TOP_CENTER">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <StackPane.margin>
-                        <Insets bottom="10.0" />
-                     </StackPane.margin>
-                  </Label>
                </children>
                <VBox.margin>
                   <Insets bottom="40.0" />
@@ -245,7 +236,6 @@
                         <Button fx:id="changeStatusButton" layoutX="911.0" layoutY="159.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="98.0" style="-fx-background-radius: 10;" styleClass="Button" text="Change status" />
                         <Button fx:id="backButton" layoutX="14.0" layoutY="197.0" mnemonicParsing="false" onAction="#switchToAdminMovie" prefHeight="25.0" prefWidth="70.0" style="-fx-background-radius: 10;" styleClass="Button" text="Back" />
                         <Button fx:id="nextButton" layoutX="1154.0" layoutY="197.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-radius: 10;" styleClass="Button" text="Next" />
-                        <ComboBox fx:id="hallComboBox" layoutX="456.0" layoutY="31.0" prefWidth="150.0" style="-fx-background-color: #434343;" />
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#272727" height="203.0" layoutX="47.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 150; -fx-arc-width: 150;" width="303.0" />
                         <Label layoutX="108.0" layoutY="37.0" text="Row" textFill="WHITE" />
                         <Label layoutX="99.0" layoutY="113.0" text="Column" textFill="WHITE" />
@@ -255,7 +245,7 @@
                         <Button fx:id="columnAdd" layoutX="246.0" layoutY="105.0" mnemonicParsing="false" onAction="#columnAddCount" prefHeight="33.0" prefWidth="33.0" style="-fx-background-radius: 0 8 8 0; -fx-background-color: #FFEE00;" text="+" />
                         <Label fx:id="rowCount" layoutX="219.0" layoutY="37.0" text="0" textFill="WHITE" />
                         <Label fx:id="columnCount" layoutX="219.0" layoutY="113.0" text="0" textFill="WHITE" />
-                        <Button fx:id="modifyButton" layoutX="177.0" layoutY="161.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="98.0" style="-fx-background-radius: 10;" styleClass="Button" text="Modify" />
+                        <Label fx:id="hallLabel" layoutX="456.0" layoutY="35.0" text="Label" textFill="WHITE" />
                      </children>
                   </AnchorPane>
                </children>
