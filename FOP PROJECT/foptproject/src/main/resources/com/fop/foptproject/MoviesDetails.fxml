@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -28,7 +27,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox alignment="CENTER_LEFT">
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="821.0">
                <GridPane.margin>
                   <Insets left="60.0" />
                </GridPane.margin>
@@ -41,20 +40,20 @@
                         <Insets right="50.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label id="header" prefHeight="27.0" prefWidth="133.0" text="Movie Details">
+                  <Label maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="260.0" styleClass="pageHeader" text="Movie Details" wrapText="true">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font size="12.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
             <StackPane alignment="CENTER_RIGHT" GridPane.columnIndex="1">
-               <children>
-                  <Button id="backButton" fx:id="backButton" mnemonicParsing="false" onAction="#changeToLandingPage" prefHeight="35.0" prefWidth="40.0" />
-               </children>
                <padding>
                   <Insets right="60.0" />
                </padding>
+               <children>
+                  <Button id="backButton" fx:id="backButton" mnemonicParsing="false" onAction="#changeToLandingPage" prefHeight="35.0" prefWidth="40.0" />
+               </children>
             </StackPane>
          </children>
          <BorderPane.margin>
@@ -67,171 +66,152 @@
       <URL value="@style.css" />
    </stylesheets>
    <center>
-      <StackPane prefHeight="1066.0" prefWidth="1630.0" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="777.0" prefWidth="1568.0">
          <padding>
-            <Insets bottom="50.0" left="60.0" right="60.0" />
+            <Insets bottom="50.0" left="100.0" right="100.0" top="80.0" />
          </padding>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <ImageView fx:id="poster" fitHeight="762.0" fitWidth="441.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+               <image>
+                  <Image url="@assets/movies/enemy.jpg" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="345.0" prefWidth="680.0" StackPane.alignment="CENTER">
                <children>
-                  <HBox minHeight="-Infinity" prefHeight="466.0" prefWidth="1446.0">
-                     <children>
-                        <ImageView fx:id="poster" fitHeight="320.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true">
-                           <HBox.margin>
-                              <Insets left="100.0" />
-                           </HBox.margin>
-                           <image>
-                              <Image url="@assets/movies/enemy.jpg" />
-                           </image>
-                           <viewport>
-                              <Rectangle2D />
-                           </viewport>
-                        </ImageView>
-                        <Region minWidth="-Infinity" prefHeight="555.0" prefWidth="120.0" />
-                        <VBox maxHeight="-Infinity" prefHeight="320.0" prefWidth="340.0">
-                           <HBox.margin>
-                              <Insets bottom="70.0" top="10.0" />
-                           </HBox.margin>
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Movie Title: " />
-                                    <Label fx:id="movieTitle" prefHeight="22.0" prefWidth="258.0" styleClass="descriptionText" text="Label" wrapText="true" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Director: " />
-                                    <Label fx:id="director" prefHeight="22.0" prefWidth="278.0" styleClass="descriptionText" text="Label" />
-                                 </children>
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Casts: " />
-                                    <Label fx:id="casts" alignment="TOP_LEFT" prefWidth="176.0" styleClass="descriptionText" text="Label" wrapText="true" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Language: " />
-                                    <Label fx:id="language" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </Label>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Age Restriction: " />
-                                    <Label fx:id="ageRestriction" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <Region minWidth="-Infinity" prefHeight="555.0" prefWidth="120.0" />
-                        <VBox maxHeight="-Infinity" prefHeight="320.0" prefWidth="340.0">
-                           <HBox.margin>
-                              <Insets bottom="70.0" top="10.0" />
-                           </HBox.margin>
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Release Date: " />
-                                    <Label fx:id="releaseDate" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label prefHeight="22.0" styleClass="descriptionText" text="iMDB Rate: ">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="imdb" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Rotten Tomato: ">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="rottenTomato" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </Label>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label prefHeight="22.0" styleClass="descriptionText" text="Length: ">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label fx:id="length" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <Region prefHeight="75.0" prefWidth="338.0" />
-                              <StackPane>
-                                 <children>
-                                    <Button id="bookButton" mnemonicParsing="false" onAction="#toMovieBooking" prefHeight="34.0" prefWidth="137.0" text="Book Ticket" />
-                                 </children>
-                              </StackPane>
-                           </children>
-                        </VBox>
-                     </children>
-                     <padding>
-                        <Insets top="80.0" />
-                     </padding>
-                  </HBox>
-                  <VBox prefHeight="345.0" prefWidth="1446.0">
-                     <padding>
-                        <Insets left="100.0" right="200.0" />
-                     </padding>
-                     <children>
-                        <Label styleClass="descriptionText" text="Synopsis: ">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="synopsis" alignment="TOP_LEFT" prefHeight="252.0" prefWidth="1344.0" styleClass="descriptionText" text="Label" wrapText="true" />
-                     </children>
-                  </VBox>
+                  <Label styleClass="header1" text="Synopsis: ">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="synopsis" alignment="TOP_LEFT" lineSpacing="5.0" prefHeight="252.0" prefWidth="546.0" styleClass="descriptionText" text="synopsis" wrapText="true" />
                </children>
+               <StackPane.margin>
+                  <Insets left="350.0" top="200.0" />
+               </StackPane.margin>
+            </VBox>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="320.0" prefWidth="340.0" StackPane.alignment="TOP_CENTER">
+               <children>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="22.0" prefWidth="145.0" styleClass="header1" text="Movie Title: " />
+                        <Label fx:id="movieTitle" prefHeight="22.0" prefWidth="258.0" styleClass="descriptionText" text="Label" wrapText="true" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="22.0" prefWidth="116.0" styleClass="header1" text="Director: " />
+                        <Label fx:id="director" prefHeight="22.0" prefWidth="278.0" styleClass="descriptionText" text="Label" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="22.0" styleClass="header1" text="Casts: " />
+                        <Label fx:id="casts" prefWidth="176.0" styleClass="descriptionText" text="Label" wrapText="true" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="22.0" styleClass="header1" text="Language: " />
+                        <Label fx:id="language" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="22.0" prefWidth="162.0" styleClass="header1" text="Age Restriction: " />
+                        <Label fx:id="ageRestriction" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="320.0" prefWidth="340.0" StackPane.alignment="TOP_RIGHT">
+               <children>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="22.0" styleClass="header1" text="Release Date: " />
+                        <Label fx:id="releaseDate" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="22.0" styleClass="header1" text="iMDB Rate: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="imdb" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="22.0" prefWidth="157.0" styleClass="header1" text="Rotten Tomato: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="rottenTomato" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="22.0" styleClass="header1" text="Length: ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="length" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Button id="bookButton" mnemonicParsing="false" onAction="#toMovieBooking" prefHeight="34.0" prefWidth="137.0" text="Book Ticket">
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin>
+                  </Button>
+                  <StackPane />
+               </children>
+               <StackPane.margin>
+                  <Insets right="60.0" />
+               </StackPane.margin>
             </VBox>
          </children>
       </StackPane>

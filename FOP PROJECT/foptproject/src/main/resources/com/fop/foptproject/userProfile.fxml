@@ -33,14 +33,20 @@
                   <Insets />
                </StackPane.margin>
                <children>
-                  <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="55.0" prefWidth="314.0">
+                  <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="55.0" prefWidth="363.0">
                      <children>
                         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
                            <image>
                               <Image url="@assets/company/logo.png" />
                            </image>
+                           <StackPane.margin>
+                              <Insets />
+                           </StackPane.margin>
                         </ImageView>
-                        <Label fx:id="titleLabel" text="Profile" StackPane.alignment="CENTER_RIGHT" />
+                        <Label fx:id="titleLabel" styleClass="pageHeader" text="Profile" StackPane.alignment="CENTER_RIGHT">
+                           <StackPane.margin>
+                              <Insets />
+                           </StackPane.margin></Label>
                      </children>
                      <opaqueInsets>
                         <Insets />

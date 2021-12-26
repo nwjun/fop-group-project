@@ -39,13 +39,13 @@
                                         <Image url="@assets/company/logo.png" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="signInBtn" mnemonicParsing="false" onAction="#changeToLoginAndRegister" prefHeight="24.0" prefWidth="89.0" style="-fx-background-radius: 30;" styleClass="Button" text="Sign In" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                <Button fx:id="signInBtn" mnemonicParsing="false" onAction="#changeToLoginAndRegister" prefHeight="24.0" prefWidth="89.0" styleClass="Button" text="Sign In" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                            <font>
                               <Font size="13.0" />
                            </font></Button>
                             </children>
                         </GridPane>
-                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity">
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1413.0" prefWidth="1497.0">
                             <children>
                                 <VBox fx:id="landingContent" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1411.0" prefWidth="1414.0" styleClass="root">
                      <children>
@@ -59,12 +59,11 @@
                               </ImageView>
                         <HBox fx:id="showingContainer" prefHeight="0.0" prefWidth="1399.0">
                                  <children>
-                                    <Label text="Now Showing">
+                                    <Label styleClass="header1" text="Now Showing">
                                        <HBox.margin>
                                           <Insets right="50.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Label text="Advance Sales" />
                                  </children>
                                  <VBox.margin>
                                     <Insets left="60.0" top="60.0" />
@@ -77,7 +76,7 @@
                                  </VBox.margin>
                               </HBox>
 
-                              <Label fx:id="landingFoodLabel" text="Food &amp; Beverages" textFill="WHITE">
+                              <Label fx:id="landingFoodLabel" styleClass="header1" text="Food &amp; Beverages" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets left="60.0" top="60.0" />
                                  </VBox.margin>
@@ -113,7 +112,7 @@
                                     <children>
                               <VBox prefHeight="252.0" prefWidth="270.0">
                                  <children>
-                                              <Hyperlink onAction="#scrollToMovies" text="Movies" textFill="#f4f2f2">
+                                              <Hyperlink onAction="#scrollToMovies" styleClass="header1" text="Movies" textFill="#f4f2f2">
                                                   <font>
                                                       <Font name="Calibri Bold" size="22.0" />
                                                   </font>
@@ -121,18 +120,13 @@
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                               </Hyperlink>
-                                              <Hyperlink onAction="#scrollToMovies" text="Now showing" textFill="#f2f2f2b2">
+                                              <Hyperlink onAction="#scrollToMovies" styleClass="greyText" text="Now showing" textFill="#f2f2f2b2">
                                                   <font>
-                                                      <Font name="Calibri Bold" size="22.0" />
-                                                  </font>
-                                              </Hyperlink>
-                                              <Hyperlink onAction="#scrollToMovies" text="Advance Sales" textFill="#f2f2f2b2">
-                                                  <font>
-                                                      <Font name="Calibri Bold" size="22.0" />
+                                                      <Font size="18.0" />
                                                   </font>
                                               </Hyperlink>
                                     <Region prefHeight="45.0" prefWidth="380.0" />
-                                              <Hyperlink onAction="#scrollToFB" prefHeight="24.0" prefWidth="240.0" text="Food and Beverages" textFill="#f4f2f2">
+                                              <Hyperlink onAction="#scrollToFB" prefHeight="24.0" prefWidth="240.0" styleClass="header1" text="Food and Beverages" textFill="#f4f2f2">
                                                   <font>
                                                       <Font name="Calibri Bold" size="22.0" />
                                                   </font>
@@ -151,7 +145,7 @@
                                 </VBox>
                                 <VBox fx:id="landingFooterVBox3" prefHeight="350.0" prefWidth="200.0" GridPane.columnIndex="2">
                                     <children>
-                              <Hyperlink prefHeight="0.0" prefWidth="240.0" text="Contact Us At" textFill="#f4f2f2">
+                              <Hyperlink prefHeight="0.0" prefWidth="240.0" styleClass="header1" text="Contact Us At" textFill="#f4f2f2">
                                  <font>
                                     <Font name="Calibri Bold" size="22.0" />
                                  </font>
@@ -169,9 +163,9 @@
                                           <Insets />
                                        </StackPane.margin>
                                                 </ImageView>
-                                                <Hyperlink onAction="#openNwjun" text="nw_jun" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
+                                                <Hyperlink onAction="#openNwjun" styleClass="greyText" text="nw_jun" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
                                                     <font>
-                                                        <Font name="Calibri Bold" size="22.0" />
+                                                        <Font size="16.0" />
                                                     </font>
                                        <StackPane.margin>
                                           <Insets left="40.0" />
@@ -179,7 +173,7 @@
                                                 </Hyperlink>
                                             </children>
                                  <VBox.margin>
-                                    <Insets left="10.0" />
+                                    <Insets bottom="10.0" left="10.0" />
                                  </VBox.margin>
                                         </StackPane>
                                         <StackPane layoutX="10.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="2.0" prefWidth="200.0">
@@ -192,9 +186,9 @@
                                           <Insets />
                                        </StackPane.margin>
                                                 </ImageView>
-                                                <Hyperlink onAction="#openShxao" prefHeight="36.0" prefWidth="119.0" text="shxao.yxn_" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
+                                                <Hyperlink onAction="#openShxao" prefHeight="36.0" prefWidth="119.0" styleClass="greyText" text="shxao.yxn_" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
                                                     <font>
-                                                        <Font name="Calibri Bold" size="22.0" />
+                                                        <Font size="16.0" />
                                                     </font>
                                        <StackPane.margin>
                                           <Insets left="40.0" />
@@ -204,6 +198,9 @@
                                  <VBox.margin>
                                     <Insets left="10.0" />
                                  </VBox.margin>
+                                 <padding>
+                                    <Insets bottom="10.0" />
+                                 </padding>
                                         </StackPane>
                               
                                                                                   <StackPane layoutX="10.0" layoutY="87.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="14.0" prefWidth="200.0">
@@ -216,9 +213,9 @@
                                           <Insets />
                                        </StackPane.margin>
                                                 </ImageView>
-                                                <Hyperlink alignment="CENTER_RIGHT" onAction="#openWxinlim" text="wxinlim" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
+                                                <Hyperlink alignment="CENTER_RIGHT" onAction="#openWxinlim" styleClass="greyText" text="wxinlim" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
                                                     <font>
-                                                        <Font name="Calibri Bold" size="22.0" />
+                                                        <Font size="16.0" />
                                                     </font>
                                        <StackPane.margin>
                                           <Insets left="40.0" />
@@ -228,6 +225,9 @@
                                  <VBox.margin>
                                     <Insets left="10.0" />
                                  </VBox.margin>
+                                 <padding>
+                                    <Insets bottom="10.0" />
+                                 </padding>
                                         </StackPane>
                                         <StackPane layoutX="10.0" layoutY="285.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="10.0" prefWidth="200.0">
                                             <children>
@@ -239,9 +239,9 @@
                                           <Insets right="20.0" />
                                        </StackPane.margin>
                                                 </ImageView>
-                                                <Hyperlink onAction="#openXyu27" text="xyu_27" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
+                                                <Hyperlink onAction="#openXyu27" styleClass="greyText" text="xyu_27" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
                                                     <font>
-                                                        <Font name="Calibri Bold" size="22.0" />
+                                                        <Font size="16.0" />
                                                     </font>
                                        <StackPane.margin>
                                           <Insets left="40.0" />
@@ -251,6 +251,9 @@
                                  <VBox.margin>
                                     <Insets left="10.0" />
                                  </VBox.margin>
+                                 <padding>
+                                    <Insets bottom="10.0" />
+                                 </padding>
                                         </StackPane>
                                         <StackPane layoutX="10.0" layoutY="316.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="0.0" prefWidth="200.0">
                                             <children>
@@ -262,9 +265,9 @@
                                           <Insets />
                                        </StackPane.margin>
                                                 </ImageView>
-                                                <Hyperlink onAction="#openKuck" prefHeight="0.0" prefWidth="143.0" text="kuck.nien_s" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
+                                                <Hyperlink onAction="#openKuck" prefHeight="0.0" prefWidth="143.0" styleClass="greyText" text="kuck.nien_s" textFill="#ffffffa3" StackPane.alignment="CENTER_LEFT">
                                                     <font>
-                                                        <Font name="Calibri Bold" size="22.0" />
+                                                        <Font size="16.0" />
                                                     </font>
                                        <StackPane.margin>
                                           <Insets left="40.0" />
