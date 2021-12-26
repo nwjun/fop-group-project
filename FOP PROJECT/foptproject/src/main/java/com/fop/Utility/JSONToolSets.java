@@ -492,7 +492,6 @@ public class JSONToolSets {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(key, jsonObjectIn);
         String jsonString = jsonObject.toString();
-        
         return jsonString;
     }
     
