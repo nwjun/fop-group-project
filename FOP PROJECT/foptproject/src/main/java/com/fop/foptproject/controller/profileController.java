@@ -90,7 +90,7 @@ public class profileController implements Initializable {
         HBox historyContainer = createRow("assets/profile/history", "Account History", 4);
 
         HBox[] containers = new HBox[]{clsBtnContainer, homeContainer, profileContainer, billingContainer, historyContainer};
-
+    
         Button clsBtn = new Button("X");
         clsBtn.getStyleClass().add("closeBtn");
         clsBtnContainer.getChildren().addAll(clsBtn);

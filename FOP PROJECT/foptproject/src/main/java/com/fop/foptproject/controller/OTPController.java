@@ -80,7 +80,7 @@ public class OTPController implements Initializable{
             OTPFieldWarning.setText("This OTP is expired"); 
             OTPField.setStyle("-fx-border-color:#FF0000;-fx-border-width:1px;-fx-pref-height:39px;-fx-pref-width:200px;-fx-background-radius:8 0 0 8;-fx-border-radius:8 0 0 8;");     
         }
-        else if(OTPRequired.equals(OTPRequired)){
+        else if(OTPRequired.equals(OTPEntered)){
             boolean status = sqlConnect.removeNewRegisterOTP(email, false);
             if (status){ 
                 RealTimeStorage.updateUserInfos(email);
@@ -88,7 +88,7 @@ public class OTPController implements Initializable{
                 switchScene.switchToHomeLogined(event);
             }
         }
-        else if(!(OTPRequired.equals(OTPRequired))){
+        else if(!(OTPRequired.equals(OTPEntered))){
             OTPField.clear();
             OTPFieldWarning.setText("Please enter the correct OTP"); 
             OTPField.setStyle("-fx-border-color:#FF0000;-fx-border-width:1px;-fx-pref-height:39px;-fx-pref-width:200px;-fx-background-radius:8 0 0 8;-fx-border-radius:8 0 0 8;");
