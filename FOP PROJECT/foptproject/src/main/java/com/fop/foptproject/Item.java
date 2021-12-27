@@ -270,7 +270,6 @@ public class Item {
     public void toMovieBooking(ActionEvent e) throws IOException{
         Button book = (Button)e.getSource();
         String id = book.getId();
-        System.out.println(id);
         RealTimeStorage.setLookingAt(id);
         new SceneController().switchToMovieBooking(e);
     }
@@ -278,7 +277,6 @@ public class Item {
     public void toMovieDetails(ActionEvent e) throws IOException{
         Button info = (Button)e.getSource();
         String id = info.getId();
-        System.out.println(id);
         RealTimeStorage.setLookingAt(id);
         new SceneController().switchToMoviesDetails(e);
     }

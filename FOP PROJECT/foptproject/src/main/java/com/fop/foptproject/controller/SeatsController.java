@@ -7,17 +7,13 @@ package com.fop.foptproject.controller;
  */
 import com.fop.Utility.JSONToolSets;
 import com.fop.Utility.sqlConnect;
-import com.fop.foptproject.App;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,16 +23,13 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -60,7 +53,7 @@ public class SeatsController implements Initializable {
     @FXML
     private GridPane seatsContainer;
     @FXML
-    private Button studentMinus, studentAdd, adultMinus, adultAdd, okuMinus, okuAdd, elderAdd, elderMinus, nextButton;
+    private Button nextButton;
     @FXML
     private Label studentCount, adultCount, okuCount, elderCount, selectedTicketLabel,
             totalLabel, elderPrice, adultPrice, studentPrice, OKUPrice, hallLabel;
@@ -257,12 +250,10 @@ public class SeatsController implements Initializable {
 
         }
 
-        boolean coupleAdd = false;
         final ObservableList<Node> gridPaneChildren = seatsContainer.getChildren();
         for (int i = 0; i < gridPaneChildren.size(); i++) {
             Node node = gridPaneChildren.get(i);
             final int k = i;
-            final boolean tempCoupleAdd = coupleAdd;
 //        for (Node node : gridPaneChildren) {
             if (node instanceof CheckBox) {
                 CheckBox seat = (CheckBox) node;

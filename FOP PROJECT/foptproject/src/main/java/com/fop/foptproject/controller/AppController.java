@@ -46,44 +46,22 @@ import com.fop.foptproject.SetUpLanding;
  * @author jun
  */
 public class AppController implements Initializable {
-    private CommonMethod method = new CommonMethod();
-    
-    private Scene scene;
-    private Stage stage;
+    private final CommonMethod method = new CommonMethod();
     
     @FXML
-    private ImageView logo;
-    @FXML
-    private Button logInBtn;
-    //banner slideshow
-    private Button signInBtn;
-    @FXML
-    private ImageView imgBanner;
-    
-    private int count=0;  
+    private ImageView imgBanner; 
         
     @FXML
-    private GridPane landingGrid;
-    @FXML
-    private StackPane landingStackPane;
-    @FXML
     private ScrollPane scrollpane;
-    @FXML
-    private GridPane landingFooter;
-    @FXML
-    private Hyperlink hyperlink;
+    
     @FXML
     private HBox movieList;
+    
     @FXML
     private HBox foodList;
+    
     @FXML
     private Line landingLine;
-    @FXML
-    private VBox landingFooterVBox1;
-    @FXML
-    private VBox landingFooterVBox2;
-    @FXML
-    private VBox landingFooterVBox3;
     
     @FXML
     void scrollToMovies(ActionEvent event) throws IOException {
@@ -126,6 +104,7 @@ public class AppController implements Initializable {
         switchScene.switchToRegisterAndLogin(event);
     }
     
+    private int count=0; 
         
     public void slideshow(){                         
         ArrayList<Image> image= new ArrayList<>();

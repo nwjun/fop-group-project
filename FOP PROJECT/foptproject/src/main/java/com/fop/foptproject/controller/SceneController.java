@@ -71,9 +71,9 @@ public class SceneController {
         
         }
         scene = new Scene(root, WIDTH, HEIGHT);
-        this.primaryStage.setScene(scene);
-        this.primaryStage.setMaximized(true);
-        this.primaryStage.show();
+        SceneController.primaryStage.setScene(scene);
+        SceneController.primaryStage.setMaximized(true);
+        SceneController.primaryStage.show();
     }
 
     private void switchScene(MouseEvent event, String fxmlFile) throws IOException {
@@ -90,9 +90,9 @@ public class SceneController {
         
         }
         scene = new Scene(root, WIDTH, HEIGHT);
-        this.primaryStage.setScene(scene);
-        this.primaryStage.setMaximized(true);
-        this.primaryStage.show();
+        SceneController.primaryStage.setScene(scene);
+        SceneController.primaryStage.setMaximized(true);
+        SceneController.primaryStage.show();
     }
 
     public void switchToOTPScene(ActionEvent event) throws IOException {

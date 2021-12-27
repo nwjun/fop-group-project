@@ -1,23 +1,29 @@
-@font-face{
-    src: url("../font/Montserrat/Montserrat-Regular.ttf");
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 .root{
-   -fx-background: #141414;
-   -fx-font-family: "Montserrat";
-   -fx-text-fill: #ffffff;
+    -fx-background: #141414;
+    -fx-font-family: 'Montserrat', sans-serif;
+    -fx-font-size: 16;
+    -fx-text-fill: #ffffff;
 }
 
 .Button {
     -fx-background-color : #FFEE00;
-    -fx-background-radius : 0;
+    -fx-background-radius : 10;
     -fx-background-insets : 0;
-    -fx-font-family: "Montserrat,Regular";
-    -fx-padding : 5px;
+    -fx-font-size: 12;
+    -fx-padding : 8px 10px 8px 10px;
 }
 
 .Button:hover {
     -fx-opacity : 0.6;
+    -fx-background-insets : 0;
+    -fx-cursor: hand;
+}
+
+.Button:disabled{
+    -fx-background-color : #c1c1c1;
+    -fx-text-fill : #ffffff;
 }
 
 #toProfile:hover{
@@ -29,8 +35,9 @@
     -fx-text-fill : #000000;
     -fx-background-radius : 20;
     -fx-background-insets : 0;
-    -fx-font-family: "Montserrat,Regular";
-    -fx-padding : 5px; 
+    -fx-font-family: "Montserrat";
+    -fx-padding : 5px;
+    -fx-cursor: hand;
 }
 
 .InfoButton{
@@ -38,17 +45,13 @@
     -fx-text-fill : #FFEE00;
     -fx-border-radius : 20;
     -fx-border-color : #FFEE00;
-    -fx-font-family: "Montserrat,Regular";
-    -fx-padding : 5px; 
 }
 
 .BookButton:hover{
     -fx-background-color : #FFFFFF;
     -fx-text-fill : #000000;
     -fx-background-radius : 20;
-    -fx-background-insets : 0;
-    -fx-font-family: "Montserrat,Regular";
-    -fx-padding : 5px; 
+    -fx-cursor: hand;
 }
 
 .BookButton{
@@ -56,7 +59,37 @@
     -fx-text-fill : #FFFFFF;
     -fx-border-radius : 20;
     -fx-border-color : #FFFFFF;
-    -fx-font-family: "Montserrat,Regular";
-    -fx-padding : 5px; 
-    
+
 }
+
+.header1{
+    -fx-font-size: 18;
+    -fx-font-weight: 500;
+}
+
+.pageHeader{
+    -fx-font-size: 28;
+    -fx-font-weight: bold;
+}
+
+.greyText{
+    -fx-text-fill: #939393;
+}
+
+.errorLabel{
+    -fx-font-size: 12;
+    -fx-padding:5 0 0 5;
+}
+
+.text-field{
+    -fx-background-radius:5;
+    -fx-padding: 5 8 5 8;
+    -fx-font-size: 14;
+}
+
+.password-field{
+    -fx-background-radius:5;
+    -fx-padding: 5 8 5 8;
+    -fx-font-size: 14;
+}
+

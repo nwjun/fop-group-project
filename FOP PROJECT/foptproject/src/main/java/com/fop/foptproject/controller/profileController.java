@@ -172,7 +172,7 @@ public class profileController implements Initializable {
 
     private void profile() {
         titleLabel.setText("Profile");
-        contentContainer.getChildren().clear();
+        contentContainer.getChildren().removeIf(e-> !(e instanceof StackPane));
         addRemoveLogo("profile");
         final double MAX_HEIGHT = 45;
         final double MAX_WIDTH = 380;
@@ -260,7 +260,7 @@ public class profileController implements Initializable {
     private void billing() {
 
         titleLabel.setText("Billing");
-        contentContainer.getChildren().clear();
+        contentContainer.getChildren().removeIf(e-> !(e instanceof StackPane));
         addRemoveLogo("billing");
 
         ScrollPane scrollPane = new ScrollPane();
@@ -344,7 +344,7 @@ public class profileController implements Initializable {
 
     private void history() {
         titleLabel.setText("History");
-        contentContainer.getChildren().clear();
+        contentContainer.getChildren().removeIf(e-> !(e instanceof StackPane));
         addRemoveLogo("history");
 
         ScrollPane scrollPane = new ScrollPane();
@@ -450,12 +450,6 @@ public class profileController implements Initializable {
 
     }
 
-    private Stage popUpStage() {
-        VBox vbox = new VBox();
-        Scene scene = new Scene(vbox);
-        Stage stage = new Stage();
-        return stage;
-    }
 
     private String[] getProfileValues() {
         // retrieve field values from db
