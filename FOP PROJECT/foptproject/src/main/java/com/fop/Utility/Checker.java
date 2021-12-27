@@ -7,13 +7,12 @@ package com.fop.Utility;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
  * 
  * @author WeiXin
  */
 public class Checker {
-    private static String emailPattern = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{3,5})$";
+    private static String emailPattern = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})+$"; // spotted by nal
     
     public static boolean checkEmail(String email){
         Pattern p = Pattern.compile(emailPattern,Pattern.CASE_INSENSITIVE);
