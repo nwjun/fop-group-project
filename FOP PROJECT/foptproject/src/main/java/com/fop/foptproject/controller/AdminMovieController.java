@@ -73,7 +73,6 @@ public class AdminMovieController implements Initializable {
     private Object[] directorCast;
     private Object[] language;
     private Object[] posterPath;
-    private Object[] allShowTime;
     private Object[] synopsis;
     private Object[] rottenTomato;
     private Object[] iMDB;
@@ -176,7 +175,6 @@ public class AdminMovieController implements Initializable {
         this.directorCast = items.get("directorCast").toArray();
         this.language = items.get("language").toArray();
         this.posterPath = items.get("poster").toArray();
-        this.allShowTime = items.get("allShowTime").toArray();
         this.synopsis = items.get("synopsis").toArray();
         this.rottenTomato = items.get("rottenTomato").toArray();
         this.iMDB = items.get("iMDB").toArray();
@@ -198,7 +196,7 @@ public class AdminMovieController implements Initializable {
         stop:{
             for(int i = 0; i < 4;i++){
                 for(int j = 0; j < 1 ; j++){
-                    this.content = new ProductCardAdminMovie((String)movieId[currentIndex], (String)movieName[currentIndex], Double.parseDouble((String)length[currentIndex]), (String)releaseDate[currentIndex], (String)directorCast[currentIndex], (String)language[currentIndex], (String)posterPath[currentIndex], (String)allShowTime[currentIndex],(String)synopsis[currentIndex], Double.parseDouble((String)rottenTomato[currentIndex]),Double.parseDouble((String)iMDB[currentIndex]), Integer.parseInt((String)ageRestrict[currentIndex]),IMGW,IMGH,SCALE, (String)theaterId[currentIndex], (String)time[currentIndex]);
+                    this.content = new ProductCardAdminMovie((String)movieId[currentIndex], (String)movieName[currentIndex], Double.parseDouble((String)length[currentIndex]), (String)releaseDate[currentIndex], (String)directorCast[currentIndex], (String)language[currentIndex], (String)posterPath[currentIndex],(String)synopsis[currentIndex], Double.parseDouble((String)rottenTomato[currentIndex]),Double.parseDouble((String)iMDB[currentIndex]), Integer.parseInt((String)ageRestrict[currentIndex]),IMGW,IMGH,SCALE, (String)theaterId[currentIndex], (String)time[currentIndex]);
                     AnchorPane MB = MakeButton((String)movieId[currentIndex],Double.parseDouble((String)length[currentIndex]), currentIndex);
                     
                     VBox img = content.getImgCard();

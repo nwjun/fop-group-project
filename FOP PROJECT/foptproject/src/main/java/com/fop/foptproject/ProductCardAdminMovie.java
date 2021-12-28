@@ -22,7 +22,7 @@ public class ProductCardAdminMovie{
     private int currentPage = 0;
     private AdminMovieController ad = new AdminMovieController();
   
-    public ProductCardAdminMovie(String movieID,String movieName,double length, String releaseDate, String directorCast, String language, String imgPath, String allShowTime, String synopsis, double rottenTomato, double iMDB, int ageRestrict, double imgW,double imgH,double scale, String theaterId, String time) throws ParseException{
+    public ProductCardAdminMovie(String movieID,String movieName,double length, String releaseDate, String directorCast, String language, String imgPath, String synopsis, double rottenTomato, double iMDB, int ageRestrict, double imgW,double imgH,double scale, String theaterId, String time) throws ParseException{
         movieDetails.put("movieID",movieID);
         movieDetails.put("movieName",movieName);
         movieDetails.put("length",length);
@@ -30,7 +30,6 @@ public class ProductCardAdminMovie{
         movieDetails.put("directorCast",directorCast);
         movieDetails.put("language", language);
         movieDetails.put("imgPath",imgPath);
-        movieDetails.put("allShowTime",allShowTime);
         movieDetails.put("synopsis",synopsis);
         movieDetails.put("rottenTomato",rottenTomato);
         movieDetails.put("iMDB",iMDB);
