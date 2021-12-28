@@ -43,12 +43,12 @@
                            <children>
                               <HBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT">
                                  <children>
-                                    <Label style="-fx-font-size: 13;" text="Welcome back, ">
+                                    <Label text="Welcome back, ">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                     </Label>
-                                    <Hyperlink id="#toProfile" fx:id="userProfileLink" onAction="#userProfile" prefHeight="25.0" style="-fx-text-fill: #ffffff; -fx-font-size: 13;" />
+                                    <Hyperlink id="#toProfile" fx:id="userProfileLink" onAction="#userProfile" prefHeight="25.0" />
                                     <Region prefHeight="29.0" prefWidth="25.0" />
                                             <Button fx:id="signOutButton" mnemonicParsing="false" onAction="#signOut" prefHeight="24.0" prefWidth="89.0" style="-fx-background-radius: 30;" styleClass="Button" text="Sign Out" textAlignment="CENTER">
                                        <font>

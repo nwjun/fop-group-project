@@ -19,15 +19,15 @@
    <center>
       <ScrollPane fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="NEVER">
          <content>
-            <AnchorPane stylesheets="@LoginRegister.css">
+            <AnchorPane prefHeight="864.0" prefWidth="1536.0" stylesheets="@LoginRegister.css">
                <children>
-                  <ImageView fitHeight="951.0" fitWidth="510.0" layoutX="-57.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="866.0" fitWidth="505.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assets/company/sign-logo-new.jpg" />
                      </image>
                   </ImageView>
-                  <Button id="backButton" fx:id="backButton" layoutX="1142.0" layoutY="41.0" mnemonicParsing="false" onAction="#backButton" prefHeight="25.0" prefWidth="40.0" />
-                  <VBox layoutX="502.0" layoutY="159.0" prefHeight="139.0" prefWidth="245.0">
+                  <Button id="backButton" fx:id="backButton" layoutX="1392.0" layoutY="45.0" mnemonicParsing="false" onAction="#backButton" prefHeight="25.0" prefWidth="40.0" />
+                  <VBox layoutX="624.0" layoutY="184.0" prefHeight="139.0" prefWidth="245.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
                         <TextField fx:id="emailField" onKeyTyped="#checkEmailFormat" prefHeight="31.0" prefWidth="212.0">
@@ -37,7 +37,7 @@
                         <Label fx:id="emailFieldWarning" styleClass="errorLabel" textFill="RED" />
                      </children>
                   </VBox>
-                  <VBox layoutX="501.0" layoutY="293.0" prefHeight="127.0" prefWidth="245.0">
+                  <VBox layoutX="624.0" layoutY="297.0" prefHeight="127.0" prefWidth="245.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
                         <PasswordField fx:id="passwordField" onKeyTyped="#checkIdenticalPass" prefHeight="31.0" prefWidth="273.0">
@@ -47,7 +47,7 @@
                         <Label fx:id="passwordFieldWarning" textFill="RED" />
                      </children>
                   </VBox>
-                  <VBox layoutX="937.0" layoutY="123.0" prefHeight="139.0" prefWidth="245.0">
+                  <VBox layoutX="1077.0" layoutY="178.0" prefHeight="90.0" prefWidth="246.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
                         <TextField fx:id="usernameField" onKeyTyped="#checkUsername" prefHeight="31.0" prefWidth="246.0">
@@ -57,54 +57,60 @@
                         <Label fx:id="usernameFieldWarning" styleClass="errorLabel" textFill="RED" />
                      </children>
                   </VBox>
-                  <VBox layoutX="937.0" layoutY="233.0" prefHeight="139.0" prefWidth="245.0">
+                  <VBox layoutX="1077.0" layoutY="288.0" prefHeight="139.0" prefWidth="245.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
                         <TextField fx:id="REmailField" onKeyTyped="#checkREmail" prefHeight="31.0" prefWidth="321.0">
                            <VBox.margin>
                               <Insets top="5.0" />
-                           </VBox.margin></TextField>
+                           </VBox.margin>
+                        </TextField>
                         <Label fx:id="REmailFieldWarning" styleClass="errorLabel" textFill="RED" />
                      </children>
                   </VBox>
-                  <VBox layoutX="937.0" layoutY="340.0" prefHeight="139.0" prefWidth="245.0">
+                  <VBox layoutX="1077.0" layoutY="395.0" prefHeight="139.0" prefWidth="245.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone number" />
                         <TextField fx:id="phoneNumberField" prefHeight="31.0" prefWidth="378.0">
                            <VBox.margin>
                               <Insets top="5.0" />
-                           </VBox.margin></TextField>
+                           </VBox.margin>
+                        </TextField>
                         <Label fx:id="phoneNumberFieldWarning" styleClass="errorLabel" textFill="RED" />
                      </children>
                   </VBox>
-                  <VBox layoutX="937.0" layoutY="441.0" onKeyTyped="#checkIdenticalPass" prefHeight="139.0" prefWidth="245.0">
+                  <VBox layoutX="1077.0" layoutY="496.0" onKeyTyped="#checkIdenticalPass" prefHeight="139.0" prefWidth="245.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
                         <PasswordField fx:id="RPasswordField" onKeyTyped="#checkIdenticalPass" prefHeight="31.0" prefWidth="273.0">
                            <VBox.margin>
                               <Insets top="5.0" />
-                           </VBox.margin></PasswordField>
-                        <Label fx:id="RPasswordFieldWarning" styleClass="errorLabel" textFill="RED" />
+                           </VBox.margin>
+                        </PasswordField>
+                        <Label fx:id="RPasswordFieldWarning" styleClass="errorLabel" textFill="RED" wrapText="true" />
                      </children>
                   </VBox>
-                  <VBox layoutX="937.0" layoutY="551.0" prefHeight="139.0" prefWidth="245.0">
+                  <VBox layoutX="1077.0" layoutY="606.0" prefHeight="139.0" prefWidth="245.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm password" />
                         <PasswordField fx:id="RConfirmPasswordField" onKeyTyped="#checkIdenticalPass" prefHeight="31.0" prefWidth="273.0">
                            <VBox.margin>
                               <Insets top="5.0" />
-                           </VBox.margin></PasswordField>
-                        <Label fx:id="RConfirmPasswordFieldWarning" styleClass="errorLabel" textFill="RED" />
+                           </VBox.margin>
+                        </PasswordField>
+                        <Label fx:id="RConfirmPasswordFieldWarning" styleClass="errorLabel" textFill="RED" wrapText="true" />
                      </children>
                   </VBox>
-                  <Button fx:id="registerButton" layoutX="937.0" layoutY="690.0" mnemonicParsing="false" onAction="#registerButton" prefHeight="31.0" prefWidth="139.0" styleClass="Button" text="Sign up" />
-                  <ImageView fitHeight="53.0" fitWidth="199.0" layoutX="501.0" layoutY="738.0" pickOnBounds="true" preserveRatio="true">
+                  <Button fx:id="registerButton" layoutX="1081.0" layoutY="742.0" mnemonicParsing="false" onAction="#registerButton" prefHeight="31.0" prefWidth="139.0" styleClass="Button" text="Sign up" />
+                  <ImageView fitHeight="53.0" fitWidth="199.0" layoutX="636.0" layoutY="668.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assets/company/logo.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="loginButton" layoutX="504.0" layoutY="434.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="31.0" prefWidth="139.0" styleClass="Button" text="Log in " />
-                  <Line endX="951.4229125976562" endY="-2.288818359375E-5" layoutX="282.0" layoutY="441.0" rotate="90.0" startX="214.00003051757812" startY="-2.288818359375E-5" stroke="#ffee00" strokeLineCap="ROUND" strokeWidth="2.0" />
+                  <Button fx:id="loginButton" layoutX="627.0" layoutY="414.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="31.0" prefWidth="139.0" styleClass="Button" text="Log in " />
+                  <Line endX="984.4482421875" endY="68.87838745117188" layoutX="374.0" layoutY="371.0" rotate="90.0" startX="285.1109313964844" startY="68.87838745117188" stroke="#acab99" strokeLineCap="ROUND" strokeWidth="2.0" />
+                  <Label layoutX="630.0" layoutY="91.0" styleClass="pageHeader" text="Login" />
+                  <Label layoutX="1081.0" layoutY="87.0" styleClass="pageHeader" text="Sign Up" />
                </children>
             </AnchorPane>
          </content>

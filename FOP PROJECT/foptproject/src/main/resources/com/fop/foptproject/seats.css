@@ -1,16 +1,6 @@
 /*
  * Empty Stylesheet file.
  */
-@font-face{
-    src: url("../font/Montserrat/Montserrat-Regular.ttf");
-}
-
-.seatsLabel{
-    -fx-text-fill:#ffffff;
-    -fx-background:#000000;
-    -fx-font-family: "Montserrat,Regular";
-    -fx-text-align: center;
-}
 
 .check-box>.box{
     -fx-background-color: rgba(0,0,0,0);
@@ -21,6 +11,7 @@
   -fx-background-repeat: stretch;
   -fx-shape: none;
   -fx-padding: 20;
+  -fx-background-color: rgba(0,0,0,0);
 }
 
 .availableSeat>.box>.mark{

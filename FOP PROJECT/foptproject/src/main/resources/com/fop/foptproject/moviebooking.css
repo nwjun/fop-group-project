@@ -2,27 +2,6 @@
  * Empty Stylesheet file.
  */
 
-.root {
-    -fx-font-family : "Montserrat,Regular";
-    -fx-text-fill:#ffffff;
-    -fx-background:#000000;
-    
-}
-
-.Button {
-    -fx-background-color : #FFEE00;
-    -fx-background-radius : 0;
-    -fx-background-insets : 0;
-    -fx-font-family: "Montserrat,Regular";
-    -fx-padding : 5px;
-    -fx-background-radius : 15px;
-}
-
-.warningText{
-    -fx-text-fill : #FF0000;
-    -fx-font-family : 'Montserrat';
-}
-
 #homeButton {
   -fx-background-image: url("assets/profile/home-white.png");
   -fx-background-size : 35px 35px;
@@ -38,34 +17,4 @@
   -fx-background-size : 35px 35px;
   -fx-background-position: center;
   -fx-background-color: rgba(0,0,0,0);
-}
-
-#backButton{
-    -fx-font-family: 'Montserrat';
-    -fx-border-radius:20px;
-    -fx-border-color:#FFEE00;
-    -fx-border-width:1px;
-    -fx-background-color:rgba(0,0,0,0);
-    -fx-text-fill:#FFEE00;
-}
-
-#backButton:hover{
-    -fx-background-color:#FFEE00;
-    -fx-text-fill:#000000;
-    -fx-background-radius:20px;
-}
-
-#nextButton{
-    -fx-font-family: 'Montserrat';
-    -fx-background-radius:20px;
-    -fx-background-color:#FFEE00;
-    -fx-text-fill:#000000; 
-}
-
-#nextButton:hover{
-    -fx-text-fill:#FFEE00;
-    -fx-background-color:rgba(0,0,0,0);
-    -fx-border-radius:20px;
-    -fx-border-color:#FFEE00;
-    -fx-border-width:1px;
 }
