@@ -38,6 +38,7 @@
     -fx-font-family: "Montserrat";
     -fx-padding : 5px;
     -fx-cursor: hand;
+    -fx-font-size: 11;
 }
 
 .InfoButton{
@@ -45,6 +46,7 @@
     -fx-text-fill : #FFEE00;
     -fx-border-radius : 20;
     -fx-border-color : #FFEE00;
+    -fx-font-size: 11;
 }
 
 .BookButton:hover{
@@ -52,6 +54,7 @@
     -fx-text-fill : #000000;
     -fx-background-radius : 20;
     -fx-cursor: hand;
+    -fx-font-size: 11;
 }
 
 .BookButton{
@@ -59,7 +62,7 @@
     -fx-text-fill : #FFFFFF;
     -fx-border-radius : 20;
     -fx-border-color : #FFFFFF;
-
+    -fx-font-size: 11;
 }
 
 .header1{
@@ -93,3 +96,20 @@
     -fx-font-size: 14;
 }
 
+.yellowButton{
+    -fx-background-radius:20px;
+    -fx-background-color:#FFEE00;
+    -fx-text-fill:#000000; 
+}
+
+.outlineButton{
+    -fx-border-radius:20px;
+    -fx-border-color:#FFEE00;
+    -fx-border-width:1px;
+    -fx-background-color:rgba(0,0,0,0);
+    -fx-text-fill:#FFEE00;
+}
+
+.yellowButton:hover, .outlineButton:hover{
+    -fx-opacity: 0.6;
+}

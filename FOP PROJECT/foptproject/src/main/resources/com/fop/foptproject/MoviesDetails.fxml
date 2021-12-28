@@ -13,10 +13,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="950.0" prefWidth="1568.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.MoviesDetailsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="864.0" prefWidth="1536.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.MoviesDetailsController">
    <top>
       <GridPane prefHeight="60.0" prefWidth="1662.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -67,13 +66,62 @@
    </stylesheets>
    <center>
       <StackPane prefHeight="777.0" prefWidth="1568.0">
-         <padding>
-            <Insets bottom="50.0" left="100.0" right="100.0" top="80.0" />
-         </padding>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <children>
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="600.0" prefWidth="842.0" StackPane.alignment="TOP_RIGHT">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="80.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label prefHeight="22.0" prefWidth="145.0" text="Movie Title: " />
+                  <Label fx:id="movieTitle" prefHeight="22.0" prefWidth="258.0" styleClass="descriptionText" text="Label" wrapText="true" GridPane.columnIndex="1" />
+                  <Label prefHeight="22.0" prefWidth="116.0" text="Director: " GridPane.rowIndex="1" />
+                  <Label fx:id="director" prefHeight="22.0" prefWidth="278.0" styleClass="descriptionText" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label prefHeight="22.0" text="Casts: " GridPane.rowIndex="4" GridPane.rowSpan="2" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets top="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="casts" prefWidth="176.0" styleClass="descriptionText" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.rowSpan="2" GridPane.valignment="TOP" GridPane.vgrow="SOMETIMES">
+                     <GridPane.margin>
+                        <Insets top="8.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="22.0" text="Language: " GridPane.rowIndex="2" />
+                  <Label fx:id="language" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label prefHeight="22.0" prefWidth="162.0" text="Age Restriction: " GridPane.rowIndex="3" />
+                  <Label fx:id="ageRestriction" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label prefHeight="22.0" text="Release Date: " GridPane.columnIndex="3" />
+                  <Label fx:id="releaseDate" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" GridPane.columnIndex="4" />
+                  <Label prefHeight="22.0" text="iMDB Rate: " GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Label fx:id="imdb" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Label prefHeight="22.0" prefWidth="157.0" text="Rotten Tomato: " GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <Label fx:id="rottenTomato" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <Label prefHeight="22.0" text="Length: " GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <Label fx:id="length" prefHeight="22.0" styleClass="descriptionText" text="Label" wrapText="true" GridPane.columnIndex="4" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="3" />
+                  <Label text="Synopsis: " GridPane.rowIndex="7" />
+                  <Label fx:id="synopsis" alignment="TOP_LEFT" lineSpacing="5.0" prefHeight="252.0" prefWidth="546.0" text="synopsis" wrapText="true" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" GridPane.rowSpan="2" />
+                  <Button id="bookButton" mnemonicParsing="false" onAction="#toMovieBooking" prefHeight="34.0" prefWidth="137.0" text="Book Ticket" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+               </children>
+            </GridPane>
             <ImageView fx:id="poster" fitHeight="762.0" fitWidth="441.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
                <image>
                   <Image url="@assets/movies/enemy.jpg" />
@@ -81,139 +129,14 @@
                <viewport>
                   <Rectangle2D />
                </viewport>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
             </ImageView>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="345.0" prefWidth="680.0" StackPane.alignment="CENTER">
-               <children>
-                  <Label styleClass="header1" text="Synopsis: ">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="synopsis" alignment="TOP_LEFT" lineSpacing="5.0" prefHeight="252.0" prefWidth="546.0" styleClass="descriptionText" text="synopsis" wrapText="true" />
-               </children>
-               <StackPane.margin>
-                  <Insets left="350.0" top="200.0" />
-               </StackPane.margin>
-            </VBox>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="320.0" prefWidth="340.0" StackPane.alignment="TOP_CENTER">
-               <children>
-                  <HBox>
-                     <children>
-                        <Label prefHeight="22.0" prefWidth="145.0" styleClass="header1" text="Movie Title: " />
-                        <Label fx:id="movieTitle" prefHeight="22.0" prefWidth="258.0" styleClass="descriptionText" text="Label" wrapText="true" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label prefHeight="22.0" prefWidth="116.0" styleClass="header1" text="Director: " />
-                        <Label fx:id="director" prefHeight="22.0" prefWidth="278.0" styleClass="descriptionText" text="Label" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label prefHeight="22.0" styleClass="header1" text="Casts: " />
-                        <Label fx:id="casts" prefWidth="176.0" styleClass="descriptionText" text="Label" wrapText="true" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label prefHeight="22.0" styleClass="header1" text="Language: " />
-                        <Label fx:id="language" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label prefHeight="22.0" prefWidth="162.0" styleClass="header1" text="Age Restriction: " />
-                        <Label fx:id="ageRestriction" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="320.0" prefWidth="340.0" StackPane.alignment="TOP_RIGHT">
-               <children>
-                  <HBox>
-                     <children>
-                        <Label prefHeight="22.0" styleClass="header1" text="Release Date: " />
-                        <Label fx:id="releaseDate" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label prefHeight="22.0" styleClass="header1" text="iMDB Rate: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="imdb" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label prefHeight="22.0" prefWidth="157.0" styleClass="header1" text="Rotten Tomato: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="rottenTomato" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label prefHeight="22.0" styleClass="header1" text="Length: ">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label fx:id="length" prefHeight="22.0" prefWidth="196.0" styleClass="descriptionText" text="Label" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <Button id="bookButton" mnemonicParsing="false" onAction="#toMovieBooking" prefHeight="34.0" prefWidth="137.0" text="Book Ticket">
-                     <VBox.margin>
-                        <Insets top="50.0" />
-                     </VBox.margin>
-                  </Button>
-                  <StackPane />
-               </children>
-               <StackPane.margin>
-                  <Insets right="60.0" />
-               </StackPane.margin>
-            </VBox>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="80.0" left="100.0" right="100.0" top="50.0" />
+         </BorderPane.margin>
       </StackPane>
    </center>
 </BorderPane>
