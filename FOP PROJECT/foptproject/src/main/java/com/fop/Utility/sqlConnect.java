@@ -579,7 +579,7 @@ public class sqlConnect {
     }
 
     public static HashMap<String, ArrayList<String>> queryAllMovie() {
-        String query = "SELECT movieId, movieName, length, releaseDate, directorCast, language, poster, allShowTime, synopsis, rottenTomato, iMDB, ageRestrict, theaterId, slot, time "
+        String query = "SELECT movieId, movieName, length, releaseDate, directorCast, language, poster, synopsis, rottenTomato, iMDB, ageRestrict, theaterId, slot, time "
                 + "FROM movies "
                 + "INNER JOIN pos USING (posterId)";
 
@@ -591,7 +591,6 @@ public class sqlConnect {
         ArrayList<String> directorCast = new ArrayList<>();
         ArrayList<String> language = new ArrayList<>();
         ArrayList<String> poster = new ArrayList<>();
-        ArrayList<String> allShowTime = new ArrayList<>();
         ArrayList<String> synopsis = new ArrayList<>();
         ArrayList<String> rottenTomato = new ArrayList<>();
         ArrayList<String> iMDB = new ArrayList<>();
@@ -612,7 +611,6 @@ public class sqlConnect {
                 language.add(rs.getString("language"));
                 String path = rs.getString("poster");
                 poster.add(path.replace("\\", "/")); // preprocess to fit linux system
-                allShowTime.add(rs.getString("allShowTime"));
                 synopsis.add(rs.getString("synopsis"));
                 rottenTomato.add(rs.getString("rottenTomato"));
                 iMDB.add(rs.getString("iMDB"));
@@ -632,7 +630,6 @@ public class sqlConnect {
         movies.put("directorCast", directorCast);
         movies.put("language", language);
         movies.put("poster", poster);
-        movies.put("allShowTime", allShowTime);
         movies.put("synopsis", synopsis);
         movies.put("rottenTomato", rottenTomato);
         movies.put("iMDB", iMDB);
