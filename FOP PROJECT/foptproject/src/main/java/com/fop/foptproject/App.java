@@ -29,8 +29,8 @@ public class App extends Application{
         final double HEIGHT = screenBounds.getHeight();
 
 
-        boolean DEBUG = false;
-        String fxmlFile = "userProfile.fxml";
+        boolean DEBUG = true;
+        String fxmlFile = "AdminSeats.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
