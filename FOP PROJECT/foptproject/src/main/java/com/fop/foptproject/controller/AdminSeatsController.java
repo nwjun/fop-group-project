@@ -18,19 +18,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.GridPane;
-import java.lang.String;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.scene.control.CheckBox;
 import javafx.scene.layout.Priority;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -48,51 +42,64 @@ public class AdminSeatsController implements Initializable {
     private Button confirmButton, backButton, rowMinus, rowAdd, columnMinus, columnAdd;
     @FXML
     private Label hallLabel, cinemaLabel, totalSeatsAvailableLabel, totalSeatsUnavailableLabel, totalSeatsLabel, rowCount, columnCount;
-    
+
     private sqlConnect sql = new sqlConnect();
     private JSONToolSets json;
-    private int maxCol = 15, maxRow = 7;
+    private int initialCol = 15, initialRow = 7;
     private ArrayList<int[]> alteredSeats = new ArrayList<>();
-    private int row = 0;
-    private int column = 0;
+    private int addedRow = 0;
+    private int addedColumn = 0;
+    private int maxCol = initialCol;
+    private int maxRow = initialRow;
     private int status = 0;
     private int totalSeats = 105;
     private int unavailableSeats = 0;
-
+    private ArrayList<ArrayList<CheckBox>> addedSeat;
 
     @FXML
     public void rowAddCount(ActionEvent event) {
-        addCountR(0, rowCount);
-        RowConstraints rowConst = createRowConstraints();
-        seatsContainer.getRowConstraints().add(rowConst);
-        addRowSeats();
+        if (addedRow < 6) {
+            maxRow++;
+            addCountR(rowCount);
+            RowConstraints rowConst = createRowConstraints();
+            seatsContainer.getRowConstraints().add(rowConst);
+            addRowSeats();
+            updateSeatsLabel();
+        }
     }
 
     @FXML
     public void rowMinusCount(ActionEvent event) {
-        minusCountR(0, rowCount);
-        RowConstraints rowConst = createRowConstraints();
-        seatsContainer.getRowConstraints().remove(rowConst);
-        if (row != 0) {
-            minusRowSeats();
+        if (addedRow != 0) {
+            maxRow--;
+            minusCountR(rowCount);
+            //System.out.println(seatsContainer.getRowCount());
+            minusRowSeats(seatsContainer.getRowCount() - 1);
+            seatsContainer.getRowConstraints().remove(seatsContainer.getRowCount() - 1);
+            updateSeatsLabel();
         }
     }
 
     @FXML
     public void columnAddCount(ActionEvent event) {
-        addCountC(0, columnCount);
-        ColumnConstraints colConst = createColumnConstraints();
-        seatsContainer.getColumnConstraints().add(colConst);
-        addColSeats();
+        if (addedColumn < 4) {
+            maxCol++;
+            addCountC(columnCount);
+            ColumnConstraints colConst = createColumnConstraints();
+            seatsContainer.getColumnConstraints().add(colConst);
+            addColSeats();
+            updateSeatsLabel();
+        }
     }
 
     @FXML
     public void columnMinusCount(ActionEvent event) {
-        minusCountC(0, columnCount);
+        minusCountC(columnCount);
         ColumnConstraints colConst = createColumnConstraints();
         seatsContainer.getColumnConstraints().remove(colConst);
-        if (column != 0) {
+        if (addedColumn != 0) {
             minusColSeats();
+            updateSeatsLabel();
         }
 
     }
@@ -103,44 +110,42 @@ public class AdminSeatsController implements Initializable {
         switchScene.switchToAdminMovie(event);
     }
 
-    private void minusCountR(int index, Label label) {
+    private void minusCountR(Label label) {
         // deduct number of row 
-        if (row > 0) {
-            --row;
-            label.setText(Integer.toString(row));
+        if (addedRow > 0) {
+            --addedRow;
+            label.setText(Integer.toString(addedRow));
         }
 
     }
 
-    private void minusCountC(int index, Label label) {
+    private void minusCountC(Label label) {
         //deduct number of column
-        if (column > 0) {
-            --column;
-            label.setText(Integer.toString(column));
+        if (addedColumn > 0) {
+            --addedColumn;
+            label.setText(Integer.toString(addedColumn));
         }
     }
 
-    private void addCountR(int index, Label label) {
+    private void addCountR(Label label) {
         // add number of row
-        if (row < 4) {
-            ++row;
-            label.setText(Integer.toString(row));
-        }
+        ++addedRow;
+        label.setText(Integer.toString(addedRow));
 
     }
 
-    private void addCountC(int index1, Label label) {
+    private void addCountC(Label label) {
         //add number of column
-        if (column < 6) {
-            ++column;
-            label.setText(Integer.toString(column));
+        if (addedColumn < 6) {
+            ++addedColumn;
+            label.setText(Integer.toString(addedColumn));
         }
     }
 
-    private int colIndex(int col, int maxcolumn) {
+    private int colIndex(int col, int initialColumn) {
         // change from gridpane col to array col
 
-        if (col >= maxcolumn) {
+        if (col >= initialColumn) {
             return col - 3;
         } else if (col >= 3) {
             return col - 2;
@@ -148,14 +153,15 @@ public class AdminSeatsController implements Initializable {
             return col - 1;
         }
     }
-    
-    public HashMap<String, ArrayList<String>> getSeatsTemplate(String theaterID) {
+
+    public HashMap<String, ArrayList<String>> getSeatsTemplate(String theaterID) throws FileNotFoundException {
         boolean isTemplate = true;
         System.out.println("dayum");
-        this.json = new JSONToolSets(sql.querySeats(theaterID, "1", isTemplate), isTemplate);
+//        this.json = new JSONToolSets(sql.querySeats(theaterID, "1", isTemplate), isTemplate);
+        this.json = new JSONToolSets(readConfig.readSeatTemplate(), isTemplate);
         HashMap<String, ArrayList<String>> seatArr = json.parseTheaterSeat(5);
-        this.maxRow = json.getRow();
-        this.maxCol = json.getColumn();
+        this.initialRow = json.getRow();
+        this.initialCol = json.getColumn();
         return seatArr;
     }
 
@@ -164,7 +170,13 @@ public class AdminSeatsController implements Initializable {
 
     }
 
+    public void updateSeatsLabel() {
+        totalSeats = (initialRow + addedRow) * (addedColumn + initialCol);
+        totalSeatsLabel.setText(String.valueOf(totalSeats));
+    }
+
     public RowConstraints createRowConstraints() {
+        //RowConstraints(double minHeight, double prefHeight, double maxHeight)
         RowConstraints rowConstraint = new RowConstraints(10, 30, Double.MAX_VALUE);
         rowConstraint.setVgrow(Priority.SOMETIMES);
         rowConstraint.setValignment(VPos.CENTER);
@@ -179,20 +191,19 @@ public class AdminSeatsController implements Initializable {
     }
 
     public void addRowSeats() {
-        int tempRow = row - 1;
-        int tempCol = column - 1;
-        tempCol = colIndex(column, maxCol);
-        for (row = 0; row <= maxRow; row++) {
-            if (column == 0) {
-                Label newLab = new Label((char) (65 + (row - 1)) + "");
+        int addSeatsRow = maxRow;
+        int maxGridCol = maxCol + 3;
+        for (int col = 0; col < maxGridCol; col++) {
+            if (col == 0) {
+                Label newLab = new Label((char) (65 + (addSeatsRow - 1)) + "");
                 newLab.getStyleClass().add("seatsLabel");
                 newLab.setAlignment(Pos.CENTER);
-                seatsContainer.add(newLab, column, row);
-
+                seatsContainer.add(newLab, col, addSeatsRow);
             } else {
-                if (column != 3 && column != maxCol - 2) {
+                if (col != 3 && col != maxGridCol - 3) {
                     CheckBox newSeat = new CheckBox();
-                    seatsContainer.add(newSeat, column, row);
+                    seatsContainer.add(newSeat, col, addSeatsRow);
+                    System.out.println(GridPane.getRowIndex(newSeat));
 
                 }
             }
@@ -200,62 +211,113 @@ public class AdminSeatsController implements Initializable {
     }
 
     public void addColSeats() {
-        int tempRow = row - 1;
-        int tempCol = column - 1;
-        tempCol = colIndex(column, maxCol);
-        for (column = 0; column <= maxCol; column++) {
-            if (row == 0) {
-                Label newLab = new Label(String.valueOf(tempCol + 1));
-                newLab.getStyleClass().add("seatsLabel");
-                newLab.setAlignment(Pos.CENTER);
-                seatsContainer.add(newLab, column, row);
-            } else {
-                if (column != 3 && column != maxCol - 2) {
-                    CheckBox newSeat = new CheckBox();
-                    seatsContainer.add(newSeat, column, row);
+//        int tempRow = row - 1;
+//        int tempCol = column - 1;
+//        tempCol = colIndex(column, initialCol);
+//        for (column = 0; column <= initialCol; column++) {
+//            if (row == 0) {
+//                Label newLab = new Label(String.valueOf(tempCol + 1));
+//                newLab.getStyleClass().add("seatsLabel");
+//                newLab.setAlignment(Pos.CENTER);
+//                seatsContainer.add(newLab, column, row);
+//            } else {
+//                if (column != 3 && column != initialCol - 2) {
+//                    CheckBox newSeat = new CheckBox();
+//                    seatsContainer.add(newSeat, column, row);
+//                }
+//            }
+//        }
+//maxcol = 16
+//        int maxGridRow = maxRow + 1;
+//        int gridCol;
+//        int colLabel;
+//        //col = 14, col<17
+//        for (int col = maxCol - 2; col < maxCol + 1; col++) {
+//            gridCol = col + 1; // gridcol = 14+1=15
+//            colLabel = col;//gridlabel = 14
+//            for (int row = 0; row < maxGridRow; row++) {
+//                //if col == 15
+//                if (col == maxCol - 1) {
+//                    // remove 15+15*0
+//                    seatsContainer.getChildren().remove(col+ (maxCol) * row -1);
+//                }
+//                // if col>15
+////                else if (col > maxCol - 1) {
+////                    //col=16
+////                    // gridcol = 17
+////                    //collabel = 15
+////                    gridCol++;
+////                    colLabel--;
+////                }
+//                if (row == 0) {
+//                    Label newLab = new Label("");
+//                    newLab.getStyleClass().add("seatsLabel");
+//                    newLab.setAlignment(Pos.CENTER);
+//                    seatsContainer.add(newLab, gridCol, row);
+//                } else {
+//                    CheckBox newSeat = new CheckBox();
+//                    seatsContainer.add(newSeat, gridCol, row);
+//                }
+//            }
+//        }
+        
+        int maxGridRow = maxRow + 1;
+        int gridCol;
+        int colLabel;
+        for(int i = 0 ; i < 4 ; i++){
+            gridCol = maxCol-1+i;
+            for(int row = 0 ; row < maxGridRow; row++){
+                if(i == 0){
+                    if(row == 0){
+                        Label newLab = new Label(String.valueOf(gridCol-1));
+                        newLab.getStyleClass().add("seatsLabel");
+                        newLab.setAlignment(Pos.CENTER);
+                        seatsContainer.add(newLab, gridCol, row);
+                    }
+                    else{
+                        CheckBox newSeat = new CheckBox();
+                        seatsContainer.add(newSeat, gridCol, row);
+                    }
                 }
+                else if(i == 1){
+                    if((row+1)*(maxCol)>maxGridRow*(maxCol)){
+                        break;
+                    }
+                    System.out.println((row+1)*(maxCol+1));
+                    seatsContainer.getChildren().remove((row+1)*(maxCol+1));
+                    
+                }
+            
             }
+        
         }
+
+
     }
 
-    public void minusRowSeats() {
-        int tempRow = row - 1;
-        int tempCol = column - 1;
-        tempCol = colIndex(column, maxCol);
-        for (row = 0; row <= maxRow; row++) {
-            if (column == 0) {
-                Label newLab = new Label((char) (65 + (row - 1)) + "");
-                newLab.getStyleClass().remove("seatsLabel");
-                newLab.setAlignment(Pos.CENTER);
-                seatsContainer.getChildren().removeIf(node -> GridPane.getRowIndex(node) == row);
-
-            } else {
-                if (column != 3 && column != maxCol - 2) {
-                    seatsContainer.getChildren().removeIf(node -> GridPane.getRowIndex(node) == row);
-
-                }
-            }
-        }
-
+    public void minusRowSeats(int removeRow) {
+        int endIndex = seatsContainer.getChildren().size();
+        int startIndex = endIndex - maxCol - 1;
+        seatsContainer.getChildren().remove(startIndex, endIndex);
     }
 
     public void minusColSeats() {
         int tempRow = row - 1;
         int tempCol = column - 1;
-        tempCol = colIndex(column, maxCol);
-        for (column = 0; column <= maxCol; column++) {
+        tempCol = colIndex(column, initialCol);
+        for (column = 0; column <= initialCol; column++) {
             if (row == 0) {
                 Label newLab = new Label(String.valueOf(tempCol + 1));
                 newLab.getStyleClass().remove("seatsLabel");
                 newLab.setAlignment(Pos.CENTER);
-                seatsContainer.getChildren().removeIf(node -> GridPane.getColumnIndex(node) == maxCol - 3);
-                seatsContainer.add(newLab, maxCol - 2, row);
+                seatsContainer.getChildren().removeIf(node -> GridPane.getColumnIndex(node) == initialCol - 3);
+                seatsContainer.add(newLab, initialCol - 2, row);
 
             } else {
-                if (column != 3 && column != maxCol - 2) {
+                if (column != 3 && column != initialCol - 2) {
                     CheckBox newSeat = new CheckBox();
-                    seatsContainer.getChildren().removeIf(node -> GridPane.getColumnIndex(node) == maxCol - 3);
-                    seatsContainer.add(newSeat, maxCol - 2, row);
+                    seatsContainer.getChildren().removeIf(node -> GridPane.getColumnIndex(node) == initialCol - 3);
+                    seatsContainer.add(newSeat, initialCol - 2, row);
                 }
             }
         }
@@ -272,7 +334,7 @@ public class AdminSeatsController implements Initializable {
         totalSeatsLabel.setText(String.valueOf(totalSeats));
         totalSeatsAvailableLabel.setText(String.valueOf(totalSeats));
         totalSeatsUnavailableLabel.setText(String.valueOf(unavailableSeats));
-        
+
         hallLabel.setText("HALL " + THEATER_ID);
 
         HashMap<String, ArrayList<String>> seatsTemp = getSeatsTemplate(THEATER_ID);
@@ -311,7 +373,7 @@ public class AdminSeatsController implements Initializable {
                     CheckBox seat = (CheckBox) m;
                     final int gridCol = GridPane.getColumnIndex(seat);
                     int row = GridPane.getRowIndex(seat) - 1;
-                    int col = colIndex(gridCol, maxCol);
+                    int col = colIndex(gridCol, initialCol);
 
                     if (seat.selectedProperty().get() == true) {
 
@@ -322,67 +384,49 @@ public class AdminSeatsController implements Initializable {
             }
         });
 
-        for (int row = 0; row < maxRow + 1; row++) {
-            // RowConstraints(double minHeight, double prefHeight, double maxHeight)
-            RowConstraints rowConstraint = new RowConstraints(10, 30, Double.MAX_VALUE);
-            rowConstraint.setVgrow(Priority.SOMETIMES);
-            rowConstraint.setValignment(VPos.CENTER);
-            seatsContainer.getRowConstraints().add(rowConstraint);
-            for (int col = 0; col < maxCol + 3; col++) {
-
-                int tempRow = row - 1;
-                int tempCol = col - 1;
-
-                if (row == 0) {
-                    // ColumnConstraints(double minWidth, double prefWidth, double maxWidth)
-                    ColumnConstraints colConstraint = new ColumnConstraints(10, 100, Double.MAX_VALUE);
-                    colConstraint.setHgrow(Priority.SOMETIMES);
-                    colConstraint.setHalignment(HPos.CENTER);
-                    seatsContainer.getColumnConstraints().add(colConstraint);
-                }
-
-                if (col == 3 || col == maxCol) {
-                    // skip lane
-                    continue;
-                }
-
-                tempCol = colIndex(col, maxCol);
-
-                if (row == 0) {
-                    // Add column label, starting from 1
-                    if (col != 0) {
-                        Label val = new Label(String.valueOf(tempCol + 1));
-                        val.getStyleClass().add("seatsLabel");
-                        val.setAlignment(Pos.CENTER);
-                        // gridPane.add(item, col,row)
-                        seatsContainer.add(val, col, row);
-                    }
-
-                } else {
-                    if (col == 0) {
-                        // Add row label, starting from A
-                        Label val = new Label((char) (65 + (row - 1)) + "");
-                        val.getStyleClass().add("seatsLabel");
-                        val.setAlignment(Pos.CENTER);
-                        seatsContainer.add(val, col, row);
-                    } else {
-
-                        // Set seat availability
-                        String val = seatsTemp.get(tempRow+"").get(tempCol);
-                        CheckBox newSeat = new CheckBox();
-                        if (val.equals("-1")) {
-                            newSeat.setDisable(true);
-                            newSeat.getStyleClass().add("availableSeat");
-                        } else {
-                            newSeat.getStyleClass().add("availableSeat");
-                        }
-                        seatsContainer.add(newSeat, col, row);
-                    }
-
-                }
-            }
-
-        }
-
+//        for (int row = 0; row < initialRow + 1; row++) {
+//            
+//            for (int col = 0; col < initialCol + 3; col++) {
+//
+//                int tempRow = row - 1;
+//                int tempCol = col - 1;
+//
+//                tempCol = colIndex(col, initialCol);
+//
+//                if (row == 0) {
+//                    // Add column label, starting from 1
+//                    if (col != 0) {
+//                        Label val = new Label(String.valueOf(tempCol + 1));
+//                        val.getStyleClass().add("seatsLabel");
+//                        val.setAlignment(Pos.CENTER);
+//                        // gridPane.add(item, col,row)
+//                        seatsContainer.add(val, col, row);
+//                    }
+//
+//                } else {
+//                    if (col == 0) {
+//                        // Add row label, starting from A
+//                        Label val = new Label((char) (65 + (row - 1)) + "");
+//                        val.getStyleClass().add("seatsLabel");
+//                        val.setAlignment(Pos.CENTER);
+//                        seatsContainer.add(val, col, row);
+//                    } else {
+//
+//                        // Set seat availability
+//                        String val = seatsTemp.get(tempRow+"").get(tempCol);
+//                        CheckBox newSeat = new CheckBox();
+//                        if (val.equals("-1")) {
+//                            newSeat.setDisable(true);
+//                            newSeat.getStyleClass().add("availableSeat");
+//                        } else {
+//                            newSeat.getStyleClass().add("availableSeat");
+//                        }
+//                        seatsContainer.add(newSeat, col, row);
+//                    }
+//
+//                }
+//            }
+//
+//        }
     }
 }
