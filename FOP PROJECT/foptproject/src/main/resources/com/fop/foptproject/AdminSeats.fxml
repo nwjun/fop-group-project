@@ -2,14 +2,11 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
@@ -56,165 +53,6 @@
                </VBox.margin>
             </StackPane>
             <GridPane fx:id="seatsContainer" alignment="CENTER" prefHeight="392.0" prefWidth="971.0">
-               <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="1" textFill="WHITE" GridPane.columnIndex="1" />
-                  <Label alignment="CENTER" layoutX="88.0" layoutY="26.0" styleClass="seatsLabel" text="2" textFill="WHITE" GridPane.columnIndex="2" />
-                  <Label alignment="CENTER" layoutX="32.0" layoutY="26.0" styleClass="seatsLabel" text="3" textFill="WHITE" GridPane.columnIndex="4" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="12" textFill="WHITE" GridPane.columnIndex="13" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="11" textFill="WHITE" GridPane.columnIndex="12" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="10" textFill="WHITE" GridPane.columnIndex="11" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="9" textFill="WHITE" GridPane.columnIndex="10" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="8" textFill="WHITE" GridPane.columnIndex="9" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="7" textFill="WHITE" GridPane.columnIndex="8" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="6" textFill="WHITE" GridPane.columnIndex="7" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="5" textFill="WHITE" GridPane.columnIndex="6" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="4" textFill="WHITE" GridPane.columnIndex="5" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="13" textFill="WHITE" GridPane.columnIndex="14" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="14" textFill="WHITE" GridPane.columnIndex="16" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="15" textFill="WHITE" GridPane.columnIndex="17" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="A" textFill="WHITE" GridPane.rowIndex="1" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="G" textFill="WHITE" GridPane.rowIndex="7" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="F" textFill="WHITE" GridPane.rowIndex="6" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="E" textFill="WHITE" GridPane.rowIndex="5" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="D" textFill="WHITE" GridPane.rowIndex="4" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="C" textFill="WHITE" GridPane.rowIndex="3" />
-                  <Label alignment="CENTER" styleClass="seatsLabel" text="B" textFill="WHITE" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox1" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox2" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox3" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox4" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox5" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox6" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox7" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox8" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox9" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox10" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox11" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox12" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox13" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox14" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox15" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox16" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox17" mnemonicParsing="false" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox18" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox19" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox20" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox21" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox22" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox23" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox24" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox25" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox26" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox27" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox28" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox29" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox30" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox31" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox32" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox33" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox34" mnemonicParsing="false" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox35" mnemonicParsing="false" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox36" mnemonicParsing="false" GridPane.columnIndex="7" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox44" mnemonicParsing="false" GridPane.columnIndex="13" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox45" mnemonicParsing="false" GridPane.columnIndex="12" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox46" mnemonicParsing="false" GridPane.columnIndex="11" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox47" mnemonicParsing="false" GridPane.columnIndex="10" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox48" mnemonicParsing="false" GridPane.columnIndex="9" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox49" mnemonicParsing="false" GridPane.columnIndex="8" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox56" mnemonicParsing="false" GridPane.columnIndex="7" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox55" mnemonicParsing="false" GridPane.columnIndex="7" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox54" mnemonicParsing="false" GridPane.columnIndex="7" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox53" mnemonicParsing="false" GridPane.columnIndex="7" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox52" mnemonicParsing="false" GridPane.columnIndex="7" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox51" mnemonicParsing="false" GridPane.columnIndex="8" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox50" mnemonicParsing="false" GridPane.columnIndex="8" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox57" mnemonicParsing="false" GridPane.columnIndex="8" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox58" mnemonicParsing="false" GridPane.columnIndex="8" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox59" mnemonicParsing="false" GridPane.columnIndex="8" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox60" mnemonicParsing="false" GridPane.columnIndex="9" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox61" mnemonicParsing="false" GridPane.columnIndex="13" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox62" mnemonicParsing="false" GridPane.columnIndex="12" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox63" mnemonicParsing="false" GridPane.columnIndex="11" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox64" mnemonicParsing="false" GridPane.columnIndex="10" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox65" mnemonicParsing="false" GridPane.columnIndex="9" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox66" mnemonicParsing="false" GridPane.columnIndex="10" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox67" mnemonicParsing="false" GridPane.columnIndex="10" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox68" mnemonicParsing="false" GridPane.columnIndex="9" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox69" mnemonicParsing="false" GridPane.columnIndex="9" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox70" mnemonicParsing="false" GridPane.columnIndex="9" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox71" mnemonicParsing="false" GridPane.columnIndex="9" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox72" mnemonicParsing="false" GridPane.columnIndex="8" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox73" mnemonicParsing="false" GridPane.columnIndex="13" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox74" mnemonicParsing="false" GridPane.columnIndex="12" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox75" mnemonicParsing="false" GridPane.columnIndex="11" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox76" mnemonicParsing="false" GridPane.columnIndex="10" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox77" mnemonicParsing="false" GridPane.columnIndex="10" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox78" mnemonicParsing="false" GridPane.columnIndex="13" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox79" mnemonicParsing="false" GridPane.columnIndex="12" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox80" mnemonicParsing="false" GridPane.columnIndex="11" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox81" mnemonicParsing="false" GridPane.columnIndex="13" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox82" mnemonicParsing="false" GridPane.columnIndex="12" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox83" mnemonicParsing="false" GridPane.columnIndex="11" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox84" mnemonicParsing="false" GridPane.columnIndex="14" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox85" mnemonicParsing="false" GridPane.columnIndex="13" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox86" mnemonicParsing="false" GridPane.columnIndex="12" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox87" mnemonicParsing="false" GridPane.columnIndex="11" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox88" mnemonicParsing="false" GridPane.columnIndex="10" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox89" mnemonicParsing="false" GridPane.columnIndex="13" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox90" mnemonicParsing="false" GridPane.columnIndex="12" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox91" mnemonicParsing="false" GridPane.columnIndex="11" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox92" mnemonicParsing="false" GridPane.columnIndex="14" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox93" mnemonicParsing="false" GridPane.columnIndex="14" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox94" mnemonicParsing="false" GridPane.columnIndex="14" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox95" mnemonicParsing="false" GridPane.columnIndex="14" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox96" mnemonicParsing="false" GridPane.columnIndex="14" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox97" mnemonicParsing="false" GridPane.columnIndex="17" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox98" mnemonicParsing="false" GridPane.columnIndex="16" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="seatBox99" mnemonicParsing="false" GridPane.columnIndex="14" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox100" mnemonicParsing="false" GridPane.columnIndex="16" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="seatBox101" mnemonicParsing="false" GridPane.columnIndex="17" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox102" mnemonicParsing="false" GridPane.columnIndex="16" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="seatBox103" mnemonicParsing="false" GridPane.columnIndex="17" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox104" mnemonicParsing="false" GridPane.columnIndex="16" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="seatBox105" mnemonicParsing="false" GridPane.columnIndex="17" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox106" mnemonicParsing="false" GridPane.columnIndex="16" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="seatBox107" mnemonicParsing="false" GridPane.columnIndex="17" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox108" mnemonicParsing="false" GridPane.columnIndex="16" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="seatBox109" mnemonicParsing="false" GridPane.columnIndex="17" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox110" mnemonicParsing="false" GridPane.columnIndex="16" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="seatBox111" mnemonicParsing="false" GridPane.columnIndex="17" GridPane.rowIndex="4" />
-               </children>
                <VBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" />
                </VBox.margin>
