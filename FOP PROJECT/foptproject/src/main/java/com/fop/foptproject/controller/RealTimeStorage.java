@@ -42,6 +42,10 @@ public class RealTimeStorage {
     private static int[] ticketType = new int[4]; // no of ticket for elder, adult, student, OKU 
     private static String[] ticketPrices = new String[4];// ticket price for elder, adult, student, OKU 
     public static int ticketTypeQuantity = ticketType.length;
+    private static String adminCol;
+    private static String adminRow;
+    private static String adminTheaterId;
+    private static ArrayList<String> adminSelected = new ArrayList<>();
     
 
     // setter for movie booking
@@ -139,6 +143,14 @@ public class RealTimeStorage {
         RealTimeStorage.selectedSeats.clear();
         RealTimeStorage.ticketType = new int[4];
         RealTimeStorage.ticketPrices = new String[4];
+    }
+    
+    public static void clearModifySeat(){
+        RealTimeStorage.adminCol = null;
+        RealTimeStorage.adminRow = null;
+        RealTimeStorage.adminTheaterId = null;
+        RealTimeStorage.adminSelected.clear();
+        RealTimeStorage.MovieBooking.clear();
     }
 
     // setter for username, userId, userEmail, phoneNumber, permission, linkedCard
@@ -419,4 +431,43 @@ public class RealTimeStorage {
     public static HashMap<String, Integer> retrieveAllPurchaseDetail() {
         return RealTimeStorage.FoodnBeverage;
     }
+    
+    public static void setAdminCol(String col){
+        RealTimeStorage.adminCol = col;
+    }
+    
+    public static void setAdminRow(String row){
+        RealTimeStorage.adminRow = row;
+    }
+    
+    public static void setAdminTheaterId(String id){
+        RealTimeStorage.adminTheaterId = id;
+    }
+    
+    public static void addAdminSelected(String seat){
+        RealTimeStorage.adminSelected.add(seat);
+    }
+    
+    public static void clearAdminSelected(){
+        RealTimeStorage.adminSelected.clear();
+    }
+    
+    public static String getAdminCol(){
+        return RealTimeStorage.adminCol;
+    }
+    
+    public static String getAdminRow(){
+        return RealTimeStorage.adminRow;
+    }
+    
+    public static String getAdminTheaterId(){
+        return RealTimeStorage.adminTheaterId;
+    }
+    
+    public static ArrayList<String> getAdminSelected(){
+        return RealTimeStorage.adminSelected;
+    }
+    
+    
+    
 }
