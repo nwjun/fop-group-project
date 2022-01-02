@@ -359,8 +359,8 @@ public class AdminFoodController implements Initializable {
         String absolutePath = file.getAbsolutePath();
 
         //the output of absolutePath is "C:\\Users\\kuckn\\Documents\\GitHub\\fop-group-project\\FOP PROJECT\\foptproject\\target\\classes\\com\\fop\\foptproject\\assets\\movies\\poster7.jpg"
-        String path = absolutePath.substring(0, absolutePath.indexOf("target")) + "src\\main\\resources\\com\\fop\\foptproject\\assets\\";
-
+        String path = absolutePath.substring(0, absolutePath.indexOf("target"))+ "src/main/resources/com/fop/foptproject/assets/";
+        
         return path;
     }
 
@@ -376,12 +376,22 @@ public class AdminFoodController implements Initializable {
         if (f != null) {
             this.pathpath = f.getAbsolutePath();
             Image img = new Image(new FileInputStream(this.pathpath));
-            DropImage.setImage(img);
-            this.poster = this.pathpath.substring(this.pathpath.lastIndexOf("\\") + 1);
-            this.ext = this.pathpath.substring(this.pathpath.lastIndexOf(".") + 1);
-            this.save = "assets\\foods\\" + this.poster;
-            this.desktopURL = getPathway() + "foods\\";
-            this.desktopPath = this.desktopURL + this.poster;
+
+            DropImage.setImage(img);      
+            this.poster = this.pathpath.substring(this.pathpath.lastIndexOf("/")+1);
+            this.ext = this.pathpath.substring(this.pathpath.lastIndexOf(".")+1);
+            this.save = "assets/foods/" + this.poster;
+            this.desktopURL = getPathway()+"foods/";
+            this.desktopPath = this.desktopURL+ this.poster;
+            
+// old code
+//             DropImage.setImage(img);
+//             this.poster = this.pathpath.substring(this.pathpath.lastIndexOf("\\") + 1);
+//             this.ext = this.pathpath.substring(this.pathpath.lastIndexOf(".") + 1);
+//             this.save = "assets\\foods\\" + this.poster;
+//             this.desktopURL = getPathway() + "foods\\";
+//             this.desktopPath = this.desktopURL + this.poster;
+
 
             posterT.setText(this.save);
         }
