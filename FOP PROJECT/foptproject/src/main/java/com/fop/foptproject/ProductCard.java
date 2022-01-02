@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
  * @author WeiXin
  */
 public class ProductCard{
-    private HashMap<String,Object> productDetails = new HashMap<>();
+    protected HashMap<String,Object> productDetails = new HashMap<>();
     private HBox productCard;
     private Label quantity;
     private static double totalAmount = 0;
@@ -35,9 +35,11 @@ public class ProductCard{
         productDetails.put("price",price);
         productDetails.put("productName",productName);
         productDetails.put("productDesc",productDesc);
-               
-        this.productCard = makeCard(productID,price);
-        HBox.setMargin(this.productCard,new Insets(0,45,0,0));   
+        makeCard(productID,price);
+    }
+    
+    public void addHashMap(String key, Object obj){
+        productDetails.put(key, obj);
     }
         
     public HashMap<String,Object> getProductDetails(){
@@ -49,11 +51,10 @@ public class ProductCard{
     }
     
     public HBox getCard(){
-        
         return this.productCard;
     }
         
-    private HBox makeCard(String productId, double price){
+    protected void makeCard(String productId, double price){
         HBox card = new HBox();
         
         VBox img = productImage(productId,price);
@@ -61,12 +62,13 @@ public class ProductCard{
         StackPane buttons = makeButtons(productId);
         
         card.getChildren().addAll(img,productDetails,buttons);
-        return card;
+        HBox.setMargin(card,new Insets(0,45,0,0));  
+        this.productCard = card;
     }
     
-    private Image getImage(){
+    protected Image getImage(){
         String path = getClass().getResource((String)getValue("imgPath")).toString();
-            Image img = new Image(path,(double)getValue("imgW"),(double)getValue("imgH"),false,false);
+        Image img = new Image(path,(double)getValue("imgW"),(double)getValue("imgH"),false,false);
         return img;
     }
     
