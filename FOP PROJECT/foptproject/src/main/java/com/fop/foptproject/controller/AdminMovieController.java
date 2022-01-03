@@ -629,53 +629,54 @@ public class AdminMovieController implements Initializable {
             
         sql.insertMovie(Id, b, Double.parseDouble(c), d, directorcast, g, "M"+Id, j, Double.parseDouble(k), Double.parseDouble(l), m1, n);
         
-// ------------ in Admin Movie -------------
+        // ------------ in Admin Movie -------------
         // with upload button
         // generate seat json string for template
-        int sCol = Integer.parseInt(RealTimeStorage.getAdminCol());
-        int sRow = Integer.parseInt(RealTimeStorage.getAdminRow());
-        ArrayList<String> selected = RealTimeStorage.getAdminSelected();
-        int TheaterID = Integer.parseInt(RealTimeStorage.getAdminTheaterId());
+        if(!editSeat.isDisable()){
+            int sCol = Integer.parseInt(RealTimeStorage.getAdminCol());
+            int sRow = Integer.parseInt(RealTimeStorage.getAdminRow());
+            ArrayList<String> selected = RealTimeStorage.getAdminSelected();
+            int TheaterID = Integer.parseInt(RealTimeStorage.getAdminTheaterId());
 
-        // generation of new seat template with new size
-        JSONObject json = new JSONObject();
-        ArrayList<Integer> row = new ArrayList<>();
-        for(int i = 0 ; i < sCol ; i++){
-            row.add(0);
+            // generation of new seat template with new size
+            JSONObject json = new JSONObject();
+            ArrayList<Integer> row = new ArrayList<>();
+            for(int i = 0 ; i < sCol ; i++){
+                row.add(0);
+            }
+
+            for(int i = 0 ; i < sRow ; i++){
+                json.put(Integer.toString(i),row);
+            }
+
+            // set seat status
+            JSONToolSets mod = new JSONToolSets(json.toString(),true);
+            mod.parseTheaterSeat(0);
+            for(int i = 0 ; i < selected.size() ; i++){
+                int mrow = Integer.parseInt(selected.get(i).split(",")[0])-1;
+                int mcolumn = Integer.parseInt(selected.get(i).split(",")[1]);
+                mcolumn = colIndex(mcolumn,sCol);
+                mod.setSeatStat(mrow, mcolumn, -1, "-");
+            }
+
+            String templateJSON = mod.getNewSeatArr().toString();
+
+            // convert to actual seat template
+            JSONObject actualjson = new JSONObject();
+            for(int i = 0 ; i < 7 ; i++){
+                actualjson.put(Integer.toString(i), mod.getNewSeatArr());
+            }
+
+            String actualJSON = actualjson.toString();
+
+            // update database
+            sql.updateSeats(templateJSON,TheaterID+"", "-", true); // template
+
+            // update actual seats
+            for(int i = 1 ; i < 6 ; i++){
+                sql.updateSeats(actualJSON,TheaterID+"",i+"",false);
+            }
         }
-
-        for(int i = 0 ; i < sRow ; i++){
-            json.put(Integer.toString(i),row);
-        }
-
-        // set seat status
-        JSONToolSets mod = new JSONToolSets(json.toString(),true);
-        mod.parseTheaterSeat(0);
-        for(int i = 0 ; i < selected.size() ; i++){
-            int mrow = Integer.parseInt(selected.get(i).split(",")[0])-1;
-            int mcolumn = Integer.parseInt(selected.get(i).split(",")[1]);
-            mcolumn = colIndex(mcolumn,sCol);
-            mod.setSeatStat(mrow, mcolumn, -1, "-");
-        }
-
-        String templateJSON = mod.getNewSeatArr().toString();
-
-        // convert to actual seat template
-        JSONObject actualjson = new JSONObject();
-        for(int i = 0 ; i < 7 ; i++){
-            actualjson.put(Integer.toString(i), mod.getNewSeatArr());
-        }
-
-        String actualJSON = actualjson.toString();
-
-        // update database
-        sql.updateSeats(templateJSON,TheaterID+"", "-", true); // template
-
-        // update actual seats
-        for(int i = 1 ; i < 6 ; i++){
-            sql.updateSeats(actualJSON,TheaterID+"",i+"",false);
-        }
-        
         }catch(Exception ex){
             ex.printStackTrace();
             Alert ax = new Alert(Alert.AlertType.ERROR);
