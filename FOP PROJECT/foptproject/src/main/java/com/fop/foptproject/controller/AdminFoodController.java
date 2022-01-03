@@ -466,24 +466,26 @@ public class AdminFoodController implements Initializable {
 
     @FXML
     private void uploadProduct(ActionEvent event) throws ParseException {
-        try {
-            if (this.updatestatus) {
-                Id = this.editproductId;
-                sql.delete(Id);
-                a = posterT.getText();
-                sql.insertPoster(Id, a);
-            } else {
-                b = categoryT.getText();
-                Id = lastproductId();
-                a = this.save;
-                sql.insertPoster(Id, a);
-            }
-
-            c = productnameT.getText();
-            d = priceT.getText();
-            e = productDescriptionT.getText();
-            sql.insertProduct(Id, c, Double.parseDouble(d), Id, e, b);
-        } catch (Exception ex) {
+        try{
+        if (this.updatestatus){
+            Id = this.editproductId;
+            sql.delete(Id);
+            a = posterT.getText();
+            sql.insertPoster(Id, a);
+            b = categoryT.getText();
+        }
+        else{
+        b = categoryT.getText();
+        Id = lastproductId();
+        a = this.save;
+        sql.insertPoster(Id, a);
+        }
+        
+        c = productnameT.getText();
+        d = priceT.getText();
+        e = productDescriptionT.getText();
+        sql.insertProduct(Id, c, Double.parseDouble(d), Id, e, b);
+        }catch(Exception ex){
             Alert ax = new Alert(Alert.AlertType.ERROR);
             ax.setTitle("Data Entry Error");
             ax.setContentText("Data Entry Error. \nPlease Check Your Input.");
