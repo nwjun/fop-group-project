@@ -613,7 +613,12 @@ public class AdminMovieController implements Initializable {
             n += obj.toString() + ", ";
         }
         n = n.substring(0, n.length()-2);
-        // ------------ in Admin Movie -------------
+        
+        
+            
+        sql.insertMovie(Id, b, Double.parseDouble(c), d, directorcast, g, "M"+Id, j, Double.parseDouble(k), Double.parseDouble(l), m1, n);
+        
+// ------------ in Admin Movie -------------
         // with upload button
         // generate seat json string for template
         int sCol = Integer.parseInt(RealTimeStorage.getAdminCol());
@@ -659,9 +664,7 @@ public class AdminMovieController implements Initializable {
         for(int i = 1 ; i < 6 ; i++){
             sql.updateSeats(actualJSON,TheaterID+"",i+"",false);
         }
-            
-            
-        sql.insertMovie(Id, b, Double.parseDouble(c), d, directorcast, g, "M"+Id, j, Double.parseDouble(k), Double.parseDouble(l), m1, n);
+        
         }catch(Exception ex){
             Alert ax = new Alert(Alert.AlertType.ERROR);
             ax.setTitle("Data Entry Error");
