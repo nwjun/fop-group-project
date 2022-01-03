@@ -217,10 +217,10 @@ public class AdminFoodController implements Initializable {
         row3.getChildren().addAll(spacing6, deleteText, spacing7, deleteButton, spacing, cancel, spacing1);
 
         VBox layout = new VBox(10);
-        layout.setStyle("-fx-background: #141414;-fx-font-family: \"Montserrat\";-fx-text-fill: #ffffff;");
         layout.getChildren().addAll(row0, row1, row2, row3);
 
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add(this.getClass().getResource("style.css").toExternalForm());
         window.setScene(scene);
         window.showAndWait();
 
