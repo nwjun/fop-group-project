@@ -112,22 +112,22 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Button id="backBtn" fx:id="nextPageButton" mnemonicParsing="false" onAction="#nextPage" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Next" GridPane.columnIndex="3">
+                                          <Button fx:id="nextPageButton" mnemonicParsing="false" onAction="#nextPage" prefHeight="25.0" prefWidth="90.0" styleClass="yellowButton" text="Next" GridPane.columnIndex="3">
                                              <GridPane.margin>
                                                 <Insets left="10.0" />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button id="nextBtn" fx:id="checkOutButton" mnemonicParsing="false" onAction="#checkOut" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Check Out" GridPane.columnIndex="6">
+                                          <Button id="nextBtn" fx:id="checkOutButton" mnemonicParsing="false" onAction="#checkOut" prefHeight="25.0" prefWidth="90.0" styleClass="yellowButton" text="Check Out" GridPane.columnIndex="6">
                                              <GridPane.margin>
                                                 <Insets left="10.0" />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButton" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Back" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
+                                          <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButton" prefHeight="25.0" prefWidth="90.0" styleClass="outlineButton" text="Back" GridPane.columnIndex="5" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button id="backBtn" fx:id="prevPageButton" mnemonicParsing="false" onAction="#prevPage" prefHeight="25.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="Button" text="Previous" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                                          <Button fx:id="prevPageButton" mnemonicParsing="false" onAction="#prevPage" prefHeight="25.0" prefWidth="90.0" styleClass="outlineButton" text="Previous" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
                                                 <Insets right="10.0" />
                                              </GridPane.margin>

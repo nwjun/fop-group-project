@@ -1,6 +1,6 @@
 .card{
     -fx-background-color: #252525;
-    -fx-padding:20px 10px 20px 10px;
+    -fx-padding:20px;
     -fx-background-radius: 10px;
     /*dropshadow( <blur-type> , <color> , shadow blur kernel radius ,
     spread [0,1.0] , x offset , y offset )*/

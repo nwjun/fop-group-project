@@ -15,17 +15,13 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -106,14 +102,15 @@ public class MovieAllShowTImeController implements Initializable {
         this.maxPage = (int) Math.ceil(movieId.length/8.0);
         this.currentIndex = 0;
                   
-        loadCard();   
+        loadCard();
+        checkPage();
     }
     
     public void loadCard() throws ParseException{
         int n = movieId.length;
         stop:{
-            for(int i = 0; i < 2;i++){
-                for(int j = 0; j < 4 ; j++){
+            for(int i = 0; i < 4;i++){
+                for(int j = 0; j < 2 ; j++){
                     this.content = new ProductCardAdminMovie((String)movieId[currentIndex], (String)movieName[currentIndex], Double.parseDouble((String)length[currentIndex]), (String)releaseDate[currentIndex], (String)directorCast[currentIndex], (String)language[currentIndex], (String)posterPath[currentIndex],(String)synopsis[currentIndex], Double.parseDouble((String)rottenTomato[currentIndex]),Double.parseDouble((String)iMDB[currentIndex]), Integer.parseInt((String)ageRestrict[currentIndex]),IMGW,IMGH,SCALE, (String)theaterId[currentIndex], (String)time[currentIndex]);
                     AnchorPane MB = MakeButton((String)movieId[currentIndex],Double.parseDouble((String)length[currentIndex]), currentIndex);
                     
@@ -122,19 +119,19 @@ public class MovieAllShowTImeController implements Initializable {
                     DETAILS.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
                     DETAILS.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
                     DETAILS.setStyle("-fx-padding: 0 0 0 0; -fx-background-color:rgba(0,0,0,0);");
-                    DETAILS.setPrefHeight(650);
-//                    HBox card = content.getCard();
+                    DETAILS.setPrefHeight(600);
 
                     VBox details = new VBox();
-                    details.setStyle("-fx-padding:0 0 0 50 ");                
+                    details.setStyle("-fx-padding:8 0 0 20 ");                
                     details.setPrefHeight(650);
-                    details.setPrefWidth(483);
+                    details.setPrefWidth(450);
                     details.getChildren().addAll(DETAILS, MB);
                     
                     HBox card = new HBox();
                     card.getChildren().addAll(img, details);
+                    card.getStyleClass().add("card");
 
-                    movieList.add(card,i,j);
+                    movieList.add(card,j,i);
                     currentIndex++;
                     if (currentIndex>=n){
                         break stop;
@@ -154,29 +151,14 @@ public class MovieAllShowTImeController implements Initializable {
         info.setLayoutY(20);
         info.setPrefWidth(100);
         info.setPrefHeight(31);
-        info.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
-        
-        info.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            
-            @Override
-            public void handle(MouseEvent t){
-                info.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px;-fx-opacity : 0.6");  
-            }
-        });
-        info.setOnMouseExited(new EventHandler<MouseEvent>(){
-            
-            @Override
-            public void handle(MouseEvent t){
-                info.setStyle("-fx-background-color:#FFEE00;-fx-background-insets:0;-fx-background-radius:15px");
-            }
-        });
+        info.getStyleClass().add("yellowButton");
         
         info.setOnAction((e)->{ 
             this.movieID = info.getId();
             FXMLLoader loader = new FXMLLoader(App.class.getResource("MoviesDetailsPopUp.fxml"));
             Stage stage = new Stage(StageStyle.UNDECORATED);
             String path1 = App.class.getResource("assets/company/logo2.png").toString(); 
-            Image img1 = new Image(path1/*, IMGW, IMGH, false, false*/);
+            Image img1 = new Image(path1);
             stage.getIcons().add(img1);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
@@ -209,7 +191,10 @@ public class MovieAllShowTImeController implements Initializable {
     }
     
     public void checkPage(){
-        if(currentPage == maxPage-1){
+        System.out.println(currentPage);
+        System.out.println(maxPage-1);
+        
+        if(currentPage <= maxPage-1){
             nextPageButton.setDisable(true);
         }
         else{

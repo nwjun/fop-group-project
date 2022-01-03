@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -18,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="857.0" prefWidth="1760.0" style="-fx-background-color: black;" stylesheets="@checkout.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.CheckOutController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="857.0" prefWidth="1760.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.CheckOutController">
    <children>
       <VBox prefHeight="939.0" prefWidth="1760.0">
          <children>
@@ -187,9 +188,9 @@
                         <CheckBox fx:id="agreement" alignment="TOP_LEFT" mnemonicParsing="false" text="I agree to the terms of the GSC Customer Agreement" wrapText="true" />
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Button id="backButton" fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="90.0" text="Back" />
+                              <Button id="backButton" fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#back" prefWidth="90.0" text="Back" />
                               <Region prefHeight="100.0" prefWidth="59.0" />
-                              <Button id="checkOutButton" fx:id="payButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pay" prefHeight="30.0" prefWidth="90.0" text="Pay" />
+                              <Button fx:id="payButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#pay" prefWidth="90.0" styleClass="yellowButton" text="Pay" />
                            </children>
                         </HBox>
                      </children>
@@ -205,4 +206,8 @@
    <padding>
       <Insets bottom="70.0" left="80.0" right="80.0" top="45.0" />
    </padding>
+   <stylesheets>
+      <URL value="@checkout.css" />
+      <URL value="@style.css" />
+   </stylesheets>
 </StackPane>

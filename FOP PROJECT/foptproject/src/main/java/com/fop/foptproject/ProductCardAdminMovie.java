@@ -61,7 +61,7 @@ public class ProductCardAdminMovie {
         this.detailCard = makeMovieDescription(movieId, length);
         this.detailCard.setPrefHeight(260);
         this.detailCard.setPrefWidth(460);
-        this.detailCard.setStyle("-fx-padding: 0 0 0 0");
+
 
 //        card.getChildren().addAll(img,movieDetails);
 //        return card;
