@@ -596,7 +596,18 @@ public class AdminMovieController implements Initializable {
                 stage.showAndWait();
                 return;
             }
-        
+        String a;
+        String Id;
+        if (this.updatestatus) {
+            Id = this.editmovieId;
+            sql.delete("M" + Id);
+            a = posterT.getText();
+            sql.insertPoster("M" + Id, a);
+        } else {
+            Id = lastmovieId();
+            a = this.save;
+            sql.insertPoster("M" + Id, a);
+        }
         String c = lengthT.getText();
         String d = releaseDateT.getText(); 
         String e = directorT.getText();
@@ -666,6 +677,7 @@ public class AdminMovieController implements Initializable {
         }
         
         }catch(Exception ex){
+            ex.printStackTrace();
             Alert ax = new Alert(Alert.AlertType.ERROR);
             ax.setTitle("Data Entry Error");
             ax.setContentText("Data Entry Error. \nPlease Check Your Input.");

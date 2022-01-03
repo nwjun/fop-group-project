@@ -30,7 +30,7 @@ public class App extends Application{
 
 
         boolean DEBUG = false;
-        String fxmlFile = "AdminSeats.fxml";
+        String fxmlFile = "App.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
