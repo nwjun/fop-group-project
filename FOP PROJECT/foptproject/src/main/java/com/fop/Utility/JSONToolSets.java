@@ -155,14 +155,14 @@ public class JSONToolSets {
             }
         }
         
-//        for(String key : extracted.keySet()){
-//            for(String item : extracted.get(key)){
-//                if(item.equals("-1"))System.out.print("X ");
-//                else System.out.print(item+" ");
-//            }
-//            System.out.println("");
-//        }
-//        System.out.println("\n");
+        for(String key : extracted.keySet()){
+            for(String item : extracted.get(key)){
+                if(item.equals("-1"))System.out.print("X ");
+                else System.out.print(item+" ");
+            }
+            System.out.println("");
+        }
+        System.out.println("\n");
         
         return extracted;
     }

@@ -28,6 +28,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
+import org.json.JSONObject;
 
 /**
  *
@@ -154,10 +155,10 @@ public class AdminSeatsController implements Initializable {
         }
     }
 
-    public HashMap<String, ArrayList<String>> getSeatsTemplate(String theaterID) throws FileNotFoundException {
+    public HashMap<String, ArrayList<String>> getSeatsTemplate(String theaterID){
         boolean isTemplate = true;
-//        this.json = new JSONToolSets(sql.querySeats(theaterID, "1", isTemplate), isTemplate);
-        this.json = new JSONToolSets(readConfig.readSeatTemplate(), isTemplate);
+        this.json = new JSONToolSets(sql.querySeats(theaterID, "1", isTemplate), isTemplate);
+//        this.json = new JSONToolSets(readConfig.readSeatTemplate(), isTemplate);
         HashMap<String, ArrayList<String>> seatArr = json.parseTheaterSeat(5);
         this.initialRow = json.getRow();
         this.initialCol = json.getColumn();
@@ -364,6 +365,7 @@ public class AdminSeatsController implements Initializable {
         final String THEATER_ID;
 //        THEATER_ID = RealTimeStorage.getMovieBooking().get("theaterId").toString();
         THEATER_ID = "8";
+        
         // Initialise 
         totalSeatsLabel.setText(String.valueOf(totalSeats));
         totalSeatsAvailableLabel.setText(String.valueOf(totalSeats));
@@ -373,10 +375,15 @@ public class AdminSeatsController implements Initializable {
 
         // fetch seat template
         HashMap<String, ArrayList<String>> seatsTemp = new HashMap<>();
-        try {
-            seatsTemp = getSeatsTemplate(THEATER_ID);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(AdminSeatsController.class.getName()).log(Level.SEVERE, null, ex);
+
+        seatsTemp = getSeatsTemplate(THEATER_ID);
+        // load if have cache
+        if(RealTimeStorage.getAdminSelected().size() > 0 && THEATER_ID.equals(RealTimeStorage.getAdminTheaterId())){
+            for(String xy : RealTimeStorage.getAdminSelected()){
+                int row = Integer.parseInt(xy.split(",")[0]) -1;
+                int column = colIndex(Integer.parseInt(xy.split(",")[1]),Integer.parseInt(RealTimeStorage.getAdminCol()));
+                seatsTemp.get(row+"").set(column, "-1");
+            }
         }
 
         // generate seat arrangement in gridpane
@@ -429,12 +436,9 @@ public class AdminSeatsController implements Initializable {
                         CheckBox newSeat = new CheckBox();
                         // Set seat availability
                         String val = seatsTemp.get(tempRow + "").get(tempCol);
-                        if (val.equals("1")) {
-                            newSeat.setDisable(true);
-                            newSeat.getStyleClass().add("soldSeat");
-                        } else if (val.equals("-1")) {
-                            newSeat.setDisable(true);
-                            newSeat.getStyleClass().add("availableSeat");
+                        if (val.equals("-1")) {
+                            newSeat.setSelected(true);
+                            unavailableSeats++;
                         } else {
                             newSeat.getStyleClass().add("availableSeat");
                         }
@@ -446,28 +450,38 @@ public class AdminSeatsController implements Initializable {
             }
 
         }
-
+        // set label value
+        totalSeatsLabel.setText(String.valueOf(totalSeats));
+        totalSeatsAvailableLabel.setText(String.valueOf(totalSeats - unavailableSeats));
+        totalSeatsUnavailableLabel.setText(String.valueOf(unavailableSeats));
+        
         // set listener to checkboxes
         setSeatListener(seatsContainer);
         final ObservableList<Node> gridPaneChildren = seatsContainer.getChildren();
 
         confirmButton.setOnAction(e -> {
+            RealTimeStorage.clearAdminSelected();
             for (int j = 0; j < gridPaneChildren.size(); j++) {
                 final Node m = gridPaneChildren.get(j);
                 final int n = j;
 
                 if (m instanceof CheckBox) {
                     CheckBox seat = (CheckBox) m;
-                    final int gridCol = GridPane.getColumnIndex(seat);
-                    int row = GridPane.getRowIndex(seat) - 1;
-                    int col = colIndex(gridCol, initialCol);
-
+                    
+                    // store selected seat to array list
                     if (seat.selectedProperty().get() == true) {
-
+                        RealTimeStorage.addAdminSelected(seat.getId());
                     }
                 }
-
-                //sql.updateSeats(jsonString,"1",true);
+            }
+            RealTimeStorage.setAdminCol(maxCol+"");
+            RealTimeStorage.setAdminRow(maxRow+"");
+            RealTimeStorage.setAdminTheaterId(THEATER_ID);
+            
+            try {
+                new SceneController().switchToAdminMovie(e);
+            } catch (IOException ex) {
+                Logger.getLogger(AdminSeatsController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
 

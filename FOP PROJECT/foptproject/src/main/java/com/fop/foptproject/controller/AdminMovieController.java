@@ -1,5 +1,6 @@
 package com.fop.foptproject.controller;
 
+import com.fop.Utility.JSONToolSets;
 import com.fop.foptproject.ProductCardAdminMovie;
 import com.fop.Utility.sqlConnect;
 import com.fop.foptproject.App;
@@ -50,6 +51,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.stage.StageStyle;
 import org.controlsfx.control.CheckComboBox;
+import org.json.JSONObject;
 
 /**
  *
@@ -554,7 +556,8 @@ public class AdminMovieController implements Initializable {
         rottenTomatoT.clear();
         iMDBT.clear();
         combobox.setValue(null);
-        checkCombo.getCheckModel().clearChecks();
+        checkCombo.getCheckModel().clearChecks(); 
+        RealTimeStorage.clearModifySeat();
     }
 
     public void refresh() throws ParseException {
@@ -563,7 +566,19 @@ public class AdminMovieController implements Initializable {
         currentPage = 0;
         checkPage();
     }
+    
+    private int colIndex(int col, int initialColumn) {
+        // change from gridpane col to array col
 
+        if (col >= initialColumn) {
+            return col - 3;
+        } else if (col >= 3) {
+            return col - 2;
+        } else {
+            return col - 1;
+        }
+    }
+    
     @FXML
     private void uploadMovie(ActionEvent event) throws ParseException {
         try {
@@ -581,39 +596,76 @@ public class AdminMovieController implements Initializable {
                 stage.showAndWait();
                 return;
             }
+        
+        String c = lengthT.getText();
+        String d = releaseDateT.getText(); 
+        String e = directorT.getText();
+        String f = castT.getText();
+        String directorcast = JSONdc(e, f);
+        String g = languageT.getText();
+        String j = synopsisT.getText();
+        String k = rottenTomatoT.getText();
+        String l = iMDBT.getText();
 
-            String a;
-            String Id;
-            if (this.updatestatus) {
-                Id = this.editmovieId;
-                sql.delete("M" + Id);
-                a = posterT.getText();
-                sql.insertPoster("M" + Id, a);
-            } else {
-                Id = lastmovieId();
-                a = this.save;
-                sql.insertPoster("M" + Id, a);
-            }
+        String n = "";
+        ObservableList list = checkCombo.getCheckModel().getCheckedItems();
+        for(Object obj : list){
+            n += obj.toString() + ", ";
+        }
+        n = n.substring(0, n.length()-2);
+        
+        
+            
+        sql.insertMovie(Id, b, Double.parseDouble(c), d, directorcast, g, "M"+Id, j, Double.parseDouble(k), Double.parseDouble(l), m1, n);
+        
+// ------------ in Admin Movie -------------
+        // with upload button
+        // generate seat json string for template
+        int sCol = Integer.parseInt(RealTimeStorage.getAdminCol());
+        int sRow = Integer.parseInt(RealTimeStorage.getAdminRow());
+        ArrayList<String> selected = RealTimeStorage.getAdminSelected();
+        int TheaterID = Integer.parseInt(RealTimeStorage.getAdminTheaterId());
 
-            String c = lengthT.getText();
-            String d = releaseDateT.getText();
-            String e = directorT.getText();
-            String f = castT.getText();
-            String directorcast = JSONdc(e, f);
-            String g = languageT.getText();
-            String j = synopsisT.getText();
-            String k = rottenTomatoT.getText();
-            String l = iMDBT.getText();
+        // generation of new seat template with new size
+        JSONObject json = new JSONObject();
+        ArrayList<Integer> row = new ArrayList<>();
+        for(int i = 0 ; i < sCol ; i++){
+            row.add(0);
+        }
 
-            String n = "";
-            ObservableList list = checkCombo.getCheckModel().getCheckedItems();
-            for (Object obj : list) {
-                n += obj.toString() + ", ";
-            }
-            n = n.substring(0, n.length() - 2);
+        for(int i = 0 ; i < sRow ; i++){
+            json.put(Integer.toString(i),row);
+        }
 
-            sql.insertMovie(Id, b, Double.parseDouble(c), d, directorcast, g, "M" + Id, j, Double.parseDouble(k), Double.parseDouble(l), m1, n);
-        } catch (Exception ex) {
+        // set seat status
+        JSONToolSets mod = new JSONToolSets(json.toString(),true);
+        mod.parseTheaterSeat(0);
+        for(int i = 0 ; i < selected.size() ; i++){
+            int mrow = Integer.parseInt(selected.get(i).split(",")[0])-1;
+            int mcolumn = Integer.parseInt(selected.get(i).split(",")[1]);
+            mcolumn = colIndex(mcolumn,sCol);
+            mod.setSeatStat(mrow, mcolumn, -1, "-");
+        }
+
+        String templateJSON = mod.getNewSeatArr().toString();
+
+        // convert to actual seat template
+        JSONObject actualjson = new JSONObject();
+        for(int i = 0 ; i < 7 ; i++){
+            actualjson.put(Integer.toString(i), mod.getNewSeatArr());
+        }
+
+        String actualJSON = actualjson.toString();
+
+        // update database
+        sql.updateSeats(templateJSON,TheaterID+"", "-", true); // template
+
+        // update actual seats
+        for(int i = 1 ; i < 6 ; i++){
+            sql.updateSeats(actualJSON,TheaterID+"",i+"",false);
+        }
+        
+        }catch(Exception ex){
             Alert ax = new Alert(Alert.AlertType.ERROR);
             ax.setTitle("Data Entry Error");
             ax.setContentText("Data Entry Error. \nPlease Check Your Input.");
@@ -683,7 +735,8 @@ public class AdminMovieController implements Initializable {
 
             }
 
-            new SceneController().switchToAdminSeats(event);
+        RealTimeStorage.updateMovieBookingByKey("theaterId", m);
+        new SceneController().switchToAdminSeats(event);
 
         }
     }
