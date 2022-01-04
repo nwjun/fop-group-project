@@ -289,7 +289,7 @@ public class AdminMovieController implements Initializable {
         layout.getChildren().addAll(row0, row1, row2, row3);
 
         Scene scene = new Scene(layout);
-        scene.getStylesheets().add(this.getClass().getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(App.class.getResource("style.css").toExternalForm());
         window.setScene(scene);
         window.showAndWait();
 

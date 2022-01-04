@@ -34,13 +34,6 @@
     ;
 }
 
-.historyHeading{
-   -fx-font-weight: bold;
-}
-
-.historyText{
-}
-
 .errorLabel{
     -fx-text-fill: #FF0000;
 }

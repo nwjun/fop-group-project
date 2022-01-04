@@ -18,7 +18,7 @@
    <content>
       <StackPane prefHeight="1100.0" prefWidth="1436.0">
          <children>
-            <VBox>
+            <VBox alignment="CENTER">
                <children>
                   <GridPane>
                     <columnConstraints>

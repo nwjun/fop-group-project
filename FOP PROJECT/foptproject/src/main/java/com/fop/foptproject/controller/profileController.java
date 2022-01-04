@@ -93,6 +93,7 @@ public class profileController implements Initializable {
     
         Button clsBtn = new Button("X");
         clsBtn.getStyleClass().add("closeBtn");
+        clsBtn.setPrefWidth(80);
         clsBtnContainer.getChildren().addAll(clsBtn);
         // Right align items
         clsBtnContainer.setAlignment(Pos.BASELINE_RIGHT);
@@ -186,6 +187,7 @@ public class profileController implements Initializable {
         Label emailErrorLabel = new Label("Incorrect format");
         emailErrorLabel.getStyleClass().add("errorLabel");
         emailErrorLabel.setVisible(false);
+        emailErrorLabel.managedProperty().bind(emailErrorLabel.visibleProperty());
         emailErrorLabel.setStyle("-fx-text-fill:#FF0000");
         emailErrorLabel.setPadding(new Insets(5, 0, 0, 10));
 
@@ -214,7 +216,10 @@ public class profileController implements Initializable {
 
         Button confirmBtn = new Button("Confirm");
         Button resetBtn = new Button("Reset");
-        resetBtn.getStyleClass().add("transparentBtn");
+        confirmBtn.getStyleClass().add("yellowButton");
+        confirmBtn.setPrefWidth(80);
+        resetBtn.getStyleClass().add("outlineButton");
+        resetBtn.setPrefWidth(80);
 
         emailField.setOnKeyTyped(eh -> {
             if (!Checker.checkEmail(emailField.getText())) {
@@ -262,7 +267,7 @@ public class profileController implements Initializable {
         titleLabel.setText("Billing");
         contentContainer.getChildren().removeIf(e-> !(e instanceof StackPane));
         addRemoveLogo("billing");
-
+        
         ScrollPane scrollPane = new ScrollPane();
         VBox scrollPaneContainer = new VBox();
         VBox banksContainer = new VBox();
@@ -272,11 +277,14 @@ public class profileController implements Initializable {
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
 
         Button addBtn = new Button("Add");
+        addBtn.setPrefWidth(80);
+        addBtn.getStyleClass().add("yellowButton");
 
         scrollPane.setContent(banksContainer);
         scrollPaneContainer.getChildren().addAll(scrollPane, addBtn);
 
         VBox wrapper = new VBox(scrollPaneContainer);
+        wrapper.setPadding(new Insets(50,0,0,0));
         contentContainer.getChildren().addAll(wrapper);
 
         // Layout
@@ -350,6 +358,7 @@ public class profileController implements Initializable {
         ScrollPane scrollPane = new ScrollPane();
         VBox wrapper = new VBox(scrollPane);
         wrapper.getStyleClass().add("wrapper");
+        wrapper.setPadding(new Insets(50,0,0,0));
         contentContainer.getChildren().add(wrapper);
 
         scrollPane.setStyle("-fx-background-color:transparent");
@@ -480,23 +489,23 @@ public class profileController implements Initializable {
             case 0:
                 RealTimeStorage.setUsername(newFieldValue);
                 returnVal = sqlConn.setNewUsernameOrPhoneNumber(RealTimeStorage.getUserEmail(), newFieldValue, false);
-                overallReturnVal = returnVal == 1? true:false;
+                overallReturnVal = returnVal == 1;
                 break;
             case 1:
                 // check dup
                 RealTimeStorage.setEmail(newFieldValue);
                 returnVal = sqlConn.setNewUserEmail(RealTimeStorage.getUserId(), newFieldValue);
-                overallReturnVal = returnVal == 1? true:false;
+                overallReturnVal = returnVal == 1;
                 break;
             case 2:
                 // check dup
                 RealTimeStorage.setPNumber(newFieldValue);
                 returnVal = sqlConn.setNewUsernameOrPhoneNumber(RealTimeStorage.getUserEmail(), newFieldValue, true);
-                overallReturnVal = returnVal == 1? true:false;
+                overallReturnVal = returnVal == 1;
                 break;
             case 3:
                 returnVal = new sqlConnect().setNewPassword(RealTimeStorage.getUserEmail(), newFieldValue);
-                overallReturnVal = returnVal == 1? true:false;
+                overallReturnVal = returnVal == 1;
                 break;
 
         }

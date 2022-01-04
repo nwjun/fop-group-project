@@ -168,7 +168,7 @@ public class MovieAllShowTImeController implements Initializable {
             try {
                 Scene scene = new Scene(loader.load());
                 stage.setScene(scene);
-                scene.getStylesheets().add(this.getClass().getResource("style.css").toExternalForm());
+                scene.getStylesheets().add(App.class.getResource("style.css").toExternalForm());
                 MoviesDetailsPopUpController controller = loader.getController();
                 controller.initData(info.getId());
                 RealTimeStorage.setLookingAt(info.getId());
