@@ -60,7 +60,7 @@ public class App extends Application {
         if (WIDTH <= 1536 && HEIGHT <= 864) {
             primaryStage.setMaximized(true);
         }
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         primaryStage.show();
 
     }
