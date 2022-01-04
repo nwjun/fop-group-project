@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
@@ -53,6 +54,8 @@ public class App extends Application {
         SceneController.setPrimaryStage(primaryStage);
         primaryStage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
         primaryStage.setTitle("Movie Ticketing System");
+//        ProgressIndicator pi = new ProgressIndicator();
+//        root.getChildrenUnmodifiable().add(pi);
         primaryStage.setScene(scene);
         if (WIDTH <= 1536 && HEIGHT <= 864) {
             primaryStage.setMaximized(true);
@@ -64,15 +67,12 @@ public class App extends Application {
 
     public static void main(String[] args) throws Exception {
         Properties prop = new readConfig().readconfigfile();
-        System.out.println("yay");
         readConfig.readSeatTemplate();
         sqlConnect sql = new sqlConnect();
 //        query all movie from database and store in local
-        System.out.println("yay");
         RealTimeStorage.setAllMovies();
 //        //query landing food poster
         RealTimeStorage.setAllLandingFood();
-
         launch();
         System.out.println("launched");
     }
