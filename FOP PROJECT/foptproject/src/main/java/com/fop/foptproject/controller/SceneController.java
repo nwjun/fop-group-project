@@ -25,6 +25,8 @@ public class SceneController {
     private static Stage primaryStage;
     private final double WIDTH;
     private final double HEIGHT;
+    private final double PREF_WIDTH = 1536;
+    private final double PREF_HEIGHT = 864;
 
     public SceneController() {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
@@ -43,12 +45,12 @@ public class SceneController {
             root = FXMLLoader.load(App.class.getResource(fxmlFile));
             Scene scene = new Scene(root);
             Stage popupStage = new Stage();
-            
+
             popupStage.initOwner(SceneController.primaryStage);
             popupStage.initModality(Modality.WINDOW_MODAL);
             popupStage.setScene(scene);
             popupStage.setResizable(false);
-            
+
             return popupStage;
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -57,10 +59,10 @@ public class SceneController {
     }
 
     private void switchScene(ActionEvent event, String fxmlFile) throws IOException {
-        
+
         Parent root = FXMLLoader.load(App.class.getResource(fxmlFile));
         //lock landing H scroll
-        if(fxmlFile.equals("App.fxml") || fxmlFile.equals("AppLogined.fxml")){
+        if (fxmlFile.equals("App.fxml") || fxmlFile.equals("AppLogined.fxml")) {
             ScrollPane k = (ScrollPane) root;
             k.hvalueProperty().addListener(new ChangeListener<Number>() {
                 public void changed(ObservableValue<? extends Number> ov,
@@ -68,18 +70,21 @@ public class SceneController {
                     k.setHvalue(50);
                 }
             });
-        
+
         }
-        scene = new Scene(root, WIDTH, HEIGHT);
+        scene = new Scene(root, PREF_WIDTH, PREF_HEIGHT);
         SceneController.primaryStage.setScene(scene);
-        SceneController.primaryStage.setMaximized(true);
+        if (WIDTH <= PREF_WIDTH && HEIGHT <= PREF_HEIGHT) {
+            primaryStage.setMaximized(true);
+        }
+        primaryStage.setResizable(false);
         SceneController.primaryStage.show();
     }
 
     private void switchScene(MouseEvent event, String fxmlFile) throws IOException {
         Parent root = FXMLLoader.load(App.class.getResource(fxmlFile));
         //lock landing H scroll
-        if(fxmlFile.equals("App.fxml")){
+        if (fxmlFile.equals("App.fxml")) {
             ScrollPane k = (ScrollPane) root;
             k.hvalueProperty().addListener(new ChangeListener<Number>() {
                 public void changed(ObservableValue<? extends Number> ov,
@@ -87,11 +92,14 @@ public class SceneController {
                     k.setHvalue(50);
                 }
             });
-        
+
         }
-        scene = new Scene(root, WIDTH, HEIGHT);
+        scene = new Scene(root, PREF_WIDTH, PREF_HEIGHT);
         SceneController.primaryStage.setScene(scene);
-        SceneController.primaryStage.setMaximized(true);
+        if (WIDTH <= PREF_WIDTH && HEIGHT <= PREF_HEIGHT) {
+            primaryStage.setMaximized(true);
+        }
+        primaryStage.setResizable(false);
         SceneController.primaryStage.show();
     }
 
@@ -102,21 +110,21 @@ public class SceneController {
     public void switchToRegisterAndLogin(ActionEvent event) throws IOException {
         switchScene(event, "LoginRegister.fxml");
     }
- 
-    public void switchToSeats(ActionEvent event) throws IOException{
-        switchScene(event,"Seats.fxml");
+
+    public void switchToSeats(ActionEvent event) throws IOException {
+        switchScene(event, "Seats.fxml");
     }
-    
-    public void switchToLandingPage(ActionEvent event) throws IOException{
-        switchScene(event,"App.fxml");
+
+    public void switchToLandingPage(ActionEvent event) throws IOException {
+        switchScene(event, "App.fxml");
     }
-    
-    public void switchToMoviesDetails(ActionEvent event) throws IOException{
-        switchScene(event,"MoviesDetails.fxml");
+
+    public void switchToMoviesDetails(ActionEvent event) throws IOException {
+        switchScene(event, "MoviesDetails.fxml");
     }
-    
-    public void switchToMovieBooking(ActionEvent event) throws IOException{
-        switchScene(event,"MovieBooking.fxml");         
+
+    public void switchToMovieBooking(ActionEvent event) throws IOException {
+        switchScene(event, "MovieBooking.fxml");
     }
 
     public void switchToHome(ActionEvent event) throws IOException {
@@ -126,7 +134,7 @@ public class SceneController {
     public void switchToHome(MouseEvent event) throws IOException {
         switchScene(event, "App.fxml");
     }
-    
+
     public void switchToHomeLogined(ActionEvent event) throws IOException {
         switchScene(event, "AppLogined.fxml");
     }
@@ -134,44 +142,44 @@ public class SceneController {
     public void switchToHomeLogined(MouseEvent event) throws IOException {
         switchScene(event, "AppLogined.fxml");
     }
-    
+
     public void switchToAdminMovie(ActionEvent event) throws IOException {
         switchScene(event, "AdminMovie.fxml");
     }
 
-    public void switchToFnB(ActionEvent event) throws IOException{
-        switchScene(event,"FoodnBeverage.fxml");         
+    public void switchToFnB(ActionEvent event) throws IOException {
+        switchScene(event, "FoodnBeverage.fxml");
     }
-    
-    public void switchToAdminFood(ActionEvent event) throws IOException{
+
+    public void switchToAdminFood(ActionEvent event) throws IOException {
         switchScene(event, "AdminFood.fxml");
     }
-    
-    public void switchToAdminMain(ActionEvent event) throws IOException{
+
+    public void switchToAdminMain(ActionEvent event) throws IOException {
         switchScene(event, "AdminMain.fxml");
     }
-    
-    public void switchToMovieAllShowTime(ActionEvent event) throws IOException{
+
+    public void switchToMovieAllShowTime(ActionEvent event) throws IOException {
         switchScene(event, "MovieAllShowTime.fxml");
     }
-    
-    public void switchToCheckOut(ActionEvent event) throws IOException{
+
+    public void switchToCheckOut(ActionEvent event) throws IOException {
         switchScene(event, "CheckOut.fxml");
     }
-    
-    public void switchToUserProfile(ActionEvent event) throws IOException{
+
+    public void switchToUserProfile(ActionEvent event) throws IOException {
         switchScene(event, "userProfile.fxml");
     }
-    
-    public void switchToAllShowTime(ActionEvent event) throws IOException{
+
+    public void switchToAllShowTime(ActionEvent event) throws IOException {
         switchScene(event, "MovieAllShowTime.fxml");
     }
-    
-    public void switchToAdminSeats(ActionEvent event) throws IOException{
+
+    public void switchToAdminSeats(ActionEvent event) throws IOException {
         switchScene(event, "AdminSeats.fxml");
     }
-    
-    public void switchToDonePayment(ActionEvent event) throws IOException{
+
+    public void switchToDonePayment(ActionEvent event) throws IOException {
         switchScene(event, "DonePayment.fxml");
     }
 }

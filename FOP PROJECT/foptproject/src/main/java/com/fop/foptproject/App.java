@@ -19,18 +19,17 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class App extends Application{
-    
+public class App extends Application {
+
     @Override
     public void start(Stage primaryStage) throws IOException {
-        
+
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         final double WIDTH = screenBounds.getWidth();
         final double HEIGHT = screenBounds.getHeight();
 
-
         boolean DEBUG = false;
-        String fxmlFile = "App.fxml";
+        String fxmlFile = "userProfile.fxml";
 
         if (!DEBUG) {
             fxmlFile = "App.fxml";
@@ -48,15 +47,17 @@ public class App extends Application{
                 }
             });
         }
-        
+
         // set Scene's width and height based on screen size
-        Scene scene = new Scene(root, HEIGHT, WIDTH);
+        Scene scene = new Scene(root, 1536, 864);
         SceneController.setPrimaryStage(primaryStage);
         primaryStage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
         primaryStage.setTitle("Movie Ticketing System");
         primaryStage.setScene(scene);
-        primaryStage.setMaximized(true);
-        primaryStage.setResizable(true);
+        if (WIDTH <= 1536 && HEIGHT <= 864) {
+            primaryStage.setMaximized(true);
+        }
+        primaryStage.setResizable(false);
         primaryStage.show();
 
     }
@@ -71,7 +72,7 @@ public class App extends Application{
         RealTimeStorage.setAllMovies();
 //        //query landing food poster
         RealTimeStorage.setAllLandingFood();
-        
+
         launch();
         System.out.println("launched");
     }
