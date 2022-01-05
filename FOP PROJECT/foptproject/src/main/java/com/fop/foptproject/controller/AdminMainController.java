@@ -14,10 +14,8 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
@@ -37,8 +35,6 @@ public class AdminMainController implements Initializable {
     private Button toAdminFood;
     @FXML
     private ImageView logo;
-    @FXML
-    private ScrollPane container;
     
     @FXML
     private void switchToAdminMovie(ActionEvent event) throws IOException {
@@ -61,7 +57,6 @@ public class AdminMainController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        BorderPane.setAlignment(container, Pos.CENTER);
         if(RealTimeStorage.getPermission().equals("3")){
             String path = App.class.getResource("assets/company/master.png").toString(); 
             Image img = new Image(path/*, IMGW, IMGH, false, false*/);
