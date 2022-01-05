@@ -74,10 +74,10 @@ public class SceneController {
         }
         scene = new Scene(root, PREF_WIDTH, PREF_HEIGHT);
         SceneController.primaryStage.setScene(scene);
-        if (WIDTH <= PREF_WIDTH && HEIGHT <= PREF_HEIGHT) {
+        if (WIDTH <= PREF_WIDTH+10 && HEIGHT <= PREF_HEIGHT+10) {
             primaryStage.setMaximized(true);
         }
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         SceneController.primaryStage.show();
     }
 
@@ -96,7 +96,7 @@ public class SceneController {
         }
         scene = new Scene(root, PREF_WIDTH, PREF_HEIGHT);
         SceneController.primaryStage.setScene(scene);
-        if (WIDTH <= PREF_WIDTH && HEIGHT <= PREF_HEIGHT) {
+        if (WIDTH <= PREF_WIDTH+10 && HEIGHT <= PREF_HEIGHT+10) {
             primaryStage.setMaximized(true);
         }
         primaryStage.setResizable(false);

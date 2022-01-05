@@ -101,6 +101,9 @@ public class ProductCardAdminMovie {
         Label hall = new Label();
         Label time = new Label();
 
+        Label[] labels = {movieName,movielength, releaseDate,director, language, path, synopsis, rottenTomato, iMDB, ageRestrict};
+        
+        
         hall.setId(movieId + "_hall");
         hall.setStyle("-fx-padding:0px 0 5px 18px");
         hall.setText("Hall: H0" + (String) this.movieDetails.get("theaterId"));
@@ -150,14 +153,12 @@ public class ProductCardAdminMovie {
         path.setText("Path: " + (String) this.movieDetails.get("imgPath"));
 
         String a = (String) this.movieDetails.get("synopsis");
-        for (int i = 47; i < a.length(); i += 57) {
-            a = insertString(a, "\n", a.lastIndexOf(" ", i - 3));
-        }
 
         synopsis.setId(movieId + "_synopsis");
         synopsis.setStyle("-fx-padding:0px 0 5px 18px");
         synopsis.setText("Synopsis: " + a);
-
+        synopsis.setWrapText(true);
+        
         rottenTomato.setId(movieId + "_rottenTomato");
         rottenTomato.setStyle("-fx-padding:0px 0 5px 18px");
         rottenTomato.setText("rottenTomato: " + String.format("%.1f/10 ", this.movieDetails.get("rottenTomato")));
@@ -170,14 +171,18 @@ public class ProductCardAdminMovie {
         ageRestrict.setStyle("-fx-padding:0px 0 5px 18px");
         ageRestrict.setText("Age Restrict: " + String.format("%d ", this.movieDetails.get("ageRestrict")));
 
-        Label line = new Label("\n __________________________*__________________________\n");
-        Label line2 = new Label("\n __________________________*__________________________\n");
+        Label line = new Label("\n ________________________*________________________\n");
+        Label line2 = new Label("\n ________________________*________________________\n");
 
-        labelContainer.setPrefWidth(425);
+        labelContainer.setPrefWidth(400);
         labelContainer.setStyle("-fx-padding:20px 0 20px 0");
         labelContainer.getChildren().clear();
         labelContainer.getChildren().addAll(movieName, movielength, releaseDate, language, rottenTomato, iMDB, ageRestrict, director, cast, synopsis, /*listShowTime,*/ line, hall, time, line2);
         labelContainer.setPrefHeight(Control.USE_COMPUTED_SIZE);
+        
+        for (Label label: labels){
+            label.setPrefWidth(Control.USE_COMPUTED_SIZE);
+        }
         
         x.setContent(labelContainer);
         x.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
