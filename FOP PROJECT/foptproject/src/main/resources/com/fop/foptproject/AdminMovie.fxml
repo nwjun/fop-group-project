@@ -71,7 +71,7 @@
                         <Label layoutX="280.0" layoutY="315.0" style="-fx-font-size: 25;" text="Here" />
                         <Label layoutX="278.0" layoutY="252.0" style="-fx-font-size: 25;" text="Drag" />
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="235.0" layoutY="285.0" style="-fx-font-size: 25;" text="Movie Poster" />
-                        <ImageView fx:id="DropImage" fitHeight="358.0" fitWidth="250.0" layoutX="187.0" layoutY="125.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="DropImage" fitHeight="377.0" fitWidth="262.0" layoutX="181.0" layoutY="118.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" />
                         <VBox layoutX="48.0" layoutY="494.0" prefHeight="128.0" prefWidth="528.0" translateY="49.0">
                            <children>
                               <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20;" text="Poster Path" />
