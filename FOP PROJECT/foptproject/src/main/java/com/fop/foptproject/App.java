@@ -66,13 +66,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) throws Exception {
-        Properties prop = new readConfig().readconfigfile();
-        readConfig.readSeatTemplate();
-        sqlConnect sql = new sqlConnect();
-//        query all movie from database and store in local
-        RealTimeStorage.setAllMovies();
-//        //query landing food poster
-        RealTimeStorage.setAllLandingFood();
+        
         launch();
         System.out.println("launched");
     }

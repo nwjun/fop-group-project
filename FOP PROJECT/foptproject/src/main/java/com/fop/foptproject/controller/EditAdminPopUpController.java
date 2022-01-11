@@ -60,7 +60,8 @@ public class EditAdminPopUpController implements Initializable {
     }    
 
     public void getAdmin(){
-        HashMap<String, ArrayList<String>> admin = sql.queryAdmin();
+        HashMap<String, ArrayList<String>> admin = RealTimeStorage.getAllAdmins();
+//        HashMap<String, ArrayList<String>> admin = sql.queryAdmin();
         Id = admin.get("Id").toArray();
         username = admin.get("username").toArray();
         email = admin.get("email").toArray();
@@ -90,6 +91,7 @@ public class EditAdminPopUpController implements Initializable {
     private void addButton(ActionEvent event) {
         String x = addAdmin.getText();
         sql.addNewUser(x.substring(0, x.lastIndexOf("@")),x, addAdminPassword.getText(), null, 2 );
+        RealTimeStorage.setAllAdmins();
         Stage stage = (Stage) addButton.getScene().getWindow();
         stage.close();
         clean();
@@ -99,6 +101,7 @@ public class EditAdminPopUpController implements Initializable {
     @FXML
     private void deleteButton(ActionEvent event) {
         sql.removeAdmin(addAdmin.getText(), addAdminPassword.getText());
+        RealTimeStorage.setAllAdmins();
         Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();
         clean();
