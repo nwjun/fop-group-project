@@ -1,6 +1,6 @@
 package com.fop.foptproject;
 
-import com.fop.foptproject.controller.AdminMovieController;
+//import com.fop.foptproject.controller.AdminMovieController;
 import java.util.HashMap;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -22,7 +22,7 @@ public class ProductCardAdminMovie {
     private VBox imgCard;
     private ScrollPane detailCard;
     private int currentPage = 0;
-    private AdminMovieController ad = new AdminMovieController();
+//    private AdminMovieController ad = new AdminMovieController();
 
     public ProductCardAdminMovie(String movieID, String movieName, double length, String releaseDate, String directorCast, String language, String imgPath, String synopsis, double rottenTomato, double iMDB, int ageRestrict, double imgW, double imgH, double scale, String theaterId, String time) throws ParseException {
         movieDetails.put("movieID", movieID);

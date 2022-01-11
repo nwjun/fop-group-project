@@ -160,7 +160,8 @@ public class AdminMovieController implements Initializable {
     }
 
     public void getProduct() throws ParseException {
-        HashMap<String, ArrayList<String>> items = sql.queryAllMovie();
+        HashMap<String, ArrayList<String>> items = RealTimeStorage.getAllMovies();
+//        HashMap<String, ArrayList<String>> items = sql.queryAllMovie();
         this.movieId = items.get("movieId").toArray();
         this.movieName = items.get("movieName").toArray();
         this.length = items.get("length").toArray();
@@ -396,8 +397,11 @@ public class AdminMovieController implements Initializable {
 
     public void delete() throws ParseException {
         String s = getdeletemovieId();
+        RealTimeStorage.deleteMovieDetails(s.substring(1));
         System.out.println("1 row(s) affected in remote database: " + s + " deleted.");
         sql.delete(s);
+        getProduct();
+        
         movieList.getChildren().clear();
         getProduct();
         currentPage = 0;
@@ -601,6 +605,7 @@ public class AdminMovieController implements Initializable {
         if (this.updatestatus) {
             Id = this.editmovieId;
             sql.delete("M" + Id);
+//            RealTimeStorage.deleteMovieDetails(Id);
             a = posterT.getText();
             sql.insertPoster("M" + Id, a);
         } else {
@@ -620,21 +625,27 @@ public class AdminMovieController implements Initializable {
 
         String n = "";
         ObservableList list = checkCombo.getCheckModel().getCheckedItems();
+        Integer count=0;
         for(Object obj : list){
             n += obj.toString() + ", ";
+            count++;
         }
         n = n.substring(0, n.length()-2);
         
-        
-            
+        if(this.updatestatus)
+            RealTimeStorage.updateMovieDetails(new String[]{"18", d, m, c, k, Id, g, j, Integer.toString(count), l, directorcast, n, b, a },Id);
+        else
+            RealTimeStorage.insertMovieDetails(new String[]{"18", d, m, c, k, Id, g, j, Integer.toString(count), l, directorcast, n, b, a });
         sql.insertMovie(Id, b, Double.parseDouble(c), d, directorcast, g, "M"+Id, j, Double.parseDouble(k), Double.parseDouble(l), m1, n);
         
         // ------------ in Admin Movie -------------
         // with upload button
         // generate seat json string for template
         if(!editSeat.isDisable()){
-            int sCol = Integer.parseInt(RealTimeStorage.getAdminCol());
-            int sRow = Integer.parseInt(RealTimeStorage.getAdminRow());
+            int sCol = Integer.parseInt(RealTimeStorage.getAdminCol()==null?"15":RealTimeStorage.getAdminCol());
+            int sRow = Integer.parseInt(RealTimeStorage.getAdminRow()==null?"7":RealTimeStorage.getAdminRow());
+//            int sCol = Integer.parseInt(RealTimeStorage.getAdminCol());
+//            int sRow = Integer.parseInt(RealTimeStorage.getAdminRow());
             ArrayList<String> selected = RealTimeStorage.getAdminSelected();
             int TheaterID = Integer.parseInt(RealTimeStorage.getAdminTheaterId());
 

@@ -74,6 +74,7 @@ public class EditPricePopUpController implements Initializable {
     private void closeWindow(ActionEvent event) {
         Stage stage = (Stage) closeWindow.getScene().getWindow();
         stage.close();
+        RealTimeStorage.setAllTickets();
     }
 
     @FXML

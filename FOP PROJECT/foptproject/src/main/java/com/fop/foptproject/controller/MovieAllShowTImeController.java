@@ -39,7 +39,7 @@ import org.json.simple.parser.ParseException;
 public class MovieAllShowTImeController implements Initializable {
 
     private ProductCardAdminMovie content;
-    private sqlConnect sql=new sqlConnect();
+   // private sqlConnect sql=new sqlConnect();
 
     private Object[] movieId;
     private Object[] movieName;
@@ -83,7 +83,8 @@ public class MovieAllShowTImeController implements Initializable {
     }    
     
     public void getProduct() throws ParseException{
-        HashMap<String,ArrayList<String>> items = sql.queryAllMovie();
+        HashMap<String,ArrayList<String>> items = RealTimeStorage.getAllMovies();
+//        HashMap<String,ArrayList<String>> items = sql.queryAllMovie();
         this.movieId = items.get("movieId").toArray();
         this.movieName = items.get("movieName").toArray();
         this.length = items.get("length").toArray();

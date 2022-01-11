@@ -40,6 +40,7 @@ import com.fop.foptproject.CommonMethod;
 import com.fop.foptproject.Food;
 import com.fop.foptproject.Movie;
 import com.fop.foptproject.SetUpLanding;
+import javafx.scene.layout.Priority;
 
 /**
  * 
@@ -146,7 +147,8 @@ public class AppController implements Initializable {
             foodList.getChildren().add(card);
             HBox.setMargin(card, new Insets(0,60,0,0));
         }
-        
+        // Set poster to center alignment
+        foodList.setAlignment(Pos.CENTER);
         // Set landingLine to center
         landingLine.setStartX(0);
         landingLine.setEndX(1450);
