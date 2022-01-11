@@ -16,7 +16,64 @@ public class RealTimeStorage {
     private static final String[] SLOTS = {"10.00AM", "03.30PM", "08.00PM", "01.00PM", "11.00PM"};
     private static HashMap<String, ArrayList<String>> movieDetails;
     private static HashMap<String, ArrayList<String>> landingFoodPoster;
-
+    private static HashMap<String, ArrayList<String>> productDetails;
+    private static HashMap<String, ArrayList<String>> adminDetails;
+    private static HashMap<String, Double> ticketDetails;
+    
+    public static void deleteMovieDetails (String s){
+        System.out.println(s);
+        int index =  RealTimeStorage.movieDetails.get("movieId").indexOf(s);
+        for(String key : RealTimeStorage.movieDetails.keySet()){
+            RealTimeStorage.movieDetails.get(key).remove(index);
+        }
+    }
+    
+    public static void updateMovieDetails (String[] attributes,String movieId){
+        int index =  RealTimeStorage.movieDetails.get("movieId").indexOf(movieId);
+        int i = 0;
+        for(String key : RealTimeStorage.movieDetails.keySet()){
+            System.out.println(key + ":" + attributes[i]);
+            RealTimeStorage.movieDetails.get(key).set(index, attributes[i]);
+            i++;
+        }
+    }
+    
+    public static void insertMovieDetails (String [] attributes){
+        int i =0;
+        for(String key : RealTimeStorage.movieDetails.keySet()){
+            System.out.println(key + ":" + attributes[i]);
+            RealTimeStorage.movieDetails.get(key).add(attributes[i]);
+            i++;
+        }
+    }
+    
+    public static void deleteProductDetails (String s){
+        System.out.println(s);
+        int index =  RealTimeStorage.productDetails.get("productId").indexOf(s);
+        for(String key : RealTimeStorage.productDetails.keySet()){
+            RealTimeStorage.productDetails.get(key).remove(index);
+        }
+    }
+    
+    public static void updateProductDetails (String[] attributes,String productId){
+        int index =  RealTimeStorage.productDetails.get("productId").indexOf(productId);
+        int i = 0;
+        for(String key : RealTimeStorage.productDetails.keySet()){
+            System.out.println(key + ":" + attributes[i]);
+            RealTimeStorage.productDetails.get(key).set(index, attributes[i]);
+            i++;
+        }
+    }
+    
+    public static void insertProductDetails (String [] attributes){
+        int i =0;
+        for(String key : RealTimeStorage.productDetails.keySet()){
+            System.out.println(key + ":" + attributes[i]);
+            RealTimeStorage.productDetails.get(key).add(attributes[i]);
+            i++;
+        }
+    }
+    
     // clear orrest after log out
     private static boolean isLogin = false;
     private static String userId;
@@ -199,6 +256,18 @@ public class RealTimeStorage {
         RealTimeStorage.movieDetails = sql.queryAllMovie();
     }
 
+    public static void setAllAdmins() {
+        RealTimeStorage.adminDetails = sql.queryAdmin();
+    }
+    
+    public static void setAllProducts() {
+        RealTimeStorage.productDetails = sql.queryAllProduct();
+    }
+    
+    public static void setAllTickets(){
+        RealTimeStorage.ticketDetails = sql.queryTicketPrice();
+    }
+
     public static void setAllLandingFood() {
         RealTimeStorage.landingFoodPoster = sql.queryLandingFood("combo", 4);
     }
@@ -290,6 +359,18 @@ public class RealTimeStorage {
     public static HashMap<String, ArrayList<String>> getAllMovies() {
         return RealTimeStorage.movieDetails;
     }
+    
+    public static HashMap<String, ArrayList<String>> getAllAdmins() {
+        return RealTimeStorage.adminDetails;
+    }
+    
+    public static HashMap<String, ArrayList<String>> getAllProducts() {
+        return RealTimeStorage.productDetails;
+    }
+    
+    public static HashMap<String, Double> getAllTickets(){
+        return RealTimeStorage.ticketDetails;
+    } 
 
     public static ArrayList<String> getMovieDetail(String key) {
         return RealTimeStorage.movieDetails.get(key);

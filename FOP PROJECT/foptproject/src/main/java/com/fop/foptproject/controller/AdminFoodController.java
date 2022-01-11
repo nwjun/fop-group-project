@@ -106,7 +106,8 @@ public class AdminFoodController implements Initializable {
     }
 
     public void getProduct() {
-        HashMap<String, ArrayList<String>> items = sql.queryAllProduct();
+        HashMap<String, ArrayList<String>> items = RealTimeStorage.getAllProducts();
+//        HashMap<String, ArrayList<String>> items = sql.queryAllProduct();
         this.productId = items.get("productId").toArray();
         this.price = items.get("price").toArray();
         this.posterPath = items.get("posterPath").toArray();
@@ -296,6 +297,7 @@ public class AdminFoodController implements Initializable {
 
     public void delete() throws ParseException {
         String s = getdeleteproductId();
+        RealTimeStorage.deleteProductDetails(s);
         System.out.println("1 row(s) affected in remote database: " + s + " deleted.");
         sql.delete(s);
         productList.getChildren().clear();
@@ -378,10 +380,10 @@ public class AdminFoodController implements Initializable {
             Image img = new Image(new FileInputStream(this.pathpath));
 
             DropImage.setImage(img);      
-            this.poster = this.pathpath.substring(this.pathpath.lastIndexOf("/")+1);
+            this.poster = this.pathpath.substring(this.pathpath.lastIndexOf("\\")+1);
             this.ext = this.pathpath.substring(this.pathpath.lastIndexOf(".")+1);
-            this.save = "assets/foods/" + this.poster;
-            this.desktopURL = getPathway()+"foods/";
+            this.save = "assets\\foods\\" + this.poster;
+            this.desktopURL = getPathway()+"foods\\";
             this.desktopPath = this.desktopURL+ this.poster;
             
 // old code
@@ -484,6 +486,10 @@ public class AdminFoodController implements Initializable {
         c = productnameT.getText();
         d = priceT.getText();
         e = productDescriptionT.getText();
+        if(this.updatestatus)
+            RealTimeStorage.updateProductDetails(new String [] {e, Id, d, b, c, a}, Id);
+        else
+            RealTimeStorage.insertProductDetails(new String [] {e, Id, d, b, c, a});
         sql.insertProduct(Id, c, Double.parseDouble(d), Id, e, b);
         }catch(Exception ex){
             Alert ax = new Alert(Alert.AlertType.ERROR);

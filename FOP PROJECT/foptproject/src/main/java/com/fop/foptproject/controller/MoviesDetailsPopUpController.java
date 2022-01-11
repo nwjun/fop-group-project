@@ -36,7 +36,7 @@ import org.json.simple.parser.ParseException;
  */
 public class MoviesDetailsPopUpController implements Initializable {
     
-    sqlConnect sql = new sqlConnect();
+//    sqlConnect sql = new sqlConnect();
     
     private Object[] movieId;
     private Object[] movieName;
@@ -115,7 +115,8 @@ public class MoviesDetailsPopUpController implements Initializable {
     
     public void price(){
         HashMap<String, Double> tickets = new HashMap<>();
-        tickets = sql.queryTicketPrice();
+        tickets = RealTimeStorage.getAllTickets();
+//        tickets = sql.queryTicketPrice();
         studentPrice.setText(Double.toString(tickets.get("TS"))+"0");
         adultPrice.setText(Double.toString(tickets.get("TC"))+"0");
         elderlyPrice.setText(Double.toString(tickets.get("TE"))+"0");
@@ -126,7 +127,8 @@ public class MoviesDetailsPopUpController implements Initializable {
     public void PopUp(String ID) throws ParseException{
         MovieAllShowTImeController x = new MovieAllShowTImeController();
         
-        HashMap<String,ArrayList<String>> items = sql.queryAllMovie();
+        HashMap<String,ArrayList<String>> items = RealTimeStorage.getAllMovies();
+//        HashMap<String,ArrayList<String>> items = sql.queryAllMovie();
         this.movieId = items.get("movieId").toArray();
         this.movieName = items.get("movieName").toArray();
         this.length = items.get("length").toArray();
