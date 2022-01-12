@@ -42,7 +42,9 @@ public class SetUpLanding {
         ArrayList<Movie> movie = new ArrayList<>();
         String movieId,movieName,poster;
         
-        for(int i = 0; i < RealTimeStorage.getMovieDetail("movieId").size()-1 ; i++){
+        int quantity = RealTimeStorage.getMovieDetail("movieId").size();
+        quantity = (quantity > 5)?5:quantity;
+        for(int i = 0; i < quantity ; i++){
             movieId = RealTimeStorage.getMovieDetail("movieId").get(i);
             movieName = RealTimeStorage.getMovieDetail("movieName").get(i);
             poster = RealTimeStorage.getMovieDetail("poster").get(i);

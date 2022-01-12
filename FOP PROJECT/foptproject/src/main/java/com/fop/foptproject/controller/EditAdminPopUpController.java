@@ -31,7 +31,6 @@ import javafx.stage.StageStyle;
  */
 public class EditAdminPopUpController implements Initializable {
 
-    private sqlConnect sql = new sqlConnect();
     private Object [] Id;
     private Object [] username;
     private Object [] email;
@@ -90,7 +89,7 @@ public class EditAdminPopUpController implements Initializable {
     @FXML
     private void addButton(ActionEvent event) {
         String x = addAdmin.getText();
-        sql.addNewUser(x.substring(0, x.lastIndexOf("@")),x, addAdminPassword.getText(), null, 2 );
+        sqlConnect.addNewUser(x.substring(0, x.lastIndexOf("@")),x, addAdminPassword.getText(), null, 2 );
         RealTimeStorage.setAllAdmins();
         Stage stage = (Stage) addButton.getScene().getWindow();
         stage.close();
@@ -100,7 +99,7 @@ public class EditAdminPopUpController implements Initializable {
 
     @FXML
     private void deleteButton(ActionEvent event) {
-        sql.removeAdmin(addAdmin.getText(), addAdminPassword.getText());
+        sqlConnect.removeAdmin(addAdmin.getText(), addAdminPassword.getText());
         RealTimeStorage.setAllAdmins();
         Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();

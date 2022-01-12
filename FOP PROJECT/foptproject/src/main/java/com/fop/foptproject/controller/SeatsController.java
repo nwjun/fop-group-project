@@ -46,7 +46,6 @@ public class SeatsController implements Initializable {
      * Initializes the controller class.
      */
     private ArrayList<String[]> selected = new ArrayList<>();
-    private sqlConnect sql = new sqlConnect();
     private int selectedLength = 0;
     // no of ticket for elder, adult, student, OKU
     private int[] tickets = new int[]{0, 0, 0, 0};
@@ -340,7 +339,7 @@ public class SeatsController implements Initializable {
     }
 
     public ArrayList<ArrayList<String>> getMovieSeats(String theaterID, String slot, String day) {
-        JSONToolSets json = new JSONToolSets(sql.querySeats(theaterID, slot, false), false);
+        JSONToolSets json = new JSONToolSets(sqlConnect.querySeats(theaterID, slot, false), false);
         HashMap<String, ArrayList<String>> seatsHash = json.parseTheaterSeat(Integer.parseInt(day));
         ArrayList<ArrayList<String>> seatsArr = new ArrayList<>();
         Set<String> rowsNo = seatsHash.keySet();

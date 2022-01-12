@@ -55,7 +55,6 @@ public class AdminFoodController implements Initializable {
     String desktopPath;
 
     private ProductCardAdminFood content;
-    private sqlConnect sql = new sqlConnect();
 
     private Object[] productId;
     private Object[] price;
@@ -299,7 +298,7 @@ public class AdminFoodController implements Initializable {
         String s = getdeleteproductId();
         RealTimeStorage.deleteProductDetails(s);
         System.out.println("1 row(s) affected in remote database: " + s + " deleted.");
-        sql.delete(s);
+        sqlConnect.delete(s);
         productList.getChildren().clear();
         getProduct();
         currentPage = 0;
@@ -421,7 +420,7 @@ public class AdminFoodController implements Initializable {
     }
 
     public String lastproductId() {
-        String x = sql.getProductLastId(b);
+        String x = sqlConnect.getProductLastId(b);
         x = x.substring(1, x.length());
         String Id = Integer.toString(Integer.valueOf(x) + 1);
         if (Id.length() == 1) {
@@ -471,16 +470,16 @@ public class AdminFoodController implements Initializable {
         try{
         if (this.updatestatus){
             Id = this.editproductId;
-            sql.delete(Id);
+            sqlConnect.delete(Id);
             a = posterT.getText();
-            sql.insertPoster(Id, a);
+            sqlConnect.insertPoster(Id, a);
             b = categoryT.getText();
         }
         else{
         b = categoryT.getText();
         Id = lastproductId();
         a = this.save;
-        sql.insertPoster(Id, a);
+        sqlConnect.insertPoster(Id, a);
         }
         
         c = productnameT.getText();
@@ -490,7 +489,7 @@ public class AdminFoodController implements Initializable {
             RealTimeStorage.updateProductDetails(new String [] {e, Id, d, b, c, a}, Id);
         else
             RealTimeStorage.insertProductDetails(new String [] {e, Id, d, b, c, a});
-        sql.insertProduct(Id, c, Double.parseDouble(d), Id, e, b);
+        sqlConnect.insertProduct(Id, c, Double.parseDouble(d), Id, e, b);
         }catch(Exception ex){
             Alert ax = new Alert(Alert.AlertType.ERROR);
             ax.setTitle("Data Entry Error");

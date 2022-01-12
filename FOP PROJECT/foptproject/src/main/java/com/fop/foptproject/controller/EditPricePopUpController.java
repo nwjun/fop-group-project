@@ -29,7 +29,6 @@ import javafx.stage.Stage;
 public class EditPricePopUpController implements Initializable {
 
     private HashMap<String, Double> tickets;
-    private sqlConnect sql = new sqlConnect();
     
     @FXML
     private Button closeWindow;
@@ -62,7 +61,7 @@ public class EditPricePopUpController implements Initializable {
     }    
 
     public void getPrice(){
-        tickets = sql.queryTicketPrice();
+        tickets = RealTimeStorage.getAllTickets();
         TS.setText(Double.toString(tickets.get("TS"))+"0");
         TC.setText(Double.toString(tickets.get("TC"))+"0");
         TE.setText(Double.toString(tickets.get("TE"))+"0");
@@ -79,31 +78,31 @@ public class EditPricePopUpController implements Initializable {
 
     @FXML
     private void TS(ActionEvent event) {
-        sql.changeTicketPrice("TS",Double.parseDouble(TS.getText()));
+        sqlConnect.changeTicketPrice("TS",Double.parseDouble(TS.getText()));
         getPrice();
     }
 
     @FXML
     private void TC(ActionEvent event) {
-        sql.changeTicketPrice("TC",Double.parseDouble(TC.getText()));
+        sqlConnect.changeTicketPrice("TC",Double.parseDouble(TC.getText()));
         getPrice();
     }
 
     @FXML
     private void TE(ActionEvent event) {
-        sql.changeTicketPrice("TE",Double.parseDouble(TE.getText()));
+        sqlConnect.changeTicketPrice("TE",Double.parseDouble(TE.getText()));
         getPrice();
     }
 
     @FXML
     private void TO(ActionEvent event) {
-        sql.changeTicketPrice("TO",Double.parseDouble(TO.getText()));
+        sqlConnect.changeTicketPrice("TO",Double.parseDouble(TO.getText()));
         getPrice();
     }
 
     @FXML
     private void TP(ActionEvent event) {
-        sql.changeTicketPrice("TP",Double.parseDouble(TP.getText()));
+        sqlConnect.changeTicketPrice("TP",Double.parseDouble(TP.getText()));
         getPrice();
     }
 

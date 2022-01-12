@@ -10,6 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -18,105 +19,130 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 
-<ScrollPane hbarPolicy="NEVER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="2200.0" prefWidth="1500.0" styleClass="root" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.AdminFoodController">
+<ScrollPane hbarPolicy="NEVER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pannable="true" prefHeight="2200.0" prefWidth="1500.0" styleClass="root" vbarPolicy="NEVER" vmax="107.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.AdminFoodController">
    <content>
-      <StackPane prefHeight="2203.0" prefWidth="1498.0">
-         <padding>
-            <Insets left="30.0" top="40.0" />
-         </padding>
+      <StackPane>
          <children>
-            <VBox prefWidth="1435.0">
+            <StackPane prefHeight="2203.0" prefWidth="1498.0">
+               <padding>
+                  <Insets left="30.0" top="40.0" />
+               </padding>
                <children>
-                  <GridPane>
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <VBox prefWidth="1435.0">
                      <children>
-                        <ImageView fx:id="logo" fitHeight="154.0" fitWidth="311.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
-                           <image>
-                              <Image url="@assets/company/Admin%20Logo.png" />
-                           </image>
-                        </ImageView>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
                            <children>
-                              <Button fx:id="backToMain" layoutX="590.0" mnemonicParsing="false" onAction="#switchToAdminMain" prefHeight="31.0" prefWidth="100.0" styleClass="Button" text="Back" />
+                              <ImageView fx:id="logo" fitHeight="154.0" fitWidth="311.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                                 <image>
+                                    <Image url="@assets/company/Admin%20Logo.png" />
+                                 </image>
+                              </ImageView>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <children>
+                                    <Button fx:id="backToMain" layoutX="590.0" mnemonicParsing="false" onAction="#switchToAdminMain" prefHeight="31.0" prefWidth="100.0" styleClass="Button" text="Back" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </GridPane>
+                        <AnchorPane prefHeight="2011.0" prefWidth="1468.0">
+                           <children>
+                              <Line endX="1000.0" endY="1585.0" layoutX="648.0" layoutY="301.0" startX="1000.0" startY="-370.0" stroke="#f5f500" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="647.0" AnchorPane.rightAnchor="723.0" AnchorPane.topAnchor="30.0" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1a1a1a" height="250.0" layoutX="190.0" layoutY="127.0" stroke="#f6ff00" strokeType="INSIDE" width="240.0" />
+                              <ImageView fx:id="DropImage" fitHeight="250.0" fitWidth="250.0" layoutX="185.0" layoutY="127.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" />
+                              <VBox layoutX="51.0" layoutY="596.0" prefHeight="128.0" prefWidth="528.0">
+                                 <children>
+                                    <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Category" />
+                                    <TextField fx:id="categoryT" prefHeight="47.0" prefWidth="528.0" promptText="combo || beverage || carte || popcorn" />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="53.0" layoutY="724.0" prefHeight="128.0" prefWidth="528.0">
+                                 <children>
+                                    <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Food Name" />
+                                    <TextField fx:id="productnameT" prefHeight="47.0" prefWidth="528.0" />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="54.0" layoutY="852.0" prefHeight="128.0" prefWidth="528.0">
+                                 <children>
+                                    <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Price" />
+                                    <TextField fx:id="priceT" prefHeight="47.0" prefWidth="528.0" />
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="54.0" layoutY="980.0" prefHeight="314.0" prefWidth="528.0">
+                                 <children>
+                                    <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Product Description" />
+                                    <TextArea fx:id="productDescriptionT" prefHeight="258.0" prefWidth="528.0" text="&#10;" />
+                                 </children>
+                              </VBox>
+                              <Button fx:id="upload" layoutX="481.0" layoutY="1316.0" mnemonicParsing="false" onAction="#uploadProduct" prefHeight="31.0" prefWidth="100.0" styleClass="yellowButton" text="Upload" />
+                              <Label layoutX="686.0" layoutY="30.0" styleClass="pageHeader" text="Food Uploaded" />
+                              <VBox layoutX="51.0" layoutY="476.0" prefHeight="128.0" prefWidth="528.0">
+                                 <children>
+                                    <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Poster Path" />
+                                    <TextField fx:id="posterT" prefHeight="47.0" prefWidth="528.0" promptText="&quot;Browse Image&quot; If Path_Not_Found" />
+                                 </children>
+                              </VBox>
+                              <Label layoutX="50.0" layoutY="30.0" styleClass="pageHeader" text="Add/ Edit Food" />
+                              <AnchorPane layoutX="686.0" layoutY="89.0" />
+                              <Label layoutX="50.0" layoutY="70.0" prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Food Poster" />
+                              <Line endX="144.0" fill="#fbff00" layoutX="150.0" layoutY="68.0" startX="-100.0" stroke="#fff200" strokeLineCap="ROUND" strokeLineJoin="ROUND" />
+                              <Line endX="149.0" fill="#fbff00" layoutX="786.0" layoutY="68.0" startX="-100.0" stroke="#fff200" strokeLineCap="ROUND" strokeLineJoin="ROUND" />
+                              <Button fx:id="nextPageButton" layoutX="1311.0" layoutY="1927.0" mnemonicParsing="false" onAction="#nextPage" prefWidth="100.0" styleClass="yellowButton" text="Next Page" />
+                              <Button fx:id="FileChooser" layoutX="243.0" layoutY="346.0" mnemonicParsing="false" onAction="#singleImagePathRead" prefWidth="134.0" styleClass="yellowButton" text="Browse Image" translateY="40.0" />
+                              <Button fx:id="prevPageButton" layoutX="1178.0" layoutY="1927.0" mnemonicParsing="false" onAction="#prevPage" prefWidth="100.0" styleClass="outlineButton" text="Previous" />
+                              <GridPane fx:id="productList" layoutX="686.0" layoutY="150.0" prefHeight="1750.0" prefWidth="748.0" vgap="40.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                              </GridPane>
+                              <Button fx:id="clearButton" layoutX="367.0" layoutY="1316.0" mnemonicParsing="false" onAction="#ClearButtonAct" prefHeight="31.0" prefWidth="100.0" styleClass="outlineButton" text="Clear" />
+                              <Button fx:id="nextPageButton1" layoutX="1311.0" layoutY="74.0" mnemonicParsing="false" onAction="#nextPage" prefWidth="100.0" styleClass="yellowButton" text="Next Page" />
+                              <Button fx:id="prevPageButton1" layoutX="1178.0" layoutY="73.0" mnemonicParsing="false" onAction="#prevPage" prefWidth="100.0" styleClass="outlineButton" text="Previous" />
                            </children>
                         </AnchorPane>
                      </children>
-                  </GridPane>
-                  <AnchorPane prefHeight="2011.0" prefWidth="1468.0">
-                     <children>
-                        <Line endX="1000.0" endY="1585.0" layoutX="648.0" layoutY="301.0" startX="1000.0" startY="-370.0" stroke="#f5f500" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="647.0" AnchorPane.rightAnchor="723.0" AnchorPane.topAnchor="30.0" />
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1a1a1a" height="250.0" layoutX="190.0" layoutY="127.0" stroke="#f6ff00" strokeType="INSIDE" width="240.0" />
-                        <ImageView fx:id="DropImage" fitHeight="250.0" fitWidth="250.0" layoutX="185.0" layoutY="127.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" />
-                        <VBox layoutX="51.0" layoutY="596.0" prefHeight="128.0" prefWidth="528.0">
-                           <children>
-                              <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Category" />
-                              <TextField fx:id="categoryT" prefHeight="47.0" prefWidth="528.0" promptText="combo || beverage || carte || popcorn" />
-                           </children>
-                        </VBox>
-                        <VBox layoutX="53.0" layoutY="724.0" prefHeight="128.0" prefWidth="528.0">
-                           <children>
-                              <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Food Name" />
-                              <TextField fx:id="productnameT" prefHeight="47.0" prefWidth="528.0" />
-                           </children>
-                        </VBox>
-                        <VBox layoutX="54.0" layoutY="852.0" prefHeight="128.0" prefWidth="528.0">
-                           <children>
-                              <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Price" />
-                              <TextField fx:id="priceT" prefHeight="47.0" prefWidth="528.0" />
-                           </children>
-                        </VBox>
-                        <VBox layoutX="54.0" layoutY="980.0" prefHeight="314.0" prefWidth="528.0">
-                           <children>
-                              <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Product Description" />
-                              <TextArea fx:id="productDescriptionT" prefHeight="258.0" prefWidth="528.0" text="&#10;" />
-                           </children>
-                        </VBox>
-                        <Button fx:id="upload" layoutX="481.0" layoutY="1316.0" mnemonicParsing="false" onAction="#uploadProduct" prefHeight="31.0" prefWidth="100.0" styleClass="yellowButton" text="Upload" />
-                        <Label layoutX="686.0" layoutY="30.0" styleClass="pageHeader" text="Food Uploaded" />
-                        <VBox layoutX="51.0" layoutY="476.0" prefHeight="128.0" prefWidth="528.0">
-                           <children>
-                              <Label prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Poster Path" />
-                              <TextField fx:id="posterT" prefHeight="47.0" prefWidth="528.0" promptText="&quot;Browse Image&quot; If Path_Not_Found" />
-                           </children>
-                        </VBox>
-                        <Label layoutX="50.0" layoutY="30.0" styleClass="pageHeader" text="Add/ Edit Food" />
-                        <AnchorPane layoutX="686.0" layoutY="89.0" />
-                        <Label layoutX="50.0" layoutY="70.0" prefHeight="57.0" prefWidth="213.0" style="-fx-font-size: 20px;" text="Food Poster" />
-                        <Line endX="144.0" fill="#fbff00" layoutX="150.0" layoutY="68.0" startX="-100.0" stroke="#fff200" strokeLineCap="ROUND" strokeLineJoin="ROUND" />
-                        <Line endX="149.0" fill="#fbff00" layoutX="786.0" layoutY="68.0" startX="-100.0" stroke="#fff200" strokeLineCap="ROUND" strokeLineJoin="ROUND" />
-                        <Button fx:id="nextPageButton" layoutX="1311.0" layoutY="1927.0" mnemonicParsing="false" onAction="#nextPage" prefWidth="100.0" styleClass="yellowButton" text="Next Page" />
-                        <Button fx:id="FileChooser" layoutX="243.0" layoutY="346.0" mnemonicParsing="false" onAction="#singleImagePathRead" prefWidth="134.0" styleClass="yellowButton" text="Browse Image" translateY="40.0" />
-                        <Button fx:id="prevPageButton" layoutX="1178.0" layoutY="1927.0" mnemonicParsing="false" onAction="#prevPage" prefWidth="100.0" styleClass="outlineButton" text="Previous" />
-                        <GridPane fx:id="productList" layoutX="686.0" layoutY="150.0" prefHeight="1750.0" prefWidth="748.0" vgap="40.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                        <Button fx:id="clearButton" layoutX="367.0" layoutY="1316.0" mnemonicParsing="false" onAction="#ClearButtonAct" prefHeight="31.0" prefWidth="100.0" styleClass="outlineButton" text="Clear" />
-                        <Button fx:id="nextPageButton1" layoutX="1311.0" layoutY="74.0" mnemonicParsing="false" onAction="#nextPage" prefWidth="100.0" styleClass="yellowButton" text="Next Page" />
-                        <Button fx:id="prevPageButton1" layoutX="1178.0" layoutY="73.0" mnemonicParsing="false" onAction="#prevPage" prefWidth="100.0" styleClass="outlineButton" text="Previous" />
-                     </children>
-                  </AnchorPane>
+                  </VBox>
                </children>
-            </VBox>
+            </StackPane>
+            <StackPane fx:id="loadingScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="426.0" prefWidth="730.0" style="-fx-background-radius: 20; -fx-background-color: #010101;" translateX="1800.0" translateY="-700.0">
+               <children>
+                  <BorderPane>
+                     <center>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="690.0" style="-fx-background-color: transparent; -fx-border-color: #FFEE00; -fx-border-radius: 20; -fx-border-width: 2;">
+                           <children>
+                              <ImageView fitHeight="287.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" translateY="-30.0">
+                                 <image>
+                                    <Image url="@assets/company/loading.gif" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="loading" style="-fx-text-fill: #ffffff; -fx-font-size: 15;" text="Loading" translateY="-105.0" />
+                           </children>
+                        </VBox>
+                     </center>
+                  </BorderPane>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </StackPane>
          </children>
       </StackPane>
    </content>

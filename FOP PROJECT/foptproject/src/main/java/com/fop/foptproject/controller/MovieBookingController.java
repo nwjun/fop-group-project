@@ -62,7 +62,6 @@ public class MovieBookingController implements Initializable {
     @FXML
     private Label showTimeWarningText;
     
-    private sqlConnect sql = new sqlConnect();
     private String chosenDay;
     private String chosenDate;
     private String chosenCinema;
@@ -115,7 +114,6 @@ public class MovieBookingController implements Initializable {
         catch(Exception e){
             // do nothing
         }
-        System.out.println(validateAll());
         nextButton.setDisable(validateAll());
     }
 
@@ -123,7 +121,6 @@ public class MovieBookingController implements Initializable {
     public void validateDateField(){
         try{
             getDate();
-            System.out.println(this.chosenDate);
             if(this.chosenDate.isEmpty()){
                 dateWarningText.setVisible(true);
                 nextButton.setDisable(true);
@@ -136,7 +133,6 @@ public class MovieBookingController implements Initializable {
         catch(Exception e){
             // do nothing
         }
-        System.out.println(validateAll());
         nextButton.setDisable(validateAll());
     }
 
@@ -151,7 +147,6 @@ public class MovieBookingController implements Initializable {
             showTimeWarningText.setVisible(false);
             nextButton.setDisable(false);
         }
-        System.out.println(validateAll());
         nextButton.setDisable(validateAll());
     }
     
@@ -217,7 +212,7 @@ public class MovieBookingController implements Initializable {
         int length = RealTimeStorage.getMovieDetail("time").get(ind).split(", ").length;
         
         for(int i = 1 ; i <= length ; i++){
-            JSONToolSets json = new JSONToolSets(sql.querySeats(theaterId,Integer.toString(i),false),false);
+            JSONToolSets json = new JSONToolSets(sqlConnect.querySeats(theaterId,Integer.toString(i),false),false);
             result = json.parseTheaterSeat(day);
             total = result.size()*result.get("0").size();
             for(int m = 0 ; m < result.size() ; m++){

@@ -10,70 +10,13 @@ import org.json.*;
  * @author WeiXin
  */
 public class RealTimeStorage {
-    
+
     // must not be cleared
-    private static sqlConnect sql = new sqlConnect();
     private static final String[] SLOTS = {"10.00AM", "03.30PM", "08.00PM", "01.00PM", "11.00PM"};
     private static HashMap<String, ArrayList<String>> movieDetails;
     private static HashMap<String, ArrayList<String>> landingFoodPoster;
     private static HashMap<String, ArrayList<String>> productDetails;
-    private static HashMap<String, ArrayList<String>> adminDetails;
-    private static HashMap<String, Double> ticketDetails;
-    
-    public static void deleteMovieDetails (String s){
-        System.out.println(s);
-        int index =  RealTimeStorage.movieDetails.get("movieId").indexOf(s);
-        for(String key : RealTimeStorage.movieDetails.keySet()){
-            RealTimeStorage.movieDetails.get(key).remove(index);
-        }
-    }
-    
-    public static void updateMovieDetails (String[] attributes,String movieId){
-        int index =  RealTimeStorage.movieDetails.get("movieId").indexOf(movieId);
-        int i = 0;
-        for(String key : RealTimeStorage.movieDetails.keySet()){
-            System.out.println(key + ":" + attributes[i]);
-            RealTimeStorage.movieDetails.get(key).set(index, attributes[i]);
-            i++;
-        }
-    }
-    
-    public static void insertMovieDetails (String [] attributes){
-        int i =0;
-        for(String key : RealTimeStorage.movieDetails.keySet()){
-            System.out.println(key + ":" + attributes[i]);
-            RealTimeStorage.movieDetails.get(key).add(attributes[i]);
-            i++;
-        }
-    }
-    
-    public static void deleteProductDetails (String s){
-        System.out.println(s);
-        int index =  RealTimeStorage.productDetails.get("productId").indexOf(s);
-        for(String key : RealTimeStorage.productDetails.keySet()){
-            RealTimeStorage.productDetails.get(key).remove(index);
-        }
-    }
-    
-    public static void updateProductDetails (String[] attributes,String productId){
-        int index =  RealTimeStorage.productDetails.get("productId").indexOf(productId);
-        int i = 0;
-        for(String key : RealTimeStorage.productDetails.keySet()){
-            System.out.println(key + ":" + attributes[i]);
-            RealTimeStorage.productDetails.get(key).set(index, attributes[i]);
-            i++;
-        }
-    }
-    
-    public static void insertProductDetails (String [] attributes){
-        int i =0;
-        for(String key : RealTimeStorage.productDetails.keySet()){
-            System.out.println(key + ":" + attributes[i]);
-            RealTimeStorage.productDetails.get(key).add(attributes[i]);
-            i++;
-        }
-    }
-    
+
     // clear orrest after log out
     private static boolean isLogin = false;
     private static String userId;
@@ -83,7 +26,9 @@ public class RealTimeStorage {
     private static String permission = "0";
     private static ArrayList<String> linkedCard;
     private static int alteringDay;
-    
+    private static HashMap<String, ArrayList<String>> adminDetails;
+    private static HashMap<String, Double> ticketDetails;
+
     // clear or reset after checkout
     private static String bookingNumber;
     private static String transactionTimestamp;
@@ -103,7 +48,60 @@ public class RealTimeStorage {
     private static String adminRow;
     private static String adminTheaterId;
     private static ArrayList<String> adminSelected = new ArrayList<>();
-    
+
+    public static void deleteMovieDetails(String s) {
+        System.out.println(s);
+        int index = RealTimeStorage.movieDetails.get("movieId").indexOf(s);
+        for (String key : RealTimeStorage.movieDetails.keySet()) {
+            RealTimeStorage.movieDetails.get(key).remove(index);
+        }
+    }
+
+    public static void updateMovieDetails(String[] attributes, String movieId) {
+        int index = RealTimeStorage.movieDetails.get("movieId").indexOf(movieId);
+        int i = 0;
+        for (String key : RealTimeStorage.movieDetails.keySet()) {
+            System.out.println(key + ":" + attributes[i]);
+            RealTimeStorage.movieDetails.get(key).set(index, attributes[i]);
+            i++;
+        }
+    }
+
+    public static void insertMovieDetails(String[] attributes) {
+        int i = 0;
+        for (String key : RealTimeStorage.movieDetails.keySet()) {
+            System.out.println(key + ":" + attributes[i]);
+            RealTimeStorage.movieDetails.get(key).add(attributes[i]);
+            i++;
+        }
+    }
+
+    public static void deleteProductDetails(String s) {
+        System.out.println(s);
+        int index = RealTimeStorage.productDetails.get("productId").indexOf(s);
+        for (String key : RealTimeStorage.productDetails.keySet()) {
+            RealTimeStorage.productDetails.get(key).remove(index);
+        }
+    }
+
+    public static void updateProductDetails(String[] attributes, String productId) {
+        int index = RealTimeStorage.productDetails.get("productId").indexOf(productId);
+        int i = 0;
+        for (String key : RealTimeStorage.productDetails.keySet()) {
+            System.out.println(key + ":" + attributes[i]);
+            RealTimeStorage.productDetails.get(key).set(index, attributes[i]);
+            i++;
+        }
+    }
+
+    public static void insertProductDetails(String[] attributes) {
+        int i = 0;
+        for (String key : RealTimeStorage.productDetails.keySet()) {
+            System.out.println(key + ":" + attributes[i]);
+            RealTimeStorage.productDetails.get(key).add(attributes[i]);
+            i++;
+        }
+    }
 
     // setter for movie booking
     public static void updateMovieBooking(HashMap<String, Object> input, boolean clear) {
@@ -185,9 +183,9 @@ public class RealTimeStorage {
         RealTimeStorage.FoodnBeverage.clear();
         RealTimeStorage.selectedSeats.clear();
     }
-    
+
     // clear booking details
-    public static void clearBookingDetails(){
+    public static void clearBookingDetails() {
         RealTimeStorage.lookingAtMovie = null;
         RealTimeStorage.isPremium = false;
         RealTimeStorage.bookingNumber = null;
@@ -201,8 +199,8 @@ public class RealTimeStorage {
         RealTimeStorage.ticketType = new int[4];
         RealTimeStorage.ticketPrices = new String[4];
     }
-    
-    public static void clearModifySeat(){
+
+    public static void clearModifySeat() {
         RealTimeStorage.adminCol = null;
         RealTimeStorage.adminRow = null;
         RealTimeStorage.adminTheaterId = null;
@@ -213,8 +211,7 @@ public class RealTimeStorage {
     // setter for username, userId, userEmail, phoneNumber, permission, linkedCard
     public static void updateUserInfos(String userEmail) {
 
-        sqlConnect sql = new sqlConnect();
-        HashMap<String, String> result = sql.queryUserCredentials(userEmail);
+        HashMap<String, String> result = sqlConnect.queryUserCredentials(userEmail);
 
         // store string value
         RealTimeStorage.userEmail = userEmail;
@@ -241,7 +238,7 @@ public class RealTimeStorage {
         }
 
         String jsonString = JSONToolSets.writeJSONString(jsonArray, "cardDetails");
-        sql.updateLinkedCard(jsonString, userEmail);
+        sqlConnect.updateLinkedCard(jsonString, userEmail);
     }
 
     public static void setAlteringDay(int day) {
@@ -253,23 +250,25 @@ public class RealTimeStorage {
     }
 
     public static void setAllMovies() {
-        RealTimeStorage.movieDetails = sql.queryAllMovie();
+        RealTimeStorage.movieDetails = sqlConnect.queryAllMovie();
     }
 
+    // possible duplicate
     public static void setAllAdmins() {
-        RealTimeStorage.adminDetails = sql.queryAdmin();
+        RealTimeStorage.adminDetails = sqlConnect.queryAdmin();
     }
-    
+
     public static void setAllProducts() {
-        RealTimeStorage.productDetails = sql.queryAllProduct();
+        RealTimeStorage.productDetails = sqlConnect.queryAllProduct();
     }
-    
-    public static void setAllTickets(){
-        RealTimeStorage.ticketDetails = sql.queryTicketPrice();
+
+    //possible duplicate
+    public static void setAllTickets() {
+        RealTimeStorage.ticketDetails = sqlConnect.queryTicketPrice();
     }
 
     public static void setAllLandingFood() {
-        RealTimeStorage.landingFoodPoster = sql.queryLandingFood("combo", 4);
+        RealTimeStorage.landingFoodPoster = sqlConnect.queryLandingFood("combo", 4);
     }
 
     public static void setBookingNumber(String bnum) {
@@ -287,11 +286,11 @@ public class RealTimeStorage {
     public static void setfnb(String fnb) {
         RealTimeStorage.fnb = fnb;
     }
-    
+
     public static void setToBePaid(String amount) {
         RealTimeStorage.toBePaid = amount;
     }
-    
+
     public static void setTimestamp(String tstamp) {
         RealTimeStorage.transactionTimestamp = tstamp;
     }
@@ -315,7 +314,7 @@ public class RealTimeStorage {
     public static String getTime(int i) {
         return RealTimeStorage.getMovieDetail("time").get(RealTimeStorage.getMovieDetail("movieId").indexOf(RealTimeStorage.lookingAtMovie)).split(", ")[i];
     }
-    
+
     public static String getTypeByQuantity() {
         return RealTimeStorage.typeByQuantity;
     }
@@ -327,7 +326,7 @@ public class RealTimeStorage {
     public static String getfnb() {
         return RealTimeStorage.fnb;
     }
-    
+
     public static String getToBePaid() {
         return RealTimeStorage.toBePaid;
     }
@@ -359,21 +358,32 @@ public class RealTimeStorage {
     public static HashMap<String, ArrayList<String>> getAllMovies() {
         return RealTimeStorage.movieDetails;
     }
-    
+
     public static HashMap<String, ArrayList<String>> getAllAdmins() {
         return RealTimeStorage.adminDetails;
     }
-    
+
     public static HashMap<String, ArrayList<String>> getAllProducts() {
         return RealTimeStorage.productDetails;
     }
-    
-    public static HashMap<String, Double> getAllTickets(){
+
+    public static HashMap<String, Double> getAllTickets() {
         return RealTimeStorage.ticketDetails;
-    } 
+    }
 
     public static ArrayList<String> getMovieDetail(String key) {
         return RealTimeStorage.movieDetails.get(key);
+    }
+
+    public static String getProductInfo(String key, String field) {
+        System.out.println(key);
+        int ind = RealTimeStorage.productDetails.get("productId").indexOf(key);
+        System.out.println(ind);
+        return RealTimeStorage.productDetails.get(field).get(ind);
+    }
+
+    public static HashMap<String, ArrayList<String>> getProductDetails() {
+        return RealTimeStorage.productDetails;
     }
 
     // getter for userId
@@ -446,9 +456,9 @@ public class RealTimeStorage {
 
         for (int i = 0; i < RealTimeStorage.ticketTypeQuantity; i++) {
             if (!isPremium) {
-                RealTimeStorage.ticketPrices[i] = sql.queryTicketPrice().get(cat[i]).toString();
+                RealTimeStorage.ticketPrices[i] = sqlConnect.queryTicketPrice().get(cat[i]).toString();
             } else {
-                RealTimeStorage.ticketPrices[i] = sql.queryTicketPrice().get(cat[4]).toString();
+                RealTimeStorage.ticketPrices[i] = sqlConnect.queryTicketPrice().get(cat[4]).toString();
             }
         }
 
@@ -512,43 +522,41 @@ public class RealTimeStorage {
     public static HashMap<String, Integer> retrieveAllPurchaseDetail() {
         return RealTimeStorage.FoodnBeverage;
     }
-    
-    public static void setAdminCol(String col){
+
+    public static void setAdminCol(String col) {
         RealTimeStorage.adminCol = col;
     }
-    
-    public static void setAdminRow(String row){
+
+    public static void setAdminRow(String row) {
         RealTimeStorage.adminRow = row;
     }
-    
-    public static void setAdminTheaterId(String id){
+
+    public static void setAdminTheaterId(String id) {
         RealTimeStorage.adminTheaterId = id;
     }
-    
-    public static void addAdminSelected(String seat){
+
+    public static void addAdminSelected(String seat) {
         RealTimeStorage.adminSelected.add(seat);
     }
-    
-    public static void clearAdminSelected(){
+
+    public static void clearAdminSelected() {
         RealTimeStorage.adminSelected.clear();
     }
-    
-    public static String getAdminCol(){
+
+    public static String getAdminCol() {
         return RealTimeStorage.adminCol;
     }
-    
-    public static String getAdminRow(){
+
+    public static String getAdminRow() {
         return RealTimeStorage.adminRow;
     }
-    
-    public static String getAdminTheaterId(){
+
+    public static String getAdminTheaterId() {
         return RealTimeStorage.adminTheaterId;
     }
-    
-    public static ArrayList<String> getAdminSelected(){
+
+    public static ArrayList<String> getAdminSelected() {
         return RealTimeStorage.adminSelected;
     }
-    
-    
-    
+
 }

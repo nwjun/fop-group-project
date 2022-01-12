@@ -6,6 +6,7 @@ package com.fop.foptproject.controller;
 
 import com.fop.foptproject.App;
 import java.io.IOException;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -14,10 +15,15 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class SceneController {
 
@@ -43,6 +49,7 @@ public class SceneController {
 
         try {
             root = FXMLLoader.load(App.class.getResource(fxmlFile));
+            
             Scene scene = new Scene(root);
             Stage popupStage = new Stage();
 
@@ -59,22 +66,46 @@ public class SceneController {
     }
 
     private void switchScene(ActionEvent event, String fxmlFile) throws IOException {
-
         Parent root = FXMLLoader.load(App.class.getResource(fxmlFile));
         //lock landing H scroll
         if (fxmlFile.equals("App.fxml") || fxmlFile.equals("AppLogined.fxml")) {
             ScrollPane k = (ScrollPane) root;
+            k.setHvalue(50);
             k.hvalueProperty().addListener(new ChangeListener<Number>() {
                 public void changed(ObservableValue<? extends Number> ov,
                         Number old_val, Number new_val) {
                     k.setHvalue(50);
                 }
             });
-
         }
+        // loading screen synchronized movement
+        else if(fxmlFile.equals("AdminMovie.fxml")){
+            ScrollPane k = (ScrollPane) root;
+            StackPane loadingScreen = (StackPane)((StackPane)k.getContent()).getChildren().get(1);
+            k.vvalueProperty().addListener(new ChangeListener<Number>() {
+                public void changed(ObservableValue<? extends Number> ov,
+                        Number old_val, Number new_val) {
+                    System.out.println(loadingScreen.getTranslateY()-(old_val.doubleValue()-new_val.doubleValue())*12.5);
+                    loadingScreen.setTranslateY(loadingScreen.getTranslateY()-(old_val.doubleValue()-new_val.doubleValue())*12.5);
+                }
+            });
+        }
+        else if(fxmlFile.equals("AdminFood.fxml")){
+            ScrollPane k = (ScrollPane) root;
+            StackPane loadingScreen = (StackPane)((StackPane)k.getContent()).getChildren().get(1);
+            k.vvalueProperty().addListener(new ChangeListener<Number>() {
+                public void changed(ObservableValue<? extends Number> ov,
+                        Number old_val, Number new_val) {
+                    System.out.println(loadingScreen.getTranslateY()-(old_val.doubleValue()-new_val.doubleValue())*16.5);
+                    loadingScreen.setTranslateY(loadingScreen.getTranslateY()-(old_val.doubleValue()-new_val.doubleValue())*16.5);
+                }
+            });
+        
+        }
+
         scene = new Scene(root, PREF_WIDTH, PREF_HEIGHT);
         SceneController.primaryStage.setScene(scene);
-        if (WIDTH <= PREF_WIDTH+10 && HEIGHT <= PREF_HEIGHT+10) {
+        if (WIDTH <= PREF_WIDTH + 10 && HEIGHT <= PREF_HEIGHT + 10) {
             primaryStage.setMaximized(true);
         }
         primaryStage.setResizable(true);
@@ -82,25 +113,50 @@ public class SceneController {
     }
 
     private void switchScene(MouseEvent event, String fxmlFile) throws IOException {
+
         Parent root = FXMLLoader.load(App.class.getResource(fxmlFile));
         //lock landing H scroll
-        if (fxmlFile.equals("App.fxml")) {
+        if (fxmlFile.equals("App.fxml") || fxmlFile.equals("AppLogined.fxml")) {
             ScrollPane k = (ScrollPane) root;
+            k.setHvalue(50);
             k.hvalueProperty().addListener(new ChangeListener<Number>() {
                 public void changed(ObservableValue<? extends Number> ov,
                         Number old_val, Number new_val) {
                     k.setHvalue(50);
                 }
             });
-
         }
+        // loading screen synchronized movement
+        else if(fxmlFile.equals("AdminMovie.fxml")){
+            ScrollPane k = (ScrollPane) root;
+            StackPane loadingScreen = (StackPane)((StackPane)k.getContent()).getChildren().get(1);
+            k.vvalueProperty().addListener(new ChangeListener<Number>() {
+                public void changed(ObservableValue<? extends Number> ov,
+                        Number old_val, Number new_val) {
+                    loadingScreen.setTranslateY(loadingScreen.getTranslateY()-(old_val.doubleValue()-new_val.doubleValue())*12.5);
+                }
+            });
+        }
+        else if(fxmlFile.equals("AdminFood.fxml")){
+            ScrollPane k = (ScrollPane) root;
+            StackPane loadingScreen = (StackPane)((StackPane)k.getContent()).getChildren().get(1);
+            k.vvalueProperty().addListener(new ChangeListener<Number>() {
+                public void changed(ObservableValue<? extends Number> ov,
+                        Number old_val, Number new_val) {
+                    loadingScreen.setTranslateY(loadingScreen.getTranslateY()-(old_val.doubleValue()-new_val.doubleValue())*16.5);
+                }
+            });
+        
+        }
+
         scene = new Scene(root, PREF_WIDTH, PREF_HEIGHT);
         SceneController.primaryStage.setScene(scene);
-        if (WIDTH <= PREF_WIDTH+10 && HEIGHT <= PREF_HEIGHT+10) {
+        if (WIDTH <= PREF_WIDTH + 10 && HEIGHT <= PREF_HEIGHT + 10) {
             primaryStage.setMaximized(true);
         }
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         SceneController.primaryStage.show();
+
     }
 
     public void switchToOTPScene(ActionEvent event) throws IOException {
@@ -182,4 +238,17 @@ public class SceneController {
     public void switchToDonePayment(ActionEvent event) throws IOException {
         switchScene(event, "DonePayment.fxml");
     }
+
+    public static void closeSplashStage() {
+        Stage newPrimary = new Stage();
+        newPrimary.initStyle(StageStyle.DECORATED);
+        newPrimary.setOnHiding(e -> Platform.exit());
+        newPrimary.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+        newPrimary.setTitle("Movie Ticketing System");
+        newPrimary.setResizable(false);
+        newPrimary.centerOnScreen();
+        SceneController.primaryStage.hide();
+        primaryStage = newPrimary;
+    }
+
 }

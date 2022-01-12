@@ -93,7 +93,8 @@ public class MoviesDetailsController implements Initializable {
         int i = movieID.indexOf(id);
         // convert hour deci to hours and minutes
         int hr = (int) Math.ceil(Double.parseDouble(RealTimeStorage.getMovieDetail("length").get(i))*60);
-        String formatted = String.format("%d %s and %d %s", hr/60,(hr/60 > 1)?"hours":"hour", hr%60, (hr%60 > 1)?"minutes":"minute");
+        //String formatted = String.format("%d %s and %d %s", hr/60,(hr/60 > 1)?"hours":"hour", hr%60, (hr%60 > 1)?"minutes":"minute");
+        String formatted = String.format("%d%s and %d%s", hr/60,"h", hr%60, "m");
         
         // set Details
         Image img = new Image(App.class.getResource(RealTimeStorage.getMovieDetail("poster").get(i)).toString());

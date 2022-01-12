@@ -46,10 +46,18 @@ import org.json.simple.parser.ParseException;
 import static com.fop.foptproject.ProductCardAdminMovie.castJsonProcessor;
 import static com.fop.foptproject.ProductCardAdminMovie.directorJsonProcesor;
 import static com.fop.foptproject.controller.SceneController.showPopUpStage;
+import java.util.concurrent.CountDownLatch;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.controlsfx.control.CheckComboBox;
 import org.json.JSONObject;
 
@@ -66,7 +74,6 @@ public class AdminMovieController implements Initializable {
     String desktopPath;
 
     private ProductCardAdminMovie content;
-    private sqlConnect sql = new sqlConnect();
 
     private Object[] movieId;
     private Object[] movieName;
@@ -87,6 +94,7 @@ public class AdminMovieController implements Initializable {
     private double SCALE = 0.9;
     private int currentIndex = 0;
     private int currentPage = 0;
+    private int dot = 0;
     private int maxPage;
 
     private String editmovieId, deletemovieId;
@@ -131,9 +139,14 @@ public class AdminMovieController implements Initializable {
     private ComboBox<String> combobox;
     @FXML
     private Button editSeat;
-
+    @FXML
+    private Label loading;
+    @FXML
+    private StackPane loadingScreen;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println("Initializing");
         if (RealTimeStorage.getPermission().equals("3")) {
             adminAdd.setDisable(false);
             adminAdd.setVisible(true);
@@ -161,7 +174,7 @@ public class AdminMovieController implements Initializable {
 
     public void getProduct() throws ParseException {
         HashMap<String, ArrayList<String>> items = RealTimeStorage.getAllMovies();
-//        HashMap<String, ArrayList<String>> items = sql.queryAllMovie();
+
         this.movieId = items.get("movieId").toArray();
         this.movieName = items.get("movieName").toArray();
         this.length = items.get("length").toArray();
@@ -360,7 +373,7 @@ public class AdminMovieController implements Initializable {
             if (this.deletestatus) {
                 try {
                     delete();
-//                sql.deleteMovie(movieId);
+//                sqlConnect.deleteMovie(movieId);
                 } catch (ParseException ex) {
                 }
                 this.deletestatus = false;
@@ -399,9 +412,9 @@ public class AdminMovieController implements Initializable {
         String s = getdeletemovieId();
         RealTimeStorage.deleteMovieDetails(s.substring(1));
         System.out.println("1 row(s) affected in remote database: " + s + " deleted.");
-        sql.delete(s);
+        sqlConnect.delete(s);
         getProduct();
-        
+
         movieList.getChildren().clear();
         getProduct();
         currentPage = 0;
@@ -560,7 +573,7 @@ public class AdminMovieController implements Initializable {
         rottenTomatoT.clear();
         iMDBT.clear();
         combobox.setValue(null);
-        checkCombo.getCheckModel().clearChecks(); 
+        checkCombo.getCheckModel().clearChecks();
         RealTimeStorage.clearModifySeat();
     }
 
@@ -570,7 +583,7 @@ public class AdminMovieController implements Initializable {
         currentPage = 0;
         checkPage();
     }
-    
+
     private int colIndex(int col, int initialColumn) {
         // change from gridpane col to array col
 
@@ -582,141 +595,20 @@ public class AdminMovieController implements Initializable {
             return col - 1;
         }
     }
-    
+
     @FXML
     private void uploadMovie(ActionEvent event) throws ParseException {
-        try {
-            String m = combobox.getValue();
-            m = m.substring(m.length() - 1);
-            Integer m1 = Integer.parseInt(m);
-            String b = movieNameT.getText();
-
-            if (sql.theaterIDCheck(m1, b)) {
-                Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Theater Hall Occupied");
-                a.setContentText("Theater Hall H0" + m1 + " Occupied. \nPlease Choose Another Hall.");
-                Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
-                stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
-                stage.showAndWait();
-                return;
-            }
-        String a;
-        String Id;
-        if (this.updatestatus) {
-            Id = this.editmovieId;
-            sql.delete("M" + Id);
-//            RealTimeStorage.deleteMovieDetails(Id);
-            a = posterT.getText();
-            sql.insertPoster("M" + Id, a);
-        } else {
-            Id = lastmovieId();
-            a = this.save;
-            sql.insertPoster("M" + Id, a);
-        }
-        String c = lengthT.getText();
-        String d = releaseDateT.getText(); 
-        String e = directorT.getText();
-        String f = castT.getText();
-        String directorcast = JSONdc(e, f);
-        String g = languageT.getText();
-        String j = synopsisT.getText();
-        String k = rottenTomatoT.getText();
-        String l = iMDBT.getText();
-
-        String n = "";
-        ObservableList list = checkCombo.getCheckModel().getCheckedItems();
-        Integer count=0;
-        for(Object obj : list){
-            n += obj.toString() + ", ";
-            count++;
-        }
-        n = n.substring(0, n.length()-2);
-        
-        if(this.updatestatus)
-            RealTimeStorage.updateMovieDetails(new String[]{"18", d, m, c, k, Id, g, j, Integer.toString(count), l, directorcast, n, b, a },Id);
-        else
-            RealTimeStorage.insertMovieDetails(new String[]{"18", d, m, c, k, Id, g, j, Integer.toString(count), l, directorcast, n, b, a });
-        sql.insertMovie(Id, b, Double.parseDouble(c), d, directorcast, g, "M"+Id, j, Double.parseDouble(k), Double.parseDouble(l), m1, n);
-        
-        // ------------ in Admin Movie -------------
-        // with upload button
-        // generate seat json string for template
-        if(!editSeat.isDisable()){
-            int sCol = Integer.parseInt(RealTimeStorage.getAdminCol()==null?"15":RealTimeStorage.getAdminCol());
-            int sRow = Integer.parseInt(RealTimeStorage.getAdminRow()==null?"7":RealTimeStorage.getAdminRow());
-//            int sCol = Integer.parseInt(RealTimeStorage.getAdminCol());
-//            int sRow = Integer.parseInt(RealTimeStorage.getAdminRow());
-            ArrayList<String> selected = RealTimeStorage.getAdminSelected();
-            int TheaterID = Integer.parseInt(RealTimeStorage.getAdminTheaterId());
-
-            // generation of new seat template with new size
-            JSONObject json = new JSONObject();
-            ArrayList<Integer> row = new ArrayList<>();
-            for(int i = 0 ; i < sCol ; i++){
-                row.add(0);
-            }
-
-            for(int i = 0 ; i < sRow ; i++){
-                json.put(Integer.toString(i),row);
-            }
-
-            // set seat status
-            JSONToolSets mod = new JSONToolSets(json.toString(),true);
-            mod.parseTheaterSeat(0);
-            for(int i = 0 ; i < selected.size() ; i++){
-                int mrow = Integer.parseInt(selected.get(i).split(",")[0])-1;
-                int mcolumn = Integer.parseInt(selected.get(i).split(",")[1]);
-                mcolumn = colIndex(mcolumn,sCol);
-                mod.setSeatStat(mrow, mcolumn, -1, "-");
-            }
-
-            String templateJSON = mod.getNewSeatArr().toString();
-
-            // convert to actual seat template
-            JSONObject actualjson = new JSONObject();
-            for(int i = 0 ; i < 7 ; i++){
-                actualjson.put(Integer.toString(i), mod.getNewSeatArr());
-            }
-
-            String actualJSON = actualjson.toString();
-
-            // update database
-            sql.updateSeats(templateJSON,TheaterID+"", "-", true); // template
-
-            // update actual seats
-            for(int i = 1 ; i < 6 ; i++){
-                sql.updateSeats(actualJSON,TheaterID+"",i+"",false);
-            }
-        }
-        }catch(Exception ex){
-            ex.printStackTrace();
-            Alert ax = new Alert(Alert.AlertType.ERROR);
-            ax.setTitle("Data Entry Error");
-            ax.setContentText("Data Entry Error. \nPlease Check Your Input.");
-            Stage stage = (Stage) ax.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+        Task<Void> postTask = postTask();
+        new Thread(postTask).start();
+        postTask.setOnSucceeded(eh -> {
+            closeLoadingScreen();
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setTitle("");
+            a.setContentText("Uploaded Successfully");
+            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
             stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
             stage.showAndWait();
-            return;
-        }
-
-        clean();
-        refresh();
-        this.updatestatus = false;
-
-        // from singleImagePathRead
-        try {
-            BufferedImage img = ImageIO.read(new File(this.pathpath));
-            File outputfile = new File(this.desktopPath);
-            ImageIO.write(img, this.ext, outputfile);
-            System.out.println("Upload Successful: Poster Changed/Uploaded");
-            this.pathpath = "";
-            this.ext = "";
-            editSeat.setDisable(false);
-        } catch (IOException ex) {
-            System.out.println("Upload Successful: Poster Unchanged");
-        }
-        // 
-
+        });
     }
 
     @FXML
@@ -749,7 +641,7 @@ public class AdminMovieController implements Initializable {
         } else {
             m = m.substring(m.length() - 1);
             Integer m1 = Integer.parseInt(m);
-            if (sql.theaterIDCheck(m1, b)) {
+            if (sqlConnect.theaterIDCheck(m1, b)) {
                 a.setTitle("Theater Hall Occupied");
                 a.setContentText("Theater Hall H0" + m1 + " Occupied. \nPlease Choose Another Hall.");
                 Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
@@ -759,8 +651,8 @@ public class AdminMovieController implements Initializable {
 
             }
 
-        RealTimeStorage.updateMovieBookingByKey("theaterId", m);
-        new SceneController().switchToAdminSeats(event);
+            RealTimeStorage.updateMovieBookingByKey("theaterId", m);
+            new SceneController().switchToAdminSeats(event);
 
         }
     }
@@ -770,4 +662,249 @@ public class AdminMovieController implements Initializable {
         editSeat.setDisable(false);
         clean();
     }
+
+    public Task postTask() {
+        Task<Void> createTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                CountDownLatch latch1 = new CountDownLatch(1);
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            showLoadingScreen();
+                            startProgress();
+                        } finally {
+                            latch1.countDown();
+                        }
+                    }
+                });
+
+                latch1.await();
+
+                try {
+                    String m = combobox.getValue();
+                    m = m.substring(m.length() - 1);
+                    Integer m1 = Integer.parseInt(m);
+                    System.out.println(m);
+                    RealTimeStorage.setAdminTheaterId(m);
+                    String b = movieNameT.getText();
+
+                    if (sqlConnect.theaterIDCheck(m1, b)) {
+                        CountDownLatch latch2 = new CountDownLatch(1);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                closeLoadingScreen();
+                                Alert a = new Alert(Alert.AlertType.ERROR);
+                                a.setTitle("Theater Hall Occupied");
+                                a.setContentText("Theater Hall H0" + m1 + " Occupied. \nPlease Choose Another Hall.");
+                                Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                                stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                                stage.showAndWait();
+                                latch2.countDown();
+                            }
+                        });
+                        latch2.await();
+                        return null;
+                    }
+
+                    String a;
+                    String Id;
+                    if (updatestatus) {
+                        Id = editmovieId;
+                        sqlConnect.delete("M" + Id);
+                        a = posterT.getText();
+                        sqlConnect.insertPoster("M" + Id, a);
+                    } else {
+                        Id = lastmovieId();
+                        a = save;
+                        sqlConnect.insertPoster("M" + Id, a);
+                    }
+                    String c = lengthT.getText();
+                    String d = releaseDateT.getText();
+                    String e = directorT.getText();
+                    String f = castT.getText();
+                    String directorcast = JSONdc(e, f);
+                    String g = languageT.getText();
+                    String j = synopsisT.getText();
+                    String k = rottenTomatoT.getText();
+                    String l = iMDBT.getText();
+
+                    String n = "";
+                    ObservableList list = checkCombo.getCheckModel().getCheckedItems();
+                    Integer count = 0;
+                    for (Object obj : list) {
+                        n += obj.toString() + ", ";
+                        count++;
+                    }
+                    n = n.substring(0, n.length() - 2);
+
+                    if (updatestatus) {
+                        RealTimeStorage.updateMovieDetails(new String[]{"18", d, m, c, k, Id, g, j, Integer.toString(count), l, directorcast, n, b, a}, Id);
+                    } else {
+                        RealTimeStorage.insertMovieDetails(new String[]{"18", d, m, c, k, Id, g, j, Integer.toString(count), l, directorcast, n, b, a});
+                    }
+                    sqlConnect.insertMovie(Id, b, Double.parseDouble(c), d, directorcast, g, "M" + Id, j, Double.parseDouble(k), Double.parseDouble(l), m1, n);
+
+                    // ------------ in Admin Movie -------------
+                    // with upload button
+                    // generate seat json string for template
+                    if (!editSeat.isDisable()) {
+                        int sCol = Integer.parseInt(RealTimeStorage.getAdminCol() == null ? "15" : RealTimeStorage.getAdminCol());
+                        int sRow = Integer.parseInt(RealTimeStorage.getAdminRow() == null ? "7" : RealTimeStorage.getAdminRow());
+                        ArrayList<String> selected = RealTimeStorage.getAdminSelected();
+                        int TheaterID = Integer.parseInt(RealTimeStorage.getAdminTheaterId());
+
+                        // generation of new seat template with new size
+                        JSONObject json = new JSONObject();
+                        ArrayList<Integer> row = new ArrayList<>();
+                        for (int i = 0; i < sCol; i++) {
+                            row.add(0);
+                        }
+
+                        for (int i = 0; i < sRow; i++) {
+                            json.put(Integer.toString(i), row);
+                        }
+
+                        // set seat status
+                        JSONToolSets mod = new JSONToolSets(json.toString(), true);
+                        mod.parseTheaterSeat(0);
+                        for (int i = 0; i < selected.size(); i++) {
+                            int mrow = Integer.parseInt(selected.get(i).split(",")[0]) - 1;
+                            int mcolumn = Integer.parseInt(selected.get(i).split(",")[1]);
+                            mcolumn = colIndex(mcolumn, sCol);
+                            mod.setSeatStat(mrow, mcolumn, -1, "-");
+                        }
+
+                        String templateJSON = mod.getNewSeatArr().toString();
+
+                        // convert to actual seat template
+                        JSONObject actualjson = new JSONObject();
+                        for (int i = 0; i < 7; i++) {
+                            actualjson.put(Integer.toString(i), mod.getNewSeatArr());
+                        }
+
+                        String actualJSON = actualjson.toString();
+
+                        // update database
+                        sqlConnect.updateSeats(templateJSON, TheaterID + "", "-", true); // template
+
+                        // update actual seats
+                        for (int i = 1; i < 6; i++) {
+                            sqlConnect.updateSeats(actualJSON, TheaterID + "", i + "", false);
+                        }
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    CountDownLatch latch3 = new CountDownLatch(1);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            closeLoadingScreen();
+                            Alert ax = new Alert(Alert.AlertType.ERROR);
+                            ax.setTitle("Data Entry Error");
+                            ax.setContentText("Data Entry Error. \nPlease Check Your Input.");
+                            Stage stage = (Stage) ax.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                            stage.showAndWait();
+                            latch3.countDown();
+                        }
+                    });
+                    latch3.await();
+                    return null;
+                }
+
+                CountDownLatch latch3 = new CountDownLatch(1);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        clean();
+                        try {
+                            refresh();
+                        } catch (ParseException ex) {
+                            // do ntg
+                        } finally {
+                            latch3.countDown();
+                        }
+                    }
+                });
+
+                latch3.await();
+
+                updatestatus = false;
+
+                // from singleImagePathRead
+                try {
+                    BufferedImage img = ImageIO.read(new File(pathpath));
+                    File outputfile = new File(desktopPath);
+                    ImageIO.write(img, ext, outputfile);
+                    System.out.println("Upload Successful: Poster Changed/Uploaded");
+                    pathpath = "";
+                    ext = "";
+                    CountDownLatch latch4 = new CountDownLatch(1);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            clean();
+                            try {
+                                editSeat.setDisable(false);
+                            } finally {
+                                latch4.countDown();
+                            }
+                        }
+                    });
+                    latch4.await();
+                } catch (IOException ex) {
+                    System.out.println("Upload Successful: Poster Unchanged");
+                }
+
+                return null;
+            }
+
+        };
+        return createTask;
+    }
+    
+    public void startProgress() {
+        String init = "Loading";
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(false);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(300), e -> {
+            if (dot == 5) {
+                loading.setText(init);
+                dot = 0;
+            } else {
+                loading.setText(loading.getText() + ".");
+                dot++;
+            }
+        }
+        ));
+        timeline.play();
+    }
+
+    public void showLoadingScreen() {
+        loadingScreen.setTranslateX(0);
+    }
+
+    public void closeLoadingScreen() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                loadingScreen.setTranslateX(1800);
+            }
+        });
+    }
 }
+
+
+
+
+
+
+
+
+
+      // 

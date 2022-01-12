@@ -4,7 +4,6 @@
  */
 package com.fop.foptproject;
 
-import com.fop.Utility.sqlConnect;
 import com.fop.foptproject.controller.RealTimeStorage;
 import java.util.HashMap;
 import javafx.geometry.Insets;
@@ -87,7 +86,7 @@ public class ProductCard{
         addition.setOnAction(e->{
             quantity.setText(Integer.toString(Integer.parseInt(quantity.getText())+1));
             addPurchase(productId,Integer.parseInt(quantity.getText()));
-            totalAmount += Double.parseDouble(new sqlConnect().queryProductInfo(productId,"price"));
+            totalAmount += Double.parseDouble(RealTimeStorage.getProductInfo(productId,"price"));
         });
         addition.setPrefSize(33,33);
         addition.setStyle("-fx-background-color:#FFEE00;-fx-background-radius:0 8 8 0;-fx-background-insets:0;");
@@ -100,7 +99,7 @@ public class ProductCard{
             if(Integer.parseInt(quantity.getText())>0){
                 quantity.setText(Integer.toString(Integer.parseInt(quantity.getText())-1));
                 addPurchase(productId,Integer.parseInt(quantity.getText()));
-                totalAmount -= Double.parseDouble(new sqlConnect().queryProductInfo(productId,"price"));
+                totalAmount -= Double.parseDouble(RealTimeStorage.getProductInfo(productId,"price"));
             }
         });
         decrement.setPrefSize(33,33);

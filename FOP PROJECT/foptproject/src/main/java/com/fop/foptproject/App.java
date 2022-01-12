@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class App extends Application {
 
@@ -29,54 +30,30 @@ public class App extends Application {
         final double HEIGHT = screenBounds.getHeight();
 
         boolean DEBUG = false;
-        String fxmlFile = "userProfile.fxml";
+        String fxmlFile = "OTP.fxml";
 
         if (!DEBUG) {
-            fxmlFile = "App.fxml";
+            fxmlFile = "SplashScreen.fxml";
         }
 
         Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
 
-        if (!DEBUG) {
-            //adjust the view to center when hvalue changes
-            ScrollPane k = (ScrollPane) root;
-            k.hvalueProperty().addListener(new ChangeListener<Number>() {
-                public void changed(ObservableValue<? extends Number> ov,
-                        Number old_val, Number new_val) {
-                    k.setHvalue(50);
-                }
-            });
-        }
-
         // set Scene's width and height based on screen size
-        Scene scene = new Scene(root, 1536, 864);
+        Scene scene = new Scene(root);
         SceneController.setPrimaryStage(primaryStage);
         primaryStage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
         primaryStage.setTitle("Movie Ticketing System");
         primaryStage.setScene(scene);
-        if (WIDTH <= 1536 && HEIGHT <= 864) {
-            primaryStage.setMaximized(true);
-        }
-        primaryStage.setResizable(true);
+        primaryStage.setResizable(false);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.centerOnScreen();
         primaryStage.show();
 
     }
 
     public static void main(String[] args) throws Exception {
-        Properties prop = new readConfig().readconfigfile();
-        System.out.println("yay");
-        readConfig.readSeatTemplate();
         sqlConnect sql = new sqlConnect();
-//        query all movie from database and store in local
-        System.out.println("yay");
-        RealTimeStorage.setAllMovies();
-//        //query landing food poster
-        RealTimeStorage.setAllLandingFood();
-
-        // query ticket prices
-        RealTimeStorage.setAllProducts();
-        RealTimeStorage.setAllAdmins();
-        RealTimeStorage.setAllTickets();
+        
         launch();
         System.out.println("launched");
     }

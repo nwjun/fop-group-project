@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -202,6 +203,27 @@
             </HBox>
          </children>
       </VBox>
+      <StackPane fx:id="loadingScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="426.0" prefWidth="730.0" style="-fx-background-radius: 20; -fx-background-color: #010101;" translateX="1800.0">
+         <children>
+            <BorderPane>
+               <center>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="690.0" style="-fx-background-color: transparent; -fx-border-color: #FFEE00; -fx-border-radius: 20; -fx-border-width: 2;">
+                     <children>
+                        <ImageView fitHeight="287.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" translateY="-30.0">
+                           <image>
+                              <Image url="@assets/company/loading.gif" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="loading" style="-fx-text-fill: #ffffff; -fx-font-size: 15;" text="Loading" translateY="-105.0" />
+                     </children>
+                  </VBox>
+               </center>
+            </BorderPane>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </StackPane>
    </children>
    <padding>
       <Insets bottom="70.0" left="80.0" right="80.0" top="45.0" />

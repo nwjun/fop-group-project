@@ -8,176 +8,199 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1097.0" style="-fx-background-color: #555555;" styleClass="root" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.MoviesDetailsPopUpController">
+
+<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.MoviesDetailsPopUpController">
    <children>
-      <ImageView fitHeight="35.0" fitWidth="169.0" layoutX="41.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@assets/company/logo.png" />
-         </image>
-      </ImageView>
-      <HBox alignment="CENTER_LEFT" layoutX="60.0" layoutY="87.0" prefHeight="406.0" prefWidth="980.0">
+      <AnchorPane fx:id="bg" prefHeight="650.0" prefWidth="1140.0" style="-fx-background-color: #282828;" styleClass="root">
          <children>
-            <ImageView fx:id="moviePoster" fitHeight="386.0" fitWidth="236.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0" translateY="-10.0" />
-            <VBox prefHeight="406.0" prefWidth="283.0" translateX="60.0" translateY="20.0">
+            <ImageView fitHeight="35.0" fitWidth="169.0" layoutX="41.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/company/logo.png" />
+               </image>
+            </ImageView>
+            <HBox alignment="CENTER_LEFT" layoutX="60.0" layoutY="87.0" prefHeight="406.0" prefWidth="980.0">
                <children>
-                  <HBox prefHeight="30.0" prefWidth="283.0">
+                  <ImageView fx:id="moviePoster" fitHeight="386.0" fitWidth="236.0" pickOnBounds="true" preserveRatio="true" translateX="-10.0" translateY="-10.0" />
+                  <VBox prefHeight="406.0" prefWidth="283.0" translateX="60.0" translateY="20.0">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Title :" wrappingWidth="123.44189453125" />
-                        <Label fx:id="movieTitleT" style="-fx-font-size: 15;" textFill="WHITE" translateX="15.0" wrapText="true" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="39.0" prefWidth="283.0">
-                     <children>
-                        <Label fx:id="casts11" prefHeight="30.0" prefWidth="123.0" text="Director: " textFill="WHITE" wrapText="true" />
-                        <Label fx:id="directorT" prefHeight="30.0" prefWidth="144.0" style="-fx-font-size: 15;" textFill="WHITE" wrapText="true" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="133.0" prefWidth="283.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cast :" wrappingWidth="112.20361328125" />
-                        <VBox prefHeight="133.0" prefWidth="173.0">
+                        <HBox prefHeight="30.0" prefWidth="283.0">
                            <children>
-                              <Label fx:id="castT" alignment="TOP_LEFT" prefHeight="151.0" prefWidth="173.0" style="-fx-font-size: 15;" text=" " />
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Title :" wrappingWidth="124.0" />
+                              <Label fx:id="movieTitleT" style="-fx-font-size: 15;" textFill="WHITE" translateX="15.0" wrapText="true" />
                            </children>
-                        </VBox>
+                        </HBox>
+                        <HBox prefHeight="39.0" prefWidth="283.0">
+                           <children>
+                              <Label fx:id="casts11" prefHeight="30.0" prefWidth="124.0" text="Director :" textFill="WHITE" wrapText="true" />
+                              <Label fx:id="directorT" prefHeight="30.0" prefWidth="144.0" style="-fx-font-size: 15;" textFill="WHITE" wrapText="true" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="133.0" prefWidth="283.0">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cast :" wrappingWidth="124.0" />
+                              <VBox prefHeight="133.0" prefWidth="173.0">
+                                 <children>
+                                    <Label fx:id="castT" alignment="TOP_LEFT" prefHeight="151.0" style="-fx-font-size: 15;" text=" " />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="40.0" prefWidth="283.0">
+                           <children>
+                              <Label fx:id="casts111" minWidth="-Infinity" prefHeight="30.0" prefWidth="124.0" text="Language : " textFill="WHITE" wrapText="true" />
+                              <Label fx:id="casts11" prefHeight="30.0" prefWidth="178.0" text="English" textFill="WHITE" wrapText="true" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="40.0" prefWidth="283.0">
+                           <children>
+                              <Label fx:id="casts1111" prefHeight="30.0" prefWidth="124.0" text="iMDB : " textFill="WHITE" wrapText="true" />
+                              <Label fx:id="iMDBT" alignment="CENTER_RIGHT" prefHeight="30.0" textFill="WHITE" wrapText="true" />
+                              <Label fx:id="casts1112" prefHeight="30.0" prefWidth="51.0" text=" / 10" textFill="WHITE" wrapText="true" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="36.0" prefWidth="463.0">
+                           <children>
+                              <Label fx:id="casts11111" prefHeight="30.0" prefWidth="124.0" text="rottenTomato : " textFill="WHITE" wrapText="true" />
+                              <Label fx:id="rottenTomatoT" alignment="CENTER_RIGHT" prefHeight="30.0" textFill="WHITE" wrapText="true" />
+                              <Label fx:id="casts11121" prefHeight="30.0" prefWidth="51.0" text=" / 10" textFill="WHITE" wrapText="true" />
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
-                  <HBox prefHeight="40.0" prefWidth="283.0">
+                  </VBox>
+                  <VBox prefHeight="406.0" prefWidth="310.0" translateX="150.0" translateY="20.0">
                      <children>
-                        <Label fx:id="casts111" prefHeight="30.0" prefWidth="123.0" text="Language: " textFill="WHITE" wrapText="true" />
-                        <Label fx:id="casts11" prefHeight="30.0" prefWidth="178.0" text="English" textFill="WHITE" wrapText="true" />
+                        <HBox prefHeight="45.0" prefWidth="431.0">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cinemas :" wrappingWidth="100.0" />
+                              <Label fx:id="cinemas" graphicTextGap="0.0" text="Kuala Lumpur, Mid Valley Megamall" textFill="WHITE" translateX="15.0" wrapText="true" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="54.0" prefWidth="431.0">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Length : " wrappingWidth="100.0" />
+                              <Label fx:id="movieLengthT" style="-fx-font-size: 15;" textFill="WHITE" translateX="15.0" wrapText="true" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="133.0" prefWidth="431.0">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Classic :" wrappingWidth="100.0" />
+                              <VBox prefHeight="149.0" prefWidth="346.0">
+                                 <children>
+                                    <HBox prefHeight="31.0" prefWidth="346.0">
+                                       <children>
+                                          <Label prefHeight="21.0" prefWidth="80.0" text="Student : " />
+                                          <Label text="RM ">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                          <Label fx:id="studentPrice" style="-fx-font-size: 15;">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="31.0" prefWidth="358.0">
+                                       <children>
+                                          <Label prefHeight="21.0" prefWidth="80.0" text="Adult : " />
+                                          <Label text="RM ">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                          <Label fx:id="adultPrice" style="-fx-font-size: 15;">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="31.0" prefWidth="358.0">
+                                       <children>
+                                          <Label prefHeight="21.0" prefWidth="80.0" text="Elderly :" />
+                                          <Label text="RM ">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                          <Label fx:id="elderlyPrice" style="-fx-font-size: 15;">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="31.0" prefWidth="358.0">
+                                       <children>
+                                          <Label prefHeight="21.0" prefWidth="80.0" text="OKU :" />
+                                          <Label text="RM ">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                          <Label fx:id="OKUPrice" style="-fx-font-size: 15;">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="71.0" prefWidth="431.0">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Premium : " wrappingWidth="100.0">
+                                 <HBox.margin>
+                                    <Insets top="2.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <Label text="RM">
+                                 <HBox.margin>
+                                    <Insets top="2.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="premiumPrice" style="-fx-font-size: 15;">
+                                 <HBox.margin>
+                                    <Insets top="2.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <AnchorPane prefHeight="46.0" prefWidth="321.0">
+                           <children>
+                              <Button fx:id="booknowButton" layoutX="210.0" layoutY="8.0" mnemonicParsing="false" onAction="#changeToMovieBooking" prefHeight="31.0" prefWidth="100.0" styleClass="yellowButton" text="Book Now" />
+                           </children>
+                        </AnchorPane>
                      </children>
-                  </HBox>
-                  <HBox prefHeight="40.0" prefWidth="283.0">
-                     <children>
-                        <Label fx:id="casts1111" prefHeight="30.0" prefWidth="123.0" text="iMDB: " textFill="WHITE" wrapText="true" />
-                        <Label fx:id="iMDBT" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="32.0" style="-fx-font-size: 15;" textFill="WHITE" wrapText="true" />
-                        <Label fx:id="casts1112" prefHeight="30.0" prefWidth="51.0" text="/10" textFill="WHITE" wrapText="true" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="36.0" prefWidth="463.0">
-                     <children>
-                        <Label fx:id="casts11111" prefHeight="30.0" prefWidth="123.0" text="rottenTomato: " textFill="WHITE" wrapText="true" />
-                        <Label fx:id="rottenTomatoT" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="32.0" style="-fx-font-size: 15;" textFill="WHITE" wrapText="true" />
-                        <Label fx:id="casts11121" prefHeight="30.0" prefWidth="51.0" style="-fx-font-size: 15;" text="/10" textFill="WHITE" wrapText="true" />
-                     </children>
-                  </HBox>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox layoutX="49.0" layoutY="465.0" prefHeight="152.0" prefWidth="1008.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Synopsis :" />
+                  <Text fx:id="synopsisT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" textAlignment="JUSTIFY" translateY="20.0" wrappingWidth="994.962646484375" />
                </children>
             </VBox>
-            <VBox prefHeight="406.0" prefWidth="310.0" translateX="150.0" translateY="20.0">
-               <children>
-                  <HBox prefHeight="45.0" prefWidth="431.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cinemas :" wrappingWidth="87.5302734375" />
-                        <Label fx:id="cinemas" text="Kuala Lumpur, Mid Valley Megamall" textFill="WHITE" translateX="15.0" wrapText="true" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="54.0" prefWidth="431.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Length : " wrappingWidth="77.26806640625" />
-                        <Label fx:id="movieLengthT" style="-fx-font-size: 15;" textFill="WHITE" translateX="15.0" wrapText="true" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="133.0" prefWidth="431.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Classic :" wrappingWidth="84.20361328125" />
-                        <VBox prefHeight="149.0" prefWidth="346.0">
-                           <children>
-                              <HBox prefHeight="31.0" prefWidth="346.0">
-                                 <children>
-                                    <Label prefHeight="21.0" text="Student: " />
-                                    <Label text="RM ">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin></Label>
-                                    <Label fx:id="studentPrice" style="-fx-font-size: 15;">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin></Label>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="31.0" prefWidth="358.0">
-                                 <children>
-                                    <Label prefHeight="21.0" prefWidth="73.0" text="Adult: " />
-                                    <Label text="RM ">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin></Label>
-                                    <Label fx:id="adultPrice" style="-fx-font-size: 15;">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin></Label>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="31.0" prefWidth="358.0">
-                                 <children>
-                                    <Label prefHeight="21.0" prefWidth="73.0" text="Elderly:" />
-                                    <Label text="RM ">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin></Label>
-                                    <Label fx:id="elderlyPrice" style="-fx-font-size: 15;">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin></Label>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="31.0" prefWidth="358.0">
-                                 <children>
-                                    <Label prefHeight="21.0" prefWidth="73.0" text="OKU:" />
-                                    <Label text="RM ">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin></Label>
-                                    <Label fx:id="OKUPrice" style="-fx-font-size: 15;">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin></Label>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="71.0" prefWidth="431.0">
-                     <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Premium : " wrappingWidth="89.89111328125">
-                           <HBox.margin>
-                              <Insets top="2.0" />
-                           </HBox.margin></Text>
-                        <Label prefHeight="21.0" style="-fx-font-size: 15;" text="RM">
-                           <HBox.margin>
-                              <Insets bottom="2.0" />
-                           </HBox.margin></Label>
-                        <Label fx:id="premiumPrice" prefHeight="21.0" prefWidth="38.0" style="-fx-font-size: 15;">
-                           <HBox.margin>
-                              <Insets bottom="2.0" />
-                           </HBox.margin></Label>
-                     </children>
-                  </HBox>
-                  <AnchorPane prefHeight="46.0" prefWidth="321.0">
-                     <children>
-                        <Button fx:id="booknowButton" layoutX="210.0" layoutY="8.0" mnemonicParsing="false" onAction="#changeToMovieBooking" prefHeight="31.0" prefWidth="100.0" styleClass="yellowButton" text="Book Now" />
-                     </children>
-                  </AnchorPane>
-               </children>
-            </VBox>
+            <Button id="backBtn" fx:id="backBtn" layoutX="948.0" layoutY="39.0" mnemonicParsing="false" onAction="#close" prefHeight="31.0" prefWidth="100.0" styleClass="outlineButton" text="Back" textFill="WHITE" />
+            <Label layoutX="210.0" layoutY="42.0" prefHeight="36.0" prefWidth="225.0" style="-fx-font-weight: bold; -fx-font-style: italic;" styleClass="pageHeader" text="Movie Details" />
          </children>
-      </HBox>
-      <VBox layoutX="49.0" layoutY="465.0" prefHeight="152.0" prefWidth="1008.0">
-         <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Synopsis :" />
-            <Text fx:id="synopsisT" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" textAlignment="JUSTIFY" translateY="20.0" wrappingWidth="994.962646484375" />
-         </children>
-      </VBox>
-      <Button id="backBtn" fx:id="backBtn" layoutX="948.0" layoutY="39.0" mnemonicParsing="false" onAction="#close" prefHeight="31.0" prefWidth="100.0" styleClass="outlineButton" text="Back" textFill="WHITE" />
-      <Label layoutX="210.0" layoutY="42.0" prefHeight="36.0" prefWidth="225.0" style="-fx-font-weight: bold; -fx-font-style: italic;" styleClass="pageHeader" text="Movie Details" />
+         <stylesheets>
+            <URL value="@adminmovie.css" />
+            <URL value="@style.css" />
+         </stylesheets>
+      </AnchorPane>
    </children>
-   <stylesheets>
-      <URL value="@adminmovie.css" />
-      <URL value="@style.css" />
-   </stylesheets>
-</AnchorPane>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</StackPane>
