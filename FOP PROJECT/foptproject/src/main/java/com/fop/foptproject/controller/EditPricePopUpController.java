@@ -61,7 +61,7 @@ public class EditPricePopUpController implements Initializable {
     }    
 
     public void getPrice(){
-        tickets = RealTimeStorage.getAllTickets();
+        tickets = sqlConnect.queryTicketPrice();
         TS.setText(Double.toString(tickets.get("TS"))+"0");
         TC.setText(Double.toString(tickets.get("TC"))+"0");
         TE.setText(Double.toString(tickets.get("TE"))+"0");
