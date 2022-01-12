@@ -204,10 +204,10 @@ public class ProductCardAdminMovie {
         String cast = "";
         if (length > 0) {
             for (int i = 0; i < length; i++) {
-                cast += ja.getString(i) + ", ";
+                cast += ja.getString(i) + ",";
             }
         }
-        cast = cast.substring(0, cast.length() - 2);
+        cast = cast.substring(0, cast.length() - 1);
         return cast;
     }
 

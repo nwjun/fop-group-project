@@ -160,7 +160,7 @@ public class sqlConnect {
 
         } catch (SQLException e) {
             System.out.println("Invalid Email");
-            e.printStackTrace();
+            //e.printStackTrace();
             return -2;
         }
 
@@ -373,7 +373,7 @@ public class sqlConnect {
 
     }
 
-    public void delete(String movieId) {
+    public static void delete(String movieId) {
         String query = "DELETE FROM pos "
                 + "WHERE posterId = ?";
 
@@ -389,7 +389,7 @@ public class sqlConnect {
         }
     }
 
-    public void insertPoster(String posterId, String poster) {
+    public static void insertPoster(String posterId, String poster) {
         String query = "INSERT INTO pos (posterId, poster) "
                 + "VALUES (?,?)";
 
@@ -408,7 +408,7 @@ public class sqlConnect {
 
     }
 
-    public boolean theaterIDCheck(int x, String movieName) {
+    public static boolean theaterIDCheck(int x, String movieName) {
         String query = "SELECT movieName, COUNT(theaterId) as DUP "
                 + "FROM movies "
                 + "WHERE theaterId = ?";
@@ -439,7 +439,7 @@ public class sqlConnect {
         return dup;
     }
 
-    public void insertMovie(String movieId, String movieName, double length, String releaseDate, String directorCast, String language, String posterId, String synopsis, double rottenTomato, double iMDB, int theaterId, String time) {
+    public static void insertMovie(String movieId, String movieName, double length, String releaseDate, String directorCast, String language, String posterId, String synopsis, double rottenTomato, double iMDB, int theaterId, String time) {
         String query = "INSERT INTO movies (movieId, movieName, length, releaseDate, directorCast, language, posterId, synopsis, rottenTomato, iMDB, ageRestrict, theaterId, time) "
                 + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -461,7 +461,6 @@ public class sqlConnect {
             prepstat.setString(13, time);
 
             int rowAffected = prepstat.executeUpdate();
-            System.out.println("Success");
         } catch (SQLException e) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setTitle("Data Entry Error");
@@ -474,7 +473,7 @@ public class sqlConnect {
         }
     }
 
-    public HashMap<String, Double> queryTicketPrice() {
+    public static HashMap<String, Double> queryTicketPrice() {
         String query = "SELECT productId, price "
                 + "FROM products "
                 + "WHERE category = \"ticket\"";
@@ -495,7 +494,7 @@ public class sqlConnect {
         return null;
     }
 
-    public void changeTicketPrice(String Id, Double price) {
+    public static void changeTicketPrice(String Id, Double price) {
         String query = "UPDATE products "
                 + "SET price = ? "
                 + "WHERE productId = ?";
@@ -513,7 +512,7 @@ public class sqlConnect {
         }
     }
 
-    public HashMap<String, ArrayList<String>> queryAdmin() {
+    public static HashMap<String, ArrayList<String>> queryAdmin() {
         String query = "SELECT userId, username, email "
                 + "FROM usercredentials "
                 + "WHERE permission = 2";
@@ -541,7 +540,7 @@ public class sqlConnect {
         return admin;
     }
 
-    public void addAdmin(String email) {
+    public static void addAdmin(String email) {
         String query = "UPDATE usercredentials "
                 + "SET permission = 2 "
                 + "WHERE email = ?";
@@ -558,7 +557,7 @@ public class sqlConnect {
         }
     }
 
-    public void removeAdmin(String email, String password) {
+    public static void removeAdmin(String email, String password) {
         String query = "DELETE FROM usercredentials "
                 + "WHERE email = ? AND password = ?";
 
@@ -610,7 +609,9 @@ public class sqlConnect {
                 directorCast.add(rs.getString("directorCast"));
                 language.add(rs.getString("language"));
                 String path = rs.getString("poster");
-                poster.add(path.replace("\\", "/")); // preprocess to fit linux system
+                if(path != null){
+                    poster.add(path.replace("\\", "/")); // preprocess to fit linux system
+                }
                 synopsis.add(rs.getString("synopsis"));
                 rottenTomato.add(rs.getString("rottenTomato"));
                 iMDB.add(rs.getString("iMDB"));
@@ -641,7 +642,7 @@ public class sqlConnect {
         return movies;
     }
 
-    public String getProductLastId(String category) {
+    public static String getProductLastId(String category) {
         String query = "SELECT productId "
                 + "FROM products "
                 + "WHERE category = ? "
@@ -661,7 +662,7 @@ public class sqlConnect {
         return null;
     }
 
-    public void insertProduct(String productId, String productname, double price, String posterId, String productDescription, String category) {
+    public static void insertProduct(String productId, String productname, double price, String posterId, String productDescription, String category) {
         String query = "INSERT INTO products (productId, productname, price, posterId, productDescription, category) "
                 + "VALUES (?,?,?,?,?,?)";
 
@@ -1011,7 +1012,7 @@ public class sqlConnect {
         return rowAffected;
     }
 
-    public int setNewUserEmail(String userId, String newFieldValue) {
+    public static int setNewUserEmail(String userId, String newFieldValue) {
         // query statement
         String query = "UPDATE usercredentials SET email = ? "
                 + "WHERE userId = ?";
@@ -1033,7 +1034,7 @@ public class sqlConnect {
         return rowAffected;
     }
     
-    public HashMap<String,ArrayList<String>> queryPurchaseHistory(String userId){
+    public static HashMap<String,ArrayList<String>> queryPurchaseHistory(String userId){
         
         String query = "SELECT movie,showDate,showTime,seatNumber,cinema FROM receipts WHERE userId = ?";
         

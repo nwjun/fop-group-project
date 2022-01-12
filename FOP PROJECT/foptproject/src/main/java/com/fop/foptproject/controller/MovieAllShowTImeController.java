@@ -18,14 +18,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -167,7 +170,9 @@ public class MovieAllShowTImeController implements Initializable {
             stage.setY(120);
             
             try {
-                Scene scene = new Scene(loader.load());
+                Parent root = loader.load();
+
+                Scene scene = new Scene(root);
                 stage.setScene(scene);
                 scene.getStylesheets().add(App.class.getResource("style.css").toExternalForm());
                 MoviesDetailsPopUpController controller = loader.getController();

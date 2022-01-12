@@ -9,84 +9,116 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="1080.0" prefWidth="539.0" styleClass="root" stylesheets="@otp.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.OTPController">
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.OTPController">
    <center>
-      <VBox alignment="TOP_CENTER" prefHeight="1080.0" prefWidth="492.0" style="-fx-padding: 75 0 75 0;" styleClass="root" stylesheets="@otp.css" BorderPane.alignment="CENTER">
+      <StackPane>
          <children>
-            <VBox id="logoContainer" alignment="CENTER" prefHeight="194.0" prefWidth="369.0">
-               <children>
-                  <ImageView fitHeight="67.0" fitWidth="278.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@assets/company/logo.png" />
-                     </image>
-                     <viewport>
-                        <Rectangle2D />
-                     </viewport>
-                  </ImageView>
-               </children>
-            </VBox>
-            <VBox id="instructionContainer" alignment="BOTTOM_CENTER" prefHeight="35.0" prefWidth="1920.0">
-               <children>
-                  <Label id="instructionText" alignment="CENTER" prefHeight="35.0" prefWidth="504.0" stylesheets="@otp.css" text="Please enter the 6 digits One-time-password to verify your account" textFill="WHITE">
-                     <font>
-                        <Font name="Baskerville Old Face" size="17.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <VBox id="subinstructionContainer" alignment="CENTER" prefHeight="26.0" prefWidth="1913.0">
-               <children>
-                  <Label id="subInstruction" fx:id="sentToEmail" alignment="CENTER" prefHeight="33.0" text="A one-time-password has been sent to limweixin17@gmail.com" textFill="#c1c1c1" />
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="72.0" prefWidth="539.0">
-               <VBox.margin>
-                  <Insets bottom="20.0" />
-               </VBox.margin>
-               <children>
-                  <HBox alignment="CENTER" prefHeight="70.0" prefWidth="1920.0">
+            <BorderPane prefHeight="1080.0" prefWidth="539.0" styleClass="root" stylesheets="@otp.css">
+               <center>
+                  <VBox alignment="TOP_CENTER" prefHeight="1080.0" prefWidth="492.0" style="-fx-padding: 75 0 75 0;" styleClass="root" stylesheets="@otp.css" BorderPane.alignment="CENTER">
                      <children>
-                        <TextField fx:id="OTPField" prefHeight="46.0" prefWidth="804.0" promptText="  6 digits OTP" style="-fx-pref-height: 39; -fx-pref-width: 200; -fx-background-radius: 8 0 0 8;" styleClass="textField">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </TextField>
-                        <Button fx:id="resendButton" mnemonicParsing="false" onAction="#resendOTP" prefHeight="34.0" prefWidth="92.0" style="-fx-pref-height: 39; -fx-background-radius: 0 8 8 0;" styleClass="Button" text="Resend (60)">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Button>
+                        <VBox id="logoContainer" alignment="CENTER" prefHeight="194.0" prefWidth="369.0">
+                           <children>
+                              <ImageView fitHeight="67.0" fitWidth="278.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/company/logo.png" />
+                                 </image>
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                        <VBox id="instructionContainer" alignment="BOTTOM_CENTER" prefHeight="35.0" prefWidth="1920.0">
+                           <children>
+                              <Label id="instructionText" alignment="CENTER" prefHeight="35.0" prefWidth="504.0" stylesheets="@otp.css" text="Please enter the 6 digits One-time-password to verify your account" textFill="WHITE">
+                                 <font>
+                                    <Font name="Baskerville Old Face" size="17.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox id="subinstructionContainer" alignment="CENTER" prefHeight="26.0" prefWidth="1913.0">
+                           <children>
+                              <Label id="subInstruction" fx:id="sentToEmail" alignment="CENTER" prefHeight="33.0" text="A one-time-password has been sent to limweixin17@gmail.com" textFill="#c1c1c1" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="72.0" prefWidth="539.0">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="70.0" prefWidth="1920.0">
+                                 <children>
+                                    <TextField fx:id="OTPField" prefHeight="46.0" prefWidth="804.0" promptText="  6 digits OTP" style="-fx-pref-height: 39; -fx-pref-width: 200; -fx-background-radius: 8 0 0 8;" styleClass="textField">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </TextField>
+                                    <Button fx:id="resendButton" mnemonicParsing="false" onAction="#resendOTP" prefHeight="34.0" prefWidth="92.0" style="-fx-pref-height: 39; -fx-background-radius: 0 8 8 0;" styleClass="Button" text="Resend (60)">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <Label fx:id="OTPFieldWarning" textFill="RED" translateX="-75.0">
+                                 <VBox.margin>
+                                    <Insets top="-10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox id="submitButtonContainer" alignment="CENTER" prefHeight="35.0" prefWidth="1906.0">
+                           <children>
+                              <Button id="submitButton" fx:id="verifyButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#verifyPrimer" prefHeight="35.0" prefWidth="273.0" styleClass="Button" text="Verify">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="-15.0" />
+                           </VBox.margin>
+                        </VBox>
                      </children>
-                  </HBox>
-                  <Label fx:id="OTPFieldWarning" textFill="RED" translateX="-75.0">
-                     <VBox.margin>
-                        <Insets top="-10.0" />
-                     </VBox.margin>
-                  </Label>
-               </children>
-            </VBox>
-            <VBox id="submitButtonContainer" alignment="CENTER" prefHeight="35.0" prefWidth="1906.0">
+                  </VBox>
+               </center>
+               <top>
+                  <Button id="backButton" fx:id="backButton" mnemonicParsing="false" onAction="#backButton" prefHeight="30.0" prefWidth="101.0" stylesheets="@otp.css" translateY="50.0" BorderPane.alignment="TOP_LEFT">
+                     <BorderPane.margin>
+                        <Insets left="50.0" />
+                     </BorderPane.margin>
+                  </Button>
+               </top>
+            </BorderPane>
+            <StackPane fx:id="loadingScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="426.0" prefWidth="730.0" style="-fx-background-radius: 20; -fx-background-color: #010101;" translateX="1800.0">
                <children>
-                  <Button id="submitButton" fx:id="verifyButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#verifyPrimer" prefHeight="35.0" prefWidth="273.0" styleClass="Button" text="Verify">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets></Button>
+                  <BorderPane>
+                     <center>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="690.0" style="-fx-background-color: transparent; -fx-border-color: #FFEE00; -fx-border-radius: 20; -fx-border-width: 2;">
+                           <children>
+                              <ImageView fitHeight="287.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" translateY="-30.0">
+                                 <image>
+                                    <Image url="@assets/company/loading.gif" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="loading" style="-fx-text-fill: #ffffff; -fx-font-size: 15;" text="Loading" translateY="-105.0" />
+                           </children>
+                        </VBox>
+                     </center>
+                  </BorderPane>
                </children>
-               <VBox.margin>
-                  <Insets top="-15.0" />
-               </VBox.margin>
-            </VBox>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </StackPane>
          </children>
-      </VBox>
+      </StackPane>
    </center>
-   <top>
-      <Button id="backButton" fx:id="backButton" mnemonicParsing="false" onAction="#backButton" prefHeight="30.0" prefWidth="101.0" stylesheets="@otp.css" translateY="50.0" BorderPane.alignment="TOP_LEFT">
-         <BorderPane.margin>
-            <Insets left="50.0" />
-         </BorderPane.margin>
-      </Button>
-   </top>
 </BorderPane>

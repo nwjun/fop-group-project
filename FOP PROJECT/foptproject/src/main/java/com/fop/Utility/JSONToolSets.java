@@ -19,7 +19,6 @@ public class JSONToolSets {
     private int rowSize;
     private boolean isSeat = false;
     private boolean isTemplate = false;
-    private static sqlConnect sql = new sqlConnect();
     
     public JSONToolSets(String jsonString){
         this.jsonObj = new JSONObject(jsonString);
@@ -35,41 +34,42 @@ public class JSONToolSets {
         return this.jsonObj;    
     }
     
-    public HashMap<String,HashMap<String,ArrayList<String>>> parseAllShowTimes(){
-        JSONObject temp = this.jsonObj;
-        HashMap<String,ArrayList<String>> hall = new HashMap<>();
-        HashMap<String,ArrayList<String>> showtime = new HashMap<>();
-        HashMap<String,HashMap<String,ArrayList<String>>> week = new HashMap<>();
-        
-        //initialize the hashmap
-        for(int i = 0; i < 7 ; i++){
-            hall.put(Integer.toString(i), new ArrayList<String>());
-            showtime.put(Integer.toString(i), new ArrayList<String>());
-        }
-        
-        //filling the info
-        int j = 0;
-        for(int i = 0 ; i < 7 ; i++){
-            while(true){
-                try{
-                    hall.get(Integer.toString(i)).add(temp.getJSONArray(Integer.toString(i)).getJSONArray(j).get(0).toString());
-                    showtime.get(Integer.toString(i)).add(temp.getJSONArray(Integer.toString(i)).getJSONArray(j).get(1).toString());
-                    j++;
-                }
-                catch(Exception e){
-                    hall.get(Integer.toString(i)).add(null);
-                    showtime.get(Integer.toString(i)).add(null);
-                    break;
-                }
-            }
-            j=0;
-        } 
-            
-        week.put("hall",hall);
-        week.put("showtime",showtime);
-        return week;
-    }
+//    public HashMap<String,HashMap<String,ArrayList<String>>> parseAllShowTimes(){
+//        JSONObject temp = this.jsonObj;
+//        HashMap<String,ArrayList<String>> hall = new HashMap<>();
+//        HashMap<String,ArrayList<String>> showtime = new HashMap<>();
+//        HashMap<String,HashMap<String,ArrayList<String>>> week = new HashMap<>();
+//        
+//        //initialize the hashmap
+//        for(int i = 0; i < 7 ; i++){
+//            hall.put(Integer.toString(i), new ArrayList<String>());
+//            showtime.put(Integer.toString(i), new ArrayList<String>());
+//        }
+//        
+//        //filling the info
+//        int j = 0;
+//        for(int i = 0 ; i < 7 ; i++){
+//            while(true){
+//                try{
+//                    hall.get(Integer.toString(i)).add(temp.getJSONArray(Integer.toString(i)).getJSONArray(j).get(0).toString());
+//                    showtime.get(Integer.toString(i)).add(temp.getJSONArray(Integer.toString(i)).getJSONArray(j).get(1).toString());
+//                    j++;
+//                }
+//                catch(Exception e){
+//                    hall.get(Integer.toString(i)).add(null);
+//                    showtime.get(Integer.toString(i)).add(null);
+//                    break;
+//                }
+//            }
+//            j=0;
+//        } 
+//            
+//        week.put("hall",hall);
+//        week.put("showtime",showtime);
+//        return week;
+//    }
     
+    // parse One Dimensional JSON array from a JSON Object to Java ArrayList, taking a string key as argument
     public ArrayList<String> parseOneDArray(String key){
         ArrayList<String> result = new ArrayList<>();
         JSONObject temp = this.jsonObj;
@@ -87,6 +87,7 @@ public class JSONToolSets {
         return result;
     }
     
+    // parse a JSON object from a JSON object into a string value, taking a string key as argument
     public String parseOneObject(String key){
         JSONObject temp = this.jsonObj;
         String value = temp.getJSONObject(key).toString();
@@ -94,6 +95,7 @@ public class JSONToolSets {
         return value;
     }
     
+    // parse a String value From a JSON object, taking a string key as argument
     public String parseValue(String key){
         JSONObject temp = this.jsonObj;
         String value = temp.getString(key);
@@ -114,6 +116,7 @@ public class JSONToolSets {
         
         return result;
     }
+    
     
     public HashMap<String,ArrayList<String>> parseTheaterSeat(int day){
         JSONObject temp = this.jsonObj;        
@@ -155,14 +158,14 @@ public class JSONToolSets {
             }
         }
         
-        for(String key : extracted.keySet()){
-            for(String item : extracted.get(key)){
-                if(item.equals("-1"))System.out.print("X ");
-                else System.out.print(item+" ");
-            }
-            System.out.println("");
-        }
-        System.out.println("\n");
+//        for(String key : extracted.keySet()){
+//            for(String item : extracted.get(key)){
+//                if(item.equals("-1"))System.out.print("X ");
+//                else System.out.print(item+" ");
+//            }
+//            System.out.println("");
+//        }
+//        System.out.println("\n");
         
         return extracted;
     }
@@ -356,97 +359,6 @@ public class JSONToolSets {
         } 
     }
     
-    
-    /**
-     * @param row integer ArrayList object 
-     * @param column integer ArrayList object
-     * @param stat integer ArrayList object
-     * Length of the parameters must be equal to each other. Otherwise will cause error
-     * <p>
-     * 0 = not booked
-     * <br>1 = booked
-     * <br>-1 = can't be booked
-     * <br><br>Middle section row and column number need to be calibrate
-     * <br>This method will update the jsonObj which is stored in the class. No action
-     * will be taken if the jsonObject is not seat template.
-     * <br>This method will return void at the end
-     * </p>
-     */
-    public void setSeatStat(ArrayList<Integer> row, ArrayList<Integer> column, ArrayList<Integer> stat){
-        if(this.isTemplate){
-            // parse json
-            HashMap<Integer,ArrayList<Integer>> temp = new HashMap<>();
-            for(int i = 0 ; i < this.rowSize ; i++){
-                temp.put(i,new ArrayList<Integer>());
-                for(int j = 0 ; j < this.columnSize ; j++){
-                    temp.get(i).add(this.jsonObj.getJSONArray(Integer.toString(i)).getInt(j));
-                }
-            }
-            
-            // set seat status
-            for(int i = 0 ; i < row.size() ; i++)
-                temp.get(row.get(i)).set(column.get(i), stat.get(i));
-            
-            // convert to json string
-            JSONObject result = new JSONObject();
-            for(int key : temp.keySet()){
-                result.put(Integer.toString(key), new JSONArray(temp.get(key)));
-            }
-            
-            this.jsonObj = result;
-        }
-    }
-    
-    /**
-     * @param row integer array type 
-     * @param column integer array type
-     * @param stat integer array type
-     * Length of the parameters must be equal to each other. Otherwise will cause error
-     * <p>
-     * 0 = not booked
-     * <br>1 = booked
-     * <br>-1 = can't be booked
-     * <br><br>Middle section row and column number need to be calibrate
-     * <br>This method will update the jsonObj which is stored in the class. No action
-     * will be taken if the jsonObject is not seat template.
-     * <br>This method will return void at the end
-     * </p>
-     */
-    public void setSeatStat(int[] row, int[] column, int[] stat){
-        if(this.isTemplate){
-            // parse json
-            HashMap<Integer,ArrayList<Integer>> temp = new HashMap<>();
-            for(int i = 0 ; i < this.rowSize ; i++){
-                temp.put(i,new ArrayList<Integer>());
-                for(int j = 0 ; j < this.columnSize ; j++){
-                    temp.get(i).add(this.jsonObj.getJSONArray(Integer.toString(i)).getInt(j));
-                }
-            }
-            
-            // set seat status
-            for(int i = 0 ; i < row.length ; i++)
-                temp.get(row[i]).set(column[i], stat[i]);
-            
-            // convert to json string
-            JSONObject result = new JSONObject();
-            for(int key : temp.keySet()){
-                result.put(Integer.toString(key), new JSONArray(temp.get(key)));
-            }
-            
-            this.jsonObj = result;
-        }
-    }
-    
-    /**
-     * Apply changes to current seat arrangement immediately
-     */
-//    public void commitToCurrentSeats(){
-//        int ind = RealTimeStorage.getMovieDetail("movieId").indexOf(RealTimeStorage.getLookingAt());
-//        String theaterId = RealTimeStorage.getMovieDetail("theaterId").get(ind);
-//        
-//        HashMap<String,ArrayList<String>> = new JSONToolSets(sql.querySeats(, ,false),false);
-//    }
-    
     /**
      *  Getter for new seat arrangement
      *  
@@ -503,12 +415,12 @@ public class JSONToolSets {
         JSONObject purchasedFnB = new JSONObject();
         for(int i = 0 ; i < RealTimeStorage.ticketTypeQuantity ; i++){
             if(RealTimeStorage.getMovieBooking().get("theaterType").equals("Classic")){
-                double price = Double.parseDouble(sql.queryProductInfo(ticketId[i],"price"));
+                double price = Double.parseDouble(sqlConnect.queryProductInfo(ticketId[i],"price"));
                 String[] concat = {ticketId[i],tickets[i]+"",price+""};
                 ticket.put(category[i], String.join(",",concat));
             }
             else{
-                double price = Double.parseDouble(sql.queryProductInfo(ticketId[4],"price"));
+                double price = Double.parseDouble(sqlConnect.queryProductInfo(ticketId[4],"price"));
                 int quantity = tickets[3]+tickets[2]+tickets[1]+tickets[0];
                 ticket.put("Premium",String.join(",",new String[]{ticketId[4],quantity+"",price+""}));
             }
@@ -519,7 +431,7 @@ public class JSONToolSets {
                 purchasedFnB.put(productId,String.join(",",concat));
                 continue;
             }
-            double price = Double.parseDouble(sql.queryProductInfo(productId,"price"));
+            double price = Double.parseDouble(sqlConnect.queryProductInfo(productId,"price"));
             String[] concat = {FnB.get(productId)+"",price+""};
             purchasedFnB.put(productId,String.join(",",concat));
         }

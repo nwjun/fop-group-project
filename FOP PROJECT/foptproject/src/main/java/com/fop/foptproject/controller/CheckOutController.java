@@ -12,11 +12,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.concurrent.CountDownLatch;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -26,7 +29,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -36,8 +41,9 @@ public class CheckOutController implements Initializable {
 
     private HashMap<String, Object> summary = new HashMap<>();
     private double toBePaid = 0;
-    private sqlConnect sql = new sqlConnect();
     private String bookedSeats = null;
+    private boolean error = false;
+    private int dot = 0;
 
     @FXML
     private Label movie;
@@ -69,6 +75,10 @@ public class CheckOutController implements Initializable {
     private CheckBox agreement;
     @FXML
     private Button payButton;
+    @FXML
+    private StackPane loadingScreen;
+    @FXML
+    private Label loading;
 
     @FXML
     public void back(ActionEvent event) throws IOException {
@@ -85,87 +95,37 @@ public class CheckOutController implements Initializable {
             stage.showAndWait();
             return;
         } else {
-            // get neccessary info
-            String booked = this.bookedSeats.replace(", ", ",");
-            String userId = RealTimeStorage.getUserId();
-            String cinema = RealTimeStorage.getMovieBooking().get("cinemaName").toString();
-            String movieName = RealTimeStorage.getMovieBooking().get("movieName").toString();
-            String purchasedItem = JSONToolSets.writeReceiptJSON(RealTimeStorage.getFnB(), RealTimeStorage.getTicketType(), RealTimeStorage.getMovieBooking().get("theaterType").toString().equals("Premium"));
-            String showDate = RealTimeStorage.getMovieBooking().get("showdate").toString();
-            String showtime = RealTimeStorage.getMovieBooking().get("showTime").toString().split(" - ")[0];
-            String theaterId = RealTimeStorage.getMovieBooking().get("theaterId").toString();
-            String slots = RealTimeStorage.getMovieBooking().get("slots").toString();
-            String chosenDay = RealTimeStorage.getMovieBooking().get("chosenDay").toString();
-            //System.out.printf("UserId: %s\n Movie Name: %s\n Cinema Name: %s\n Booked Seats: %s\n Show DateTime: %s %s TheaterId: %s\n Purchased: %s\n",userId,movieName,cinema,booked,showDate,showtime,theaterId,purchasedItem);
-            // set booked seat stat to occupied
-            JSONToolSets json = new JSONToolSets(sql.querySeats(theaterId, slots, false), false);
-            //json.parseTheaterSeat(Integer.parseInt(chosenDay));
-            String revert = json.getNewSeatArr().toString();
-            json.parseTheaterSeat(Integer.parseInt(chosenDay));
-            for (int i = 0; i < RealTimeStorage.getSelectedSeats().size(); i++) {
-                int row = Integer.parseInt(RealTimeStorage.getSelectedSeats().get(i)[0]);
-                int column = Integer.parseInt(RealTimeStorage.getSelectedSeats().get(i)[1]);
-                json.setSeatStat(row, column, 1, chosenDay);
-            }
-            String currentSeat = json.getNewSeatArr().toString();
-            json.parseTheaterSeat(Integer.parseInt(chosenDay));
-            // any process fail will reset the jsonArr to prev 
-            boolean error = false;
-            // save transaction detail to sql
-            String bookingNumber = null;
-            Date datenow = new Date();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Timestamp ts = new Timestamp(datenow.getTime());
-            String timestamp = format.format(ts);
-            RealTimeStorage.setTimestamp(timestamp);
-            // send booking email to user
-            for (int i = 0; i < 3; i++) {
-                bookingNumber = sql.addTransactionDetail(userId, purchasedItem, booked, theaterId, showDate, showtime, movieName, cinema);
-                if (bookingNumber == null) {
-                    error = true;
-                    continue;
+            Task<Void> postTask = postTask(event);
+            new Thread(postTask).start();
+            postTask.setOnSucceeded(eh -> {
+                if (!error) {
+                    try {
+                        new SceneController().switchToDonePayment(event);
+                    } catch (IOException ex) {
+                        // do ntg
+                    }
                 } else {
-                    RealTimeStorage.setBookingNumber(bookingNumber);
-                    new emailTo(RealTimeStorage.getUserEmail()).sendBookingConfirmations(movieName, RealTimeStorage.getUsername(), bookingNumber, bookingNumber, showDate, showtime, booked, this.toBePaid*1.16);
-                    error = false;
-                    break;
+                    closeLoadingScreen();
+                    a.setAlertType(AlertType.ERROR);
+                    a.setTitle("Unknown Error occured");
+                    a.setContentText("A fatal error has occured during transaction. Please try again later");
+                    Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                    stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                    stage.showAndWait();
+                    return;
                 }
-            }
-            if (!error) {
-                try {
-                    sql.updateSeats(currentSeat, theaterId, slots, false);
-                    RealTimeStorage.setToBePaid(String.format("RM%.2f", this.toBePaid * 1.16 + 1.5));
-                    new SceneController().switchToDonePayment(event);
-                    error = false;
-                } catch (Exception e) {
-                    error = true;
-                }
-            }
-
-            if (error) {
-                sql.updateSeats(revert, theaterId, slots, false);
-            }
-            
-            if(saveCard.isSelected()){
-                String selectedBank = selectBank.getValue().toString();
-                String card = cardNumber.getText();
-                String expiry = expiryDate.getText();
-                String cvvNumber = cvv.getText();
-                RealTimeStorage.updateLinkedCard(new String[]{selectedBank, card, expiry, cvvNumber});
-                RealTimeStorage.appendLinkedCards();
-            }
+            });
 
         }
     }
 
     @FXML
     public void autoFillCardDetails(ActionEvent event) {
-        try{
+        try {
             if (selectCard.getValue().toString().equals("-")) {
                 return;
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             // do nothing
         }
         String card = selectCard.getValue().toString();
@@ -180,7 +140,7 @@ public class CheckOutController implements Initializable {
         String bank = RealTimeStorage.getLinkedCard2D().get(ind)[0];
         String expiry = RealTimeStorage.getLinkedCard2D().get(ind)[2];
         String cvvVal = RealTimeStorage.getLinkedCard2D().get(ind)[3];
-        
+
         selectBank.setValue(bank);
         cardNumber.setText(cardnumber);
         expiryDate.setText(expiry);
@@ -200,20 +160,19 @@ public class CheckOutController implements Initializable {
         String productname;
         int quantity;
         HashMap<String, Integer> current = RealTimeStorage.getFnB();
-        sqlConnect sql = new sqlConnect();
         int i = 0;
         for (String key : current.keySet()) {
             quantity = current.get(key);
             if (key.equals("S000005P")) {
-                productname = "[FREE]" + sql.queryProductInfo(key.substring(0, 7), "productname");
+                productname = "[FREE]" + RealTimeStorage.getProductInfo(key.substring(0, key.length() - 1), "productName");
             } else {
-                total += quantity * Double.parseDouble(sql.queryProductInfo(key, "price"));
-                productname = sql.queryProductInfo(key, "productname");
+                total += quantity * Double.parseDouble(RealTimeStorage.getProductInfo(key, "price"));
+                productname = RealTimeStorage.getProductInfo(key, "productName");
             }
             name += productname + " x" + quantity + ", ";
         }
         name = name.substring(0, name.length() - 2);
-        RealTimeStorage.setfnb(name.replace(", ","\n"));
+        RealTimeStorage.setfnb(name.replace(", ", "\n"));
         this.toBePaid += total;
         return new String[]{name, total + ""};
     }
@@ -246,13 +205,145 @@ public class CheckOutController implements Initializable {
                 }
             } else {
                 quantity += ticketTypes[i];
-                total += ticketTypes[i] * (Double.parseDouble(sql.queryProductInfo("TP", "price")));
+                total += ticketTypes[i] * (Double.parseDouble(sqlConnect.queryProductInfo("TP", "price")));
                 tickettype = "Premium x" + quantity + "\n";
             }
         }
         this.toBePaid += total;
         RealTimeStorage.setTypeByQuantity(tickettype.substring(0, tickettype.length() - 1));
         return new String[]{tickettype.substring(0, tickettype.length() - 1), total + ""};
+    }
+
+    public Task postTask(ActionEvent eventIn) {
+        Task<Void> createTask = new Task<>() {
+            private ActionEvent event = eventIn;
+
+            @Override
+            protected Void call() throws Exception {
+                CountDownLatch latch = new CountDownLatch(1);
+
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        try {
+                            showLoadingScreen();
+                            startProgress();
+                        } finally {
+                            latch.countDown();
+                        }
+
+                    }
+                });
+
+                latch.await();
+
+                // start background posting
+                // get neccessary info
+                String booked = bookedSeats.replace(", ", ",");
+                String userId = RealTimeStorage.getUserId();
+                String cinema = RealTimeStorage.getMovieBooking().get("cinemaName").toString();
+                String movieName = RealTimeStorage.getMovieBooking().get("movieName").toString();
+                String purchasedItem = JSONToolSets.writeReceiptJSON(RealTimeStorage.getFnB(), RealTimeStorage.getTicketType(), RealTimeStorage.getMovieBooking().get("theaterType").toString().equals("Premium"));
+                String showDate = RealTimeStorage.getMovieBooking().get("showdate").toString();
+                String showtime = RealTimeStorage.getMovieBooking().get("showTime").toString().split(" - ")[0];
+                String theaterId = RealTimeStorage.getMovieBooking().get("theaterId").toString();
+                String slots = RealTimeStorage.getMovieBooking().get("slots").toString();
+                String chosenDay = RealTimeStorage.getMovieBooking().get("chosenDay").toString();
+                //System.out.printf("UserId: %s\n Movie Name: %s\n Cinema Name: %s\n Booked Seats: %s\n Show DateTime: %s %s TheaterId: %s\n Purchased: %s\n",userId,movieName,cinema,booked,showDate,showtime,theaterId,purchasedItem);
+                // set booked seat stat to occupied
+                JSONToolSets json = new JSONToolSets(sqlConnect.querySeats(theaterId, slots, false), false);
+                //json.parseTheaterSeat(Integer.parseInt(chosenDay));
+                String revert = json.getNewSeatArr().toString();
+                json.parseTheaterSeat(Integer.parseInt(chosenDay));
+                for (int i = 0; i < RealTimeStorage.getSelectedSeats().size(); i++) {
+                    int row = Integer.parseInt(RealTimeStorage.getSelectedSeats().get(i)[0]);
+                    int column = Integer.parseInt(RealTimeStorage.getSelectedSeats().get(i)[1]);
+                    json.setSeatStat(row, column, 1, chosenDay);
+                }
+                String currentSeat = json.getNewSeatArr().toString();
+                json.parseTheaterSeat(Integer.parseInt(chosenDay));
+                // any process fail will reset the jsonArr to prev 
+                error = false;
+                // save transaction detail to sql
+                String bookingNumber = null;
+                Date datenow = new Date();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Timestamp ts = new Timestamp(datenow.getTime());
+                String timestamp = format.format(ts);
+                RealTimeStorage.setTimestamp(timestamp);
+                // send booking email to user
+                for (int i = 0; i < 3; i++) {
+                    bookingNumber = sqlConnect.addTransactionDetail(userId, purchasedItem, booked, theaterId, showDate, showtime, movieName, cinema);
+                    if (bookingNumber == null) {
+                        error = true;
+                        continue;
+                    } else {
+                        RealTimeStorage.setBookingNumber(bookingNumber);
+                        error = false;
+                        break;
+                    }
+                }
+
+                if (saveCard.isSelected()) {
+                    String selectedBank = selectBank.getValue().toString();
+                    String card = cardNumber.getText();
+                    String expiry = expiryDate.getText();
+                    String cvvNumber = cvv.getText();
+                    RealTimeStorage.updateLinkedCard(new String[]{selectedBank, card, expiry, cvvNumber});
+                    RealTimeStorage.appendLinkedCards();
+                }
+
+                if (error) {
+                    sqlConnect.updateSeats(revert, theaterId, slots, false);
+                } else {
+                    try {
+                        sqlConnect.updateSeats(currentSeat, theaterId, slots, false);
+                        RealTimeStorage.setToBePaid(String.format("RM%.2f", toBePaid * 1.16 + 1.5));
+                        error = false;
+                    } catch (Exception e) {
+                        // do ntg
+                    } finally {
+                        if (!error) {
+                            new emailTo(RealTimeStorage.getUserEmail()).sendBookingConfirmations(movieName, RealTimeStorage.getUsername(), bookingNumber, bookingNumber, showDate, showtime, booked, toBePaid * 1.16 + 1.5);
+                        }
+                    }
+                }
+
+                return null;
+            }
+        };
+
+        return createTask;
+    }
+
+    public void startProgress() {
+        String init = "Loading";
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(false);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(300), e -> {
+            if (dot == 5) {
+                loading.setText(init);
+                dot = 0;
+            } else {
+                loading.setText(loading.getText() + ".");
+                dot++;
+            }
+        }
+        ));
+        timeline.play();
+    }
+
+    public void showLoadingScreen() {
+        loadingScreen.setTranslateX(0);
+    }
+
+    public void closeLoadingScreen() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                loadingScreen.setTranslateX(1800);
+            }
+        });
     }
 
     @Override

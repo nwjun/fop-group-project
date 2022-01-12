@@ -6,7 +6,6 @@ package com.fop.foptproject.controller;
  */
 
 import com.fop.foptproject.ProductCard;
-import com.fop.Utility.sqlConnect;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ import javafx.util.Duration;
  */
 public class FoodnBeverageController implements Initializable{  
     // class attributes
-    private sqlConnect sql = new sqlConnect();
     private Object[] productId;
     private Object[] price;
     private Object[] posterPath;
@@ -93,16 +91,31 @@ public class FoodnBeverageController implements Initializable{
     private Line highlightLine;
     
     public void getProduct(String category){
-        HashMap<String,ArrayList<String>> items = sql.queryProduct(category);
-        this.productId = items.get("productId").toArray();
-        this.price = items.get("price").toArray();
-        this.posterPath = items.get("posterPath").toArray();
-        this.productDesc = items.get("productDesc").toArray();
-        this.productName = items.get("productName").toArray();
+        HashMap<String,ArrayList<String>> items = RealTimeStorage.getProductDetails();
+        ArrayList<String> productIdContainer = new ArrayList<>();
+        ArrayList<String> priceContainer = new ArrayList<>();
+        ArrayList<String> posterPathContainer = new ArrayList<>();
+        ArrayList<String> productDescContainer = new ArrayList<>();
+        ArrayList<String> productNameContainer = new ArrayList<>();
+        for(int i = 0 ; i < items.get("productId").size() ; i++){
+            if(items.get("category").get(i).equals(category)){
+                productIdContainer.add(items.get("productId").get(i));
+                priceContainer.add(items.get("price").get(i));
+                posterPathContainer.add(items.get("posterPath").get(i));
+                productDescContainer.add(items.get("productDesc").get(i));
+                productNameContainer.add(items.get("productName").get(i));
+            }
+        }
+        
+        this.productId = productIdContainer.toArray();
+        this.price = priceContainer.toArray();
+        this.posterPath = posterPathContainer.toArray();
+        this.productDesc = productDescContainer.toArray();
+        this.productName = productNameContainer.toArray();
         this.currentPage = 0;
         this.maxPage = (int) Math.ceil(productId.length/4.0);
         this.currentIndex = 0;
-                  
+        
         loadCard();   
     }
     
@@ -183,7 +196,6 @@ public class FoodnBeverageController implements Initializable{
         HashMap<String,Integer> current = RealTimeStorage.getFnB();
         double price;
         String name;
-        sqlConnect sql = new sqlConnect();
         int i = 0;
         for(String key:current.keySet()){
            if(i==0){
@@ -202,8 +214,8 @@ public class FoodnBeverageController implements Initializable{
            
            if(key.equals("S000005P"))continue; // skip premium gift
            
-           price = Double.parseDouble(sql.queryProductInfo(key,"price"));
-           name = sql.queryProductInfo(key,"productname");
+           price = Double.parseDouble(RealTimeStorage.getProductInfo(key,"price"));
+           name = RealTimeStorage.getProductInfo(key,"productName");
            
            Label productName = new Label(name);
            Label productPrice = new Label(String.format("RM%.2f",price*current.get(key)));

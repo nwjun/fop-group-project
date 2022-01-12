@@ -204,7 +204,7 @@
                                        <StackPane.margin>
                                           <Insets />
                                        </StackPane.margin></Button>
-                                    <Label fx:id="selectedTicketLabel" alignment="CENTER" prefHeight="38.0" prefWidth="40.0" style="-fx-border-width: 1; -fx-border-style: solid; -fx-border-radius: 60; -fx-border-color: #ffee00;" styleClass="header1" text="0" translateX="-60.0" StackPane.alignment="TOP_CENTER">
+                                    <Label fx:id="selectedTicketLabel" alignment="CENTER" prefHeight="38.0" prefWidth="38.0" style="-fx-border-width: 1; -fx-border-style: solid; -fx-border-radius: 60; -fx-border-color: #ffee00;" styleClass="header1" text="0" translateX="-60.0" translateY="-2.0" StackPane.alignment="TOP_CENTER">
                                        <padding>
                                           <Insets bottom="4.0" left="8.0" right="8.0" top="4.0" />
                                        </padding>

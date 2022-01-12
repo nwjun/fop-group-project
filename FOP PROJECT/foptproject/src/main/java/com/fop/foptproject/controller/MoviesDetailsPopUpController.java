@@ -27,7 +27,11 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import org.json.simple.parser.ParseException;
 /**
  * FXML Controller class
@@ -35,8 +39,6 @@ import org.json.simple.parser.ParseException;
  * @author shiao, kuckn, WeiXin
  */
 public class MoviesDetailsPopUpController implements Initializable {
-    
-//    sqlConnect sql = new sqlConnect();
     
     private Object[] movieId;
     private Object[] movieName;
@@ -50,7 +52,8 @@ public class MoviesDetailsPopUpController implements Initializable {
     private double IMGH = 375;
     private double SCALE = 0.9;
     
-    
+    @FXML
+    private AnchorPane bg;
     @FXML
     private Label cinemas;
     @FXML
@@ -128,7 +131,6 @@ public class MoviesDetailsPopUpController implements Initializable {
         MovieAllShowTImeController x = new MovieAllShowTImeController();
         
         HashMap<String,ArrayList<String>> items = RealTimeStorage.getAllMovies();
-//        HashMap<String,ArrayList<String>> items = sql.queryAllMovie();
         this.movieId = items.get("movieId").toArray();
         this.movieName = items.get("movieName").toArray();
         this.length = items.get("length").toArray();
@@ -166,10 +168,7 @@ public class MoviesDetailsPopUpController implements Initializable {
         iMDBT.setText((String)this.iMDB[index]);
         directorT.setText(directorJsonProcesor((String)this.directorCast[index]));
         String s = castJsonProcessor((String)this.directorCast[index]);
-
-        for (int i = 0; i<s.length(); i+=10){
-            s = insertString(s, "\n", s.lastIndexOf(", ", i));
-        }
+        s = s.replace(",", "\n");
         
         castT.setText(s);
         
@@ -181,6 +180,7 @@ public class MoviesDetailsPopUpController implements Initializable {
     }  
     
     public void initData(String ID) throws ParseException{
+        bg.setEffect(new DropShadow(10, 0, 0,Color.YELLOW));
         PopUp(ID);
     }
     

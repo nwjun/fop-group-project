@@ -64,7 +64,6 @@ public class profileController implements Initializable {
     StackPane centerContainer;
 
     CommonMethod commonMethod = new CommonMethod();
-    sqlConnect sql = new sqlConnect();
     ArrayList<String[]> banks;
     boolean overallReturnVal = true;
 
@@ -421,7 +420,7 @@ public class profileController implements Initializable {
     }
 
     public String[][] getHistories() {
-        HashMap<String,ArrayList<String>> fetched = sql.queryPurchaseHistory(RealTimeStorage.getUserId());
+        HashMap<String,ArrayList<String>> fetched = sqlConnect.queryPurchaseHistory(RealTimeStorage.getUserId());
         final int NUM = fetched.get("movieName").size();
         System.out.println(NUM);
         // if no record is found
@@ -483,28 +482,27 @@ public class profileController implements Initializable {
     private void updateProfile(String newFieldValue, int item) {
         // update data in database
         int returnVal;
-        sqlConnect sqlConn = new sqlConnect();
         
         switch (item) {
             case 0:
                 RealTimeStorage.setUsername(newFieldValue);
-                returnVal = sqlConn.setNewUsernameOrPhoneNumber(RealTimeStorage.getUserEmail(), newFieldValue, false);
+                returnVal = sqlConnect.setNewUsernameOrPhoneNumber(RealTimeStorage.getUserEmail(), newFieldValue, false);
                 overallReturnVal = returnVal == 1;
                 break;
             case 1:
                 // check dup
                 RealTimeStorage.setEmail(newFieldValue);
-                returnVal = sqlConn.setNewUserEmail(RealTimeStorage.getUserId(), newFieldValue);
+                returnVal = sqlConnect.setNewUserEmail(RealTimeStorage.getUserId(), newFieldValue);
                 overallReturnVal = returnVal == 1;
                 break;
             case 2:
                 // check dup
                 RealTimeStorage.setPNumber(newFieldValue);
-                returnVal = sqlConn.setNewUsernameOrPhoneNumber(RealTimeStorage.getUserEmail(), newFieldValue, true);
+                returnVal = sqlConnect.setNewUsernameOrPhoneNumber(RealTimeStorage.getUserEmail(), newFieldValue, true);
                 overallReturnVal = returnVal == 1;
                 break;
             case 3:
-                returnVal = new sqlConnect().setNewPassword(RealTimeStorage.getUserEmail(), newFieldValue);
+                returnVal = sqlConnect.setNewPassword(RealTimeStorage.getUserEmail(), newFieldValue);
                 overallReturnVal = returnVal == 1;
                 break;
 
