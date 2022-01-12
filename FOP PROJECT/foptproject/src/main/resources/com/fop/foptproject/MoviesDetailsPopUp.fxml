@@ -25,19 +25,19 @@
                <children>
                   <HBox prefHeight="30.0" prefWidth="283.0">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Title :" wrappingWidth="109.44189453125" />
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Title :" wrappingWidth="123.44189453125" />
                         <Label fx:id="movieTitleT" style="-fx-font-size: 15;" textFill="WHITE" translateX="15.0" wrapText="true" />
                      </children>
                   </HBox>
                   <HBox prefHeight="39.0" prefWidth="283.0">
                      <children>
-                        <Label fx:id="casts11" prefHeight="30.0" prefWidth="112.0" text="Director: " textFill="WHITE" wrapText="true" />
+                        <Label fx:id="casts11" prefHeight="30.0" prefWidth="123.0" text="Director: " textFill="WHITE" wrapText="true" />
                         <Label fx:id="directorT" prefHeight="30.0" prefWidth="144.0" style="-fx-font-size: 15;" textFill="WHITE" wrapText="true" />
                      </children>
                   </HBox>
                   <HBox prefHeight="133.0" prefWidth="283.0">
                      <children>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cast :" wrappingWidth="110.20361328125" />
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cast :" wrappingWidth="112.20361328125" />
                         <VBox prefHeight="133.0" prefWidth="173.0">
                            <children>
                               <Label fx:id="castT" alignment="TOP_LEFT" prefHeight="151.0" prefWidth="173.0" style="-fx-font-size: 15;" text=" " />
@@ -47,20 +47,20 @@
                   </HBox>
                   <HBox prefHeight="40.0" prefWidth="283.0">
                      <children>
-                        <Label fx:id="casts111" prefHeight="30.0" prefWidth="122.0" text="Language: " textFill="WHITE" wrapText="true" />
+                        <Label fx:id="casts111" prefHeight="30.0" prefWidth="123.0" text="Language: " textFill="WHITE" wrapText="true" />
                         <Label fx:id="casts11" prefHeight="30.0" prefWidth="178.0" text="English" textFill="WHITE" wrapText="true" />
                      </children>
                   </HBox>
                   <HBox prefHeight="40.0" prefWidth="283.0">
                      <children>
-                        <Label fx:id="casts1111" prefHeight="30.0" prefWidth="115.0" text="iMDB: " textFill="WHITE" wrapText="true" />
+                        <Label fx:id="casts1111" prefHeight="30.0" prefWidth="123.0" text="iMDB: " textFill="WHITE" wrapText="true" />
                         <Label fx:id="iMDBT" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="32.0" style="-fx-font-size: 15;" textFill="WHITE" wrapText="true" />
                         <Label fx:id="casts1112" prefHeight="30.0" prefWidth="51.0" text="/10" textFill="WHITE" wrapText="true" />
                      </children>
                   </HBox>
                   <HBox prefHeight="36.0" prefWidth="463.0">
                      <children>
-                        <Label fx:id="casts11111" prefHeight="30.0" prefWidth="124.0" text="rottenTomato: " textFill="WHITE" wrapText="true" />
+                        <Label fx:id="casts11111" prefHeight="30.0" prefWidth="123.0" text="rottenTomato: " textFill="WHITE" wrapText="true" />
                         <Label fx:id="rottenTomatoT" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="32.0" style="-fx-font-size: 15;" textFill="WHITE" wrapText="true" />
                         <Label fx:id="casts11121" prefHeight="30.0" prefWidth="51.0" style="-fx-font-size: 15;" text="/10" textFill="WHITE" wrapText="true" />
                      </children>
@@ -148,7 +148,7 @@
                            <HBox.margin>
                               <Insets top="2.0" />
                            </HBox.margin></Text>
-                        <Label prefHeight="21.0" prefWidth="28.0" style="-fx-font-size: 15;" text="RM">
+                        <Label prefHeight="21.0" style="-fx-font-size: 15;" text="RM">
                            <HBox.margin>
                               <Insets bottom="2.0" />
                            </HBox.margin></Label>

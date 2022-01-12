@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -10,37 +11,22 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="1175.0" styleClass="background" stylesheets="@donepayment.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.DonePaymentController">
-   <top>
-      <ImageView fitHeight="35.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER_LEFT">
-         <image>
-            <Image url="@assets/company/logo.png" />
-         </image>
-         <BorderPane.margin>
-            <Insets left="50.0" top="40.0" />
-         </BorderPane.margin>
-      </ImageView>
-   </top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="1175.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.DonePaymentController">
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="500.0">
                <HBox.margin>
-                  <Insets bottom="30.0" top="60.0" />
+                  <Insets bottom="30.0" top="20.0" />
                </HBox.margin>
-               <padding>
-                  <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
-               </padding>
                <children>
-                  <Label id="title" styleClass="description" text="Transaction Status" translateX="-20.0" translateY="-20.0" />
                   <HBox>
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
                      <children>
                         <Label styleClass="description" text="Status : " />
-                        <Label fx:id="status" layoutX="10.0" layoutY="10.0" style="-fx-text-fill: green;" styleClass="description" text="Success" />
+                        <Label fx:id="status" layoutX="10.0" layoutY="10.0" style="-fx-text-fill: #55DD00; -fx-font-weight: 700;" styleClass="description" text="Success" />
                      </children>
                   </HBox>
                   <HBox>
@@ -99,17 +85,20 @@
                   </HBox>
                   <StackPane>
                      <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets top="30.0" />
                      </VBox.margin>
                      <children>
                         <VBox alignment="CENTER" prefHeight="94.0" prefWidth="400.0">
                            <children>
-                              <Label styleClass="description" text="Thank you for choosing GSC Cinema!">
+                              <Label style="-fx-font-style: italic;" styleClass="description" text="Thank you for choosing GSC Cinema!">
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Button id="homeButton" fx:id="toHomeButton" alignment="CENTER" mnemonicParsing="false" onAction="#toHome" prefHeight="29.0" prefWidth="97.0" text="Home" />
+                              <Button fx:id="toHomeButton" alignment="CENTER" mnemonicParsing="false" onAction="#toHome" prefHeight="29.0" prefWidth="97.0" styleClass="yellowButton" text="Home">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin></Button>
                            </children>
                         </VBox>
                      </children>
@@ -119,4 +108,27 @@
          </children>
       </HBox>
    </center>
+   <stylesheets>
+      <URL value="@donepayment.css" />
+      <URL value="@style.css" />
+   </stylesheets>
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="35.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/company/logo.png" />
+               </image>
+            </ImageView>
+            <Label styleClass="pageHeader" text="Transaction Status">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets left="50.0" top="50.0" />
+         </BorderPane.margin>
+      </HBox>
+   </top>
 </BorderPane>

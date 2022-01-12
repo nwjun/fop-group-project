@@ -30,7 +30,7 @@
       <VBox prefHeight="149.0" prefWidth="520.0">
          <children>
             <Label text="Account Number" />
-            <TextField fx:id="accTextField" />
+            <TextField fx:id="accTextField" promptText="10-17 numbers" />
             <Label fx:id="accErrorMsg" textFill="RED" />
             <HBox prefHeight="74.0" prefWidth="520.0">
                <children>

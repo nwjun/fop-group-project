@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
@@ -12,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="1080.0" prefWidth="539.0" styleClass="root" stylesheets="@otp.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.OTPController">
+<BorderPane prefHeight="1080.0" prefWidth="539.0" styleClass="root" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.OTPController">
    <center>
-      <VBox alignment="TOP_CENTER" prefHeight="1080.0" prefWidth="492.0" style="-fx-padding: 75 0 75 0;" styleClass="root" stylesheets="@otp.css" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="1080.0" prefWidth="492.0" style="-fx-padding: 75 0 75 0;" styleClass="root" BorderPane.alignment="CENTER">
          <children>
             <VBox id="logoContainer" alignment="CENTER" prefHeight="194.0" prefWidth="369.0">
                <children>
@@ -44,7 +45,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="72.0" prefWidth="539.0">
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="10.0" top="30.0" />
                </VBox.margin>
                <children>
                   <HBox alignment="CENTER" prefHeight="70.0" prefWidth="1920.0">
@@ -54,12 +55,15 @@
                               <Font size="16.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="resendButton" mnemonicParsing="false" onAction="#resendOTP" prefHeight="34.0" prefWidth="92.0" style="-fx-pref-height: 39; -fx-background-radius: 0 8 8 0;" styleClass="Button" text="Resend (60)">
+                        <Button fx:id="resendButton" mnemonicParsing="false" onAction="#resendOTP" prefHeight="34.0" style="-fx-pref-height: 39; -fx-background-radius: 0 8 8 0;" styleClass="Button" text="Resend (60)">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Button>
                      </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </HBox>
                   <Label fx:id="OTPFieldWarning" textFill="RED" translateX="-75.0">
                      <VBox.margin>
@@ -68,15 +72,18 @@
                   </Label>
                </children>
             </VBox>
-            <VBox id="submitButtonContainer" alignment="CENTER" prefHeight="35.0" prefWidth="1906.0">
+            <VBox id="submitButtonContainer" alignment="CENTER" prefHeight="40.0" prefWidth="539.0">
                <children>
-                  <Button id="submitButton" fx:id="verifyButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#verifyPrimer" prefHeight="35.0" prefWidth="273.0" styleClass="Button" text="Verify">
+                  <Button id="submitButton" fx:id="verifyButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#verifyPrimer" prefHeight="40.0" prefWidth="156.0" styleClass="yellowButton" text="Verify">
                      <opaqueInsets>
                         <Insets />
-                     </opaqueInsets></Button>
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></Button>
                </children>
                <VBox.margin>
-                  <Insets top="-15.0" />
+                  <Insets />
                </VBox.margin>
             </VBox>
          </children>
@@ -89,4 +96,8 @@
          </BorderPane.margin>
       </Button>
    </top>
+   <stylesheets>
+      <URL value="@otp.css" />
+      <URL value="@style.css" />
+   </stylesheets>
 </BorderPane>

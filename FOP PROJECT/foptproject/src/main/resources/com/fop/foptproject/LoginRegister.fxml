@@ -44,7 +44,7 @@
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin></PasswordField>
-                        <Label fx:id="passwordFieldWarning" textFill="RED" />
+                        <Label fx:id="passwordFieldWarning" styleClass="errorLabel" textFill="RED" />
                      </children>
                   </VBox>
                   <VBox layoutX="1077.0" layoutY="178.0" prefHeight="90.0" prefWidth="246.0">
