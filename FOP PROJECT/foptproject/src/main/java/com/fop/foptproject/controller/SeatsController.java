@@ -7,6 +7,7 @@ package com.fop.foptproject.controller;
  */
 import com.fop.Utility.JSONToolSets;
 import com.fop.Utility.sqlConnect;
+import com.fop.foptproject.App;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,13 +24,16 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -176,8 +180,7 @@ public class SeatsController implements Initializable {
 //        THEATER_ID = "1";
 //        SLOT = "1";
 //        DAY = "1";
-        
-        hallLabel.setText("HALL "+ THEATER_ID);
+        hallLabel.setText("HALL " + THEATER_ID);
         ArrayList<ArrayList<String>> seatsTemp = getMovieSeats(THEATER_ID, SLOT, DAY);
 
         priceLabels = new Label[]{elderPrice, adultPrice, studentPrice, OKUPrice};
@@ -238,7 +241,7 @@ public class SeatsController implements Initializable {
                         } else if (val.equals("-1")) {
                             newSeat.setDisable(true);
                             newSeat.getStyleClass().add("availableSeat");
-                        }else{
+                        } else {
                             newSeat.getStyleClass().add("availableSeat");
                         }
                         seatsContainer.add(newSeat, col, row);
@@ -264,25 +267,40 @@ public class SeatsController implements Initializable {
                             int col = colIndex(GridPane.getColumnIndex(seat), maxCol);
 
                             // Selected
-                            if (old_val == false && new_val == true && selectedLength < totalTicket) {
-                                selected.add(new String[]{String.valueOf(row), String.valueOf(col)});
+                            if (old_val == false && new_val == true) {
+                                if (selectedLength < totalTicket) {
+                                    selected.add(new String[]{String.valueOf(row), String.valueOf(col)});
 
-                                // seat selected is double-seat
-                                if (row == maxRow - 1 || col == 0 || col == 1 || col == maxCol - 2 || col == maxCol - 1) {
-                                    // can choose double seat
-                                    if ((totalTicket - selectedLength) >= 2) {
-                                        CheckBox temp = getDoubleSeat(row, col, maxRow, maxCol, gridPaneChildren, k);
-                                        
-                                        // if next seat is not disabled seat
-                                        if (!temp.isDisable()) {
-                                            temp.setSelected(true);
+                                    // seat selected is double-seat
+                                    if (row == maxRow - 1 || col == 0 || col == 1 || col == maxCol - 2 || col == maxCol - 1) {
+                                        // can choose double seat
+                                        if ((totalTicket - selectedLength) >= 2) {
+                                            CheckBox temp = getDoubleSeat(row, col, maxRow, maxCol, gridPaneChildren, k);
+
+                                            // if next seat is not disabled seat
+                                            if (!temp.isDisable()) {
+                                                temp.setSelected(true);
+                                            }
+
+                                        } else {
+                                            // unselect seat for those who aren't couple
+                                            ((CheckBox) gridPaneChildren.get(k)).setSelected(false);
+                                            Alert a = new Alert(Alert.AlertType.ERROR);
+                                            a.setTitle("Hello single dog, cannot!");
+                                            a.setContentText("Single dog is not allowed to buy couple seats");
+                                            Stage stageA = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                                            stageA.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                                            stageA.showAndWait();
                                         }
-                                        
-                                        
-                                    } else {
-                                        // unselect seat for those who aren't couple
-                                        ((CheckBox) gridPaneChildren.get(k)).setSelected(false);
                                     }
+                                } else {
+                                    ((CheckBox) gridPaneChildren.get(k)).setSelected(false);
+                                    Alert a = new Alert(Alert.AlertType.ERROR);
+                                    a.setTitle("Not enough ticket");
+                                    a.setContentText("Maximum number of seats can be chosen is reached");
+                                    Stage stageA = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                                    stageA.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                                    stageA.showAndWait();
                                 }
 
                             } // Unselected
@@ -295,7 +313,7 @@ public class SeatsController implements Initializable {
                                 // seat selected is double-seat
                                 if (row == maxRow - 1 || col == 0 || col == 1 || col == maxCol - 2 || col == maxCol - 1) {
                                     CheckBox temp = getDoubleSeat(row, col, maxRow, maxCol, gridPaneChildren, k);
-                                    
+
                                     // if next seat is not disabled seat
                                     if (!temp.isDisable()) {
                                         temp.setSelected(false);

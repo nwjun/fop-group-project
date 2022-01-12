@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="600.0" styleClass="root" stylesheets="@adminmovie.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.EditAdminPopUpController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="709.0" styleClass="root" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.EditAdminPopUpController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
             <GridPane prefHeight="56.0" prefWidth="600.0">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="28.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="217.0" minWidth="10.0" prefWidth="127.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="163.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="318.0" minWidth="10.0" prefWidth="293.0" />
@@ -23,21 +31,24 @@
                   <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="76.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fitHeight="46.0" fitWidth="248.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                  <ImageView fitHeight="46.0" fitWidth="248.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@assets/company/master.png" />
                      </image>
                   </ImageView>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                      <children>
                         <Button fx:id="closeWindow" layoutX="254.0" layoutY="16.0" mnemonicParsing="false" onAction="#closeWindow" style="-fx-background-color: #ff0000;" text="X" />
                      </children>
                   </AnchorPane>
                </children>
+               <VBox.margin>
+                  <Insets left="30.0" top="20.0" />
+               </VBox.margin>
             </GridPane>
             <VBox prefHeight="250.0" prefWidth="600.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="32.0" prefWidth="101.0" style="-fx-font-size: 20; -fx-text-fill: #FFEE00; -fx-border-radius: 20px; -fx-border-color: FFEE00;" text="Admins: ">
+                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="155.0" style="-fx-text-fill: #FFEE00;" styleClass="pageHeader" text="Admins: ">
                      <VBox.margin>
                         <Insets left="20.0" top="5.0" />
                      </VBox.margin>
@@ -55,19 +66,19 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label prefHeight="21.0" prefWidth="70.0" style="-fx-text-fill: #FFEE00; -fx-font-size: 17;" text="Id" textAlignment="CENTER" GridPane.columnIndex="1">
+                              <Label prefHeight="21.0" prefWidth="70.0" style="-fx-text-fill: #FFEE00;" styleClass="header1" text="Id" textAlignment="CENTER" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin></Label>
-                              <Label prefHeight="21.0" prefWidth="199.0" style="-fx-text-fill: #FFEE00; -fx-font-size: 17;" text="Username" GridPane.columnIndex="2">
+                              <Label prefHeight="21.0" prefWidth="199.0" style="-fx-text-fill: #FFEE00;" styleClass="header1" text="Username" GridPane.columnIndex="2">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin></Label>
-                              <Label prefHeight="21.0" prefWidth="360.0" style="-fx-text-fill: #FFEE00; -fx-font-size: 17;" text="Email" GridPane.columnIndex="3">
+                              <Label prefHeight="21.0" prefWidth="360.0" style="-fx-text-fill: #FFEE00;" styleClass="header1" text="Email" GridPane.columnIndex="3">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin></Label>
-                              <Label prefHeight="21.0" prefWidth="70.0" style="-fx-text-fill: #FFEE00; -fx-font-size: 17;" text="No" textAlignment="CENTER">
+                              <Label prefHeight="21.0" prefWidth="70.0" style="-fx-text-fill: #FFEE00;" styleClass="header1" text="No" textAlignment="CENTER">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin>
@@ -79,16 +90,19 @@
                         </GridPane>
                      </content>
                      <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets />
                      </VBox.margin>
                   </ScrollPane>
                </children>
+               <VBox.margin>
+                  <Insets left="20.0" top="10.0" />
+               </VBox.margin>
             </VBox>
             <VBox prefHeight="50.0" prefWidth="600.0">
                <children>
-                  <Label prefHeight="21.0" prefWidth="156.0" text="Add/ Remove Admin:">
+                  <Label prefHeight="21.0" text="Add/ Remove Admin:">
                      <VBox.margin>
-                        <Insets left="25.0" />
+                        <Insets bottom="10.0" left="25.0" />
                      </VBox.margin>
                   </Label>
                   <HBox prefHeight="100.0" prefWidth="200.0">
@@ -98,38 +112,47 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button id="backBtn" fx:id="addButton" mnemonicParsing="false" onAction="#addButton" prefHeight="31.0" prefWidth="74.0" styleClass="Button" text="Add">
+                        <Button id="backBtn" fx:id="addButton" mnemonicParsing="false" onAction="#addButton" prefHeight="33.0" prefWidth="84.0" styleClass="yellowButton" text="Add">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Button>
                      </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </HBox>
                </children>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
             </VBox>
             <VBox prefHeight="70.0" prefWidth="600.0">
                <children>
                   <Label prefHeight="21.0" prefWidth="156.0" text="Password: ">
                      <VBox.margin>
-                        <Insets left="25.0" />
+                        <Insets bottom="10.0" />
                      </VBox.margin>
                   </Label>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="addAdminPassword" prefHeight="31.0" prefWidth="461.0" promptText="Enter Password">
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButton" prefHeight="31.0" prefWidth="74.0" styleClass="Button" text="Remove">
+                        <PasswordField fx:id="addAdminPassword" prefWidth="461.0" promptText="Enter Password" />
+                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButton" prefHeight="33.0" prefWidth="84.0" styleClass="yellowButton" text="Remove">
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin></Button>
                      </children>
                   </HBox>
                </children>
+               <VBox.margin>
+                  <Insets left="40.0" top="20.0" />
+               </VBox.margin>
             </VBox>
          </children>
       </VBox>
    </children>
+   <stylesheets>
+      <URL value="@adminmovie.css" />
+      <URL value="@style.css" />
+   </stylesheets>
 </StackPane>

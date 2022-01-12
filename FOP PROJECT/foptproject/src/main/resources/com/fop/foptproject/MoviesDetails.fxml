@@ -118,7 +118,7 @@
                   <Label prefHeight="22.0" text="Length: " GridPane.columnIndex="3" GridPane.rowIndex="3" />
                   <Label fx:id="length" prefHeight="22.0" styleClass="descriptionText" text="Label" wrapText="true" GridPane.columnIndex="4" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="3" />
                   <Label text="Synopsis: " GridPane.rowIndex="7" />
-                  <Label fx:id="synopsis" alignment="TOP_LEFT" lineSpacing="5.0" prefHeight="252.0" prefWidth="843.0" text="synopsis" wrapText="true" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" GridPane.rowSpan="2" />
+                  <Label fx:id="synopsis" alignment="TOP_LEFT" lineSpacing="5.0" prefHeight="252.0" prefWidth="846.0" text="synopsis" wrapText="true" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" GridPane.rowSpan="2" />
                   <Button id="bookButton" mnemonicParsing="false" onAction="#toMovieBooking" prefHeight="34.0" prefWidth="137.0" text="Book Ticket" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                </children>
             </GridPane>

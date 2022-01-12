@@ -58,8 +58,7 @@ public class profileController implements Initializable {
     @FXML
     StackPane mainContainer;
     @FXML
-    ImageView bigLogo;
-
+    ImageView bigLogo, smallLogo;
     @FXML
     StackPane centerContainer;
 
@@ -89,7 +88,7 @@ public class profileController implements Initializable {
         HBox historyContainer = createRow("assets/profile/history", "Account History", 4);
 
         HBox[] containers = new HBox[]{clsBtnContainer, homeContainer, profileContainer, billingContainer, historyContainer};
-    
+
         Button clsBtn = new Button("X");
         clsBtn.getStyleClass().add("closeBtn");
         clsBtn.setPrefWidth(80);
@@ -172,7 +171,7 @@ public class profileController implements Initializable {
 
     private void profile() {
         titleLabel.setText("Profile");
-        contentContainer.getChildren().removeIf(e-> !(e instanceof StackPane));
+        contentContainer.getChildren().removeIf(e -> !(e instanceof StackPane));
         addRemoveLogo("profile");
         final double MAX_HEIGHT = 45;
         final double MAX_WIDTH = 380;
@@ -262,15 +261,13 @@ public class profileController implements Initializable {
     }
 
     private void billing() {
-
         titleLabel.setText("Billing");
-        contentContainer.getChildren().removeIf(e-> !(e instanceof StackPane));
+        contentContainer.getChildren().removeIf(e -> !(e instanceof StackPane));
         addRemoveLogo("billing");
-        
+
         ScrollPane scrollPane = new ScrollPane();
         VBox scrollPaneContainer = new VBox();
         VBox banksContainer = new VBox();
-
         scrollPane.setFitToWidth(true);
         scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -283,7 +280,7 @@ public class profileController implements Initializable {
         scrollPaneContainer.getChildren().addAll(scrollPane, addBtn);
 
         VBox wrapper = new VBox(scrollPaneContainer);
-        wrapper.setPadding(new Insets(50,0,0,0));
+        wrapper.setPadding(new Insets(50, 0, 0, 0));
         contentContainer.getChildren().addAll(wrapper);
 
         // Layout
@@ -306,8 +303,7 @@ public class profileController implements Initializable {
                 VBox detailsContainer = new VBox(emptyLabel);
                 detailsContainer.setAlignment(Pos.CENTER);
                 banksContainer.getChildren().add(detailsContainer);
-            } 
-            else {
+            } else {
                 if (i == -1) {
                     i = i + 1;
                 }
@@ -320,6 +316,10 @@ public class profileController implements Initializable {
                 HBox.setHgrow(region, Priority.ALWAYS);
                 Button removeBtn = new Button("-");
                 removeBtn.setId(String.join("#", bank));
+                removeBtn.getStyleClass().add("yellowButton");
+                removeBtn.setStyle("-fx-background-radius:8px; ");
+                removeBtn.prefHeight(8);
+                removeBtn.prefWidth(8);
                 HBox bankButtonRow = new HBox(detailsContainer, region, removeBtn);
                 bankButtonRow.setAlignment(Pos.CENTER_LEFT);
                 banksContainer.getChildren().add(bankButtonRow);
@@ -351,13 +351,13 @@ public class profileController implements Initializable {
 
     private void history() {
         titleLabel.setText("History");
-        contentContainer.getChildren().removeIf(e-> !(e instanceof StackPane));
+        contentContainer.getChildren().removeIf(e -> !(e instanceof StackPane));
         addRemoveLogo("history");
 
         ScrollPane scrollPane = new ScrollPane();
         VBox wrapper = new VBox(scrollPane);
         wrapper.getStyleClass().add("wrapper");
-        wrapper.setPadding(new Insets(50,0,0,0));
+        wrapper.setPadding(new Insets(50, 0, 0, 0));
         contentContainer.getChildren().add(wrapper);
 
         scrollPane.setStyle("-fx-background-color:transparent");
@@ -369,6 +369,7 @@ public class profileController implements Initializable {
         GridPane gridPane = new GridPane();
         gridPane.setStyle("-fx-background-color:#252525");
         scrollPane.setContent(gridPane);
+        scrollPane.setTranslateY(30);
         gridPane.setHgap(10);
         gridPane.setVgap(30);
         gridPane.getStyleClass().addAll("grid");
@@ -393,13 +394,16 @@ public class profileController implements Initializable {
 
             for (int j = -1; j < history.length; j++) {
                 Label label = new Label();
-                if(history.length == 0){
+                if (history.length == 0) {
+                    label.setTranslateY(20);
                     label.setText("No record is found");
+                    label.setTranslateZ(100);
                     label.setStyle("-fx-font-size:18px; -fx-opacity:0.7; -fx-padding:10 0 10 0");
                     j++;
-                }
-                else{
-                    if(j==-1)j++;
+                } else {
+                    if (j == -1) {
+                        j++;
+                    }
                     label.setText(history[j]);
                 }
                 if (j == 0) {
@@ -409,7 +413,7 @@ public class profileController implements Initializable {
                 }
 
                 historyContainer.getChildren().add(label);
-                
+
             }
             historyContainers.add(historyContainer);
 
@@ -422,12 +426,12 @@ public class profileController implements Initializable {
     public String[][] getHistories() {
         HashMap<String,ArrayList<String>> fetched = sqlConnect.queryPurchaseHistory(RealTimeStorage.getUserId());
         final int NUM = fetched.get("movieName").size();
-        System.out.println(NUM);
+       
         // if no record is found
-        if(NUM == 0){
+        if (NUM == 0) {
             return new String[][]{{}};
         }
-        
+
         // if record is found
         String[][] histories = new String[NUM][4];
         for (int i = 0; i < NUM; i++) {
@@ -446,9 +450,19 @@ public class profileController implements Initializable {
 
     private void addRemoveLogo(String section) {
 
+        titleLabel.setTranslateY(0);
+        titleLabel.setTranslateX(0);
+        smallLogo.setTranslateX(0);
+        smallLogo.setTranslateY(0);
+        contentContainer.setTranslateY(0);
         if (section.equals("billing")) {
+            contentContainer.setTranslateY(-80);
             centerContainer.getChildren().remove(bigLogo);
             StackPane.setAlignment(contentContainer, Pos.CENTER);
+//            titleLabel.setTranslateY(-80);
+            titleLabel.setTranslateX(-150);
+            smallLogo.setTranslateX(-150);
+//            smallLogo.setTranslateY(-80);
 
         } else if (!centerContainer.getChildren().contains(bigLogo)) {
             centerContainer.getChildren().add(bigLogo);
@@ -457,7 +471,6 @@ public class profileController implements Initializable {
         }
 
     }
-
 
     private String[] getProfileValues() {
         // retrieve field values from db
@@ -482,7 +495,7 @@ public class profileController implements Initializable {
     private void updateProfile(String newFieldValue, int item) {
         // update data in database
         int returnVal;
-        
+
         switch (item) {
             case 0:
                 RealTimeStorage.setUsername(newFieldValue);

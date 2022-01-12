@@ -118,6 +118,61 @@
                         <Label layoutX="630.0" layoutY="91.0" styleClass="pageHeader" text="Login" />
                         <Label layoutX="1081.0" layoutY="87.0" styleClass="pageHeader" text="Sign Up" />
                      </children>
+                  </VBox>
+                  <VBox layoutX="624.0" layoutY="297.0" prefHeight="127.0" prefWidth="245.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+                        <PasswordField fx:id="passwordField" onKeyTyped="#checkIdenticalPass" prefHeight="31.0" prefWidth="273.0">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin></PasswordField>
+                        <Label fx:id="passwordFieldWarning" styleClass="errorLabel" textFill="RED" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="1077.0" layoutY="178.0" prefHeight="90.0" prefWidth="246.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
+                        <TextField fx:id="usernameField" onKeyTyped="#checkUsername" prefHeight="31.0" prefWidth="246.0">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin></TextField>
+                        <Label fx:id="usernameFieldWarning" styleClass="errorLabel" textFill="RED" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="1077.0" layoutY="288.0" prefHeight="139.0" prefWidth="245.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+                        <TextField fx:id="REmailField" onKeyTyped="#checkREmail" prefHeight="31.0" prefWidth="321.0">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label fx:id="REmailFieldWarning" styleClass="errorLabel" textFill="RED" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="1077.0" layoutY="395.0" prefHeight="139.0" prefWidth="245.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone number" />
+                        <TextField fx:id="phoneNumberField" prefHeight="31.0" prefWidth="378.0">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label fx:id="phoneNumberFieldWarning" styleClass="errorLabel" textFill="RED" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="1077.0" layoutY="496.0" onKeyTyped="#checkIdenticalPass" prefHeight="139.0" prefWidth="245.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+                        <PasswordField fx:id="RPasswordField" onKeyTyped="#checkIdenticalPass" prefHeight="31.0" prefWidth="273.0">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </PasswordField>
+                        <Label fx:id="RPasswordFieldWarning" styleClass="errorLabel" textFill="RED" wrapText="true" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="1077.0" layoutY="606.0" prefHeight="139.0" prefWidth="245.0">
                   </AnchorPane>
                </content>
             </ScrollPane>

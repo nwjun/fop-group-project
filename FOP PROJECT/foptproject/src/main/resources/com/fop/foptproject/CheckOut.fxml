@@ -106,7 +106,7 @@
                                     <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="100.0" styleClass="purchaseDetailPaneDesc" text="TOTAL" />
                                     <StackPane alignment="TOP_LEFT" GridPane.columnIndex="1">
                                        <children>
-                                          <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="398.0" styleClass="purchaseDetailPaneTitle" text="(included 6% SST &amp; 10% Service Charge)">
+                                          <Label alignment="TOP_LEFT" prefHeight="30.0" prefWidth="398.0" style="-fx-font-style: italic;" styleClass="purchaseDetailPaneTitle" text="(included 6% SST &amp; 10% Service Charge)">
                                              <padding>
                                                 <Insets left="5.0" />
                                              </padding></Label>

@@ -35,7 +35,7 @@
                <children>
                   <StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="55.0" prefWidth="363.0">
                      <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+                        <ImageView fx:id="smallLogo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
                            <image>
                               <Image url="@assets/company/logo.png" />
                            </image>

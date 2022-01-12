@@ -31,7 +31,7 @@ public class sqlConnect {
         Properties prop = new readConfig().readconfigfile();
         try {
             this.conn = DriverManager.getConnection(
-            prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
+            prop.getProperty("configuration.sqlConnection1"),prop.getProperty("configuration.sqlUser1"),prop.getProperty("configuration.sqlPassword1")
             );
             System.out.println("connected");
         } catch (SQLException e) {
