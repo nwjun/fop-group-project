@@ -73,6 +73,10 @@ public class App extends Application {
 //        //query landing food poster
         RealTimeStorage.setAllLandingFood();
 
+        // query ticket prices
+        RealTimeStorage.setAllProducts();
+        RealTimeStorage.setAllAdmins();
+        RealTimeStorage.setAllTickets();
         launch();
         System.out.println("launched");
     }
