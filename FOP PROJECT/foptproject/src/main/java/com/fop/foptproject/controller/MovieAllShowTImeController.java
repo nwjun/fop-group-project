@@ -103,18 +103,23 @@ public class MovieAllShowTImeController implements Initializable {
         this.time = items.get("time").toArray();
         
         this.currentPage = 0;
-        this.maxPage = (int) Math.ceil(movieId.length/8.0);
+        this.maxPage = (int) Math.ceil(movieId.length/6.0);
+        System.out.println("Max Page: "+this.maxPage);
         this.currentIndex = 0;
-                  
+        for(Object poster:this.movieName){
+            System.out.println(poster.toString());
+        }   
         loadCard();
         checkPage();
     }
     
     public void loadCard() throws ParseException{
         int n = movieId.length;
+        System.out.println(n);
         stop:{
-            for(int i = 0; i < 4;i++){
+            for(int i = 0; i < 3;i++){
                 for(int j = 0; j < 2 ; j++){
+                    System.out.println("Current Index: "+currentIndex);
                     this.content = new ProductCardAdminMovie((String)movieId[currentIndex], (String)movieName[currentIndex], Double.parseDouble((String)length[currentIndex]), (String)releaseDate[currentIndex], (String)directorCast[currentIndex], (String)language[currentIndex], (String)posterPath[currentIndex],(String)synopsis[currentIndex], Double.parseDouble((String)rottenTomato[currentIndex]),Double.parseDouble((String)iMDB[currentIndex]), Integer.parseInt((String)ageRestrict[currentIndex]),IMGW,IMGH,SCALE, (String)theaterId[currentIndex], (String)time[currentIndex]);
                     AnchorPane MB = MakeButton((String)movieId[currentIndex],Double.parseDouble((String)length[currentIndex]), currentIndex);
                     
@@ -199,10 +204,7 @@ public class MovieAllShowTImeController implements Initializable {
     }
     
     public void checkPage(){
-        System.out.println(currentPage);
-        System.out.println(maxPage-1);
-        
-        if(currentPage <= maxPage-1){
+        if(currentPage == maxPage-1){
             nextPageButton.setDisable(true);
         }
         else{

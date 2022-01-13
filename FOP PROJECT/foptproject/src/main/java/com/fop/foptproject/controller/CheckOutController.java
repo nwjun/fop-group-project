@@ -97,6 +97,7 @@ public class CheckOutController implements Initializable {
         } else {
             Task<Void> postTask = postTask(event);
             new Thread(postTask).start();
+            System.out.println("Start Payment"); // debug flag
             postTask.setOnSucceeded(eh -> {
                 if (!error) {
                     try {
@@ -221,7 +222,8 @@ public class CheckOutController implements Initializable {
             @Override
             protected Void call() throws Exception {
                 CountDownLatch latch = new CountDownLatch(1);
-
+                
+//                System.out.println("start loading Screen"); // debug flags
                 Platform.runLater(new Runnable() {
                     public void run() {
                         try {
@@ -235,7 +237,8 @@ public class CheckOutController implements Initializable {
                 });
 
                 latch.await();
-
+                
+//                System.out.println("start compiling data"); // debug flag
                 // start background posting
                 // get neccessary info
                 String booked = bookedSeats.replace(", ", ",");
@@ -248,17 +251,22 @@ public class CheckOutController implements Initializable {
                 String theaterId = RealTimeStorage.getMovieBooking().get("theaterId").toString();
                 String slots = RealTimeStorage.getMovieBooking().get("slots").toString();
                 String chosenDay = RealTimeStorage.getMovieBooking().get("chosenDay").toString();
-                //System.out.printf("UserId: %s\n Movie Name: %s\n Cinema Name: %s\n Booked Seats: %s\n Show DateTime: %s %s TheaterId: %s\n Purchased: %s\n",userId,movieName,cinema,booked,showDate,showtime,theaterId,purchasedItem);
+//                System.out.printf("UserId: %s\nMovie Name: %s\nCinema Name: %s\nBooked Seats: %s\nShow DateTime: %s %s TheaterId: %s\nPurchased: %s\nChosen Day: %s\n",userId,movieName,cinema,booked,showDate,showtime,theaterId,purchasedItem,chosenDay);
                 // set booked seat stat to occupied
+                
+//                System.out.println("Fetching json"); // debug flag
                 JSONToolSets json = new JSONToolSets(sqlConnect.querySeats(theaterId, slots, false), false);
-                //json.parseTheaterSeat(Integer.parseInt(chosenDay));
+                System.out.println("Altering json");
                 String revert = json.getNewSeatArr().toString();
                 json.parseTheaterSeat(Integer.parseInt(chosenDay));
                 for (int i = 0; i < RealTimeStorage.getSelectedSeats().size(); i++) {
                     int row = Integer.parseInt(RealTimeStorage.getSelectedSeats().get(i)[0]);
                     int column = Integer.parseInt(RealTimeStorage.getSelectedSeats().get(i)[1]);
+                    System.out.println(row+","+column);
                     json.setSeatStat(row, column, 1, chosenDay);
+//                    System.out.println("yay"); // debug flag
                 }
+//                System.out.println("Start posting details"); // debug flag
                 String currentSeat = json.getNewSeatArr().toString();
                 json.parseTheaterSeat(Integer.parseInt(chosenDay));
                 // any process fail will reset the jsonArr to prev 
@@ -271,6 +279,7 @@ public class CheckOutController implements Initializable {
                 String timestamp = format.format(ts);
                 RealTimeStorage.setTimestamp(timestamp);
                 // send booking email to user
+//                System.out.println("Posting data"); // debug flag 
                 for (int i = 0; i < 3; i++) {
                     bookingNumber = sqlConnect.addTransactionDetail(userId, purchasedItem, booked, theaterId, showDate, showtime, movieName, cinema);
                     if (bookingNumber == null) {
@@ -282,8 +291,9 @@ public class CheckOutController implements Initializable {
                         break;
                     }
                 }
-
-                if (saveCard.isSelected()) {
+                
+//                System.out.println("Saving card details with error = " + error ); // debug flag
+                if (saveCard.isSelected() && !error) {
                     String selectedBank = selectBank.getValue().toString();
                     String card = cardNumber.getText();
                     String expiry = expiryDate.getText();
@@ -291,10 +301,12 @@ public class CheckOutController implements Initializable {
                     RealTimeStorage.updateLinkedCard(new String[]{selectedBank, card, expiry, cvvNumber});
                     RealTimeStorage.appendLinkedCards();
                 }
-
+                
+//                System.out.println("error = "+error); // debug flag
                 if (error) {
                     sqlConnect.updateSeats(revert, theaterId, slots, false);
-                } else {
+                } 
+                else {
                     try {
                         sqlConnect.updateSeats(currentSeat, theaterId, slots, false);
                         RealTimeStorage.setToBePaid(String.format("RM%.2f", toBePaid * 1.16 + 1.5));
@@ -303,11 +315,12 @@ public class CheckOutController implements Initializable {
                         // do ntg
                     } finally {
                         if (!error) {
+//                            System.out.println("emailing"); // debug flag
                             new emailTo(RealTimeStorage.getUserEmail()).sendBookingConfirmations(movieName, RealTimeStorage.getUsername(), bookingNumber, bookingNumber, showDate, showtime, booked, toBePaid * 1.16 + 1.5);
                         }
                     }
                 }
-
+//                System.out.println("payment done with error = "+error);
                 return null;
             }
         };
