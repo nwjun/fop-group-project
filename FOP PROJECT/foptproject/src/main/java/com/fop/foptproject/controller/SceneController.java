@@ -85,7 +85,6 @@ public class SceneController {
             k.vvalueProperty().addListener(new ChangeListener<Number>() {
                 public void changed(ObservableValue<? extends Number> ov,
                         Number old_val, Number new_val) {
-                    System.out.println(loadingScreen.getTranslateY()-(old_val.doubleValue()-new_val.doubleValue())*12.5);
                     loadingScreen.setTranslateY(loadingScreen.getTranslateY()-(old_val.doubleValue()-new_val.doubleValue())*12.5);
                 }
             });
@@ -96,7 +95,6 @@ public class SceneController {
             k.vvalueProperty().addListener(new ChangeListener<Number>() {
                 public void changed(ObservableValue<? extends Number> ov,
                         Number old_val, Number new_val) {
-                    System.out.println(loadingScreen.getTranslateY()-(old_val.doubleValue()-new_val.doubleValue())*16.5);
                     loadingScreen.setTranslateY(loadingScreen.getTranslateY()-(old_val.doubleValue()-new_val.doubleValue())*16.5);
                 }
             });

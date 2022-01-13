@@ -151,7 +151,6 @@ public class SplashScreenController implements Initializable {
 
                 // Wait for the startProgress to be executed
                 latch.await();
-
                 // DB Processes
                 // fetch movies
                 fetchAllMovie();

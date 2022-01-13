@@ -143,10 +143,9 @@ public class AdminMovieController implements Initializable {
     private Label loading;
     @FXML
     private StackPane loadingScreen;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("Initializing");
         if (RealTimeStorage.getPermission().equals("3")) {
             adminAdd.setDisable(false);
             adminAdd.setVisible(true);
@@ -158,6 +157,31 @@ public class AdminMovieController implements Initializable {
         try {
             setValue();
             getProduct();
+
+            // recover cache
+            HashMap<String, Object> cache = RealTimeStorage.getMovieBooking();
+            if((cache.get("actualPosterPath") != null)){
+                System.out.println((String)(cache.get("actualPosterPath")));
+                DropImage.setImage((((String)cache.get("actualPosterPath")).isBlank())?null:new Image((String) cache.get("actualPosterPath")));
+            }
+            System.out.println((String)(cache.get("modifiedPosterPath")));
+            posterT.setText((String) (cache.get("modifiedPosterPath")));
+            movieNameT.setText((String) (cache.get("movieName")));
+            lengthT.setText((String) (cache.get("length")));
+            releaseDateT.setText((String) (cache.get("releaseDate")));
+            languageT.setText((String) (cache.get("language")));
+            synopsisT.setText((String) (cache.get("synopsis")));
+            rottenTomatoT.setText((String) (cache.get("rottenTomato")));
+            iMDBT.setText((String) (cache.get("iMDBT")));
+            directorT.setText((String) cache.get("director"));
+            castT.setText((String) cache.get("cast"));
+            combobox.setValue(((String) cache.get("theaterId") == null) ? null : "H0" + (String) cache.get("theaterId"));
+            if (((String) (cache.get("selectedSlot"))) != null) {
+                for (String time : ((String) (cache.get("selectedSlot"))).split(",")) {
+                    checkCombo.getCheckModel().check(time);
+                }
+            }
+
         } catch (ParseException ex) {
             Logger.getLogger(AdminMovieController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -525,6 +549,7 @@ public class AdminMovieController implements Initializable {
 
     @FXML
     private void switchToAdminMain(ActionEvent event) throws IOException {
+        RealTimeStorage.clearModifySeat();
         SceneController SwitchScene = new SceneController();
         SwitchScene.switchToAdminMain(event);
     }
@@ -652,6 +677,30 @@ public class AdminMovieController implements Initializable {
             }
 
             RealTimeStorage.updateMovieBookingByKey("theaterId", m);
+
+            // save user input if exists
+            DropImage.setImage(null);
+
+            final ObservableList<String> checkedItems = checkCombo.getCheckModel().getCheckedItems();
+            String converted = "";
+            for(Object item:checkedItems){
+                converted += item.toString() + ",";
+            }
+            System.out.println(posterT.getText());
+            System.out.println(this.pathpath);
+            RealTimeStorage.updateMovieBookingByKey("actualPosterPath", this.pathpath);
+            RealTimeStorage.updateMovieBookingByKey("modifiedPosterPath", posterT.getText());
+            RealTimeStorage.updateMovieBookingByKey("movieName", movieNameT.getText());
+            RealTimeStorage.updateMovieBookingByKey("length", lengthT.getText());
+            RealTimeStorage.updateMovieBookingByKey("releaseDate", releaseDateT.getText());
+            RealTimeStorage.updateMovieBookingByKey("director", directorT.getText());
+            RealTimeStorage.updateMovieBookingByKey("cast", castT.getText());
+            RealTimeStorage.updateMovieBookingByKey("language", languageT.getText());
+            RealTimeStorage.updateMovieBookingByKey("synopsis", synopsisT.getText());
+            RealTimeStorage.updateMovieBookingByKey("iMDBT", iMDBT.getText());
+            RealTimeStorage.updateMovieBookingByKey("rottenTomato", rottenTomatoT.getText());
+            RealTimeStorage.updateMovieBookingByKey("selectedSlot", converted);
+
             new SceneController().switchToAdminSeats(event);
 
         }
@@ -661,6 +710,7 @@ public class AdminMovieController implements Initializable {
     private void clearButtonAct(ActionEvent event) {
         editSeat.setDisable(false);
         clean();
+        RealTimeStorage.clearModifySeat();
     }
 
     public Task postTask() {
@@ -687,7 +737,6 @@ public class AdminMovieController implements Initializable {
                     String m = combobox.getValue();
                     m = m.substring(m.length() - 1);
                     Integer m1 = Integer.parseInt(m);
-                    System.out.println(m);
                     RealTimeStorage.setAdminTheaterId(m);
                     String b = movieNameT.getText();
 
@@ -710,7 +759,7 @@ public class AdminMovieController implements Initializable {
                         return null;
                     }
 
-                    String a;
+                    String a="";
                     String Id;
                     if (updatestatus) {
                         Id = editmovieId;
@@ -719,7 +768,9 @@ public class AdminMovieController implements Initializable {
                         sqlConnect.insertPoster("M" + Id, a);
                     } else {
                         Id = lastmovieId();
-                        a = save;
+                        if(save == null){
+                            a = posterT.getText();
+                        }
                         sqlConnect.insertPoster("M" + Id, a);
                     }
                     String c = lengthT.getText();
@@ -740,7 +791,7 @@ public class AdminMovieController implements Initializable {
                         count++;
                     }
                     n = n.substring(0, n.length() - 2);
-
+                    System.out.println(a);
                     if (updatestatus) {
                         RealTimeStorage.updateMovieDetails(new String[]{"18", d, m, c, k, Id, g, j, Integer.toString(count), l, directorcast, n, b, a}, Id);
                     } else {
@@ -866,7 +917,7 @@ public class AdminMovieController implements Initializable {
         };
         return createTask;
     }
-    
+
     public void startProgress() {
         String init = "Loading";
         Timeline timeline = new Timeline();
@@ -897,6 +948,7 @@ public class AdminMovieController implements Initializable {
             }
         });
     }
+
 }
 
 

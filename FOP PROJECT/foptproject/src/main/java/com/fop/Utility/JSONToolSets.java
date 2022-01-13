@@ -34,41 +34,6 @@ public class JSONToolSets {
         return this.jsonObj;    
     }
     
-//    public HashMap<String,HashMap<String,ArrayList<String>>> parseAllShowTimes(){
-//        JSONObject temp = this.jsonObj;
-//        HashMap<String,ArrayList<String>> hall = new HashMap<>();
-//        HashMap<String,ArrayList<String>> showtime = new HashMap<>();
-//        HashMap<String,HashMap<String,ArrayList<String>>> week = new HashMap<>();
-//        
-//        //initialize the hashmap
-//        for(int i = 0; i < 7 ; i++){
-//            hall.put(Integer.toString(i), new ArrayList<String>());
-//            showtime.put(Integer.toString(i), new ArrayList<String>());
-//        }
-//        
-//        //filling the info
-//        int j = 0;
-//        for(int i = 0 ; i < 7 ; i++){
-//            while(true){
-//                try{
-//                    hall.get(Integer.toString(i)).add(temp.getJSONArray(Integer.toString(i)).getJSONArray(j).get(0).toString());
-//                    showtime.get(Integer.toString(i)).add(temp.getJSONArray(Integer.toString(i)).getJSONArray(j).get(1).toString());
-//                    j++;
-//                }
-//                catch(Exception e){
-//                    hall.get(Integer.toString(i)).add(null);
-//                    showtime.get(Integer.toString(i)).add(null);
-//                    break;
-//                }
-//            }
-//            j=0;
-//        } 
-//            
-//        week.put("hall",hall);
-//        week.put("showtime",showtime);
-//        return week;
-//    }
-    
     // parse One Dimensional JSON array from a JSON Object to Java ArrayList, taking a string key as argument
     public ArrayList<String> parseOneDArray(String key){
         ArrayList<String> result = new ArrayList<>();
@@ -122,11 +87,15 @@ public class JSONToolSets {
         JSONObject temp = this.jsonObj;        
         RealTimeStorage.setAlteringDay(day);
         
-        this.rowSize = temp.length();
-        if(!this.isTemplate)
+        
+        if(!this.isTemplate){
+            this.rowSize = temp.getJSONObject("0").length();
             this.columnSize = temp.getJSONObject("0").getJSONArray("0").length();
-        else
+        }
+        else{
+            this.rowSize = temp.length();
             this.columnSize = temp.getJSONArray("0").length();
+        }
        
         JSONArray temp2;
         HashMap<String,ArrayList<String>> extracted = new HashMap<>();
@@ -300,7 +269,8 @@ public class JSONToolSets {
      * <br>This method will return void at the end
      * </p>
      */
-    public void setSeatStat(int row, int column, int stat, String day){
+     public void setSeatStat(int row, int column, int stat, String day){
+         System.out.println(isTemplate);
         if(this.isTemplate){
             // parse json
             HashMap<Integer,ArrayList<Integer>> temp = new HashMap<>();
@@ -321,6 +291,7 @@ public class JSONToolSets {
             }
             
             this.jsonObj = result;
+            return;
         }
         else{
             // handle changes on non template
@@ -332,10 +303,10 @@ public class JSONToolSets {
                     for(int j = 0 ; j < this.rowSize ; j++){
                         temp.put(j,new ArrayList<Integer>());
                         for(int k = 0 ; k < this.columnSize ; k++){
-                            //System.out.print(this.jsonObj.getJSONObject(Integer.toString(i)).getJSONArray(Integer.toString(j)).getInt(k) + " ");
+//                            System.out.print(this.jsonObj.getJSONObject(Integer.toString(i)).getJSONArray(Integer.toString(j)).getInt(k) + " ");
                             temp.get(j).add(this.jsonObj.getJSONObject(Integer.toString(i)).getJSONArray(Integer.toString(j)).getInt(k));
                         }
-                        //System.out.println("");
+                        System.out.println("");
                     }
                     
                     // set seat status
@@ -351,11 +322,13 @@ public class JSONToolSets {
                 }
                 else{
                     // copy unaffected day
-                    //System.out.println(this.jsonObj.getJSONObject(Integer.toString(i)));
+//                    System.out.println(this.jsonObj.getJSONObject(Integer.toString(i)));
                     newJson.put(Integer.toString(i),this.jsonObj.getJSONObject(Integer.toString(i)));
                 }    
             }
             this.jsonObj = newJson;
+            parseTheaterSeat(Integer.parseInt(day));
+            return;
         } 
     }
     
