@@ -51,6 +51,7 @@ public class SeatsController implements Initializable {
     private int[] tickets = new int[]{0, 0, 0, 0};
     private int totalTicket = 0;
     private final String[] ticketPrices = RealTimeStorage.getTicketPrices(RealTimeStorage.getMovieBooking().get("theaterType").equals("Premium"));
+    private boolean doubleSeat = false;
     //private final String[] ticketPrices = RealTimeStorage.getTicketPrices(false);
 
     @FXML
@@ -72,6 +73,17 @@ public class SeatsController implements Initializable {
     // switch to next scene
     @FXML
     public void toFnB(ActionEvent event) throws IOException {
+        if (doubleSeat) {
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("Cinema SOP");
+            a.getDialogPane().setPrefHeight(250);
+            a.getDialogPane().setPrefWidth(400);
+            a.setContentText("Only guests from the same family and residence are allowed to sit in pairs. Related documents must be produced as proof when requested. By proceeding means you are agree to take the responsibility on all consequences regarding this issue.");
+            Stage stageA = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stageA.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stageA.showAndWait();
+        }
+
         RealTimeStorage.setSelectedSeats(selected);
         RealTimeStorage.setTicketType(tickets);
         new SceneController().switchToFnB(event);
@@ -276,7 +288,7 @@ public class SeatsController implements Initializable {
                                         // can choose double seat
                                         if ((totalTicket - selectedLength) >= 2) {
                                             CheckBox temp = getDoubleSeat(row, col, maxRow, maxCol, gridPaneChildren, k);
-
+                                            doubleSeat = true;
                                             // if next seat is not disabled seat
                                             if (!temp.isDisable()) {
                                                 temp.setSelected(true);
@@ -313,7 +325,7 @@ public class SeatsController implements Initializable {
                                 // seat selected is double-seat
                                 if (row == maxRow - 1 || col == 0 || col == 1 || col == maxCol - 2 || col == maxCol - 1) {
                                     CheckBox temp = getDoubleSeat(row, col, maxRow, maxCol, gridPaneChildren, k);
-
+                                    doubleSeat = false;
                                     // if next seat is not disabled seat
                                     if (!temp.isDisable()) {
                                         temp.setSelected(false);

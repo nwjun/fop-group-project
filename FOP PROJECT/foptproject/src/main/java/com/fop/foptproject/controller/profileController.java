@@ -239,6 +239,7 @@ public class profileController implements Initializable {
                 }
             }
             createAlert();
+            newPassField.setText("");
 
         });
 

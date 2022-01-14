@@ -107,13 +107,13 @@
                                         <Label fx:id="RConfirmPasswordFieldWarning" styleClass="errorLabel" textFill="RED" wrapText="true" />
                                     </children>
                                 </VBox>
-                                <Button fx:id="registerButton" layoutX="1081.0" layoutY="742.0" mnemonicParsing="false" onAction="#registerButton" prefHeight="31.0" prefWidth="139.0" styleClass="Button" text="Sign up" />
+                                <Button fx:id="registerButton" layoutX="1081.0" layoutY="742.0" mnemonicParsing="false" onAction="#registerButton" prefHeight="31.0" prefWidth="139.0" styleClass="yellowButton" text="Sign up" />
                                 <ImageView fitHeight="53.0" fitWidth="199.0" layoutX="636.0" layoutY="668.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@assets/company/logo.png" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="loginButton" layoutX="627.0" layoutY="414.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="31.0" prefWidth="139.0" styleClass="Button" text="Log in " />
+                                <Button fx:id="loginButton" layoutX="627.0" layoutY="414.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="31.0" prefWidth="139.0" styleClass="yellowButton" text="Log in " />
                                 <Line endX="984.4482421875" endY="68.87838745117188" layoutX="374.0" layoutY="371.0" rotate="90.0" startX="285.1109313964844" startY="68.87838745117188" stroke="#acab99" strokeLineCap="ROUND" strokeWidth="2.0" />
                                 <Label layoutX="630.0" layoutY="91.0" styleClass="pageHeader" text="Login" />
                                 <Label layoutX="1081.0" layoutY="87.0" styleClass="pageHeader" text="Sign Up" />

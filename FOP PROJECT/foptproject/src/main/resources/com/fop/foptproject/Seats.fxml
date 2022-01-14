@@ -212,7 +212,7 @@
                                           <Insets left="70.0" />
                                        </StackPane.margin>
                                    </Label>
-                                    <Button mnemonicParsing="false" onAction="#changeToMovieBooking" prefHeight="25.0" prefWidth="100.0" style="-fx-background-radius: 10;" styleClass="outlineButton" text="Back" StackPane.alignment="BOTTOM_LEFT">
+                                    <Button mnemonicParsing="false" onAction="#changeToMovieBooking" prefHeight="25.0" prefWidth="100.0" styleClass="outlineButton" text="Back" StackPane.alignment="BOTTOM_LEFT">
                                        <StackPane.margin>
                                           <Insets />
                                        </StackPane.margin></Button>

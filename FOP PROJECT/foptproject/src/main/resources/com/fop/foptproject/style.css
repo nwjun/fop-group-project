@@ -120,3 +120,34 @@
 .yellowButton:hover, .outlineButton:hover{
     -fx-opacity: 0.6;
 }
+
+.yellowButton:pressed {
+    -fx-border-radius:20px;
+    -fx-border-color:black;
+    -fx-border-width:1px;
+    -fx-background-color:white;
+    -fx-text-fill:black;
+    -fx-font-size: 12;
+    -fx-padding : 8px 10px 8px 10px;
+}
+
+.yellowButton:pressed{
+    -fx-border-radius:20px;
+    -fx-border-color:black;
+    -fx-border-width:1px;
+    -fx-background-color:white;
+    -fx-text-fill:black;
+    -fx-font-size: 12;
+    -fx-padding : 8px 10px 8px 10px;
+}
+
+.outlineButton:pressed, .outlineButton:selected{
+    -fx-background-radius:20px;
+    -fx-background-color:white;
+    -fx-text-fill:black;
+    -fx-font-size: 12;
+    -fx-padding : 8px 10px 8px 10px;
+    -fx-border-radius:20px;
+    -fx-border-color:black;
+    -fx-border-width:1px;
+}

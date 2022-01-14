@@ -76,7 +76,7 @@
 #backButton{
     -fx-background-color : #ffffff;
     -fx-border-radius : 20px;
-    -fx-border-color : #434343;
+    -fx-border-color : #434343;     
 }
 
 #checkOutButton{
@@ -85,13 +85,8 @@
 }
 
 #backButton:hover{
-    -fx-background-color : #ffee00;
-    -fx-border-radius : 20px;
-    -fx-border-color : transperent;
+    -fx-opacity : 0.6;
+    -fx-background-insets : 0;
+    -fx-cursor: hand;
 }
 
-#checkOutButton:hover{
-    -fx-border-color : #434343;
-    -fx-background-color : #ffffff;
-    -fx-border-radius : 20px; 
-}
