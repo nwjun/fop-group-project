@@ -43,7 +43,6 @@ public class AdminSeatsController implements Initializable {
     @FXML
     private Label hallLabel, cinemaLabel, totalSeatsAvailableLabel, totalSeatsUnavailableLabel, totalSeatsLabel, rowCount, columnCount;
 
-    private sqlConnect sql = new sqlConnect();
     private JSONToolSets json;
     private int initialCol = 15, initialRow = 7;
     private ArrayList<int[]> alteredSeats = new ArrayList<>();
@@ -98,9 +97,9 @@ public class AdminSeatsController implements Initializable {
         if (addedColumn != 0) {
             minusCountC(columnCount);
             minusColSeats();
-            seatsContainer.getColumnConstraints().remove(seatsContainer.getColumnCount() - 1);       
-            updateSeatsLabel();
+            seatsContainer.getColumnConstraints().remove(seatsContainer.getColumnCount() - 1);
             maxCol--;
+            updateSeatsLabel();
         }
 
     }
@@ -157,21 +156,16 @@ public class AdminSeatsController implements Initializable {
 
     public HashMap<String, ArrayList<String>> getSeatsTemplate(String theaterID){
         boolean isTemplate = true;
-        this.json = new JSONToolSets(sql.querySeats(theaterID, "1", isTemplate), isTemplate);
-//        this.json = new JSONToolSets(readConfig.readSeatTemplate(), isTemplate);
+        this.json = new JSONToolSets(sqlConnect.querySeats(theaterID, "1", isTemplate), isTemplate);
         HashMap<String, ArrayList<String>> seatArr = json.parseTheaterSeat(5);
-        this.initialRow = json.getRow();
-        this.initialCol = json.getColumn();
+        this.maxRow = json.getRow();
+        this.maxCol = json.getColumn();
         return seatArr;
     }
 
-    public void updateSeats() {
-        // Update actual seats arrangement
-
-    }
 
     public void updateSeatsLabel() {
-        totalSeats = (initialRow + addedRow) * (addedColumn + initialCol);
+        totalSeats = (maxRow) * (maxCol);
         totalSeatsLabel.setText(String.valueOf(totalSeats));
     }
 
@@ -363,20 +357,21 @@ public class AdminSeatsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         final String THEATER_ID;
-//        THEATER_ID = RealTimeStorage.getMovieBooking().get("theaterId").toString();
-        THEATER_ID = "8";
+        THEATER_ID = RealTimeStorage.getMovieBooking().get("theaterId").toString();
+        // fetch seat template
+        HashMap<String, ArrayList<String>> seatsTemp = new HashMap<>();
+
+        seatsTemp = getSeatsTemplate(THEATER_ID);
         
-        // Initialise 
+        // Initialise
+        totalSeats = maxRow*maxCol;
         totalSeatsLabel.setText(String.valueOf(totalSeats));
         totalSeatsAvailableLabel.setText(String.valueOf(totalSeats));
         totalSeatsUnavailableLabel.setText(String.valueOf(unavailableSeats));
 
         hallLabel.setText("HALL " + THEATER_ID);
 
-        // fetch seat template
-        HashMap<String, ArrayList<String>> seatsTemp = new HashMap<>();
-
-        seatsTemp = getSeatsTemplate(THEATER_ID);
+        
         // load if have cache
         if(RealTimeStorage.getAdminSelected().size() > 0 && THEATER_ID.equals(RealTimeStorage.getAdminTheaterId())){
             for(String xy : RealTimeStorage.getAdminSelected()){
@@ -460,7 +455,7 @@ public class AdminSeatsController implements Initializable {
         final ObservableList<Node> gridPaneChildren = seatsContainer.getChildren();
 
         confirmButton.setOnAction(e -> {
-            RealTimeStorage.clearAdminSelected();
+//            RealTimeStorage.clearAdminSelected();
             for (int j = 0; j < gridPaneChildren.size(); j++) {
                 final Node m = gridPaneChildren.get(j);
                 final int n = j;

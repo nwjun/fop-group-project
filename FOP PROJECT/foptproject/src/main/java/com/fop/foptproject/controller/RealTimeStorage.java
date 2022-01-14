@@ -61,7 +61,7 @@ public class RealTimeStorage {
         int index = RealTimeStorage.movieDetails.get("movieId").indexOf(movieId);
         int i = 0;
         for (String key : RealTimeStorage.movieDetails.keySet()) {
-            System.out.println(key + ":" + attributes[i]);
+//            System.out.println(key + ":" + attributes[i]);
             RealTimeStorage.movieDetails.get(key).set(index, attributes[i]);
             i++;
         }
@@ -70,7 +70,7 @@ public class RealTimeStorage {
     public static void insertMovieDetails(String[] attributes) {
         int i = 0;
         for (String key : RealTimeStorage.movieDetails.keySet()) {
-            System.out.println(key + ":" + attributes[i]);
+//            System.out.println(key + ":" + attributes[i]);
             RealTimeStorage.movieDetails.get(key).add(attributes[i]);
             i++;
         }
@@ -88,7 +88,7 @@ public class RealTimeStorage {
         int index = RealTimeStorage.productDetails.get("productId").indexOf(productId);
         int i = 0;
         for (String key : RealTimeStorage.productDetails.keySet()) {
-            System.out.println(key + ":" + attributes[i]);
+//            System.out.println(key + ":" + attributes[i]);
             RealTimeStorage.productDetails.get(key).set(index, attributes[i]);
             i++;
         }
@@ -97,7 +97,7 @@ public class RealTimeStorage {
     public static void insertProductDetails(String[] attributes) {
         int i = 0;
         for (String key : RealTimeStorage.productDetails.keySet()) {
-            System.out.println(key + ":" + attributes[i]);
+//            System.out.println(key + ":" + attributes[i]);
             RealTimeStorage.productDetails.get(key).add(attributes[i]);
             i++;
         }
@@ -157,7 +157,8 @@ public class RealTimeStorage {
 
         if (RealTimeStorage.MovieBooking.containsKey(key)) {
             RealTimeStorage.MovieBooking.replace(key, value);
-        } else {
+        } 
+        else {
             RealTimeStorage.MovieBooking.put(key, value);
         }
     }
@@ -224,6 +225,12 @@ public class RealTimeStorage {
         // parse json
         String jsonString = result.get("linkedCard");
         RealTimeStorage.linkedCard = new JSONToolSets(jsonString).parseOneDArray("cardDetails");
+        
+        // update movie details
+        RealTimeStorage.setAllMovies();
+        RealTimeStorage.setAllProducts();
+        RealTimeStorage.setAllTickets();
+        RealTimeStorage.setAllAdmins();
 
     }
 
