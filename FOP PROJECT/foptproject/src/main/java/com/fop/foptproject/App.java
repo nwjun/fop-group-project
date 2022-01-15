@@ -30,7 +30,7 @@ public class App extends Application {
         final double HEIGHT = screenBounds.getHeight();
 
         boolean DEBUG = false;
-        String fxmlFile = "OTP.fxml";
+        String fxmlFile = "CheckOut.fxml";
 
         if (!DEBUG) {
             fxmlFile = "SplashScreen.fxml";

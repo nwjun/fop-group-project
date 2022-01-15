@@ -19,9 +19,9 @@
 
 <ScrollPane fx:id="scrollpane" fitToWidth="true" hbarPolicy="NEVER" hmax="100.0" styleClass="root" stylesheets="@style.css" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fop.foptproject.controller.AppController">
     <content>
-        <StackPane fx:id="landingStackPane" alignment="CENTER" stylesheets="@style.css">
+        <StackPane fx:id="landingStackPane" alignment="CENTER">
             <children>
-                <VBox fx:id="landingBody" alignment="TOP_CENTER" prefHeight="1911.0" stylesheets="@style.css">
+                <VBox fx:id="landingBody" alignment="TOP_CENTER" prefHeight="1911.0">
                     <children>
                         <GridPane fx:id="landingGrid" alignment="TOP_CENTER">
                             <columnConstraints>

@@ -1,5 +1,6 @@
 package com.fop.foptproject.controller;
 
+import com.fop.Utility.Checker;
 import com.fop.Utility.JSONToolSets;
 import com.fop.Utility.emailTo;
 import com.fop.Utility.sqlConnect;
@@ -13,13 +14,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
+import java.util.function.UnaryOperator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -28,7 +34,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -94,29 +103,38 @@ public class CheckOutController implements Initializable {
             stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
             stage.showAndWait();
             return;
+        } else if (Checker.checkCardValidity(cardNumber.getText().replaceAll("-", ""))) {
+            a.setContentText("Invalid credit card number");
+            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+            return;
         } else {
-            Task<Void> postTask = postTask(event);
-            new Thread(postTask).start();
-            System.out.println("Start Payment"); // debug flag
-            postTask.setOnSucceeded(eh -> {
-                if (!error) {
-                    try {
-                        new SceneController().switchToDonePayment(event);
-                    } catch (IOException ex) {
-                        // do ntg
+            boolean isValidExpiry = checkExpiry();
+            if (isValidExpiry) {
+                Task<Void> postTask = postTask(event);
+                new Thread(postTask).start();
+                System.out.println("Start Payment"); // debug flag
+                postTask.setOnSucceeded(eh -> {
+                    if (!error) {
+                        try {
+                            new SceneController().switchToDonePayment(event);
+                        } catch (IOException ex) {
+                            // do ntg
+                        }
+                    } else {
+                        closeLoadingScreen();
+                        a.setAlertType(AlertType.ERROR);
+                        a.setTitle("Unknown Error occured");
+                        a.setContentText("A fatal error has occured during transaction. Please try again later");
+                        Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                        stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                        stage.showAndWait();
+                        return;
                     }
-                } else {
-                    closeLoadingScreen();
-                    a.setAlertType(AlertType.ERROR);
-                    a.setTitle("Unknown Error occured");
-                    a.setContentText("A fatal error has occured during transaction. Please try again later");
-                    Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
-                    stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
-                    stage.showAndWait();
-                    return;
-                }
-            });
+                });
 
+            }
         }
     }
 
@@ -150,7 +168,7 @@ public class CheckOutController implements Initializable {
     }
 
     @FXML
-    public void clearCardSelectionOnChange(ActionEvent event) {
+    public void clearCardSelectionOnChange(Event event) {
         selectCard.setValue("-");
     }
 
@@ -222,8 +240,7 @@ public class CheckOutController implements Initializable {
             @Override
             protected Void call() throws Exception {
                 CountDownLatch latch = new CountDownLatch(1);
-                
-//                System.out.println("start loading Screen"); // debug flags
+
                 Platform.runLater(new Runnable() {
                     public void run() {
                         try {
@@ -237,8 +254,7 @@ public class CheckOutController implements Initializable {
                 });
 
                 latch.await();
-                
-//                System.out.println("start compiling data"); // debug flag
+
                 // start background posting
                 // get neccessary info
                 String booked = bookedSeats.replace(", ", ",");
@@ -251,10 +267,8 @@ public class CheckOutController implements Initializable {
                 String theaterId = RealTimeStorage.getMovieBooking().get("theaterId").toString();
                 String slots = RealTimeStorage.getMovieBooking().get("slots").toString();
                 String chosenDay = RealTimeStorage.getMovieBooking().get("chosenDay").toString();
-//                System.out.printf("UserId: %s\nMovie Name: %s\nCinema Name: %s\nBooked Seats: %s\nShow DateTime: %s %s TheaterId: %s\nPurchased: %s\nChosen Day: %s\n",userId,movieName,cinema,booked,showDate,showtime,theaterId,purchasedItem,chosenDay);
-                // set booked seat stat to occupied
                 
-//                System.out.println("Fetching json"); // debug flag
+                // set booked seat stat to occupied
                 JSONToolSets json = new JSONToolSets(sqlConnect.querySeats(theaterId, slots, false), false);
                 System.out.println("Altering json");
                 String revert = json.getNewSeatArr().toString();
@@ -262,13 +276,12 @@ public class CheckOutController implements Initializable {
                 for (int i = 0; i < RealTimeStorage.getSelectedSeats().size(); i++) {
                     int row = Integer.parseInt(RealTimeStorage.getSelectedSeats().get(i)[0]);
                     int column = Integer.parseInt(RealTimeStorage.getSelectedSeats().get(i)[1]);
-                    System.out.println(row+","+column);
+                    System.out.println(row + "," + column);
                     json.setSeatStat(row, column, 1, chosenDay);
-//                    System.out.println("yay"); // debug flag
                 }
-//                System.out.println("Start posting details"); // debug flag
                 String currentSeat = json.getNewSeatArr().toString();
                 json.parseTheaterSeat(Integer.parseInt(chosenDay));
+                
                 // any process fail will reset the jsonArr to prev 
                 error = false;
                 // save transaction detail to sql
@@ -278,8 +291,8 @@ public class CheckOutController implements Initializable {
                 Timestamp ts = new Timestamp(datenow.getTime());
                 String timestamp = format.format(ts);
                 RealTimeStorage.setTimestamp(timestamp);
+                
                 // send booking email to user
-//                System.out.println("Posting data"); // debug flag 
                 for (int i = 0; i < 3; i++) {
                     bookingNumber = sqlConnect.addTransactionDetail(userId, purchasedItem, booked, theaterId, showDate, showtime, movieName, cinema);
                     if (bookingNumber == null) {
@@ -291,8 +304,6 @@ public class CheckOutController implements Initializable {
                         break;
                     }
                 }
-                
-//                System.out.println("Saving card details with error = " + error ); // debug flag
                 if (saveCard.isSelected() && !error) {
                     String selectedBank = selectBank.getValue().toString();
                     String card = cardNumber.getText();
@@ -301,12 +312,10 @@ public class CheckOutController implements Initializable {
                     RealTimeStorage.updateLinkedCard(new String[]{selectedBank, card, expiry, cvvNumber});
                     RealTimeStorage.appendLinkedCards();
                 }
-                
-//                System.out.println("error = "+error); // debug flag
+
                 if (error) {
                     sqlConnect.updateSeats(revert, theaterId, slots, false);
-                } 
-                else {
+                } else {
                     try {
                         sqlConnect.updateSeats(currentSeat, theaterId, slots, false);
                         RealTimeStorage.setToBePaid(String.format("RM%.2f", toBePaid * 1.16 + 1.5));
@@ -315,12 +324,10 @@ public class CheckOutController implements Initializable {
                         // do ntg
                     } finally {
                         if (!error) {
-//                            System.out.println("emailing"); // debug flag
                             new emailTo(RealTimeStorage.getUserEmail()).sendBookingConfirmations(movieName, RealTimeStorage.getUsername(), bookingNumber, bookingNumber, showDate, showtime, booked, toBePaid * 1.16 + 1.5);
                         }
                     }
                 }
-//                System.out.println("payment done with error = "+error);
                 return null;
             }
         };
@@ -359,8 +366,113 @@ public class CheckOutController implements Initializable {
         });
     }
 
+    public boolean checkExpiry() {
+        String expiry = expiryDate.getText();
+        boolean isValid = false;
+        Alert a = new Alert(AlertType.ERROR);
+        // check month and year validity
+        int MM = Integer.parseInt(expiry.split("/")[0]);
+        int YY = Integer.parseInt(expiry.split("/")[1]);
+        if (MM > 12 || MM < 1) {
+            isValid = false;
+            a.setTitle("Invalid month");
+            a.setContentText("Invalid month is entered. Please double check ur expiry date input");
+            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+            return isValid;
+        }
+        if (YY < 22) {
+            isValid = false;
+            a.setTitle("Expired card");
+            a.setContentText("The card is expired. Please change another card to proceed with the payment");
+            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+            stage.showAndWait();
+            return isValid;
+        }
+        isValid = true;
+        return isValid;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // add listener to input field
+        cardNumber.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                    String newValue) {
+                if (newValue.length() - oldValue.length() > 0) {
+                    if ((newValue.length() % 4 == 0 && newValue.length() == 4 || (newValue.length() + 1) % 5 == 0)) {
+                        cardNumber.appendText("-");
+                    }
+                }
+                if (newValue.length() > 19) {
+                    cardNumber.setText(oldValue);
+                }
+            }
+        });
+
+        expiryDate.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                    String newValue) {
+                if (newValue.length() - oldValue.length() > 0) {
+                    if (newValue.length() == 2) {
+                        expiryDate.appendText("/");
+                    }
+                }
+                if (newValue.length() > 5) {
+                    expiryDate.setText(oldValue);
+                }
+
+            }
+        });
+
+        cvv.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                    String newValue) {
+                if (newValue.length() > 3) {
+                    cvv.setText(oldValue);
+                }
+
+            }
+        });
+
+        // filters
+        UnaryOperator<Change> cardFilter = change -> {
+            String text = change.getText();
+
+            if (text.matches("[0-9|-]*")) {
+                return change;
+            }
+            return null;
+        };
+
+        UnaryOperator<Change> expiryFilter = change -> {
+            String text = change.getText();
+
+            if (text.matches("[0-9|/]*")) {
+                return change;
+            }
+            return null;
+        };
+
+        UnaryOperator<Change> cvvFilter = change -> {
+            String text = change.getText();
+
+            if (text.matches("[0-9]*")) {
+                return change;
+            }
+            return null;
+        };
+
+        // set filter
+        cardNumber.setTextFormatter(new TextFormatter<String>(cardFilter));
+        expiryDate.setTextFormatter(new TextFormatter<String>(expiryFilter));
+        cvv.setTextFormatter(new TextFormatter<String>(cvvFilter));
+
         // init input field
         selectCard.setDisable(false);
         cardNumber.setDisable(false);

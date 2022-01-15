@@ -24,14 +24,17 @@
       <VBox prefHeight="66.0" prefWidth="520.0">
          <children>
             <Label text="Select Bank" />
-            <ChoiceBox fx:id="bankChoiceBox" prefWidth="150.0" />
+            <ChoiceBox fx:id="bankChoiceBox" minHeight="-Infinity" prefHeight="28.0" prefWidth="150.0" />
          </children>
       </VBox>
       <VBox prefHeight="149.0" prefWidth="520.0">
          <children>
             <Label text="Account Number" />
-            <TextField fx:id="accTextField" promptText="10-17 numbers" />
-            <Label fx:id="accErrorMsg" textFill="RED" />
+            <TextField fx:id="accTextField" promptText="10-16 numbers" />
+            <Label fx:id="accErrorMsg" style="-fx-font-size: 13;" textFill="RED">
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin></Label>
             <HBox prefHeight="74.0" prefWidth="520.0">
                <children>
                   <VBox prefHeight="74.0" prefWidth="80.0">
@@ -53,13 +56,28 @@
             </HBox>
          </children>
       </VBox>
-      <HBox fx:id="buttonContainer" prefHeight="57.0" prefWidth="520.0" spacing="40.0">
+      <VBox>
          <children>
-            <Button fx:id="addBtn" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" styleClass="yellowButton" text="Add" />
-            <Button fx:id="cclBtn" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="80.0" styleClass="outlineButton" text="Cancel" />
-            <Label fx:id="addErrorMsg" />
+            <Label fx:id="addErrorMsg" alignment="TOP_LEFT" style="-fx-font-size: 13;" textFill="RED" translateY="-5.0">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></Label>
+            <HBox fx:id="buttonContainer" alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="520.0" spacing="40.0">
+               <children>
+                  <Button fx:id="addBtn" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" styleClass="yellowButton" text="Add">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="cclBtn" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="80.0" styleClass="outlineButton" text="Cancel">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </VBox>
    </children>
    <padding>
       <Insets bottom="50.0" left="40.0" right="40.0" top="50.0" />
