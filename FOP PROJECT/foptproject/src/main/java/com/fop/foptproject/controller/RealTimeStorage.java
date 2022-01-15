@@ -491,7 +491,8 @@ public class RealTimeStorage {
     // setter for linkedCards
     public static void removeLinkedCards(String cardDetails) {
         // remove specified cards
-        RealTimeStorage.linkedCard.remove(cardDetails);
+        boolean res = RealTimeStorage.linkedCard.remove(cardDetails);
+        if (!res) RealTimeStorage.linkedCard.removeIf(s -> s.contains(cardDetails));
     }
 
     public static void setUsername(String newVal) {

@@ -7,6 +7,11 @@
     -fx-text-fill: #ffffff;
 }
 
+.scroll-pane .scroll-bar:vertical {
+    -fx-unit-increment: 2 ;
+    -fx-block-increment: 10 ;
+}
+
 .Button {
     -fx-background-color : #FFEE00;
     -fx-background-radius : 10;
