@@ -12,6 +12,8 @@ import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -31,11 +33,19 @@ public class sqlConnect {
         Properties prop = new readConfig().readconfigfile();
         try {
             this.conn = DriverManager.getConnection(
-            prop.getProperty("configuration.sqlConnection1"),prop.getProperty("configuration.sqlUser1"),prop.getProperty("configuration.sqlPassword1")
+                prop.getProperty("configuration.sqlConnection1"),prop.getProperty("configuration.sqlUser1"),prop.getProperty("configuration.sqlPassword1")
             );
-            System.out.println("connected");
         } catch (SQLException e) {
-            System.out.println("failed");
+            // switch to local database
+            if(this.conn == null){
+                try {
+                    this.conn = DriverManager.getConnection(
+                        prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
+                    );  
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
         }
     }
@@ -70,7 +80,7 @@ public class sqlConnect {
     }
 
     public void createTestQuery() throws SQLException {
-        // createa a SQL prepare statement object
+        // create a SQL prepare statement object
         PreparedStatement prep = conn.prepareStatement("SELECT * FROM usercredentials");
 
         // execute the statement
@@ -151,16 +161,13 @@ public class sqlConnect {
             int permission = rs.getInt("permission");
 
             if (dbPassword.equals(inputPass)) {
-                System.out.println("Successfully login");
                 return permission;
             } else {
-                System.out.println("Invalid Password");
                 return -1;
             }
 
         } catch (SQLException e) {
-            System.out.println("Invalid Email");
-            //e.printStackTrace();
+            e.printStackTrace();
             return -2;
         }
 
@@ -402,8 +409,7 @@ public class sqlConnect {
             int rowAffected = prepstat.executeUpdate();
 
         } catch (SQLException e) {
-//                e.printStackTrace();
-            System.out.println("Fail");
+                e.printStackTrace();
         }
 
     }
@@ -488,8 +494,8 @@ public class sqlConnect {
 
             }
             return tickets;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -507,8 +513,8 @@ public class sqlConnect {
 
             prepstat.executeUpdate();
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -530,8 +536,8 @@ public class sqlConnect {
                 username.add(rs.getString("username"));
                 email.add(rs.getString("email"));
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         admin.put("Id", Id);
         admin.put("username", username);
@@ -552,8 +558,8 @@ public class sqlConnect {
 
             prepstat.executeUpdate();
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -572,8 +578,8 @@ public class sqlConnect {
 
             prepstat.executeUpdate();
 
-        } catch (SQLException ex) {
-            System.out.println("Incorrect Email or Password! Try Again!");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -620,8 +626,8 @@ public class sqlConnect {
                 slot.add(rs.getString("slot"));
                 time.add(rs.getString("time"));
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         movies.put("movieId", movieId);
@@ -1016,7 +1022,6 @@ public class sqlConnect {
         // query statement
         String query = "UPDATE usercredentials SET email = ? "
                 + "WHERE userId = ?";
-        System.out.println(newFieldValue);
         int rowAffected = 0;
         try {
             // retrieve from Database

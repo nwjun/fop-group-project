@@ -103,7 +103,7 @@ public class CheckOutController implements Initializable {
             stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
             stage.showAndWait();
             return;
-        } else if (Checker.checkCardValidity(cardNumber.getText().replaceAll("-", ""))) {
+        } else if (!Checker.checkCardValidity(cardNumber.getText().replaceAll("-", ""))) {
             a.setContentText("Invalid credit card number");
             Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
             stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
@@ -114,7 +114,6 @@ public class CheckOutController implements Initializable {
             if (isValidExpiry) {
                 Task<Void> postTask = postTask(event);
                 new Thread(postTask).start();
-                System.out.println("Start Payment"); // debug flag
                 postTask.setOnSucceeded(eh -> {
                     if (!error) {
                         try {
@@ -193,6 +192,7 @@ public class CheckOutController implements Initializable {
         name = name.substring(0, name.length() - 2);
         RealTimeStorage.setfnb(name.replace(", ", "\n"));
         this.toBePaid += total;
+        
         return new String[]{name, total + ""};
     }
 
@@ -270,13 +270,11 @@ public class CheckOutController implements Initializable {
                 
                 // set booked seat stat to occupied
                 JSONToolSets json = new JSONToolSets(sqlConnect.querySeats(theaterId, slots, false), false);
-                System.out.println("Altering json");
                 String revert = json.getNewSeatArr().toString();
                 json.parseTheaterSeat(Integer.parseInt(chosenDay));
                 for (int i = 0; i < RealTimeStorage.getSelectedSeats().size(); i++) {
                     int row = Integer.parseInt(RealTimeStorage.getSelectedSeats().get(i)[0]);
                     int column = Integer.parseInt(RealTimeStorage.getSelectedSeats().get(i)[1]);
-                    System.out.println(row + "," + column);
                     json.setSeatStat(row, column, 1, chosenDay);
                 }
                 String currentSeat = json.getNewSeatArr().toString();
@@ -370,6 +368,7 @@ public class CheckOutController implements Initializable {
         String expiry = expiryDate.getText();
         boolean isValid = false;
         Alert a = new Alert(AlertType.ERROR);
+        
         // check month and year validity
         int MM = Integer.parseInt(expiry.split("/")[0]);
         int YY = Integer.parseInt(expiry.split("/")[1]);
@@ -484,14 +483,17 @@ public class CheckOutController implements Initializable {
         // fill booked movie name
         String showdatetime = RealTimeStorage.getMovieBooking().get("showdate").toString() + " " + RealTimeStorage.getMovieBooking().get("showTime").toString().split(" - ")[0];
         movie.setText(RealTimeStorage.getMovieBooking().get("movieName").toString() + "\n" + showdatetime);
+        
         // fill booked seats
         ArrayList<String[]> seat = RealTimeStorage.getSelectedSeats();
         String bookedSeats = getSeatBooking(seat);
         seats.setText(bookedSeats);
+        
         // fill ticket types
         String[] ticketValuePair = getTicketPurchase();
         ticketType.setText(ticketValuePair[0]);
         ticketPrice.setText(String.format("RM%.2f", Double.parseDouble(ticketValuePair[1])));
+        
         // fill FnB purchase
         if (!RealTimeStorage.getFnB().isEmpty()) {
             String[] FnBValuePair = getFnBPurchase();
@@ -501,8 +503,10 @@ public class CheckOutController implements Initializable {
             FnB.setText("");
             FnBPrice.setText("RM0.00");
         }
+        
         // totalAmount
         totalAmount.setText(String.format("RM%.2f", this.toBePaid * 1.16 + 1.5));
+        
         // populate card choices
         ArrayList<String[]> cards = RealTimeStorage.getLinkedCard2D();
         if (cards == null) {
@@ -513,6 +517,7 @@ public class CheckOutController implements Initializable {
             }
             selectCard.getItems().add("-");
         }
+        
         // populate bank choices
         selectBank.getItems().addAll(new String[]{"Ambank", "Maybank", "Public Bank"});
     }

@@ -50,7 +50,6 @@ public class RealTimeStorage {
     private static ArrayList<String> adminSelected = new ArrayList<>();
 
     public static void deleteMovieDetails(String s) {
-        System.out.println(s);
         int index = RealTimeStorage.movieDetails.get("movieId").indexOf(s);
         for (String key : RealTimeStorage.movieDetails.keySet()) {
             RealTimeStorage.movieDetails.get(key).remove(index);
@@ -61,7 +60,6 @@ public class RealTimeStorage {
         int index = RealTimeStorage.movieDetails.get("movieId").indexOf(movieId);
         int i = 0;
         for (String key : RealTimeStorage.movieDetails.keySet()) {
-//            System.out.println(key + ":" + attributes[i]);
             RealTimeStorage.movieDetails.get(key).set(index, attributes[i]);
             i++;
         }
@@ -70,14 +68,12 @@ public class RealTimeStorage {
     public static void insertMovieDetails(String[] attributes) {
         int i = 0;
         for (String key : RealTimeStorage.movieDetails.keySet()) {
-//            System.out.println(key + ":" + attributes[i]);
             RealTimeStorage.movieDetails.get(key).add(attributes[i]);
             i++;
         }
     }
 
     public static void deleteProductDetails(String s) {
-        System.out.println(s);
         int index = RealTimeStorage.productDetails.get("productId").indexOf(s);
         for (String key : RealTimeStorage.productDetails.keySet()) {
             RealTimeStorage.productDetails.get(key).remove(index);
@@ -88,7 +84,6 @@ public class RealTimeStorage {
         int index = RealTimeStorage.productDetails.get("productId").indexOf(productId);
         int i = 0;
         for (String key : RealTimeStorage.productDetails.keySet()) {
-//            System.out.println(key + ":" + attributes[i]);
             RealTimeStorage.productDetails.get(key).set(index, attributes[i]);
             i++;
         }
@@ -97,7 +92,6 @@ public class RealTimeStorage {
     public static void insertProductDetails(String[] attributes) {
         int i = 0;
         for (String key : RealTimeStorage.productDetails.keySet()) {
-//            System.out.println(key + ":" + attributes[i]);
             RealTimeStorage.productDetails.get(key).add(attributes[i]);
             i++;
         }
@@ -383,9 +377,7 @@ public class RealTimeStorage {
     }
 
     public static String getProductInfo(String key, String field) {
-        System.out.println(key);
         int ind = RealTimeStorage.productDetails.get("productId").indexOf(key);
-        System.out.println(ind);
         return RealTimeStorage.productDetails.get(field).get(ind);
     }
 
