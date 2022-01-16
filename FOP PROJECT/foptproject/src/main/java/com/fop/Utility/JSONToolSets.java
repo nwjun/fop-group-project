@@ -270,7 +270,6 @@ public class JSONToolSets {
      * </p>
      */
      public void setSeatStat(int row, int column, int stat, String day){
-         System.out.println(isTemplate);
         if(this.isTemplate){
             // parse json
             HashMap<Integer,ArrayList<Integer>> temp = new HashMap<>();
@@ -303,10 +302,8 @@ public class JSONToolSets {
                     for(int j = 0 ; j < this.rowSize ; j++){
                         temp.put(j,new ArrayList<Integer>());
                         for(int k = 0 ; k < this.columnSize ; k++){
-//                            System.out.print(this.jsonObj.getJSONObject(Integer.toString(i)).getJSONArray(Integer.toString(j)).getInt(k) + " ");
                             temp.get(j).add(this.jsonObj.getJSONObject(Integer.toString(i)).getJSONArray(Integer.toString(j)).getInt(k));
                         }
-                        System.out.println("");
                     }
                     
                     // set seat status
@@ -322,7 +319,6 @@ public class JSONToolSets {
                 }
                 else{
                     // copy unaffected day
-//                    System.out.println(this.jsonObj.getJSONObject(Integer.toString(i)));
                     newJson.put(Integer.toString(i),this.jsonObj.getJSONObject(Integer.toString(i)));
                 }    
             }
