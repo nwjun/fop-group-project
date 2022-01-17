@@ -43,10 +43,10 @@ public class sqlConnect {
                         prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
                     );  
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    System.out.println("SQL ERROR");
                 }
             }
-            e.printStackTrace();
+            System.out.println("SQL Connection ERROR");
         }
     }
 
