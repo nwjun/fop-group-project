@@ -324,7 +324,6 @@ public class AdminSeatsController implements Initializable {
                         (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
                             if (old_val == false && new_val == true) {
                                 unavailableSeats++;
-                                System.out.println(seat.getId());
                             } else {
                                 unavailableSeats--;
                             }
@@ -342,7 +341,6 @@ public class AdminSeatsController implements Initializable {
                 (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
                     if (old_val == false && new_val == true) {
                         unavailableSeats++;
-                        System.out.println(node.getId());
                     } else {
                         unavailableSeats--;
                     }

@@ -161,10 +161,8 @@ public class AdminMovieController implements Initializable {
             // recover cache
             HashMap<String, Object> cache = RealTimeStorage.getMovieBooking();
             if((cache.get("actualPosterPath") != null)){
-                System.out.println((String)(cache.get("actualPosterPath")));
                 DropImage.setImage((((String)cache.get("actualPosterPath")).isBlank())?null:new Image((String) cache.get("actualPosterPath")));
             }
-            System.out.println((String)(cache.get("modifiedPosterPath")));
             posterT.setText((String) (cache.get("modifiedPosterPath")));
             movieNameT.setText((String) (cache.get("movieName")));
             lengthT.setText((String) (cache.get("length")));
@@ -377,7 +375,7 @@ public class AdminMovieController implements Initializable {
             try {
                 castT.setText(castJsonProcessor((String) this.directorCast[index]));
             } catch (ParseException ex) {
-                System.out.println("Parse Error");
+                
             }
             this.updatestatus = true;
 
@@ -435,7 +433,6 @@ public class AdminMovieController implements Initializable {
     public void delete() throws ParseException {
         String s = getdeletemovieId();
         RealTimeStorage.deleteMovieDetails(s.substring(1));
-        System.out.println("1 row(s) affected in remote database: " + s + " deleted.");
         sqlConnect.delete(s);
         getProduct();
 
@@ -686,8 +683,6 @@ public class AdminMovieController implements Initializable {
             for(Object item:checkedItems){
                 converted += item.toString() + ",";
             }
-            System.out.println(posterT.getText());
-            System.out.println(this.pathpath);
             RealTimeStorage.updateMovieBookingByKey("actualPosterPath", this.pathpath);
             RealTimeStorage.updateMovieBookingByKey("modifiedPosterPath", posterT.getText());
             RealTimeStorage.updateMovieBookingByKey("movieName", movieNameT.getText());
@@ -791,7 +786,6 @@ public class AdminMovieController implements Initializable {
                         count++;
                     }
                     n = n.substring(0, n.length() - 2);
-                    System.out.println(a);
                     if (updatestatus) {
                         RealTimeStorage.updateMovieDetails(new String[]{"18", d, m, c, k, Id, g, j, Integer.toString(count), l, directorcast, n, b, a}, Id);
                     } else {
@@ -891,7 +885,6 @@ public class AdminMovieController implements Initializable {
                     BufferedImage img = ImageIO.read(new File(pathpath));
                     File outputfile = new File(desktopPath);
                     ImageIO.write(img, ext, outputfile);
-                    System.out.println("Upload Successful: Poster Changed/Uploaded");
                     pathpath = "";
                     ext = "";
                     CountDownLatch latch4 = new CountDownLatch(1);
@@ -908,7 +901,6 @@ public class AdminMovieController implements Initializable {
                     });
                     latch4.await();
                 } catch (IOException ex) {
-                    System.out.println("Upload Successful: Poster Unchanged");
                 }
 
                 return null;
