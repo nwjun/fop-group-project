@@ -374,7 +374,7 @@ public class AdminMovieController implements Initializable {
             try {
                 castT.setText(castJsonProcessor((String) this.directorCast[index]));
             } catch (ParseException ex) {
-                System.out.println("Parse Error");
+                
             }
             this.updatestatus = true;
 

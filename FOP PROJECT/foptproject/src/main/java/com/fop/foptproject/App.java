@@ -42,6 +42,5 @@ public class App extends Application {
     public static void main(String[] args) throws Exception {
         sqlConnect sql = new sqlConnect();
         launch();
-        System.out.println("launched");
     }
 }
