@@ -43,10 +43,11 @@ public class sqlConnect {
                         prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
                     );  
                 } catch (SQLException ex) {
-                    System.out.println("SQL ERROR");
+                    ex.printStackTrace();
                 }
             }
-            System.out.println("SQL Connection ERROR");
+            System.out.println("Remote Database Connection ERROR");
+            System.out.println("Check your Wi-Fi Connection");
         }
     }
 
