@@ -766,9 +766,9 @@ public class AdminMovieController implements Initializable {
                         sqlConnect.insertPoster("M" + Id, a);
                     } else {
                         Id = lastmovieId();
-                        if(save == null){
+
                             a = posterT.getText();
-                        }
+                        
                         sqlConnect.insertPoster("M" + Id, a);
                     }
                     String c = lengthT.getText();
