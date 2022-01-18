@@ -1,10 +1,5 @@
 package com.fop.foptproject.controller;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
-
 import com.fop.foptproject.ProductCard;
 import java.io.IOException;
 import java.net.URL;
@@ -29,7 +24,6 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 
 /**
- * FXML Controller class
  *
  * @author WeiXIn
  */

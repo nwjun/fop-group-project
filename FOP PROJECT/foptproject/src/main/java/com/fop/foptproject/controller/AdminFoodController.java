@@ -28,7 +28,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -297,7 +296,6 @@ public class AdminFoodController implements Initializable {
     public void delete() throws ParseException {
         String s = getdeleteproductId();
         RealTimeStorage.deleteProductDetails(s);
-        System.out.println("1 row(s) affected in remote database: " + s + " deleted.");
         sqlConnect.delete(s);
         productList.getChildren().clear();
         getProduct();
@@ -509,11 +507,10 @@ public class AdminFoodController implements Initializable {
             BufferedImage img = ImageIO.read(new File(this.pathpath));
             File outputfile = new File(this.desktopPath);
             ImageIO.write(img, this.ext, outputfile);
-            System.out.println("Upload Successful: Poster Changed/Uploaded");
             this.pathpath = "";
             this.ext = "";
         } catch (IOException ex) {
-            System.out.println("Upload Successful: Poster Unchanged");
+            // do ntg
         }
     }
 

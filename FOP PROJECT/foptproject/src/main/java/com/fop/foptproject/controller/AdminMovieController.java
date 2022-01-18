@@ -31,7 +31,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -53,7 +52,6 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.StageStyle;
@@ -100,6 +98,7 @@ public class AdminMovieController implements Initializable {
     private String editmovieId, deletemovieId;
     private boolean deletestatus = false;
     private boolean updatestatus = false;
+    private boolean error = false;
 
     @FXML
     private ImageView DropImage;
@@ -161,10 +160,8 @@ public class AdminMovieController implements Initializable {
             // recover cache
             HashMap<String, Object> cache = RealTimeStorage.getMovieBooking();
             if((cache.get("actualPosterPath") != null)){
-                System.out.println((String)(cache.get("actualPosterPath")));
                 DropImage.setImage((((String)cache.get("actualPosterPath")).isBlank())?null:new Image((String) cache.get("actualPosterPath")));
             }
-            System.out.println((String)(cache.get("modifiedPosterPath")));
             posterT.setText((String) (cache.get("modifiedPosterPath")));
             movieNameT.setText((String) (cache.get("movieName")));
             lengthT.setText((String) (cache.get("length")));
@@ -435,7 +432,6 @@ public class AdminMovieController implements Initializable {
     public void delete() throws ParseException {
         String s = getdeletemovieId();
         RealTimeStorage.deleteMovieDetails(s.substring(1));
-        System.out.println("1 row(s) affected in remote database: " + s + " deleted.");
         sqlConnect.delete(s);
         getProduct();
 
@@ -603,6 +599,7 @@ public class AdminMovieController implements Initializable {
     }
 
     public void refresh() throws ParseException {
+        RealTimeStorage.setAllMovies();
         movieList.getChildren().clear();
         getProduct();
         currentPage = 0;
@@ -627,12 +624,15 @@ public class AdminMovieController implements Initializable {
         new Thread(postTask).start();
         postTask.setOnSucceeded(eh -> {
             closeLoadingScreen();
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setTitle("");
-            a.setContentText("Uploaded Successfully");
-            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
-            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
-            stage.showAndWait();
+            if(error != true){
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("");
+                a.setContentText("Uploaded Successfully");
+                Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                stage.showAndWait();
+                error = false;
+            }
         });
     }
 
@@ -686,8 +686,6 @@ public class AdminMovieController implements Initializable {
             for(Object item:checkedItems){
                 converted += item.toString() + ",";
             }
-            System.out.println(posterT.getText());
-            System.out.println(this.pathpath);
             RealTimeStorage.updateMovieBookingByKey("actualPosterPath", this.pathpath);
             RealTimeStorage.updateMovieBookingByKey("modifiedPosterPath", posterT.getText());
             RealTimeStorage.updateMovieBookingByKey("movieName", movieNameT.getText());
@@ -791,7 +789,6 @@ public class AdminMovieController implements Initializable {
                         count++;
                     }
                     n = n.substring(0, n.length() - 2);
-                    System.out.println(a);
                     if (updatestatus) {
                         RealTimeStorage.updateMovieDetails(new String[]{"18", d, m, c, k, Id, g, j, Integer.toString(count), l, directorcast, n, b, a}, Id);
                     } else {
@@ -854,6 +851,7 @@ public class AdminMovieController implements Initializable {
                         @Override
                         public void run() {
                             closeLoadingScreen();
+                            error = true;
                             Alert ax = new Alert(Alert.AlertType.ERROR);
                             ax.setTitle("Data Entry Error");
                             ax.setContentText("Data Entry Error. \nPlease Check Your Input.");
@@ -891,7 +889,6 @@ public class AdminMovieController implements Initializable {
                     BufferedImage img = ImageIO.read(new File(pathpath));
                     File outputfile = new File(desktopPath);
                     ImageIO.write(img, ext, outputfile);
-                    System.out.println("Upload Successful: Poster Changed/Uploaded");
                     pathpath = "";
                     ext = "";
                     CountDownLatch latch4 = new CountDownLatch(1);
@@ -908,7 +905,7 @@ public class AdminMovieController implements Initializable {
                     });
                     latch4.await();
                 } catch (IOException ex) {
-                    System.out.println("Upload Successful: Poster Unchanged");
+                    // do ntg
                 }
 
                 return null;

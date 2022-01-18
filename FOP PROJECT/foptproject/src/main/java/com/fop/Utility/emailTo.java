@@ -1,6 +1,5 @@
 package com.fop.Utility;
 
-import com.fop.foptproject.App;
 import com.fop.foptproject.controller.RealTimeStorage;
 import java.util.Properties;
 import java.util.logging.Level;

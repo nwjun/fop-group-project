@@ -1,15 +1,12 @@
 package com.fop.foptproject.controller;
 
 import com.fop.Utility.JSONToolSets;
-import com.fop.Utility.readConfig;
 import com.fop.Utility.sqlConnect;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -28,7 +25,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import org.json.JSONObject;
 
 /**
  *
@@ -324,7 +320,6 @@ public class AdminSeatsController implements Initializable {
                         (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
                             if (old_val == false && new_val == true) {
                                 unavailableSeats++;
-                                System.out.println(seat.getId());
                             } else {
                                 unavailableSeats--;
                             }
@@ -342,7 +337,6 @@ public class AdminSeatsController implements Initializable {
                 (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
                     if (old_val == false && new_val == true) {
                         unavailableSeats++;
-                        System.out.println(node.getId());
                     } else {
                         unavailableSeats--;
                     }

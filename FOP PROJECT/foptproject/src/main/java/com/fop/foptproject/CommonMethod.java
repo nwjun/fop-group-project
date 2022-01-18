@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.fop.foptproject;
 
-import java.io.File;
 import javafx.collections.ObservableList;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
 
 /**
  *
@@ -46,7 +38,6 @@ public class CommonMethod {
 
     public static String getOperatingSystem() {
         String os = System.getProperty("os.name");
-        // System.out.println("Using System Property: " + os);
         return os;
     }
 }
