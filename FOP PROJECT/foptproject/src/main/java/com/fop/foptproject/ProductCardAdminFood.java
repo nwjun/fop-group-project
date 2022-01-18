@@ -15,7 +15,6 @@ import javafx.scene.image.Image;
 public class ProductCardAdminFood {
 
     private HashMap<String, Object> productDetails = new HashMap<>();
-//    private HBox productCard;
     private VBox imgCard;
     private VBox detailCard;
 

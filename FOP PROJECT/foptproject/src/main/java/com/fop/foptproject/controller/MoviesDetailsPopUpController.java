@@ -1,14 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package com.fop.foptproject.controller;
 
-import com.fop.Utility.sqlConnect;
 import com.fop.foptproject.App;
 import static com.fop.foptproject.ProductCardAdminMovie.castJsonProcessor;
 import static com.fop.foptproject.ProductCardAdminMovie.directorJsonProcesor;
-import static com.fop.foptproject.ProductCardAdminMovie.insertString;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,20 +15,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.fop.foptproject.controller.MovieAllShowTImeController;
-import com.fop.foptproject.controller.AdminMovieController;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import org.json.simple.parser.ParseException;
+
 /**
- * FXML Controller class
  *
  * @author shiao, kuckn, WeiXin
  */

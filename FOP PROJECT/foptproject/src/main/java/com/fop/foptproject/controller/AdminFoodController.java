@@ -28,7 +28,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -511,6 +510,7 @@ public class AdminFoodController implements Initializable {
             this.pathpath = "";
             this.ext = "";
         } catch (IOException ex) {
+            // do ntg
         }
     }
 

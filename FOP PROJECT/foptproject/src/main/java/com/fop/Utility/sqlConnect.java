@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.fop.Utility;
 
 import com.fop.foptproject.App;
@@ -12,8 +8,6 @@ import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -33,21 +27,29 @@ public class sqlConnect {
         Properties prop = new readConfig().readconfigfile();
         try {
             this.conn = DriverManager.getConnection(
-                prop.getProperty("configuration.sqlConnection1"),prop.getProperty("configuration.sqlUser1"),prop.getProperty("configuration.sqlPassword1")
+                    prop.getProperty("configuration.sqlConnection2"), prop.getProperty("configuration.sqlUser2"), prop.getProperty("configuration.sqlPassword2")
             );
         } catch (SQLException e) {
             // switch to local database
-            if(this.conn == null){
+            System.out.println("switch to alternative server");
+            if (this.conn == null) {
                 try {
                     this.conn = DriverManager.getConnection(
-                        prop.getProperty("configuration.sqlConnection"),prop.getProperty("configuration.sqlUser"),prop.getProperty("configuration.sqlPassword")
-                    );  
+                            prop.getProperty("configuration.sqlConnection1"), prop.getProperty("configuration.sqlUser1"), prop.getProperty("configuration.sqlPassword1")
+                    );
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    System.out.println("switch to localhost");
+                    if (this.conn == null) {
+                        try {
+                            this.conn = DriverManager.getConnection(
+                                    prop.getProperty("configuration.sqlConnection"), prop.getProperty("configuration.sqlUser"), prop.getProperty("configuration.sqlPassword")
+                            );
+                        } catch (SQLException exx) {
+                            exx.printStackTrace();
+                        }
+                    }
                 }
             }
-            System.out.println("Remote Database Connection ERROR");
-            System.out.println("Check your Wi-Fi Connection");
         }
     }
 
@@ -168,7 +170,6 @@ public class sqlConnect {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
             return -2;
         }
 
@@ -410,7 +411,7 @@ public class sqlConnect {
             int rowAffected = prepstat.executeUpdate();
 
         } catch (SQLException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
 
     }
@@ -616,7 +617,7 @@ public class sqlConnect {
                 directorCast.add(rs.getString("directorCast"));
                 language.add(rs.getString("language"));
                 String path = rs.getString("poster");
-                if(path != null){
+                if (path != null) {
                     poster.add(path.replace("\\", "/")); // preprocess to fit linux system
                 }
                 synopsis.add(rs.getString("synopsis"));
@@ -882,11 +883,11 @@ public class sqlConnect {
 
         return jsonString;
     }
-    
-    public static void updateSeats(String jsonString,String theaterId, String slots, boolean isTemplate){
-        String query = (isTemplate)?"UPDATE theaters SET seatTemplate = ? WHERE theaterId = ?":String.format("UPDATE theaters SET seat%s = ? WHERE theaterId = ?",slots);
-        
-        try{
+
+    public static void updateSeats(String jsonString, String theaterId, String slots, boolean isTemplate) {
+        String query = (isTemplate) ? "UPDATE theaters SET seatTemplate = ? WHERE theaterId = ?" : String.format("UPDATE theaters SET seat%s = ? WHERE theaterId = ?", slots);
+
+        try {
             PreparedStatement prep = conn.prepareStatement(query);
             prep.setString(1, jsonString);
             prep.setString(2, theaterId);
@@ -909,39 +910,37 @@ public class sqlConnect {
 
         return foodCategory;
     }
-    
-    public static String addTransactionDetail(String userId, String purchasedItem, String seatNumber, String theaterId, String showdate, String showtime, String movieName, String cinema){
-        String receiptId = "";
-        String query = "SELECT receiptNumber " +
-                     "FROM receipts "+
-                     "ORDER BY receiptNumber DESC "+
-                     "LIMIT 1";
 
-        try{
+    public static String addTransactionDetail(String userId, String purchasedItem, String seatNumber, String theaterId, String showdate, String showtime, String movieName, String cinema) {
+        String receiptId = "";
+        String query = "SELECT receiptNumber "
+                + "FROM receipts "
+                + "ORDER BY receiptNumber DESC "
+                + "LIMIT 1";
+
+        try {
             //get last receiptNumber
             PreparedStatement prepstat1 = conn.prepareStatement(query);
             ResultSet rs = prepstat1.executeQuery();
             rs.next();
             receiptId = rs.getString("receiptNumber");
-            receiptId = (receiptId==null)?"R00000":receiptId;
+            receiptId = (receiptId == null) ? "R00000" : receiptId;
             // increment by 1
-            receiptId = String.format("R%05d",Integer.parseInt(receiptId.substring(1))+1);
-        }
-        catch(SQLException e){
+            receiptId = String.format("R%05d", Integer.parseInt(receiptId.substring(1)) + 1);
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
-        
+
         // SQL Statement
-        query = "INSERT INTO receipts(receiptNumber, userId, purchasedItem, seatNumber, showDate, showTime, movie, cinema, theaterId)" 
-              +"VALUE(?,?,?,?,?,?,?,?,?)";
-        
-        
+        query = "INSERT INTO receipts(receiptNumber, userId, purchasedItem, seatNumber, showDate, showTime, movie, cinema, theaterId)"
+                + "VALUE(?,?,?,?,?,?,?,?,?)";
+
         int rowAffected = 0; // check sql response
-        
-        try{
+
+        try {
             // create a SQL prepare statement object
-            PreparedStatement prepstat = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement prepstat = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             // filling the fields
             prepstat.setString(1, receiptId);
@@ -953,16 +952,15 @@ public class sqlConnect {
             prepstat.setString(7, movieName);
             prepstat.setString(8, cinema);
             prepstat.setString(9, theaterId);
-            
+
             // execute the statement
             rowAffected = prepstat.executeUpdate();
-            
-        }
-        catch(SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
-        
+
         return receiptId;
     }
 
@@ -1039,27 +1037,27 @@ public class sqlConnect {
 
         return rowAffected;
     }
-    
-    public static HashMap<String,ArrayList<String>> queryPurchaseHistory(String userId){
-        
+
+    public static HashMap<String, ArrayList<String>> queryPurchaseHistory(String userId) {
+
         String query = "SELECT movie,showDate,showTime,seatNumber,cinema FROM receipts WHERE userId = ?";
-        
+
         // initialize the HashMap
-        HashMap<String,ArrayList<String>> result = new HashMap<>();
+        HashMap<String, ArrayList<String>> result = new HashMap<>();
         // initialize all ArrayList that are going to put into HashMap
         ArrayList<String> movie = new ArrayList<>();
         ArrayList<String> cinema = new ArrayList<>();
         ArrayList<String> showDateTime = new ArrayList<>();
         ArrayList<String> seatNumber = new ArrayList<>();
-        
-        try{
+
+        try {
             PreparedStatement prep = conn.prepareStatement(query);
-            prep.setString(1,userId);
-     
+            prep.setString(1, userId);
+
             ResultSet rs = prep.executeQuery();
-            
+
             // get all fetched data
-            while(rs.next()){
+            while (rs.next()) {
                 String movieName = rs.getString("movie");
                 String cinemaName = rs.getString("cinema");
                 String showTimeStamp = rs.getString("showDate") + " " + rs.getString("showTime");
@@ -1069,17 +1067,16 @@ public class sqlConnect {
                 showDateTime.add(showTimeStamp);
                 seatNumber.add(seats);
             }
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             return null;
         }
-        
+
         // put into HashMap
-        result.put("movieName",movie);
-        result.put("cinemaName",cinema);
-        result.put("showDateTime",showDateTime);
-        result.put("seatNumber",seatNumber);
-        
+        result.put("movieName", movie);
+        result.put("cinemaName", cinema);
+        result.put("showDateTime", showDateTime);
+        result.put("seatNumber", seatNumber);
+
         return result;
     }
 

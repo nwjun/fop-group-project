@@ -1,6 +1,5 @@
 package com.fop.foptproject;
 
-//import com.fop.foptproject.controller.AdminMovieController;
 import java.util.HashMap;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -225,7 +224,7 @@ public class ProductCardAdminMovie {
     }
 
     private Image getImage() {
-        String path = getClass().getResource((String) getValue("imgPath")).toString();
+        String path = App.class.getResource((String) getValue("imgPath")).toString();
         Image img = new Image(path, (double) getValue("imgW"), (double) getValue("imgH"), false, false);
         return img;
     }

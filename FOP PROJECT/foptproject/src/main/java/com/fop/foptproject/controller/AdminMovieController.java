@@ -31,7 +31,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -53,7 +52,6 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.StageStyle;
@@ -100,6 +98,7 @@ public class AdminMovieController implements Initializable {
     private String editmovieId, deletemovieId;
     private boolean deletestatus = false;
     private boolean updatestatus = false;
+    private boolean error = false;
 
     @FXML
     private ImageView DropImage;
@@ -600,6 +599,7 @@ public class AdminMovieController implements Initializable {
     }
 
     public void refresh() throws ParseException {
+        RealTimeStorage.setAllMovies();
         movieList.getChildren().clear();
         getProduct();
         currentPage = 0;
@@ -624,12 +624,15 @@ public class AdminMovieController implements Initializable {
         new Thread(postTask).start();
         postTask.setOnSucceeded(eh -> {
             closeLoadingScreen();
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setTitle("");
-            a.setContentText("Uploaded Successfully");
-            Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
-            stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
-            stage.showAndWait();
+            if(error != true){
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("");
+                a.setContentText("Uploaded Successfully");
+                Stage stage = (Stage) a.getDialogPane().getScene().getWindow(); // get the window of alert box and cast to stage to add icons
+                stage.getIcons().add(new Image(App.class.getResource("assets/company/logo2.png").toString()));
+                stage.showAndWait();
+                error = false;
+            }
         });
     }
 
@@ -848,6 +851,7 @@ public class AdminMovieController implements Initializable {
                         @Override
                         public void run() {
                             closeLoadingScreen();
+                            error = true;
                             Alert ax = new Alert(Alert.AlertType.ERROR);
                             ax.setTitle("Data Entry Error");
                             ax.setContentText("Data Entry Error. \nPlease Check Your Input.");
@@ -901,6 +905,7 @@ public class AdminMovieController implements Initializable {
                     });
                     latch4.await();
                 } catch (IOException ex) {
+                    // do ntg
                 }
 
                 return null;

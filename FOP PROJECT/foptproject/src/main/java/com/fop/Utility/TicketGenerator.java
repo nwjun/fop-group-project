@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.fop.Utility;
 
 import com.google.zxing.WriterException;
@@ -34,8 +30,6 @@ public class TicketGenerator {
  
         // read from existing pdf
         PdfDocument doc = new PdfDocument(new PdfReader(src),new PdfWriter(ops)); // write the pdf into buffer
-        
-        System.out.println(FnB+"\n");
         
         // custom font and color
         PdfFont montserratFont = PdfFontFactory.createFont("src/main/resources/com/fop/font/Montserrat/Montserrat-Regular.ttf",true);

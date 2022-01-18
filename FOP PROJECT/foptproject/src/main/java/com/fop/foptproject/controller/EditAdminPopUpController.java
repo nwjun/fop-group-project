@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package com.fop.foptproject.controller;
 
 import com.fop.Utility.sqlConnect;
@@ -15,8 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import javafx.application.Platform;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -25,7 +19,6 @@ import static com.fop.foptproject.controller.SceneController.showPopUpStage;
 import javafx.stage.StageStyle;
 
 /**
- * FXML Controller class
  *
  * @author kuckn
  */

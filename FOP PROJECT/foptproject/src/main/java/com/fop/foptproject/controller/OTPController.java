@@ -8,9 +8,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -25,7 +22,6 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 /**
- * FXML Controller Class
  *
  * @author WeiXin
  */

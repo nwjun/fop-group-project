@@ -80,7 +80,7 @@ public class MovieAllShowTImeController implements Initializable {
         try {
             getProduct();
         } catch (ParseException ex) {
-            Logger.getLogger(MovieAllShowTImeController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Fail");
         }
     }    
     
@@ -103,7 +103,7 @@ public class MovieAllShowTImeController implements Initializable {
         
         this.currentPage = 0;
         this.maxPage = (int) Math.ceil(movieId.length/6.0);
-        this.currentIndex = 0;   
+        this.currentIndex = 0;
         loadCard();
         checkPage();
     }
